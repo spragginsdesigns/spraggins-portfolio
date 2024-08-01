@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Austin Spraggins Portfolio
 
-## Getting Started
+Welcome to my personal portfolio website! This site is designed to showcase my work, skills, and activities as a web developer, content creator, designer, security expert, problem solver, and tech enthusiast.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![1722533388811](image/README/1722533388811.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Website URL
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Visit the portfolio at [spragginsdesigns.xyz](https://spragginsdesigns.xyz/)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
+* **Hero Section** :
+* Dynamic introduction with a typing animation that highlights various roles.
+* A visually engaging header with my photo and a call-to-action button to explore my work.
+* **PDF Resume Viewer** :
+* Easily view my resume directly on the website using an embedded PDF viewer.
+* Navigation through resume pages with previous and next buttons.
+* **GitHub Activity** :
+* Display of my latest GitHub repositories.
+* Key statistics including stars, forks, and open issues for each repository.
+* Overview of my GitHub profile, including followers, following count, and public repositories.
+* **Skills Display** :
+* Showcases my technical skills using interactive icons.
+* A brief description of my proficiency in each skill.
+* **Footer Section** :
+* Links to my social media profiles and contact information.
+* A simple and clean footer design for easy navigation.
 
-To learn more about Next.js, take a look at the following resources:
+## Additional Information
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* **Responsive Design** : The website is optimized for viewing on any device, ensuring a great user experience on both desktop and mobile platforms.
+* **Modern Technologies** : Built using Next.js and React for a fast and responsive user interface.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Feel free to explore the website and get in touch with me through the contact information provided. Thank you for visiting!
