@@ -20,7 +20,7 @@ const fetchGitHubData = async () => {
 		const [userResponse, reposResponse] = await Promise.all([
 			axios.get("https://api.github.com/users/spragginsdesigns", { headers }),
 			axios.get(
-				"https://api.github.com/users/spragginsdesigns/repos?sort=updated&per_page=6",
+				"https://api.github.com/users/spragginsdesigns/repos?sort=updated&per_page=10",
 				{ headers }
 			)
 		]);
