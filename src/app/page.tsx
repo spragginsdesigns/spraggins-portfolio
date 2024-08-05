@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 		siteName: "Austin Spraggins Portfolio",
 		images: [
 			{
-				url: "https://www.spragginsdesigns.xyz/og-image.png",
+				url: "https://opengraph.b-cdn.net/production/images/57d437b6-00af-4dc3-a9eb-7e29e51c5f04.png?token=9VdePgxCJ40PR3vQtoZBslC8r3smw8O8YOX0UfWivzg&height=372&width=1200&expires=33258886154",
 				width: 1200,
 				height: 630
 			}
@@ -32,7 +32,9 @@ export const metadata: Metadata = {
 		title: "Austin Spraggins - Full Stack Developer Portfolio",
 		description:
 			"Explore the portfolio of Austin Spraggins, a Full Stack Developer specializing in React, Next.js, and modern web technologies. Based in Fresno, CA.",
-		images: ["https://www.spragginsdesigns.xyz/twitter-image.png"]
+		images: [
+			"https://opengraph.b-cdn.net/production/images/57d437b6-00af-4dc3-a9eb-7e29e51c5f04.png?token=9VdePgxCJ40PR3vQtoZBslC8r3smw8O8YOX0UfWivzg&height=372&width=1200&expires=33258886154"
+		]
 	}
 };
 

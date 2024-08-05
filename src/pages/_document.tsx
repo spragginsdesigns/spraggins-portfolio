@@ -42,6 +42,8 @@ export default function Document() {
 					name="keywords"
 					content="Austin Spraggins, Spraggins, Spraggins Designs, Austin Fresno CA, Spraggins Fresno CA, Austin Spraggins Fresno CA, Austin Fresno, Fresno Austin, Fresno Spraggins, Web Development, Full Stack Developer, React, Next.js, JavaScript, TypeScript, Software Engineer, Fresno CA, Portfolio, Austin Spraggins Portfolio, Austin Spraggins Resume, Austin Spraggins"
 				/>
+				{/* Canonical URL */}
+				<link rel="canonical" href="https://www.spragginsdesigns.xyz/" />
 
 				{/* Open Graph / Facebook Meta Tags */}
 				<meta property="og:url" content="https://www.spragginsdesigns.xyz/" />
@@ -53,7 +55,7 @@ export default function Document() {
 				/>
 				<meta
 					property="og:image"
-					content="https://opengraph.b-cdn.net/production/images/f29fdab1-e9de-40a5-a182-e4a65bc87c23.png?token=S8IzszoBZ_jScizh7hmeipzGo8t1TRrVUrbpzh36BDo&height=372&width=1200&expires=33258879249"
+					content="https://opengraph.b-cdn.net/production/images/57d437b6-00af-4dc3-a9eb-7e29e51c5f04.png?token=9VdePgxCJ40PR3vQtoZBslC8r3smw8O8YOX0UfWivzg&height=372&width=1200&expires=33258886154"
 				/>
 
 				{/* Twitter Meta Tags */}
@@ -70,7 +72,7 @@ export default function Document() {
 				/>
 				<meta
 					name="twitter:image"
-					content="https://opengraph.b-cdn.net/production/images/f29fdab1-e9de-40a5-a182-e4a65bc87c23.png?token=S8IzszoBZ_jScizh7hmeipzGo8t1TRrVUrbpzh36BDo&height=372&width=1200&expires=33258879249"
+					content="https://opengraph.b-cdn.net/production/images/57d437b6-00af-4dc3-a9eb-7e29e51c5f04.png?token=9VdePgxCJ40PR3vQtoZBslC8r3smw8O8YOX0UfWivzg&height=372&width=1200&expires=33258886154"
 				/>
 			</Head>
 			<body>
