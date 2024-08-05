@@ -5,13 +5,14 @@ import { motion } from "framer-motion";
 import { FaPaperPlane, FaCheck } from "react-icons/fa";
 
 const Contact: React.FC = () => {
-	const emailAddress = "austin@spragginsdesigns.xyz";
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isSubmitted, setIsSubmitted] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setIsSubmitting(true);
+		setError(null);
 
 		const form = e.currentTarget;
 		const name = (form.elements.namedItem("name") as HTMLInputElement).value;
@@ -19,18 +20,27 @@ const Contact: React.FC = () => {
 		const message = (form.elements.namedItem("message") as HTMLTextAreaElement)
 			.value;
 
-		const subject = `Contact from ${name}`;
-		const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+		try {
+			const response = await fetch("/api/send-email", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({ name, email, message })
+			});
 
-		// Simulating an API call
-		await new Promise((resolve) => setTimeout(resolve, 1500));
+			if (!response.ok) {
+				throw new Error("Failed to send message");
+			}
 
-		window.location.href = `mailto:${emailAddress}?subject=${encodeURIComponent(
-			subject
-		)}&body=${encodeURIComponent(body)}`;
-
-		setIsSubmitting(false);
-		setIsSubmitted(true);
+			setIsSubmitted(true);
+			form.reset();
+		} catch (error) {
+			console.error("Error sending email:", error);
+			setError("Failed to send message. Please try again later.");
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	const inputVariants = {
@@ -133,6 +143,12 @@ const Contact: React.FC = () => {
 						)}
 					</motion.button>
 				</form>
+				{error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+				{isSubmitted && (
+					<p className="text-green-500 mt-4 text-center">
+						Message sent successfully!
+					</p>
+				)}
 			</motion.div>
 		</section>
 	);
