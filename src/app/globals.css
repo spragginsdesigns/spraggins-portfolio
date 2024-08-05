@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,6 +16,11 @@ html {
 body {
 	color: rgb(var(--foreground-rgb));
 	background: rgb(var(--background-rgb));
+}
+
+/* Dancing Script Font */
+.font-dancing-script {
+	font-family: "Dancing Script", cursive;
 }
 
 @media (prefers-color-scheme: dark) {

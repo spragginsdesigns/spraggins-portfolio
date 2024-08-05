@@ -8,14 +8,14 @@ export default async function handler(
 	if (req.method === "POST") {
 		const { name, email, message } = req.body;
 
-		// Create a transporter using SMTP
+		// Create a transporter using Gmail SMTP
 		let transporter = nodemailer.createTransport({
-			host: "mail.privateemail.com",
+			host: "smtp.gmail.com",
 			port: 465,
 			secure: true, // use SSL
 			auth: {
-				user: "austin@spragginsdesigns.xyz",
-				pass: process.env.EMAIL_PASSWORD
+				user: "spragginsdesigns@gmail.com",
+				pass: process.env.GMAIL_APP_PASSWORD
 			}
 		});
 
@@ -56,18 +56,34 @@ export default async function handler(
     `;
 
 		try {
+			// Verify SMTP connection configuration
+			await transporter.verify();
+
 			// Send email
-			await transporter.sendMail({
-				from: "austin@spragginsdesigns.xyz",
-				to: "austin@spragginsdesigns.xyz",
+			const info = await transporter.sendMail({
+				from: "spragginsdesigns@gmail.com",
+				to: "spragginsdesigns@gmail.com",
 				subject: `New Contact from ${name}`,
 				html: htmlTemplate
 			});
 
+			console.log("Message sent: %s", info.messageId);
 			res.status(200).json({ message: "Email sent successfully" });
-		} catch (error) {
+		} catch (error: unknown) {
 			console.error("Error sending email:", error);
-			res.status(500).json({ error: "Failed to send email" });
+			if (error instanceof Error) {
+				res.status(500).json({
+					error: "Failed to send email",
+					details: error.message,
+					stack:
+						process.env.NODE_ENV === "development" ? error.stack : undefined
+				});
+			} else {
+				res.status(500).json({
+					error: "Failed to send email",
+					details: "An unknown error occurred"
+				});
+			}
 		}
 	} else {
 		res.setHeader("Allow", ["POST"]);

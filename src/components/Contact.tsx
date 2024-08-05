@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaPaperPlane, FaCheck } from "react-icons/fa";
 
 const Contact: React.FC = () => {
@@ -75,7 +75,7 @@ const Contact: React.FC = () => {
 							id="name"
 							name="name"
 							className="bg-surface border border-gray-600 text-text text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-							placeholder="John Doe"
+							placeholder="Your Name"
 							required
 						/>
 					</motion.div>
@@ -128,7 +128,7 @@ const Contact: React.FC = () => {
 					>
 						{isSubmitting ? (
 							<motion.div
-								className="w-5 h-5 border-t-2 border-b-2 border-background rounded-full animate-spin"
+								className="w-6 h-6 border-t-2 border-r-2 border-background rounded-full"
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
 							></motion.div>
@@ -143,12 +143,51 @@ const Contact: React.FC = () => {
 						)}
 					</motion.button>
 				</form>
-				{error && <p className="text-red-500 mt-4 text-center">{error}</p>}
-				{isSubmitted && (
-					<p className="text-green-500 mt-4 text-center">
-						Message sent successfully!
-					</p>
-				)}
+				<AnimatePresence>
+					{error && (
+						<motion.p
+							className="text-red-500 mt-4 text-center"
+							initial={{ opacity: 0, y: -10 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: -10 }}
+						>
+							{error}
+						</motion.p>
+					)}
+					{isSubmitted && (
+						<motion.div
+							className="mt-8 text-center"
+							initial={{ opacity: 0, scale: 0.8 }}
+							animate={{ opacity: 1, scale: 1 }}
+							transition={{ duration: 0.5 }}
+						>
+							<motion.div
+								className="inline-block p-4 bg-green-500 rounded-full"
+								initial={{ rotate: 0 }}
+								animate={{ rotate: 360 }}
+								transition={{ duration: 0.5 }}
+							>
+								<FaCheck className="text-white text-2xl" />
+							</motion.div>
+							<motion.h3
+								className="text-2xl font-bold mt-4 mb-2"
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ delay: 0.3 }}
+							>
+								Message Sent Successfully!
+							</motion.h3>
+							<motion.p
+								className="text-gray-600"
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ delay: 0.5 }}
+							>
+								Thank you for reaching out. We&apos;ll get back to you soon!
+							</motion.p>
+						</motion.div>
+					)}
+				</AnimatePresence>
 			</motion.div>
 		</section>
 	);
