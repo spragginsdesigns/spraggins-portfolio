@@ -178,8 +178,8 @@ const ProjectCard: React.FC<{
 					<Image
 						src={imgSrc}
 						alt={`${title} favicon`}
-						width={32}
-						height={32}
+						width={64}
+						height={64}
 						className="mb-4"
 						onError={handleImageError}
 					/>
