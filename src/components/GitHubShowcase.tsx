@@ -1,6 +1,5 @@
 "use client";
-import React from "react";
-import { useQuery } from "react-query";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import {
@@ -15,18 +14,17 @@ import {
 import Image from "next/image";
 
 const fetchGitHubData = async () => {
-	const token = "GITHUB_TOKEN";
-	const headers = { Authorization: `Bearer ${token}` };
+	const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+	const headers = token ? { Authorization: `Bearer ${token}` } : {};
 	try {
-		const { data: user } = await axios.get(
-			"https://api.github.com/users/spragginsdesigns",
-			{ headers }
-		);
-		const { data: repos } = await axios.get(
-			"https://api.github.com/users/spragginsdesigns/repos?sort=updated&per_page=6",
-			{ headers }
-		);
-		return { user, repos };
+		const [userResponse, reposResponse] = await Promise.all([
+			axios.get("https://api.github.com/users/spragginsdesigns", { headers }),
+			axios.get(
+				"https://api.github.com/users/spragginsdesigns/repos?sort=updated&per_page=6",
+				{ headers }
+			)
+		]);
+		return { user: userResponse.data, repos: reposResponse.data };
 	} catch (error) {
 		console.error("GitHub API Error:", error);
 		throw error;
@@ -34,27 +32,35 @@ const fetchGitHubData = async () => {
 };
 
 const GitHubShowcase: React.FC = () => {
-	const { data, isLoading, isError } = useQuery("githubData", fetchGitHubData);
+	const [data, setData] = useState<{ user: any; repos: any[] } | null>(null);
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 
-	if (isLoading)
-		return (
-			<div className="text-center py-20">
-				<motion.div
-					className="inline-block animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"
-					animate={{ rotate: 360 }}
-					transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-				></motion.div>
-			</div>
-		);
-	if (isError)
-		return (
-			<div className="text-center py-20 text-red-500">
-				<FaExclamationCircle className="inline-block text-4xl mb-4" />
-				<p>Error fetching GitHub data. Please try again later.</p>
-			</div>
-		);
+	useEffect(() => {
+		fetchGitHubData()
+			.then(setData)
+			.catch((err) => {
+				console.error("Error fetching GitHub data:", err);
+				if (err.response) {
+					// The request was made and the server responded with a status code
+					// that falls out of the range of 2xx
+					setError(
+						`GitHub API error: ${err.response.status} ${err.response.statusText}`
+					);
+				} else if (err.request) {
+					// The request was made but no response was received
+					setError("Network error. Please check your internet connection.");
+				} else {
+					// Something happened in setting up the request that triggered an Error
+					setError("An unexpected error occurred.");
+				}
+			})
+			.finally(() => setIsLoading(false));
+	}, []);
 
-	const { user, repos } = data!;
+	if (!data) return null;
+
+	const { user, repos } = data;
 
 	return (
 		<section id="github" className="bg-surface text-text py-20">
@@ -95,59 +101,46 @@ const GitHubShowcase: React.FC = () => {
 							<div>
 								<FaBook className="inline-block text-2xl text-primary mb-2" />
 								<p className="font-bold">{user.public_repos}</p>
-								<p className="text-sm">Repos</p>
+								<p className="text-sm">Repositories</p>
 							</div>
 						</div>
-						<a
-							href={user.html_url}
-							target="_blank"
-							rel="noopener noreferrer"
-							className="block w-full text-center bg-primary text-background px-6 py-3 rounded-full hover:bg-opacity-80 transition-colors"
-						>
-							<FaGithub className="inline-block mr-2" /> View Profile
-						</a>
 					</motion.div>
-					<div className="lg:col-span-2">
-						<h3 className="text-2xl font-bold mb-6">Recent Repositories</h3>
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-							{repos.map((repo: any, index: number) => (
-								<motion.div
-									key={repo.id}
-									className="bg-background p-6 rounded-lg shadow-md"
-									initial={{ opacity: 0, y: 20 }}
-									animate={{ opacity: 1, y: 0 }}
-									transition={{ duration: 0.5, delay: index * 0.1 }}
-								>
-									<h4 className="text-xl font-semibold mb-2">{repo.name}</h4>
-									<p className="text-sm text-text-secondary mb-4 h-12 overflow-hidden">
-										{repo.description || "No description available"}
-									</p>
-									<div className="flex justify-between text-sm mb-4">
-										<span className="flex items-center">
-											<FaStar className="mr-1 text-yellow-500" />
-											{repo.stargazers_count}
-										</span>
-										<span className="flex items-center">
-											<FaCodeBranch className="mr-1 text-green-500" />
-											{repo.forks_count}
-										</span>
-										<span className="flex items-center">
-											<FaExclamationCircle className="mr-1 text-red-500" />
-											{repo.open_issues_count}
-										</span>
-									</div>
-									<a
-										href={repo.html_url}
-										target="_blank"
-										rel="noopener noreferrer"
-										className="inline-flex items-center text-primary hover:underline"
-									>
-										<FaLink className="mr-1" /> View Repository
-									</a>
-								</motion.div>
-							))}
-						</div>
-					</div>
+					{repos.map((repo, index) => (
+						<motion.div
+							key={repo.id}
+							className="bg-background p-6 rounded-lg shadow-xl"
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.5, delay: index * 0.1 }}
+						>
+							<h4 className="text-xl font-semibold mb-2">{repo.name}</h4>
+							<p className="text-sm text-text-secondary mb-4 h-12 overflow-hidden">
+								{repo.description || "No description available"}
+							</p>
+							<div className="flex justify-between text-sm mb-4">
+								<span className="flex items-center">
+									<FaStar className="mr-1 text-yellow-500" />
+									{repo.stargazers_count}
+								</span>
+								<span className="flex items-center">
+									<FaCodeBranch className="mr-1 text-green-500" />
+									{repo.forks_count}
+								</span>
+								<span className="flex items-center">
+									<FaExclamationCircle className="mr-1 text-red-500" />
+									{repo.open_issues_count}
+								</span>
+							</div>
+							<a
+								href={repo.html_url}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center text-primary hover:underline"
+							>
+								<FaLink className="mr-1" /> View Repository
+							</a>
+						</motion.div>
+					))}
 				</div>
 			</div>
 		</section>

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
 const ProjectCard: React.FC<{
@@ -8,9 +8,10 @@ const ProjectCard: React.FC<{
 	description: string;
 	link: string;
 }> = ({ title, description, link }) => {
-	const [imgSrc, setImgSrc] = React.useState<string>("");
+	const [imgSrc, setImgSrc] = useState<string | null>(null);
+	const [imgError, setImgError] = useState(false);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		let faviconUrl: string;
 
 		if (link.includes("spragginsdesigns.github.io")) {
@@ -27,17 +28,29 @@ const ProjectCard: React.FC<{
 		setImgSrc(faviconUrl);
 	}, [link]);
 
+	const handleImageError = () => {
+		setImgError(true);
+	};
+
 	return (
 		<div className="bg-surface rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105">
 			<div className="p-6 flex flex-col items-center">
-				<Image
-					src={imgSrc || "/fallback-icon.png"}
-					alt={`${title} favicon`}
-					width={32}
-					height={32}
-					className="mb-4"
-					onError={() => setImgSrc("/fallback-icon.png")}
-				/>
+				{imgSrc && !imgError ? (
+					<Image
+						src={imgSrc}
+						alt={`${title} favicon`}
+						width={32}
+						height={32}
+						className="mb-4"
+						onError={handleImageError}
+					/>
+				) : (
+					<div className="w-8 h-8 mb-4 bg-primary rounded-full flex items-center justify-center">
+						<span className="text-xs font-bold text-background">
+							{title.charAt(0).toUpperCase()}
+						</span>
+					</div>
+				)}
 				<h3 className="text-xl font-bold mb-2 text-primary">{title}</h3>
 				<p className="text-text-secondary mb-4 text-center">{description}</p>
 				<a

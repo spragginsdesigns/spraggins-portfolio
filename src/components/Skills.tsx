@@ -3,7 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-	FaFileAlt,
 	FaHtml5,
 	FaCss3Alt,
 	FaJs,
@@ -65,11 +64,12 @@ const Skills: React.FC = () => {
 						transition={{ delay: 0.5, duration: 0.5 }}
 					>
 						<Link
-							href="/resume"
+							href="https://drive.google.com/file/d/1G1Czfeqoa8priSxrlsYElJnBILulZ30x/view?usp=drive_link"
+							target="_blank"
+							rel="noopener noreferrer"
 							className="inline-flex items-center bg-primary text-background px-6 py-3 rounded-full hover:bg-opacity-80 transition-all transform hover:scale-105"
 						>
-							<FaFileAlt className="mr-2" />
-							View Full Resume
+							View Resume
 						</Link>
 					</motion.div>
 				</div>
