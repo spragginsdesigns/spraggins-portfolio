@@ -34,6 +34,21 @@ const LifeStage = ({
 );
 
 const About: React.FC = () => {
+	const calculateAge = (birthDate: Date) => {
+		const today = new Date();
+		let age = today.getFullYear() - birthDate.getFullYear();
+		const m = today.getMonth() - birthDate.getMonth();
+		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+			age--;
+		}
+		return age;
+	};
+
+	const lillyBirthday = new Date("2017-01-09");
+	const julianBirthday = new Date("2012-11-17");
+
+	const lillyAge = calculateAge(lillyBirthday);
+	const julianAge = calculateAge(julianBirthday);
 	return (
 		<section id="about" className="bg-surface text-text py-20">
 			<div className="container mx-auto px-4">
@@ -85,11 +100,12 @@ const About: React.FC = () => {
 					transition={{ delay: 0.5, duration: 0.5 }}
 				>
 					<p className="text-lg mb-4 font-sans">
-						Today, at 33, I&apos;m a proud father of two wonderful children,
-						Lilly (7) and Julian (11). Based in Fresno, California, I&apos;m
-						living my dream as a Full-Stack Web Developer, constantly learning
-						and growing in this ever-evolving field. My journey has shaped me
-						into who I am today - a confident programmer, problem-solver, and
+						Today, at {calculateAge(new Date("1990-04-14"))}, I&apos;m a proud
+						father of two wonderful children, Lilly ({lillyAge}) and Julian (
+						{julianAge}) Spraggins. Based in Fresno, California, I&apos;m living
+						my dream as a Full-Stack Web Developer, constantly learning and
+						growing in this ever-evolving field.<br></br> My journey has shaped
+						me into who I am today - a confident programmer, problem-solver, and
 						innovator, excited to make a positive impact through code.
 					</p>
 					<p className="text-xl font-dancing-script text-primary italic leading-relaxed">
