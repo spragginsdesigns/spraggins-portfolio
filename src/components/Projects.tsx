@@ -13,7 +13,7 @@ const CHANNEL_ID = "UCG33v2g2KT3hXXWLLbCFBcA";
 const specialProject = {
 	title: "Shadow Gaming",
 	description:
-		"My YouTube gaming channel with over 10K subscribers, featuring The Division 1 & 2. I love gaming and creating content, and enjoyed this opportunity to share my passion with others.",
+		"My YouTube gaming channel with over 10K subscribers, featuring The Division 1 & 2. I love gaming and creating content, and enjoyed this opportunity to share my passion with others greatly.",
 	link: "https://youtube.com/c/shadowgaming99",
 	isSpecial: true,
 	logoPath: "/images/Shadow-Gaming-Logo-Bitmap.bmp"
