@@ -22,27 +22,30 @@ const specialProject = {
 const projects = [
 	{
 		title: "AI Favicon Generator",
-		description: "Generate unique favicons using AI technology.",
+		description: "Using DALL-E 3 to generate unique and high quality favicons.",
 		link: "https://spragginsdesigns.github.io/AI-Favicon-Creator/"
 	},
 	{
-		title: "AI Prompt Perfector",
+		title: "Prompt Perfector",
 		description: "Optimize your AI prompts for better results.",
 		link: "https://spragginsdesigns.github.io/AI-Prompt-Perfector/"
 	},
 	{
 		title: "Bible AI Study Tool",
-		description: "AI-powered tool for in-depth Bible study.",
+		description:
+			"AI-powered tool for in-depth Bible study. This is in very early development.",
 		link: "https://bible-ai-explorer.vercel.app/"
 	},
 	{
 		title: "Gelateria Del Centro",
-		description: "A React-based website for Gelateria Del Centro.",
+		description:
+			"A React-based website for Gelateria Del Centro, an awesome Ice Cream shop located in Fresno, CA.",
 		link: "https://www.eatgelateria.com/"
 	},
 	{
-		title: "ContextPro AI",
-		description: "Full-stack Next.js app with Tailwind CSS and PostgreSQL.",
+		title: "ContextPro.AI",
+		description:
+			"Full-stack Next.js app with Tailwind CSS and PostgreSQL. My biggest project to date, and most feature-rich.",
 		link: "https://contextproai.vercel.app/"
 	}
 ];
