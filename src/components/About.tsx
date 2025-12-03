@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import {
 	FaCode,
-	FaGraduationCap,
+	FaRocket,
 	FaTruck,
 	FaLaptopCode,
 	FaUsers,
@@ -82,9 +82,10 @@ const About: React.FC = () => {
 							<p className="text-lg mb-4 font-sans text-center">
 								At {calculateAge(new Date("1990-11-26"))}, I&rsquo;m a proud
 								father of two wonderful children, Lilly ({lillyAge}) and Julian
-								({julianAge}) Spraggins. Based in Fresno, California, I&rsquo;m
-								living my dream as a Full-Stack Web Developer, constantly
-								learning and growing in this ever-evolving field.
+								({julianAge}) Spraggins. Based in Fresno, California, I serve as
+								CTO & Senior Software Engineer at LineCrush Inc, where I own 30%
+								of the company and lead development of our sports analytics
+								platform.
 							</p>
 							<p className="text-xl font-dancing-script text-primary italic leading-relaxed text-center">
 								Austin Dillon Spraggins
@@ -114,9 +115,9 @@ const About: React.FC = () => {
 							description="Life took an unexpected turn, leading to a period of profound personal growth and self-discovery. During this time, I gained invaluable insights about myself and the world around me, strengthening my resolve to make a positive impact through technology."
 						/>
 						<LifeStage
-							icon={<FaGraduationCap className="text-3xl" />}
-							title="Continuous Learning"
-							description="Currently pursuing a Bachelor's Degree in Computer Science while working as a Full-Stack Web Developer. I'm excited to apply my skills in Python, Express.js, NextJS 14, and Tailwind CSS to create innovative solutions."
+							icon={<FaRocket className="text-3xl" />}
+							title="Leading at LineCrush"
+							description="As CTO & Senior Software Engineer at LineCrush Inc (30% owner), I lead development of a full-stack sports analytics platform. Working 12+ hour days for the past 2 years, I've built expertise in Next.js, Python, PostgreSQL, Redis, AWS, and production infrastructure management."
 						/>
 						<LifeStage
 							icon={<FaChild className="text-3xl" />}

@@ -4,7 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal portfolio website for Austin Spraggins built with Next.js 14, React 18, TypeScript, and Tailwind CSS. Live at [spragginsdesigns.xyz](https://spragginsdesigns.xyz/).
+Personal portfolio website for **Austin Spraggins** - CTO & Senior Software Engineer at **LineCrush Inc** (30% owner). Built with Next.js 14, React 18, TypeScript, and Tailwind CSS. Live at [spragginsdesigns.xyz](https://spragginsdesigns.xyz/).
+
+**Purpose:** Showcase professional work, experience, and technical skills in a modern, sleek design. This portfolio represents 2+ years of intensive full-stack development experience at LineCrush, working 12+ hour days on a massive production codebase.
+
+## About Austin
+
+- **Current Role:** CTO & Senior Software Engineer at LineCrush Inc
+- **Company:** [LineCrush](https://www.linecrush.com) - Sports analytics platform
+- **Experience:** Full-stack development with Next.js, Python, PostgreSQL (Neon), Redis, AWS, Ubuntu VPS infrastructure
+- **Background:** Former truck driver turned tech professional, taught Web Development at Bitwise Industries and Geekwise Academy
+- **Location:** Fresno, California
 
 ## Commands
 
@@ -52,3 +62,11 @@ Required in `.env.local`:
 - Tailwind CSS with custom color palette defined in `tailwind.config.ts`
 - Custom fonts: Inter (body) and Poppins (headings) via next/font/google
 - Path alias: `@/*` maps to `./src/*`
+
+## Content Guidelines
+
+When updating portfolio content, accurately reflect Austin's role:
+- **LineCrush** is the flagship project (formerly ContextPro.AI)
+- Emphasize CTO and leadership experience
+- Highlight full-stack expertise: Next.js, Python, PostgreSQL, Redis, AWS, VPS management
+- Include production-scale experience with scrapers, cronjobs, real-time data pipelines

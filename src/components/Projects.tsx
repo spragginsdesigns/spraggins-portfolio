@@ -43,10 +43,10 @@ const projects = [
 		link: "https://www.eatgelateria.com/"
 	},
 	{
-		title: "ContextPro.AI",
+		title: "LineCrush",
 		description:
-			"Full-stack Next.js app with Tailwind CSS and PostgreSQL. My biggest project to date, and most feature-rich.",
-		link: "https://contextproai.vercel.app/"
+			"Sports analytics platform where I serve as CTO & Senior Software Engineer. Full-stack Next.js with Python backend, PostgreSQL, Redis, AWS, and real-time data pipelines. My flagship project.",
+		link: "https://www.linecrush.com/"
 	}
 ];
 
