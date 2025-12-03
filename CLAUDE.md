@@ -10,6 +10,8 @@ Personal portfolio website for **Austin Spraggins** - Co-Founder, CTO & Senior S
 
 ## About Austin
 
+### Professional
+
 - **Current Role:** Co-Founder, CTO & Senior Software Engineer at LineCrush Inc
 - **Company:** [LineCrush](https://www.linecrush.com) - Sports analytics platform
 - **Experience:** End-to-end ownership across the entire stack:
@@ -19,9 +21,29 @@ Personal portfolio website for **Austin Spraggins** - Co-Founder, CTO & Senior S
   - AI/ML: OpenAI, Anthropic, Perplexity, Google Vision (4+ LLM integrations)
   - Infrastructure: AWS (S3, SES, CloudFront), Ubuntu VPS, Vercel, Docker
   - Data: Web scrapers, real-time pipelines, NLP, cron jobs
-- **Background:** Former truck driver turned tech professional, taught Web Development at Bitwise Industries and Geekwise Academy
-- **Location:** Fresno, California
+- **Education:** AA in Web Development (5+ years in college, consistently high grades)
+- **Teaching:** Former Web Development instructor at Bitwise Industries and Geekwise Academy
 - **Status:** Open to contracts & consulting
+
+### Personal
+
+- **Location:** Fresno, California (grew up in the mountains of O'Neals, CA)
+- **Family:** Proud father of two children - Julian and Lilly
+- **Faith:** Christian - faith is central to his life and work
+- **Background:** Lost his father at age 8; later cared for his mother when she became blind. Former truck driver before transitioning to tech. Went through a transformative life experience that profoundly changed his perspective, helping him find faith, inner peace, and renewed purpose.
+
+### Values & Approach
+
+- **Mission:** To serve God, be a good father and provider, and build technology that makes the world more intelligent, loving, and just
+- **Problem-Solving Style:** Thinks through problems deeply, plans carefully, and takes things step by step - testing and adjusting along the way. Prefers to understand every part of a plan before attempting it.
+- **Core Beliefs:**
+  - Technology should extend human gifts, not replace them
+  - Kindness, respect, and honesty in all interactions
+  - Building meaningful tools that honor God
+
+### Personal Projects
+
+- **Bible AI Explorer:** An app to help users understand the Bible better with AI assistance (the AI is instructed to act as a believer in Christ)
 
 ## Social Links
 
@@ -134,6 +156,7 @@ When updating portfolio content:
 - Emphasize "Open to Contracts & Consulting" (not job seeking)
 - Keep stats accurate: 2+ years production, 4+ LLM integrations, 100+ database tables
 - Featured GitHub projects: SaveALife CPR, Constrong, Bible AI Explorer, AI Tutor WebApp
+- **IMPORTANT:** When referencing Austin's transformative life experience, describe it as a "difficult period" or "challenging time" that led to personal growth, finding faith, and renewed purpose. Never be more specific than this.
 
 ## Dependencies
 
