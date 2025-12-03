@@ -1,142 +1,182 @@
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
+import { BackgroundLines } from "@/components/ui/background-lines";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import { Badge } from "@/components/ui/badge";
+import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 
 const Hero: React.FC = () => {
-	const roles = useMemo(
-		() => [
-			"Co-Founder & CTO",
-			"Senior Software Engineer",
-			"Full Stack Developer",
-			"AI/ML Engineer",
-			"DevOps Engineer",
-			"Tech Entrepreneur"
-		],
-		[]
-	);
-	const [roleIndex, setRoleIndex] = useState(0);
-	const [displayedRole, setDisplayedRole] = useState("");
-	const [isDeleting, setIsDeleting] = useState(false);
+	const tagline =
+		"I build production systems at scale. 350+ React components, 45+ microservices, 100+ database tables, and AI systems processing millions of data points.";
 
-	useEffect(() => {
-		let timeout: NodeJS.Timeout;
-
-		const animateRole = () => {
-			const currentRole = roles[roleIndex];
-			const typingSpeed = 100;
-			const deletingSpeed = 50;
-			const pauseDuration = 2000;
-
-			if (!isDeleting && displayedRole !== currentRole) {
-				setDisplayedRole(currentRole.substring(0, displayedRole.length + 1));
-				const nextTypingDelay = typingSpeed + Math.random() * 50;
-				timeout = setTimeout(animateRole, nextTypingDelay);
-			} else if (isDeleting && displayedRole !== "") {
-				setDisplayedRole(currentRole.substring(0, displayedRole.length - 1));
-				const nextDeletingDelay = deletingSpeed + Math.random() * 30;
-				timeout = setTimeout(animateRole, nextDeletingDelay);
-			} else if (displayedRole === currentRole) {
-				timeout = setTimeout(() => {
-					setIsDeleting(true);
-					animateRole();
-				}, pauseDuration);
-			} else if (displayedRole === "") {
-				timeout = setTimeout(() => {
-					setIsDeleting(false);
-					setRoleIndex((prevIndex) => (prevIndex + 1) % roles.length);
-					animateRole();
-				}, pauseDuration);
-			}
-		};
-
-		animateRole();
-		return () => clearTimeout(timeout);
-	}, [displayedRole, isDeleting, roleIndex, roles]);
+	const highlights = [
+		"Co-Founder & CTO",
+		"Full Stack",
+		"AI/ML",
+		"DevOps",
+	];
 
 	return (
-		<section className="bg-background text-text pt-24 pb-12 md:py-32 relative overflow-hidden">
-			<div className="absolute inset-0 z-0">
-				<svg
-					className="w-full h-full"
-					viewBox="0 0 100 100"
-					preserveAspectRatio="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<defs>
-						<linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-							<stop offset="0%" stopColor="#00ffff" stopOpacity="0.1" />
-							<stop offset="100%" stopColor="#ff00ff" stopOpacity="0.1" />
-						</linearGradient>
-					</defs>
-					<rect width="100%" height="100%" fill="url(#grad1)" />
-					<g className="lines">
-						{[...Array(10)].map((_, i) => (
-							<path
-								key={i}
-								d={`M0,${10 + i * 10} Q50,${5 + i * 10} 100,${15 + i * 10}`}
-								className="cyberpunk-line"
-							/>
-						))}
-					</g>
-				</svg>
-			</div>
-			<div className="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
-				<motion.div
-					className="md:w-1/2 mb-8 md:mb-0"
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.5 }}
-				>
-					<h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 leading-tight">
-						Austin Spraggins
-					</h1>
-					<h2 className="text-xl md:text-3xl text-primary mb-6 transition-all duration-200 ease-in-out">
-						<span>{displayedRole}</span>
-						<span className="animate-blink">|</span>
-					</h2>
-					<p className="text-xl mb-8 text-text-secondary max-w-xl leading-relaxed font-light">
-						Built a production SaaS platform with 350+ components, 45+ microservices,
-						and AI systems processing millions of data points. Turning complex
-						challenges into scalable solutions.
-					</p>
-					<Link
-						href="#projects"
-						className="
-    bg-primary text-background px-8 py-4 rounded-full
-    text-lg font-semibold
-    shadow-lg
-    inline-block
-    transition-all duration-300 ease-in-out
-    hover:bg-opacity-90
-    hover:shadow-xl
-    hover:-translate-y-1
-    hover:scale-105
-    active:translate-y-0
-    active:scale-100
-  "
+		<BackgroundLines className="flex items-center justify-center w-full min-h-screen relative" svgOptions={{ duration: 12 }}>
+			<div className="container mx-auto px-4 py-20 md:py-0">
+				<div className="flex flex-col lg:flex-row items-center justify-between gap-12 relative z-20">
+					{/* Left Content */}
+					<motion.div
+						className="flex-1 text-center lg:text-left max-w-2xl"
+						initial={{ opacity: 0, x: -50 }}
+						animate={{ opacity: 1, x: 0 }}
+						transition={{ duration: 0.6 }}
 					>
-						Explore My Work
-					</Link>
-				</motion.div>
-				<motion.div
-					className="md:w-1/2 flex justify-center"
-					initial={{ opacity: 0, scale: 0.8 }}
-					animate={{ opacity: 1, scale: 1 }}
-					transition={{ duration: 0.5, delay: 0.2 }}
-				>
-					<Image
-						src="/images/AustinSpraggins-FavoriteProfilePic1.jpg"
-						alt="Austin Spraggins"
-						width={400}
-						height={400}
-						className="rounded-full shadow-2xl border-4 border-primary"
-					/>
-				</motion.div>
+						{/* Status Badge */}
+						<motion.div
+							initial={{ opacity: 0, y: -20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.4, delay: 0.2 }}
+							className="mb-6"
+						>
+							<Badge className="bg-green-500/20 text-green-400 border-green-500/30 px-4 py-1.5 text-sm">
+								<span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse inline-block" />
+								Available for Opportunities
+							</Badge>
+						</motion.div>
+
+						{/* Name */}
+						<h1 className="text-5xl md:text-7xl font-heading font-bold mb-4 leading-tight">
+							<span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-cyan-400 to-primary">
+								Austin Spraggins
+							</span>
+						</h1>
+
+						{/* Role Badges */}
+						<motion.div
+							className="flex flex-wrap gap-2 justify-center lg:justify-start mb-6"
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ duration: 0.5, delay: 0.3 }}
+						>
+							{highlights.map((role, index) => (
+								<Badge
+									key={role}
+									variant="secondary"
+									className="bg-card/80 border-primary/30 text-foreground px-3 py-1"
+								>
+									{role}
+								</Badge>
+							))}
+						</motion.div>
+
+						{/* Animated Tagline */}
+						<div className="mb-8">
+							<TextGenerateEffect
+								words={tagline}
+								className="text-muted-foreground"
+								duration={0.3}
+							/>
+						</div>
+
+						{/* CTA Buttons */}
+						<motion.div
+							className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8"
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.5, delay: 0.8 }}
+						>
+							<Link
+								href="#projects"
+								className="group bg-primary text-background px-8 py-4 rounded-full text-lg font-semibold shadow-lg inline-flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
+							>
+								View My Work
+								<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+							</Link>
+							<Link
+								href="#contact"
+								className="bg-card/80 backdrop-blur-sm border border-border/50 text-foreground px-8 py-4 rounded-full text-lg font-semibold inline-flex items-center justify-center gap-2 transition-all duration-300 hover:border-primary/50 hover:-translate-y-1"
+							>
+								<Mail className="w-5 h-5" />
+								Contact Me
+							</Link>
+						</motion.div>
+
+						{/* Social Links */}
+						<motion.div
+							className="flex gap-4 justify-center lg:justify-start"
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ duration: 0.5, delay: 1 }}
+						>
+							<a
+								href="https://github.com/spragginsdesigns"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="p-3 rounded-full bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
+								aria-label="GitHub"
+							>
+								<Github className="w-5 h-5" />
+							</a>
+							<a
+								href="https://linkedin.com/in/austin-spraggins"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="p-3 rounded-full bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
+								aria-label="LinkedIn"
+							>
+								<Linkedin className="w-5 h-5" />
+							</a>
+						</motion.div>
+					</motion.div>
+
+					{/* Right Content - Profile Image */}
+					<motion.div
+						className="flex-shrink-0"
+						initial={{ opacity: 0, scale: 0.8 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{ duration: 0.6, delay: 0.3 }}
+					>
+						<div className="relative">
+							{/* Glow Effect */}
+							<div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-cyan-500/20 to-primary/20 rounded-full blur-2xl animate-pulse" />
+
+							{/* Profile Image */}
+							<div className="relative">
+								<Image
+									src="/images/profile_pic_main2_lessthan1MB.png"
+									alt="Austin Spraggins - Co-Founder & CTO"
+									width={400}
+									height={400}
+									className="rounded-full shadow-2xl border-4 border-primary/50 relative z-10"
+									priority
+								/>
+
+								{/* Stats Floating Cards */}
+								<motion.div
+									className="absolute -right-4 top-1/4 bg-card/90 backdrop-blur-sm border border-border/50 rounded-xl p-3 shadow-lg"
+									initial={{ opacity: 0, x: 20 }}
+									animate={{ opacity: 1, x: 0 }}
+									transition={{ duration: 0.5, delay: 1.2 }}
+								>
+									<div className="text-2xl font-bold text-primary">2+</div>
+									<div className="text-xs text-muted-foreground">Years Production</div>
+								</motion.div>
+
+								<motion.div
+									className="absolute -left-4 bottom-1/4 bg-card/90 backdrop-blur-sm border border-border/50 rounded-xl p-3 shadow-lg"
+									initial={{ opacity: 0, x: -20 }}
+									animate={{ opacity: 1, x: 0 }}
+									transition={{ duration: 0.5, delay: 1.4 }}
+								>
+									<div className="text-2xl font-bold text-primary">4+</div>
+									<div className="text-xs text-muted-foreground">LLM Integrations</div>
+								</motion.div>
+							</div>
+						</div>
+					</motion.div>
+				</div>
 			</div>
-		</section>
+		</BackgroundLines>
 	);
 };
 
