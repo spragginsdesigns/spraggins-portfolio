@@ -11,28 +11,28 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-	title: "Austin Spraggins - Full Stack Developer Portfolio",
+	title: "Austin Spraggins | Co-Founder & CTO | Senior Software Engineer",
 	description:
-		"The Official Portfolio of Austin Spraggins, a Full Stack Developer specializing in React, Next.js, and modern web technologies. Based in Fresno, CA.",
+		"Co-Founder & CTO building production systems at scale. 350+ React components, 45+ microservices, AI/ML integrations, and 100+ database tables. Full-stack expertise in Next.js, Python, PostgreSQL, and cloud infrastructure.",
 	authors: [{ name: "Austin Spraggins" }],
 	keywords:
-		"Austin Spraggins, Spraggins Designs, Web Development, Full Stack Developer, React, Next.js, JavaScript, TypeScript, Software Engineer, Fresno CA, Portfolio",
+		"Austin Spraggins, CTO, Co-Founder, Senior Software Engineer, Full Stack Developer, AI Engineer, ML Engineer, React, Next.js, TypeScript, Python, PostgreSQL, LineCrush, DevOps, System Architecture, Fresno CA",
 	metadataBase: new URL("https://www.spragginsdesigns.xyz"),
 	alternates: {
 		canonical: "https://www.spragginsdesigns.xyz"
 	},
 	openGraph: {
-		title: "Austin Spraggins - Full Stack Developer Portfolio",
+		title: "Austin Spraggins | Co-Founder & CTO | Senior Software Engineer",
 		description:
-			"Explore the portfolio of Austin Spraggins, a Full Stack Developer specializing in React, Next.js, and modern web technologies. Based in Fresno, CA.",
+			"Co-Founder & CTO building production systems at scale. 350+ React components, 45+ microservices, AI/ML integrations. Available for contracts and consulting.",
 		url: "https://www.spragginsdesigns.xyz/",
-		siteName: "Austin Spraggins Portfolio",
+		siteName: "Austin Spraggins - Senior Software Engineer",
 		images: [
 			{
 				url: "https://opengraph.b-cdn.net/production/images/57d437b6-00af-4dc3-a9eb-7e29e51c5f04.png?token=9VdePgxCJ40PR3vQtoZBslC8r3smw8O8YOX0UfWivzg&height=372&width=1200&expires=33258886154",
 				width: 1200,
 				height: 372,
-				alt: "Austin Spraggins Portfolio Preview"
+				alt: "Austin Spraggins - Co-Founder & CTO Portfolio"
 			}
 		],
 		locale: "en_US",
@@ -40,16 +40,16 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Austin Spraggins - Full Stack Developer Portfolio",
+		title: "Austin Spraggins | Co-Founder & CTO | Senior Software Engineer",
 		description:
-			"Explore the portfolio of Austin Spraggins, a Full Stack Developer specializing in React, Next.js, and modern web technologies. Based in Fresno, CA.",
+			"Co-Founder & CTO building production systems at scale. 350+ React components, 45+ microservices, AI/ML integrations. Available for contracts and consulting.",
 		images: [
 			{
 				url: "https://opengraph.b-cdn.net/production/images/57d437b6-00af-4dc3-a9eb-7e29e51c5f04.png?token=9VdePgxCJ40PR3vQtoZBslC8r3smw8O8YOX0UfWivzg&height=372&width=1200&expires=33258886154",
-				alt: "Austin Spraggins Portfolio Preview"
+				alt: "Austin Spraggins - Co-Founder & CTO Portfolio"
 			}
 		],
-		creator: "@AustinSpraggins" // Replace with your actual Twitter handle
+		creator: "@spragginsdesign"
 	},
 	robots: {
 		index: true,
