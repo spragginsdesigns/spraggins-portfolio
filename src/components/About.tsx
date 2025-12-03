@@ -1,39 +1,19 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
+import { Timeline } from "@/components/ui/timeline";
+import { Badge } from "@/components/ui/badge";
 import {
-	FaCode,
-	FaRocket,
-	FaTruck,
-	FaLaptopCode,
-	FaUsers,
-	FaChild
-} from "react-icons/fa";
-
-const LifeStage = ({
-	icon,
-	title,
-	description
-}: {
-	icon: React.ReactNode;
-	title: string;
-	description: string;
-}) => (
-	<motion.div
-		className="flex items-start mb-8"
-		initial={{ opacity: 0, x: -50 }}
-		animate={{ opacity: 1, x: 0 }}
-		transition={{ duration: 0.5 }}
-	>
-		<div className="mr-4 mt-1 text-primary">{icon}</div>
-		<div>
-			<h3 className="text-xl font-bold mb-2 text-primary">{title}</h3>
-			<p className="text-text-secondary">{description}</p>
-		</div>
-	</motion.div>
-);
+	Code,
+	Truck,
+	GraduationCap,
+	Rocket,
+	Heart,
+	Brain,
+	Server,
+	Database
+} from "lucide-react";
 
 const About: React.FC = () => {
 	const calculateAge = (birthDate: Date) => {
@@ -48,84 +28,176 @@ const About: React.FC = () => {
 
 	const lillyBirthday = new Date("2017-01-09");
 	const julianBirthday = new Date("2012-11-17");
-
 	const lillyAge = calculateAge(lillyBirthday);
 	const julianAge = calculateAge(julianBirthday);
+	const myAge = calculateAge(new Date("1990-11-26"));
 
-	return (
-		<section id="about" className="bg-surface text-text py-20">
-			<div className="container mx-auto px-4">
-				<motion.h2
-					className="text-4xl font-heading font-bold mb-12 text-center text-primary"
-					initial={{ opacity: 0, y: -50 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.5 }}
-				>
-					My Journey
-				</motion.h2>
-
-				<div className="flex flex-col md:flex-row gap-8">
-					<div className="md:w-1/2">
-						<motion.div
-							initial={{ opacity: 0, scale: 0.9 }}
-							animate={{ opacity: 1, scale: 1 }}
-							transition={{ duration: 0.5 }}
-							className="bg-background rounded-lg shadow-lg p-6 mb-8"
-						>
-							<Image
-								src="/images/sd-logo-banner.png" // Replace with your actual image path
-								alt="Austin Dillon Spraggins"
-								width={800}
-								height={600}
-								className="rounded-full mx-auto mb-6"
-							/>
-							<p className="text-lg mb-4 font-sans text-center">
-								At {calculateAge(new Date("1990-11-26"))}, I&rsquo;m a proud
-								father of two wonderful children, Lilly ({lillyAge}) and Julian
-								({julianAge}) Spraggins. Based in Fresno, California, I&rsquo;m a
-								Co-Founder & CTO at LineCrush Inc, leading all technical
-								operations for our sports analytics platform.
-							</p>
-							<p className="text-xl font-dancing-script text-primary italic leading-relaxed text-center">
-								Austin Dillon Spraggins
-							</p>
-						</motion.div>
+	const timelineData = [
+		{
+			title: "Early Days",
+			content: (
+				<div>
+					<div className="flex items-center gap-3 mb-4">
+						<div className="p-2 rounded-lg bg-primary/10">
+							<Code className="w-5 h-5 text-primary" />
+						</div>
+						<h4 className="text-lg font-semibold text-foreground">The Beginning</h4>
 					</div>
-
-					<div className="md:w-1/2">
-						<LifeStage
-							icon={<FaCode className="text-3xl" />}
-							title="The Early Days"
-							description="Born and raised in the mountains of O'Neals, California, I developed a fascination with technology from a young age. The serene environment sparked my curiosity about how things work in the digital world."
-						/>
-						<LifeStage
-							icon={<FaTruck className="text-3xl" />}
-							title="Hitting the Road"
-							description="My first career was as a truck driver, which taught me valuable lessons about responsibility, time management, and the importance of staying focused on long-term goals."
-						/>
-						<LifeStage
-							icon={<FaLaptopCode className="text-3xl" />}
-							title="Discovering My Passion"
-							description="I transitioned into tech, following my lifelong passion. I began teaching Web Development at Bitwise Industries and Geekwise Academy, igniting a love for sharing knowledge and inspiring others in the field."
-						/>
-						<LifeStage
-							icon={<FaUsers className="text-3xl" />}
-							title="A Period of Reflection"
-							description="Life took an unexpected turn, leading to a period of profound personal growth and self-discovery. During this time, I gained invaluable insights about myself and the world around me, strengthening my resolve to make a positive impact through technology."
-						/>
-						<LifeStage
-							icon={<FaRocket className="text-3xl" />}
-							title="Leading at LineCrush"
-							description="As Co-Founder & CTO at LineCrush Inc, I own every layer of our stack. From Next.js frontend to Python backend, AI/ML and NLP systems, web scraping pipelines, PostgreSQL and Redis databases, AWS infrastructure, to Ubuntu VPS DevOps - 2+ years of 12+ hour days building production systems."
-						/>
-						<LifeStage
-							icon={<FaChild className="text-3xl" />}
-							title="Family and Future"
-							description="As a father and developer, I'm combining my passion for technology with the joys of parenthood. I'm excited to create a future where my children can see the positive impact of technology and innovation."
-						/>
+					<p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
+						Born and raised in the mountains of O&apos;Neals, California, I developed a
+						fascination with technology from a young age. The serene environment sparked
+						my curiosity about how things work in the digital world.
+					</p>
+					<div className="flex flex-wrap gap-2">
+						<Badge variant="secondary">Curiosity</Badge>
+						<Badge variant="secondary">Self-taught</Badge>
+						<Badge variant="secondary">Problem Solving</Badge>
 					</div>
 				</div>
-			</div>
+			),
+		},
+		{
+			title: "First Career",
+			content: (
+				<div>
+					<div className="flex items-center gap-3 mb-4">
+						<div className="p-2 rounded-lg bg-orange-500/10">
+							<Truck className="w-5 h-5 text-orange-500" />
+						</div>
+						<h4 className="text-lg font-semibold text-foreground">Hitting the Road</h4>
+					</div>
+					<p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
+						My first career was as a truck driver, which taught me valuable lessons about
+						responsibility, time management, and the importance of staying focused on
+						long-term goals. These skills would prove invaluable in tech.
+					</p>
+					<div className="flex flex-wrap gap-2">
+						<Badge variant="secondary">Discipline</Badge>
+						<Badge variant="secondary">Time Management</Badge>
+						<Badge variant="secondary">Long-term Thinking</Badge>
+					</div>
+				</div>
+			),
+		},
+		{
+			title: "Tech Transition",
+			content: (
+				<div>
+					<div className="flex items-center gap-3 mb-4">
+						<div className="p-2 rounded-lg bg-blue-500/10">
+							<GraduationCap className="w-5 h-5 text-blue-500" />
+						</div>
+						<h4 className="text-lg font-semibold text-foreground">Discovering My Passion</h4>
+					</div>
+					<p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
+						I transitioned into tech, following my lifelong passion. I began teaching
+						Web Development at Bitwise Industries and Geekwise Academy, igniting a love
+						for sharing knowledge and inspiring others in the field.
+					</p>
+					<div className="flex flex-wrap gap-2">
+						<Badge variant="secondary">Teaching</Badge>
+						<Badge variant="secondary">Web Development</Badge>
+						<Badge variant="secondary">Mentorship</Badge>
+					</div>
+				</div>
+			),
+		},
+		{
+			title: "2023-Present",
+			content: (
+				<div>
+					<div className="flex items-center gap-3 mb-4">
+						<div className="p-2 rounded-lg bg-green-500/10">
+							<Rocket className="w-5 h-5 text-green-500" />
+						</div>
+						<h4 className="text-lg font-semibold text-foreground">Leading at LineCrush</h4>
+					</div>
+					<p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
+						As Co-Founder & CTO at LineCrush Inc, I own every layer of our stack.
+						2+ years of 12+ hour days building production systems that serve users 24/7.
+					</p>
+
+					{/* Tech highlights */}
+					<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+						<div className="bg-card/50 rounded-lg p-4 text-center border border-border/50">
+							<Brain className="w-6 h-6 text-primary mx-auto mb-2" />
+							<div className="text-sm font-medium">AI/ML</div>
+							<div className="text-xs text-muted-foreground">4+ LLMs</div>
+						</div>
+						<div className="bg-card/50 rounded-lg p-4 text-center border border-border/50">
+							<Code className="w-6 h-6 text-primary mx-auto mb-2" />
+							<div className="text-sm font-medium">Frontend</div>
+							<div className="text-xs text-muted-foreground">Next.js 15</div>
+						</div>
+						<div className="bg-card/50 rounded-lg p-4 text-center border border-border/50">
+							<Server className="w-6 h-6 text-primary mx-auto mb-2" />
+							<div className="text-sm font-medium">Backend</div>
+							<div className="text-xs text-muted-foreground">Python</div>
+						</div>
+						<div className="bg-card/50 rounded-lg p-4 text-center border border-border/50">
+							<Database className="w-6 h-6 text-primary mx-auto mb-2" />
+							<div className="text-sm font-medium">Database</div>
+							<div className="text-xs text-muted-foreground">PostgreSQL</div>
+						</div>
+					</div>
+
+					<div className="flex flex-wrap gap-2">
+						<Badge className="bg-primary/20 text-primary border-primary/30">Co-Founder & CTO</Badge>
+						<Badge variant="secondary">Full Stack</Badge>
+						<Badge variant="secondary">System Design</Badge>
+						<Badge variant="secondary">DevOps</Badge>
+					</div>
+				</div>
+			),
+		},
+		{
+			title: "Today",
+			content: (
+				<div>
+					<div className="flex items-center gap-3 mb-4">
+						<div className="p-2 rounded-lg bg-pink-500/10">
+							<Heart className="w-5 h-5 text-pink-500" />
+						</div>
+						<h4 className="text-lg font-semibold text-foreground">Family & Future</h4>
+					</div>
+
+					{/* Personal info card */}
+					<div className="bg-card/50 rounded-xl p-6 border border-border/50 mb-6">
+						<div className="flex flex-col md:flex-row items-center gap-6">
+							<Image
+								src="/images/sd-logo-banner.png"
+								alt="Austin Dillon Spraggins"
+								width={120}
+								height={120}
+								className="rounded-xl"
+							/>
+							<div className="text-center md:text-left">
+								<p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-3">
+									At {myAge}, I&apos;m a proud father of two wonderful children,
+									Lilly ({lillyAge}) and Julian ({julianAge}) Spraggins. Based in
+									Fresno, California, combining my passion for technology with the
+									joys of parenthood.
+								</p>
+								<p className="text-lg font-dancing-script text-primary italic">
+									Austin Dillon Spraggins
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<p className="text-muted-foreground text-sm md:text-base leading-relaxed">
+						I&apos;m excited to create a future where my children can see the positive
+						impact of technology and innovation. Every line of code is building toward
+						something meaningful.
+					</p>
+				</div>
+			),
+		},
+	];
+
+	return (
+		<section id="about" className="bg-background text-foreground">
+			<Timeline data={timelineData} />
 		</section>
 	);
 };
