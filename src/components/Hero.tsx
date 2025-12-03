@@ -121,7 +121,7 @@ const Hero: React.FC = () => {
 								<Github className="w-4 h-4 md:w-5 md:h-5" />
 							</a>
 							<a
-								href="https://linkedin.com/in/austin-spraggins"
+								href="https://www.linkedin.com/in/spragginsdesigns/"
 								target="_blank"
 								rel="noopener noreferrer"
 								className="p-2.5 md:p-3 rounded-full bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
