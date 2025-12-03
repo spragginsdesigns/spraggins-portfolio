@@ -14,7 +14,6 @@ html {
 }
 
 body {
-	color: rgb(var(--foreground-rgb));
 	background: rgb(var(--background-rgb));
 }
 
@@ -124,4 +123,44 @@ body {
 }
 .lines path:nth-child(10) {
 	animation-delay: -9s;
+}
+
+@layer base {
+  /* Dark cyberpunk theme - default */
+  :root {
+		--background: 0 0% 7%;
+		--foreground: 0 0% 100%;
+		--card: 0 0% 12%;
+		--card-foreground: 0 0% 100%;
+		--popover: 0 0% 10%;
+		--popover-foreground: 0 0% 100%;
+		--primary: 187 100% 68%;
+		--primary-foreground: 0 0% 7%;
+		--secondary: 0 0% 14.9%;
+		--secondary-foreground: 0 0% 98%;
+		--muted: 0 0% 14.9%;
+		--muted-foreground: 0 0% 70%;
+		--accent: 142 76% 36%;
+		--accent-foreground: 0 0% 100%;
+		--destructive: 0 84% 60%;
+		--destructive-foreground: 0 0% 98%;
+		--border: 0 0% 20%;
+		--input: 0 0% 14.9%;
+		--ring: 187 100% 68%;
+		--chart-1: 187 100% 68%;
+		--chart-2: 142 76% 36%;
+		--chart-3: 0 84% 60%;
+		--chart-4: 280 65% 60%;
+		--chart-5: 43 74% 66%;
+		--radius: 0.75rem;
+	}
+}
+
+@layer base {
+  * {
+    @apply border-border;
+	}
+  body {
+    @apply bg-background text-foreground;
+	}
 }

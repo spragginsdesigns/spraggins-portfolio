@@ -98,9 +98,9 @@ const Hero: React.FC = () => {
 						<span className="animate-blink">|</span>
 					</h2>
 					<p className="text-xl mb-8 text-text-secondary max-w-xl leading-relaxed font-light">
-						Passionate about crafting innovative and secure digital solutions.
-						Transforming complex challenges into elegant, user-centric
-						experiences.
+						Built a production SaaS platform with 350+ components, 45+ microservices,
+						and AI systems processing millions of data points. Turning complex
+						challenges into scalable solutions.
 					</p>
 					<Link
 						href="#projects"
