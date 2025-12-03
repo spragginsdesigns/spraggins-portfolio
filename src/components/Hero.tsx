@@ -8,12 +8,12 @@ import { motion } from "framer-motion";
 const Hero: React.FC = () => {
 	const roles = useMemo(
 		() => [
-			"CTO at LineCrush",
+			"Co-Founder & CTO",
 			"Senior Software Engineer",
 			"Full Stack Developer",
-			"Tech Entrepreneur",
-			"Problem Solver",
-			"Tech Enthusiast"
+			"AI/ML Engineer",
+			"DevOps Engineer",
+			"Tech Entrepreneur"
 		],
 		[]
 	);

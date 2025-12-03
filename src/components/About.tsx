@@ -82,10 +82,9 @@ const About: React.FC = () => {
 							<p className="text-lg mb-4 font-sans text-center">
 								At {calculateAge(new Date("1990-11-26"))}, I&rsquo;m a proud
 								father of two wonderful children, Lilly ({lillyAge}) and Julian
-								({julianAge}) Spraggins. Based in Fresno, California, I serve as
-								CTO & Senior Software Engineer at LineCrush Inc, where I own 30%
-								of the company and lead development of our sports analytics
-								platform.
+								({julianAge}) Spraggins. Based in Fresno, California, I&rsquo;m a
+								Co-Founder & CTO at LineCrush Inc, leading all technical
+								operations for our sports analytics platform.
 							</p>
 							<p className="text-xl font-dancing-script text-primary italic leading-relaxed text-center">
 								Austin Dillon Spraggins
@@ -117,7 +116,7 @@ const About: React.FC = () => {
 						<LifeStage
 							icon={<FaRocket className="text-3xl" />}
 							title="Leading at LineCrush"
-							description="As CTO & Senior Software Engineer at LineCrush Inc (30% owner), I lead development of a full-stack sports analytics platform. Working 12+ hour days for the past 2 years, I've built expertise in Next.js, Python, PostgreSQL, Redis, AWS, and production infrastructure management."
+							description="As Co-Founder & CTO at LineCrush Inc, I own every layer of our stack. From Next.js frontend to Python backend, AI/ML and NLP systems, web scraping pipelines, PostgreSQL and Redis databases, AWS infrastructure, to Ubuntu VPS DevOps - 2+ years of 12+ hour days building production systems."
 						/>
 						<LifeStage
 							icon={<FaChild className="text-3xl" />}

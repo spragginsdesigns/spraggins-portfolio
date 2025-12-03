@@ -45,7 +45,7 @@ const projects = [
 	{
 		title: "LineCrush",
 		description:
-			"Sports analytics platform where I serve as CTO & Senior Software Engineer. Full-stack Next.js with Python backend, PostgreSQL, Redis, AWS, and real-time data pipelines. My flagship project.",
+			"Sports analytics platform where I serve as Co-Founder & CTO. I built and maintain every layer: Next.js frontend, Python backend, AI/ML, NLP, web scraping, PostgreSQL, Redis, AWS, and Ubuntu VPS DevOps.",
 		link: "https://www.linecrush.com/"
 	}
 ];

@@ -4,15 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal portfolio website for **Austin Spraggins** - CTO & Senior Software Engineer at **LineCrush Inc** (30% owner). Built with Next.js 14, React 18, TypeScript, and Tailwind CSS. Live at [spragginsdesigns.xyz](https://spragginsdesigns.xyz/).
+Personal portfolio website for **Austin Spraggins** - Co-Founder, CTO & Senior Software Engineer at **LineCrush Inc**. Built with Next.js 14, React 18, TypeScript, and Tailwind CSS. Live at [spragginsdesigns.xyz](https://spragginsdesigns.xyz/).
 
 **Purpose:** Showcase professional work, experience, and technical skills in a modern, sleek design. This portfolio represents 2+ years of intensive full-stack development experience at LineCrush, working 12+ hour days on a massive production codebase.
 
 ## About Austin
 
-- **Current Role:** CTO & Senior Software Engineer at LineCrush Inc
+- **Current Role:** Co-Founder, CTO & Senior Software Engineer at LineCrush Inc
 - **Company:** [LineCrush](https://www.linecrush.com) - Sports analytics platform
-- **Experience:** Full-stack development with Next.js, Python, PostgreSQL (Neon), Redis, AWS, Ubuntu VPS infrastructure
+- **Experience:** End-to-end ownership across the entire stack - Frontend (Next.js, React), Backend (Python, Node.js), AI/ML, NLP, Web Scraping, PostgreSQL (Neon), Redis, AWS (S3, CloudFront), Ubuntu VPS DevOps, real-time data pipelines, cronjobs, and production infrastructure
 - **Background:** Former truck driver turned tech professional, taught Web Development at Bitwise Industries and Geekwise Academy
 - **Location:** Fresno, California
 
