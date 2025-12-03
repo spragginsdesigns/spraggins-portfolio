@@ -153,37 +153,14 @@ const Hero: React.FC = () => {
 							<div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-cyan-500/20 to-primary/20 rounded-full blur-2xl animate-pulse" />
 
 							{/* Profile Image */}
-							<div className="relative">
-								<Image
-									src="/images/profile_pic_main2_lessthan1MB.png"
-									alt="Austin Spraggins - Co-Founder & CTO"
-									width={400}
-									height={400}
-									className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] rounded-full shadow-2xl border-4 border-primary/50 relative z-10 object-cover"
-									priority
-								/>
-
-								{/* Stats Floating Cards - Hidden on mobile */}
-								<motion.div
-									className="hidden md:block absolute -right-4 top-1/4 bg-card/90 backdrop-blur-sm border border-border/50 rounded-xl p-3 shadow-lg"
-									initial={{ opacity: 0, x: 20 }}
-									animate={{ opacity: 1, x: 0 }}
-									transition={{ duration: 0.5, delay: 1.2 }}
-								>
-									<div className="text-2xl font-bold text-primary">2+</div>
-									<div className="text-xs text-muted-foreground">Years Production</div>
-								</motion.div>
-
-								<motion.div
-									className="hidden md:block absolute -left-4 bottom-1/4 bg-card/90 backdrop-blur-sm border border-border/50 rounded-xl p-3 shadow-lg"
-									initial={{ opacity: 0, x: -20 }}
-									animate={{ opacity: 1, x: 0 }}
-									transition={{ duration: 0.5, delay: 1.4 }}
-								>
-									<div className="text-2xl font-bold text-primary">4+</div>
-									<div className="text-xs text-muted-foreground">LLM Integrations</div>
-								</motion.div>
-							</div>
+							<Image
+								src="/images/profile_pic_main2_lessthan1MB.png"
+								alt="Austin Spraggins - Co-Founder & CTO"
+								width={400}
+								height={400}
+								className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] rounded-full shadow-2xl border-4 border-primary/50 relative z-10 object-cover"
+								priority
+							/>
 						</div>
 					</motion.div>
 				</div>
