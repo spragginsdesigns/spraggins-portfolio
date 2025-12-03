@@ -112,7 +112,7 @@ const Expertise: React.FC = () => {
 			icon: <Cpu className="w-5 h-5" />,
 			title: "System Design",
 			description:
-				"Architected real-time data pipelines, distributed cron jobs, Redis caching layers, and 30+ PostgreSQL tables with complex relationships.",
+				"Architected real-time data pipelines, distributed cron jobs, Redis caching layers, and 100+ PostgreSQL tables with complex relationships.",
 			skills: ["Redis", "PostgreSQL", "Real-time Systems", "Caching", "Data Pipelines"],
 			gradient: "bg-gradient-to-br from-green-500 to-emerald-500"
 		},
@@ -146,7 +146,7 @@ const Expertise: React.FC = () => {
 		{ value: "353+", label: "React Components" },
 		{ value: "45+", label: "Backend Services" },
 		{ value: "45+", label: "API Endpoints" },
-		{ value: "30+", label: "Database Tables" },
+		{ value: "100+", label: "Database Tables" },
 		{ value: "4+", label: "LLM Integrations" },
 		{ value: "2+", label: "Years Production" }
 	];
