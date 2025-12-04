@@ -292,7 +292,7 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
 	"": () => "",
 };
 
-const WELCOME_MESSAGE = `
+const WELCOME_MESSAGE_DESKTOP = `
   ███████╗██████╗ ██████╗  █████╗  ██████╗  ██████╗ ██╗███╗   ██╗███████╗
   ██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝ ██╔════╝ ██║████╗  ██║██╔════╝
   ███████╗██████╔╝██████╔╝███████║██║  ███╗██║  ███╗██║██╔██╗ ██║███████╗
@@ -323,20 +323,64 @@ const WELCOME_MESSAGE = `
 
 `;
 
+const WELCOME_MESSAGE_MOBILE = `
+╭──────────────────────────────╮
+│      SPRAGGINS OS v2.0       │
+│      Portfolio Edition       │
+╰──────────────────────────────╯
+
+  Host:     Austin Spraggins
+  Role:     Co-Founder & CTO
+  Company:  LineCrush Inc.
+  Uptime:   2+ years production
+
+  ────────────────────────────
+
+  Components:  353+
+  Services:    45+
+  DB Tables:   100+
+  LLMs:        4+
+
+  ────────────────────────────
+
+  Type 'help' for commands.
+
+`;
+
 const InteractiveTerminal: React.FC = () => {
-	const [history, setHistory] = useState<CommandOutput[]>([
-		{ type: "ascii", content: WELCOME_MESSAGE },
-	]);
+	const [isMobile, setIsMobile] = useState(false);
+	const [history, setHistory] = useState<CommandOutput[]>([]);
 	const [currentInput, setCurrentInput] = useState("");
 	const [commandHistory, setCommandHistory] = useState<string[]>([]);
 	const [historyIndex, setHistoryIndex] = useState(-1);
 	const [isTyping, setIsTyping] = useState(false);
+	const [isInitialized, setIsInitialized] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const terminalRef = useRef<HTMLDivElement>(null);
 	const { ref: inViewRef, inView } = useInView({
 		threshold: 0.2,
 		triggerOnce: true,
 	});
+
+	// Detect mobile and set initial welcome message
+	useEffect(() => {
+		const checkMobile = () => {
+			const mobile = window.innerWidth < 768;
+			setIsMobile(mobile);
+			return mobile;
+		};
+
+		const mobile = checkMobile();
+		if (!isInitialized) {
+			setHistory([
+				{ type: "ascii", content: mobile ? WELCOME_MESSAGE_MOBILE : WELCOME_MESSAGE_DESKTOP }
+			]);
+			setIsInitialized(true);
+		}
+
+		window.addEventListener("resize", checkMobile);
+		return () => window.removeEventListener("resize", checkMobile);
+	}, [isInitialized]);
 
 	// Auto-scroll to bottom
 	useEffect(() => {
@@ -403,7 +447,7 @@ const InteractiveTerminal: React.FC = () => {
 
 			// Handle clear command
 			if (trimmedCmd === "clear") {
-				setHistory([{ type: "ascii", content: WELCOME_MESSAGE }]);
+				setHistory([{ type: "ascii", content: isMobile ? WELCOME_MESSAGE_MOBILE : WELCOME_MESSAGE_DESKTOP }]);
 				return;
 			}
 
@@ -422,7 +466,7 @@ const InteractiveTerminal: React.FC = () => {
 				]);
 			}
 		},
-		[typeOutput]
+		[typeOutput, isMobile]
 	);
 
 	// Handle key events
@@ -543,7 +587,7 @@ const InteractiveTerminal: React.FC = () => {
 						{/* Terminal content */}
 						<div
 							ref={terminalRef}
-							className="p-4 md:p-6 h-[400px] md:h-[500px] overflow-y-auto font-mono text-sm md:text-base scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent"
+							className="p-3 md:p-6 h-[350px] md:h-[500px] overflow-y-auto font-mono text-[11px] sm:text-sm md:text-base scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent"
 						>
 							<AnimatePresence>
 								{history.map((item, index) => (
@@ -569,7 +613,8 @@ const InteractiveTerminal: React.FC = () => {
 
 							{/* Input line */}
 							<div className="flex items-center text-green-400 mt-2">
-								<span className="mr-2">visitor@austin-portfolio:~$</span>
+								<span className="mr-2 hidden sm:inline">visitor@austin-portfolio:~$</span>
+								<span className="mr-2 sm:hidden">visitor:~$</span>
 								<div className="flex-1 relative">
 									<input
 										ref={inputRef}
@@ -592,24 +637,24 @@ const InteractiveTerminal: React.FC = () => {
 						</div>
 
 						{/* Bottom bar with hints */}
-						<div className="px-4 py-2 bg-[#1a1a1a] border-t border-border/30 flex justify-between text-xs text-muted-foreground">
-							<span>
-								<kbd className="px-1.5 py-0.5 bg-card rounded text-[10px]">
+						<div className="px-2 sm:px-4 py-2 bg-[#1a1a1a] border-t border-border/30 flex justify-between text-[10px] sm:text-xs text-muted-foreground">
+							<span className="flex items-center gap-1">
+								<kbd className="px-1 sm:px-1.5 py-0.5 bg-card rounded text-[9px] sm:text-[10px]">
 									↑↓
-								</kbd>{" "}
-								History
+								</kbd>
+								<span className="hidden sm:inline">History</span>
 							</span>
-							<span>
-								<kbd className="px-1.5 py-0.5 bg-card rounded text-[10px]">
+							<span className="flex items-center gap-1">
+								<kbd className="px-1 sm:px-1.5 py-0.5 bg-card rounded text-[9px] sm:text-[10px]">
 									Tab
-								</kbd>{" "}
-								Autocomplete
+								</kbd>
+								<span className="hidden sm:inline">Autocomplete</span>
 							</span>
-							<span>
-								<kbd className="px-1.5 py-0.5 bg-card rounded text-[10px]">
+							<span className="flex items-center gap-1">
+								<kbd className="px-1 sm:px-1.5 py-0.5 bg-card rounded text-[9px] sm:text-[10px]">
 									Enter
-								</kbd>{" "}
-								Execute
+								</kbd>
+								<span className="hidden sm:inline">Execute</span>
 							</span>
 						</div>
 					</div>

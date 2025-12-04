@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Poppins, Dancing_Script } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import Layout from "../components/Layout";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
@@ -98,8 +97,8 @@ export default function RootLayout({
 				<meta name="msapplication-TileColor" content="#da532c" />
 				<meta name="theme-color" content="#ffffff" />
 			</head>
-			<body className="font-sans bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
-				<Layout>{children}</Layout>
+			<body className="font-sans bg-background text-foreground">
+				{children}
 			</body>
 		</html>
 	);
