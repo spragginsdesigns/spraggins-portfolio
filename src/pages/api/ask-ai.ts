@@ -241,21 +241,30 @@ export default async function handler(
 			}),
 		});
 
-		if (!response.ok) {
-			const errorData = await response.json();
-			console.error("OpenAI API error:", errorData);
-			return res.status(response.status).json({
-				error: errorData.error?.message || "Failed to get AI response",
+		// Check content type to ensure we got JSON back
+		const contentType = response.headers.get("content-type");
+		if (!contentType || !contentType.includes("application/json")) {
+			console.error("OpenAI returned non-JSON response:", response.status, contentType);
+			return res.status(502).json({
+				error: "AI service temporarily unavailable. Please try again.",
 			});
 		}
 
 		const data = await response.json();
+
+		if (!response.ok) {
+			console.error("OpenAI API error:", data);
+			return res.status(response.status).json({
+				error: data.error?.message || "Failed to get AI response",
+			});
+		}
+
 		const outputText = data.choices?.[0]?.message?.content ||
 			"I couldn't generate a response. Please try again.";
 
 		return res.status(200).json({ response: outputText });
 	} catch (error) {
 		console.error("Error calling OpenAI:", error);
-		return res.status(500).json({ error: "Failed to process request" });
+		return res.status(500).json({ error: "Failed to process request. Please try again." });
 	}
 }
