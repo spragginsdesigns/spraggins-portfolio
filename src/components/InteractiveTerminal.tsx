@@ -15,6 +15,8 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
 │                    AVAILABLE COMMANDS                       │
 ╰─────────────────────────────────────────────────────────────╯
 
+  PORTFOLIO
+  ─────────────────────────────────────────────────────────────
   about       →  Who is Austin Spraggins?
   skills      →  Technical skills & expertise
   experience  →  Work history & roles
@@ -23,8 +25,19 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   contact     →  Get in touch
   resume      →  View full resume
   socials     →  Social media links
+
+  UNIX COMMANDS
+  ─────────────────────────────────────────────────────────────
+  ls          →  List files and directories
+  pwd         →  Print working directory
+  whoami      →  Display current user
+  cat <file>  →  View file contents
+  cd <dir>    →  Change directory
+  date        →  Show current date/time
+  uptime      →  System uptime
+  neofetch    →  Display system info
+  man         →  Manual pages
   clear       →  Clear terminal
-  help        →  Show this help message
 
   TIP: Try 'sudo hire austin' for a surprise!
 `,
@@ -65,22 +78,22 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   FRONTEND                        BACKEND
   ─────────────────────────────   ─────────────────────────────
   ■■■■■■■■■■ React/Next.js        ■■■■■■■■■■ Python
-  ■■■■■■■■■■ TypeScript           ■■■■■■■■■░ Node.js
-  ■■■■■■■■■░ Tailwind CSS         ■■■■■■■■░░ FastAPI
-  ■■■■■■■■░░ Framer Motion        ■■■■■■■■░░ REST APIs
+  ■■■■■■■■■■ TypeScript           ■■■■■■■■■■ Node.js
+  ■■■■■■■■■■ Tailwind CSS         ■■■■■■■■■░ FastAPI
+  ■■■■■■■■■░ Framer Motion        ■■■■■■■■■■ REST APIs
 
   DATABASE                        AI/ML
   ─────────────────────────────   ─────────────────────────────
-  ■■■■■■■■■░ PostgreSQL           ■■■■■■■■■░ OpenAI GPT
-  ■■■■■■■■░░ Redis                ■■■■■■■■░░ Anthropic Claude
-  ■■■■■■■░░░ MongoDB              ■■■■■■■░░░ Google Vision
-  ■■■■■■░░░░ Neon                 ■■■■■■■░░░ Perplexity
+  ■■■■■■■■■■ PostgreSQL           ■■■■■■■■■■ OpenAI GPT
+  ■■■■■■■■■░ Redis                ■■■■■■■■■░ Anthropic Claude
+  ■■■■■■■■■░ MongoDB              ■■■■■■■■■░ Google Vision
+  ■■■■■■■■■░ Neon                 ■■■■■■■■■░ Perplexity
 
   DEVOPS & TOOLS
   ─────────────────────────────────────────────────────────────
-  ■■■■■■■■■░ Git/GitHub           ■■■■■■■■░░ Docker
-  ■■■■■■■■░░ AWS (S3, SES, CF)    ■■■■■■■░░░ Vercel
-  ■■■■■■■░░░ Linux/Ubuntu         ■■■■■■░░░░ CI/CD
+  ■■■■■■■■■■ Git/GitHub           ■■■■■■■■■░ Docker
+  ■■■■■■■■■░ AWS (S3, SES, CF)    ■■■■■■■■■■ Vercel
+  ■■■■■■■■■░ Linux/Ubuntu         ■■■■■■■■■░ CI/CD
 `,
 
 	experience: () => `
@@ -288,6 +301,107 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
 
   ═══════════════════════════════════════════════════════════
 `,
+
+	// Unix-like commands
+	ls: () => `
+  about.txt     education/    projects/     socials.txt
+  skills.txt    experience/   contact.txt   resume.pdf
+
+  Type any filename or folder name to view contents.
+`,
+
+	pwd: () => `/home/visitor/austin-portfolio`,
+
+	whoami: () => `visitor (guest user)
+
+  Want to know who Austin is? Type 'about'`,
+
+	cat: () => `
+  Usage: cat <filename>
+
+  Try: 'cat about.txt' or just type 'about'
+`,
+
+	"cat about.txt": () => COMMANDS.about(),
+	"cat skills.txt": () => COMMANDS.skills(),
+	"cat contact.txt": () => COMMANDS.contact(),
+	"cat socials.txt": () => COMMANDS.socials(),
+	"cat resume.pdf": () => COMMANDS.resume(),
+
+	cd: () => `
+  This is a single-page portfolio terminal.
+  All content is accessible from the root directory.
+
+  Try: 'ls' to see available files, or type a command like 'about'
+`,
+
+	"cd projects": () => COMMANDS.projects(),
+	"cd education": () => COMMANDS.education(),
+	"cd experience": () => COMMANDS.experience(),
+
+	echo: () => `
+  Usage: echo <message>
+
+  Try: 'echo Hello World'
+`,
+
+	date: () => {
+		const now = new Date();
+		return now.toString();
+	},
+
+	uptime: () => `
+  System uptime: 2+ years in production
+  Portfolio uptime: since 2024
+  Coffee consumed: ∞ cups
+`,
+
+	neofetch: () => `
+  ███████╗██████╗ ██████╗  █████╗  ██████╗  ██████╗ ██╗███╗   ██╗███████╗
+  ██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝ ██╔════╝ ██║████╗  ██║██╔════╝
+  ███████╗██████╔╝██████╔╝███████║██║  ███╗██║  ███╗██║██╔██╗ ██║███████╗
+  ╚════██║██╔═══╝ ██╔══██╗██╔══██║██║   ██║██║   ██║██║██║╚██╗██║╚════██║
+  ███████║██║     ██║  ██║██║  ██║╚██████╔╝╚██████╔╝██║██║ ╚████║███████║
+  ╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝╚═╝  ╚═══╝╚══════╝
+                              ██████╗ ███████╗
+                             ██╔═══██╗██╔════╝
+                             ██║   ██║███████╗
+                             ██║   ██║╚════██║
+                             ╚██████╔╝███████║
+                              ╚═════╝ ╚══════╝
+  ─────────────────────────────────────────────────────────────────────
+  OS:        SpragginsOS v2.0 (Portfolio Edition)
+  Host:      Austin Spraggins
+  Role:      Co-Founder & CTO @ LineCrush
+  Uptime:    2+ years in production
+  Shell:     bash 5.1.16
+  Terminal:  visitor@austin-portfolio
+  ─────────────────────────────────────────────────────────────────────
+  CPU:       353+ React Components
+  Memory:    100+ PostgreSQL Tables
+  Services:  45+ Python Microservices
+  AI:        4+ LLM Integrations
+  ─────────────────────────────────────────────────────────────────────
+`,
+
+	man: () => `
+  Manual pages available for:
+
+  about       - Display information about Austin
+  skills      - Show technical skills
+  experience  - View work history
+  projects    - List featured projects
+  education   - Educational background
+  contact     - Contact information
+  resume      - Full resume
+  socials     - Social media links
+
+  Unix commands: ls, pwd, whoami, cat, cd, date, uptime, neofetch
+`,
+
+	"--help": () => COMMANDS.help(),
+	"-h": () => COMMANDS.help(),
+	"?": () => COMMANDS.help(),
 
 	"": () => "",
 };
