@@ -9,6 +9,9 @@ interface CommandOutput {
 	content: string | React.ReactNode;
 }
 
+// Type for commands that reference other commands
+type CommandHandler = () => string | React.ReactNode;
+
 const COMMANDS: Record<string, () => string | React.ReactNode> = {
 	help: () => `
 ╭─────────────────────────────────────────────────────────────╮
@@ -26,6 +29,10 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   resume      →  View full resume
   socials     →  Social media links
 
+  AI ASSISTANT
+  ─────────────────────────────────────────────────────────────
+  ask <question>  →  Ask AI anything about Austin!
+
   UNIX COMMANDS
   ─────────────────────────────────────────────────────────────
   ls          →  List files and directories
@@ -39,7 +46,7 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   man         →  Manual pages
   clear       →  Clear terminal
 
-  TIP: Try 'sudo hire austin' for a surprise!
+  TIP: Try 'ask Is Austin available for hire?'
 `,
 
 	about: () => `
@@ -543,10 +550,62 @@ const InteractiveTerminal: React.FC = () => {
 		[]
 	);
 
+	// Handle AI ask command
+	const handleAskCommand = useCallback(
+		async (question: string) => {
+			setIsTyping(true);
+			setHistory((prev) => [
+				...prev,
+				{ type: "system", content: "🤖 Thinking..." },
+			]);
+
+			try {
+				const response = await fetch("/api/ask-ai", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ question }),
+				});
+
+				const data = await response.json();
+
+				// Remove the "Thinking..." message
+				setHistory((prev) => prev.slice(0, -1));
+
+				if (response.ok) {
+					await typeOutput(`🤖 ${data.response}`);
+				} else {
+					setHistory((prev) => [
+						...prev,
+						{
+							type: "error",
+							content: `Error: ${data.error || "Failed to get response"}`,
+						},
+					]);
+					setIsTyping(false);
+				}
+			} catch {
+				// Remove the "Thinking..." message
+				setHistory((prev) => prev.slice(0, -1));
+				setHistory((prev) => [
+					...prev,
+					{
+						type: "error",
+						content: "Error: Failed to connect to AI. Please try again.",
+					},
+				]);
+				setIsTyping(false);
+			}
+		},
+		[typeOutput]
+	);
+
 	// Handle command execution
 	const executeCommand = useCallback(
 		async (cmd: string) => {
 			const trimmedCmd = cmd.trim().toLowerCase();
+			const originalCmd = cmd.trim();
 
 			// Add input to history
 			setHistory((prev) => [
@@ -565,6 +624,51 @@ const InteractiveTerminal: React.FC = () => {
 				return;
 			}
 
+			// Handle ask command (AI chat)
+			if (trimmedCmd.startsWith("ask ")) {
+				const question = originalCmd.slice(4).trim();
+				if (question) {
+					await handleAskCommand(question);
+				} else {
+					setHistory((prev) => [
+						...prev,
+						{
+							type: "output",
+							content: `Usage: ask <question>
+
+  Ask the AI anything about Austin Spraggins!
+
+  Examples:
+    ask What are Austin's main skills?
+    ask Is Austin available for hire?
+    ask Tell me about LineCrush
+    ask What's Austin's tech stack?`,
+						},
+					]);
+				}
+				return;
+			}
+
+			// Handle just "ask" without a question
+			if (trimmedCmd === "ask") {
+				setHistory((prev) => [
+					...prev,
+					{
+						type: "output",
+						content: `Usage: ask <question>
+
+  Ask the AI anything about Austin Spraggins!
+
+  Examples:
+    ask What are Austin's main skills?
+    ask Is Austin available for hire?
+    ask Tell me about LineCrush
+    ask What's Austin's tech stack?`,
+					},
+				]);
+				return;
+			}
+
 			// Get command handler
 			const handler = COMMANDS[trimmedCmd];
 
@@ -580,7 +684,7 @@ const InteractiveTerminal: React.FC = () => {
 				]);
 			}
 		},
-		[typeOutput, isMobile]
+		[typeOutput, isMobile, handleAskCommand]
 	);
 
 	// Handle key events
@@ -717,7 +821,9 @@ const InteractiveTerminal: React.FC = () => {
 													? "text-red-400"
 													: item.type === "ascii"
 														? "text-primary"
-														: "text-gray-300"
+														: item.type === "system"
+															? "text-yellow-400 animate-pulse"
+															: "text-gray-300"
 										}`}
 									>
 										{item.content}
@@ -781,7 +887,7 @@ const InteractiveTerminal: React.FC = () => {
 					transition={{ duration: 0.5, delay: 0.4 }}
 					className="flex flex-wrap justify-center gap-2 mt-6"
 				>
-					{["help", "about", "skills", "experience", "projects", "contact"].map(
+					{["help", "about", "skills", "projects", "contact", "ask"].map(
 						(cmd) => (
 							<button
 								key={cmd}
