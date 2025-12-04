@@ -225,7 +225,7 @@ export default async function handler(
 				Authorization: `Bearer ${apiKey}`,
 			},
 			body: JSON.stringify({
-				model: "gpt-4o-mini", // Using gpt-4o-mini as fallback since gpt-5.1 may not be available
+				model: "gpt-4o",
 				messages: [
 					{
 						role: "system",
