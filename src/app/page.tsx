@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Hero from "@/components/Hero";
+import InteractiveTerminal from "@/components/InteractiveTerminal";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Expertise from "@/components/Expertise";
@@ -43,6 +44,7 @@ export default function Home() {
 		<main className="bg-background min-h-screen relative">
 			<div className="relative z-10">
 				<Hero />
+				<InteractiveTerminal />
 				<About />
 				<Projects />
 				<Expertise />
