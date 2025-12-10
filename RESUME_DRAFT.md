@@ -2,67 +2,95 @@
 
 **Co-Founder, CTO & Senior Software Engineer**
 
-559-818-0467 | austin@spragginsdesigns.xyz | Fresno, CA, USA
+559-818-0467 | spragginsdesigns@gmail.com | Fresno, CA, USA
 github.com/spragginsdesigns | linkedin.com/in/spragginsdesigns
+
+---
+
+## PROFESSIONAL SUMMARY
+
+Technical co-founder and CTO who architected and built an investor-backed sports analytics platform from zero to production. Deep expertise in AI/ML systems, having integrated 4+ LLMs into production workflows and leveraging AI-assisted development daily. Proven ability to own the entire technical stack—from database architecture to cloud infrastructure to user-facing features—while leading product strategy and technical decision-making.
 
 ---
 
 ## EXPERIENCE
 
-### Co-Founder & CTO
-**LineCrush Inc** | 04/2024 - Present | Remote
+### Co-Founder & Chief Technology Officer
+**LineCrush Inc** (Investor-Backed Sports Analytics Platform) | 04/2024 - Present | Remote
 
-Tech Stack: Next.js 15, React, TypeScript, Python, PostgreSQL/Neon, Redis, AWS (S3, SES, CloudFront), Docker, OpenAI API, Anthropic API, Perplexity API, Google Vision API
+**Technical Leadership & Architecture**
+- **Architected and built the entire technical platform from concept to production** as sole technical founder, making all architecture decisions for a system now serving real users and attracting investor funding.
+- **Designed scalable full-stack architecture** comprising 353+ React components, 45+ Python microservices, 45+ API endpoints, and 100+ PostgreSQL database tables—all built and maintained independently.
+- **Own the complete technical roadmap** including feature prioritization, infrastructure decisions, and technology selection while balancing startup velocity with code quality.
 
-- **Built and scaled a sports analytics platform from concept to production**, architecting the entire technical stack including 353+ React components, 45+ Python microservices, and 100+ PostgreSQL database tables.
-- **Led AI/ML integration strategy**, implementing 4+ LLM integrations (OpenAI, Anthropic, Perplexity, Google Vision) for intelligent data processing and user experiences.
-- **Designed and deployed cloud infrastructure** on AWS (S3, SES, CloudFront) and Ubuntu VPS, implementing CI/CD pipelines, Redis caching, and performance optimization achieving sub-second load times.
-- **Architected real-time data pipelines** including web scrapers, ETL processes, NLP systems, and cron jobs processing millions of sports data points daily.
-- **Managed end-to-end product development** from technical architecture decisions to deployment, ensuring 99.9% uptime for production systems.
+**AI/ML Systems & Integration**
+- **Integrated 4+ production LLM systems** (OpenAI GPT-4, Anthropic Claude, Perplexity, Google Vision) for intelligent data processing, content generation, and automated analysis pipelines.
+- **Engineered sophisticated AI prompting systems** with context management, response parsing, and fallback handling to ensure reliable AI-powered features at scale.
+- **Built AI-assisted data pipelines** combining web scraping, NLP processing, and LLM analysis to transform raw sports data into actionable insights.
 
-### Web Developer Instructor
-**BitWise Industries / Geekwise Academy** | 04/2022 - 07/2023 | Hybrid
+**Infrastructure & Data Engineering**
+- **Deployed and manage cloud infrastructure** on AWS (S3, SES, CloudFront) and Ubuntu VPS with Docker containerization, CI/CD pipelines, and automated deployments via Vercel.
+- **Architected real-time data systems** including web scrapers, ETL pipelines, Redis caching layers, and cron-based automation processing millions of data points daily.
+- **Implemented performance optimizations** achieving sub-second load times through code splitting, lazy loading, edge caching, and database query optimization.
 
-Tech Stack: HTML, CSS3, JavaScript, React
-
-- **Led web development courses** on HTML, CSS3, JavaScript, and React, successfully training over 200 participants with a 95% course completion rate.
-- **Enhanced learning environment**, increasing engagement by 40% through interactive teaching and fostering inclusivity.
-- **Committed to student success**, improving retention of core web development skills and creating a rewarding educational experience.
-
-### Web Developer & Marketing Specialist
-**Gelateria Del Centro** | 07/2023 - 04/2024 | Hybrid
-
-Tech Stack: HTML5, CSS3, JavaScript, React.js, Lighthouse
-
-- **Redesigned and optimized the website**, achieving over 90% on Lighthouse and Google PageSpeed, improving load times by 20% and securing first-page Google rankings.
-- **Improved responsiveness and accessibility**, boosting user engagement by 30% and increasing mobile traffic by 25%.
-- **Led SEO and digital marketing efforts**, increasing organic traffic by 40% and brand engagement by 50%.
+**Tech Stack:** Next.js 15, React 18, TypeScript, Python, PostgreSQL/Neon, Redis, AWS, Docker, OpenAI API, Anthropic API, Perplexity API, Google Vision API, Tailwind CSS, Vercel
 
 ---
 
-## KEY SKILLS
+### Web Development Instructor
+**Bitwise Industries / Geekwise Academy** | 04/2022 - 07/2023 | Fresno, CA
 
-### Front-End Development
-Next.js 15, React (Hooks, Context API, Server Components), TypeScript, JavaScript ES6+, Tailwind CSS, HTML5, CSS3, SASS/LESS, Bootstrap, Responsive Design, ARIA Accessibility
+- **Trained 200+ students** in modern web development (HTML, CSS, JavaScript, React) with a 95% course completion rate.
+- **Developed curriculum and teaching methodologies** that increased student engagement by 40% through hands-on projects and interactive learning.
+- **Mentored career-changers into tech**, helping students from non-traditional backgrounds land their first developer roles.
 
-### Back-End & Databases
-Python, Node.js, PostgreSQL, Neon, Redis, ExpressJS, RESTful APIs, GraphQL, WebSockets, OAuth, NextAuth.js, JWT, Docker, Kubernetes
+---
 
-### AI/ML & Data Engineering
-OpenAI API, Anthropic API, Perplexity API, Google Vision API, AI Prompt Engineering, NLP, Web Scraping, ETL Pipelines, Real-time Data Processing
+### Web Developer & Marketing Specialist
+**Gelateria Del Centro** | 07/2023 - 04/2024 | Fresno, CA
+
+- **Rebuilt website achieving 90%+ Lighthouse scores**, improving load times by 20% and securing first-page Google rankings.
+- **Drove 40% increase in organic traffic** through SEO optimization and data-driven digital marketing strategies.
+
+---
+
+## TECHNICAL EXPERTISE
+
+### AI & Machine Learning
+**LLM Integration:** OpenAI GPT-4/GPT-4o, Anthropic Claude (Opus, Sonnet, Haiku), Perplexity API, Google Vision API
+**AI Development Practices:** Advanced prompt engineering, context window optimization, chain-of-thought prompting, AI-assisted coding (Claude Code, GitHub Copilot, Cursor), RAG systems, embedding strategies
+**Daily AI Workflow:** Leverage AI tools for code generation, debugging, architecture planning, documentation, and technical decision-making—deeply integrated into every aspect of development
+
+### Full-Stack Development
+**Frontend:** Next.js 15 (App Router, Server Components), React 18, TypeScript, Tailwind CSS, Framer Motion, shadcn/ui
+**Backend:** Python, Node.js, Express, RESTful APIs, GraphQL, WebSockets
+**Databases:** PostgreSQL, Neon (serverless Postgres), Redis, database design & optimization
 
 ### DevOps & Infrastructure
-AWS (S3, SES, CloudFront), Ubuntu VPS, Vercel, Docker, CI/CD Pipelines, Git/GitHub, Performance Optimization, Caching Strategies
+**Cloud:** AWS (S3, SES, CloudFront), Vercel, Ubuntu VPS administration
+**Containerization:** Docker, container orchestration
+**CI/CD:** GitHub Actions, automated testing & deployment pipelines
+**Performance:** Caching strategies, CDN optimization, code splitting, lazy loading
 
-### Tools & Practices
-Figma, Chrome DevTools, Jest, Playwright, Selenium, Lighthouse, SEO Best Practices, Agile Development
+### Data Engineering
+**Pipelines:** ETL systems, real-time data processing, cron automation
+**Scraping:** Web scraping at scale, data extraction & transformation
+**Processing:** NLP, data analysis, automated reporting systems
+
+---
+
+## KEY ACHIEVEMENTS
+
+- **Built investor-backed startup** from zero lines of code to production platform
+- **353+ React components** architected and maintained in production
+- **45+ Python microservices** powering backend operations
+- **100+ database tables** designed for scalability and performance
+- **4+ LLM integrations** in production AI systems
+- **200+ students trained** in web development fundamentals
 
 ---
 
 ## EDUCATION
-
-**Bachelor of Computer Science** (Expected January 2026)
-Fresno State College, Fresno, CA | 2024 - Present
 
 **Associate of Science in Information Systems: Web Design**
 Clovis Community College, Clovis, CA | 2021
@@ -72,6 +100,6 @@ Clovis Community College, Clovis, CA | 2020
 
 ---
 
-## REFEREES
+## REFERENCES
 
 Available upon request.
