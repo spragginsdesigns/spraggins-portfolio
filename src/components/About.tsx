@@ -165,7 +165,7 @@ const About: React.FC = () => {
 					<div className="bg-card/50 rounded-xl p-6 border border-border/50 mb-6">
 						<div className="flex flex-col md:flex-row items-center gap-6">
 							<Image
-								src="/images/sd-logo-banner.png"
+								src="https://spraggins-designs.s3.us-east-1.amazonaws.com/images/sd-logo-banner.png"
 								alt="Austin Dillon Spraggins"
 								width={120}
 								height={120}

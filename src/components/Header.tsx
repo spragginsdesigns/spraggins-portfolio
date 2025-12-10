@@ -8,7 +8,7 @@ const Header: React.FC = () => {
 			<div className="container mx-auto px-4 py-3 flex justify-between items-center">
 				<Link href="/" className="flex items-center">
 					<Image
-						src="/images/sd-logo.webp"
+						src="https://spraggins-designs.s3.us-east-1.amazonaws.com/images/sd-logo.webp"
 						alt="Spraggins Designs Logo"
 						width={40}
 						height={40}

@@ -12,7 +12,8 @@
 ## Links
 
 - [Portfolio](https://www.spragginsdesigns.xyz): Main portfolio website
-- [Resume](https://www.spragginsdesigns.xyz/AustinSpraggins_Resume.docx): Downloadable resume (Word)
+- [Resume PDF](https://spraggins-designs.s3.us-east-1.amazonaws.com/resume/AustinSpraggins_Resume.pdf): Downloadable resume (PDF)
+- [Resume DOCX](https://spraggins-designs.s3.us-east-1.amazonaws.com/resume/AustinSpraggins_Resume.docx): Downloadable resume (Word)
 - [GitHub](https://github.com/spragginsdesigns): 50+ repositories
 - [LinkedIn](https://www.linkedin.com/in/spragginsdesigns/): Professional profile
 - [Twitter](https://twitter.com/spragginsdesign): Social updates

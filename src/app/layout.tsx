@@ -28,9 +28,9 @@ export const metadata: Metadata = {
 		siteName: "Austin Spraggins - Senior Software Engineer",
 		images: [
 			{
-				url: "https://opengraph.b-cdn.net/production/images/57d437b6-00af-4dc3-a9eb-7e29e51c5f04.png?token=9VdePgxCJ40PR3vQtoZBslC8r3smw8O8YOX0UfWivzg&height=372&width=1200&expires=33258886154",
+				url: "https://spraggins-designs.s3.us-east-1.amazonaws.com/images/og-image.png",
 				width: 1200,
-				height: 372,
+				height: 630,
 				alt: "Austin Spraggins - Co-Founder & CTO Portfolio"
 			}
 		],
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 			"Co-Founder & CTO building production systems at scale. 350+ React components, 45+ microservices, AI/ML integrations. Available for contracts and consulting.",
 		images: [
 			{
-				url: "https://opengraph.b-cdn.net/production/images/57d437b6-00af-4dc3-a9eb-7e29e51c5f04.png?token=9VdePgxCJ40PR3vQtoZBslC8r3smw8O8YOX0UfWivzg&height=372&width=1200&expires=33258886154",
+				url: "https://spraggins-designs.s3.us-east-1.amazonaws.com/images/og-image.png",
 				alt: "Austin Spraggins - Co-Founder & CTO Portfolio"
 			}
 		],

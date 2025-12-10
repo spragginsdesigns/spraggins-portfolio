@@ -139,7 +139,7 @@ const Hero: React.FC = () => {
 								<Twitter className="w-4 h-4 md:w-5 md:h-5" />
 							</a>
 							<a
-								href="/AustinSpraggins_Resume.docx"
+								href="https://spraggins-designs.s3.us-east-1.amazonaws.com/resume/AustinSpraggins_Resume.pdf"
 								download
 								className="p-2.5 md:p-3 rounded-full bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
 								aria-label="Download Resume"
@@ -162,7 +162,7 @@ const Hero: React.FC = () => {
 
 							{/* Profile Image */}
 							<Image
-								src="/images/profile_pic_main2_lessthan1MB.png"
+								src="https://spraggins-designs.s3.us-east-1.amazonaws.com/images/profile_pic_main2_lessthan1MB.png"
 								alt="Austin Spraggins - Co-Founder & CTO"
 								width={400}
 								height={400}

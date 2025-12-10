@@ -19,6 +19,12 @@ const nextConfig = {
 				hostname: "raw.githubusercontent.com",
 				port: "",
 				pathname: "/**"
+			},
+			{
+				protocol: "https",
+				hostname: "spraggins-designs.s3.us-east-1.amazonaws.com",
+				port: "",
+				pathname: "/**"
 			}
 		]
 	},
