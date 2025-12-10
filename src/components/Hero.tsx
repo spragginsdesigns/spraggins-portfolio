@@ -166,7 +166,7 @@ const Hero: React.FC = () => {
 								alt="Austin Spraggins - Co-Founder & CTO"
 								width={400}
 								height={400}
-								className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] rounded-full shadow-2xl border-4 border-primary/50 relative z-10 object-cover"
+								className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] rounded-full shadow-2xl border-4 border-primary/50 relative z-10 object-cover object-top"
 								priority
 							/>
 						</div>
