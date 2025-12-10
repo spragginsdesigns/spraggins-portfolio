@@ -1,41 +1,117 @@
-# Austin Spraggins | Co-Founder & CTO | Senior Software Engineer
+# Austin Spraggins | Co-Founder, CTO & Senior Software Engineer
 
-> Co-Founder, CTO & Senior Software Engineer at LineCrush Inc. 2+ years building production systems at scale. Christian. Father of Julian and Lilly. Open to contracts & consulting.
+> Technical co-founder and CTO who architected and built an investor-backed sports analytics platform from zero to production. Deep expertise in AI/ML systems, having integrated 4+ LLMs into production workflows and leveraging AI-assisted development daily. Christian. Father of Julian and Lilly. Open to contracts & consulting.
 
-## About
+## Contact
 
-Austin Spraggins is a full-stack engineer and technical leader based in Fresno, California. He co-founded LineCrush Inc, a sports analytics platform, where he serves as CTO overseeing the entire technical stack.
-
-**Mission:** To serve God, be a good father and provider, and build technology that makes the world more intelligent, loving, and just.
-
-### Technical Expertise
-
-- **Frontend:** Next.js 15, React (353+ components), TypeScript, Tailwind CSS
-- **Backend:** Python (45+ microservices), Node.js, 45+ API endpoints
-- **Database:** PostgreSQL/Neon (100+ tables), Redis caching
-- **AI/ML:** 4+ LLM integrations (OpenAI, Anthropic, Perplexity, Google Vision)
-- **Infrastructure:** AWS (S3, SES, CloudFront), Ubuntu VPS, Vercel, Docker
-
-### Background
-
-Father of two wonderful children - Julian and Lilly. Former truck driver who transitioned to tech. Former Web Development instructor at Bitwise Industries and Geekwise Academy. AA in Web Development with 5+ years of college education. Grew up in the mountains of O'Neals, California.
+- Phone: 559-818-0467
+- Email: spragginsdesigns@gmail.com
+- Location: Fresno, CA, USA
+- Status: Open to contracts & consulting
 
 ## Links
 
 - [Portfolio](https://www.spragginsdesigns.xyz): Main portfolio website
-- [Resume](https://www.spragginsdesigns.xyz/AustinSpragginsResume.pdf): Downloadable resume PDF
+- [Resume](https://www.spragginsdesigns.xyz/AustinSpraggins_Resume.docx): Downloadable resume (Word)
 - [GitHub](https://github.com/spragginsdesigns): 50+ repositories
 - [LinkedIn](https://www.linkedin.com/in/spragginsdesigns/): Professional profile
 - [Twitter](https://twitter.com/spragginsdesign): Social updates
 
+## Mission
+
+To serve God, be a good father and provider, and build technology that makes the world more intelligent, loving, and just.
+
+---
+
+## Experience
+
+### Co-Founder & Chief Technology Officer
+**LineCrush Inc** (Investor-Backed Sports Analytics Platform) | 04/2024 - Present | Remote
+
+**Technical Leadership & Architecture**
+- Architected and built the entire technical platform from concept to production as sole technical founder, making all architecture decisions for a system now serving real users and attracting investor funding.
+- Designed scalable full-stack architecture comprising 353+ React components, 45+ Python microservices, 45+ API endpoints, and 100+ PostgreSQL database tables—all built and maintained independently.
+- Own the complete technical roadmap including feature prioritization, infrastructure decisions, and technology selection while balancing startup velocity with code quality.
+
+**AI/ML Systems & Integration**
+- Integrated 4+ production LLM systems (OpenAI GPT-4, Anthropic Claude, Perplexity, Google Vision) for intelligent data processing, content generation, and automated analysis pipelines.
+- Engineered sophisticated AI prompting systems with context management, response parsing, and fallback handling to ensure reliable AI-powered features at scale.
+- Built AI-assisted data pipelines combining web scraping, NLP processing, and LLM analysis to transform raw sports data into actionable insights.
+
+**Infrastructure & Data Engineering**
+- Deployed and manage cloud infrastructure on AWS (S3, SES, CloudFront) and Ubuntu VPS with Docker containerization, CI/CD pipelines, and automated deployments via Vercel.
+- Architected real-time data systems including web scrapers, ETL pipelines, Redis caching layers, and cron-based automation processing millions of data points daily.
+- Implemented performance optimizations achieving sub-second load times through code splitting, lazy loading, edge caching, and database query optimization.
+
+**Tech Stack:** Next.js 15, React 18, TypeScript, Python, PostgreSQL/Neon, Redis, AWS, Docker, OpenAI API, Anthropic API, Perplexity API, Google Vision API, Tailwind CSS, Vercel
+
+### Web Developer & Marketing Specialist
+**Gelateria Del Centro** | 07/2023 - 04/2024 | Fresno, CA
+
+- Rebuilt website achieving 90%+ Lighthouse scores, improving load times by 20% and securing first-page Google rankings.
+- Drove 40% increase in organic traffic through SEO optimization and data-driven digital marketing strategies.
+
+### Web Development Instructor
+**Bitwise Industries / Geekwise Academy** | 04/2022 - 07/2023 | Fresno, CA
+
+- Trained 200+ students in modern web development (HTML, CSS, JavaScript, React) with a 95% course completion rate.
+- Developed curriculum and teaching methodologies that increased student engagement by 40% through hands-on projects and interactive learning.
+- Mentored career-changers into tech, helping students from non-traditional backgrounds land their first developer roles.
+
+---
+
+## Technical Expertise
+
+### AI & Machine Learning
+- **LLM Integration:** OpenAI GPT-4/GPT-4o, Anthropic Claude (Opus, Sonnet, Haiku), Perplexity API, Google Vision API
+- **AI Development Practices:** Advanced prompt engineering, context window optimization, chain-of-thought prompting, AI-assisted coding (Claude Code, GitHub Copilot, Cursor), RAG systems, embedding strategies
+- **Daily AI Workflow:** Leverage AI tools for code generation, debugging, architecture planning, documentation, and technical decision-making—deeply integrated into every aspect of development
+
+### Full-Stack Development
+- **Frontend:** Next.js 15 (App Router, Server Components), React 18, TypeScript, Tailwind CSS, Framer Motion, shadcn/ui
+- **Backend:** Python, Node.js, Express, RESTful APIs, GraphQL, WebSockets
+- **Databases:** PostgreSQL, Neon (serverless Postgres), Redis, database design & optimization
+
+### DevOps & Infrastructure
+- **Cloud:** AWS (S3, SES, CloudFront), Vercel, Ubuntu VPS administration
+- **Containerization:** Docker, container orchestration
+- **CI/CD:** GitHub Actions, automated testing & deployment pipelines
+- **Performance:** Caching strategies, CDN optimization, code splitting, lazy loading
+
+### Data Engineering
+- **Pipelines:** ETL systems, real-time data processing, cron automation
+- **Scraping:** Web scraping at scale, data extraction & transformation
+- **Processing:** NLP, data analysis, automated reporting systems
+
+---
+
+## Key Achievements
+
+- Built investor-backed startup from zero lines of code to production platform
+- 353+ React components architected and maintained in production
+- 45+ Python microservices powering backend operations
+- 100+ database tables designed for scalability and performance
+- 4+ LLM integrations in production AI systems
+- 200+ students trained in web development fundamentals
+
+---
+
 ## Projects
 
-- [LineCrush](https://www.linecrush.com): Sports analytics platform - 353+ React components, 45+ Python microservices, 100+ database tables, 4+ LLM integrations
+- [LineCrush](https://www.linecrush.com): Investor-backed sports analytics platform - 353+ React components, 45+ Python microservices, 100+ database tables, 4+ LLM integrations
 - [SaveALife CPR](https://github.com/spragginsdesigns/savealife-cpr): Emergency response training application
 - [Bible AI Explorer](https://github.com/spragginsdesigns/bible-ai-explorer): AI-powered Bible study assistant
 - [AI Tutor WebApp](https://github.com/spragginsdesigns/ai-tutor-webapp): Educational AI tutoring platform
 
-## Contact
+---
 
-- Email: Available via contact form at https://www.spragginsdesigns.xyz/#contact
-- Status: Open to contracts & consulting
+## Education
+
+- **Associate of Science in Information Systems: Web Design** - Clovis Community College, Clovis, CA (2021)
+- **Certificate of Achievement in Information Systems: Web Design** - Clovis Community College, Clovis, CA (2020)
+
+---
+
+## Background
+
+Father of two wonderful children - Julian and Lilly. Former truck driver who transitioned to tech. Former Web Development instructor at Bitwise Industries and Geekwise Academy. Grew up in the mountains of O'Neals, California.

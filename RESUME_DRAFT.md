@@ -37,6 +37,14 @@ Technical co-founder and CTO who architected and built an investor-backed sports
 
 ---
 
+### Web Developer & Marketing Specialist
+**Gelateria Del Centro** | 07/2023 - 04/2024 | Fresno, CA
+
+- **Rebuilt website achieving 90%+ Lighthouse scores**, improving load times by 20% and securing first-page Google rankings.
+- **Drove 40% increase in organic traffic** through SEO optimization and data-driven digital marketing strategies.
+
+---
+
 ### Web Development Instructor
 **Bitwise Industries / Geekwise Academy** | 04/2022 - 07/2023 | Fresno, CA
 
@@ -44,13 +52,6 @@ Technical co-founder and CTO who architected and built an investor-backed sports
 - **Developed curriculum and teaching methodologies** that increased student engagement by 40% through hands-on projects and interactive learning.
 - **Mentored career-changers into tech**, helping students from non-traditional backgrounds land their first developer roles.
 
----
-
-### Web Developer & Marketing Specialist
-**Gelateria Del Centro** | 07/2023 - 04/2024 | Fresno, CA
-
-- **Rebuilt website achieving 90%+ Lighthouse scores**, improving load times by 20% and securing first-page Google rankings.
-- **Drove 40% increase in organic traffic** through SEO optimization and data-driven digital marketing strategies.
 
 ---
 

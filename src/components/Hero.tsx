@@ -139,7 +139,7 @@ const Hero: React.FC = () => {
 								<Twitter className="w-4 h-4 md:w-5 md:h-5" />
 							</a>
 							<a
-								href="/AustinSpragginsResume.pdf"
+								href="/AustinSpraggins_Resume.docx"
 								download
 								className="p-2.5 md:p-3 rounded-full bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
 								aria-label="Download Resume"
