@@ -1,0 +1,41 @@
+# Austin Spraggins | Co-Founder & CTO | Senior Software Engineer
+
+> Co-Founder, CTO & Senior Software Engineer at LineCrush Inc. 2+ years building production systems at scale. Christian. Father of Julian and Lilly. Open to contracts & consulting.
+
+## About
+
+Austin Spraggins is a full-stack engineer and technical leader based in Fresno, California. He co-founded LineCrush Inc, a sports analytics platform, where he serves as CTO overseeing the entire technical stack.
+
+**Mission:** To serve God, be a good father and provider, and build technology that makes the world more intelligent, loving, and just.
+
+### Technical Expertise
+
+- **Frontend:** Next.js 15, React (353+ components), TypeScript, Tailwind CSS
+- **Backend:** Python (45+ microservices), Node.js, 45+ API endpoints
+- **Database:** PostgreSQL/Neon (100+ tables), Redis caching
+- **AI/ML:** 4+ LLM integrations (OpenAI, Anthropic, Perplexity, Google Vision)
+- **Infrastructure:** AWS (S3, SES, CloudFront), Ubuntu VPS, Vercel, Docker
+
+### Background
+
+Father of two wonderful children - Julian and Lilly. Former truck driver who transitioned to tech. Former Web Development instructor at Bitwise Industries and Geekwise Academy. AA in Web Development with 5+ years of college education. Grew up in the mountains of O'Neals, California.
+
+## Links
+
+- [Portfolio](https://www.spragginsdesigns.xyz): Main portfolio website
+- [Resume](https://drive.google.com/file/d/1K4BnVsvsqYQlZ-s3mJfKRVcY4hqrNdo1/view?usp=sharing): Downloadable resume (Google Drive)
+- [GitHub](https://github.com/spragginsdesigns): 50+ repositories
+- [LinkedIn](https://www.linkedin.com/in/spragginsdesigns/): Professional profile
+- [Twitter](https://twitter.com/spragginsdesign): Social updates
+
+## Projects
+
+- [LineCrush](https://www.linecrush.com): Sports analytics platform - 353+ React components, 45+ Python microservices, 100+ database tables, 4+ LLM integrations
+- [SaveALife CPR](https://github.com/spragginsdesigns/savealife-cpr): Emergency response training application
+- [Bible AI Explorer](https://github.com/spragginsdesigns/bible-ai-explorer): AI-powered Bible study assistant
+- [AI Tutor WebApp](https://github.com/spragginsdesigns/ai-tutor-webapp): Educational AI tutoring platform
+
+## Contact
+
+- Email: Available via contact form at https://www.spragginsdesigns.xyz/#contact
+- Status: Open to contracts & consulting
