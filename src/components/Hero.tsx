@@ -7,7 +7,7 @@ import { motion } from "motion/react";
 import { BackgroundLines } from "@/components/ui/background-lines";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Mail, Twitter, FileDown } from "lucide-react";
 
 const Hero: React.FC = () => {
 	const tagline =
@@ -137,6 +137,14 @@ const Hero: React.FC = () => {
 								aria-label="Twitter"
 							>
 								<Twitter className="w-4 h-4 md:w-5 md:h-5" />
+							</a>
+							<a
+								href="/AustinSpragginsResume.pdf"
+								download
+								className="p-2.5 md:p-3 rounded-full bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
+								aria-label="Download Resume"
+							>
+								<FileDown className="w-4 h-4 md:w-5 md:h-5" />
 							</a>
 						</motion.div>
 					</motion.div>
