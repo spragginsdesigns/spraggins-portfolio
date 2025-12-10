@@ -10,7 +10,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-	title: "Austin Spraggins | Co-Founder & CTO | Senior Software Engineer",
+	title: "Austin Spraggins | CTO, Engineer, Builder",
 	description:
 		"Co-Founder & CTO building production systems at scale. 350+ React components, 45+ microservices, AI/ML integrations, and 100+ database tables. Full-stack expertise in Next.js, Python, PostgreSQL, and cloud infrastructure.",
 	authors: [{ name: "Austin Spraggins" }],
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 		canonical: "https://www.spragginsdesigns.xyz"
 	},
 	openGraph: {
-		title: "Austin Spraggins | Co-Founder & CTO | Senior Software Engineer",
+		title: "Austin Spraggins | CTO, Engineer, Builder",
 		description:
 			"Co-Founder & CTO building production systems at scale. 350+ React components, 45+ microservices, AI/ML integrations. Available for contracts and consulting.",
 		url: "https://www.spragginsdesigns.xyz/",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Austin Spraggins | Co-Founder & CTO | Senior Software Engineer",
+		title: "Austin Spraggins | CTO, Engineer, Builder",
 		description:
 			"Co-Founder & CTO building production systems at scale. 350+ React components, 45+ microservices, AI/ML integrations. Available for contracts and consulting.",
 		images: [
