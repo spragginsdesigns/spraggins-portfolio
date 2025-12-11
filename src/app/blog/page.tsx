@@ -21,7 +21,7 @@ export default function BlogPage() {
 		<main className="min-h-screen bg-background">
 			{/* Header */}
 			<header className="border-b border-border/30 bg-card/20 backdrop-blur-sm sticky top-0 z-10">
-				<div className="max-w-5xl mx-auto px-6 py-4">
+				<div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
 					<Link
 						href="/"
 						className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -34,13 +34,13 @@ export default function BlogPage() {
 
 			{/* Hero */}
 			<div className="bg-gradient-to-b from-card/50 to-transparent">
-				<div className="max-w-5xl mx-auto px-6 py-16">
-					<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+				<div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
+					<h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
 						<span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-cyan-400">
 							Dev Blog
 						</span>
 					</h1>
-					<p className="text-xl text-muted-foreground leading-relaxed max-w-3xl">
+					<p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl">
 						Building AI-powered sports analytics at LineCrush. Notes on
 						full-stack development, AI integration, and startup life.
 					</p>
@@ -48,7 +48,7 @@ export default function BlogPage() {
 			</div>
 
 			{/* Posts */}
-			<div className="max-w-5xl mx-auto px-6 py-12">
+			<div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
 				{posts.length === 0 ? (
 					<div className="text-center py-16">
 						<p className="text-muted-foreground text-lg">
@@ -60,7 +60,7 @@ export default function BlogPage() {
 						{posts.map((post, index) => (
 							<Link key={post.slug} href={`/blog/${post.slug}`}>
 								<article
-									className={`group p-8 rounded-xl border border-border/50 bg-card/30 backdrop-blur-sm hover:border-primary/50 hover:bg-card/50 transition-all duration-300 ${
+									className={`group p-5 sm:p-6 md:p-8 rounded-xl border border-border/50 bg-card/30 backdrop-blur-sm hover:border-primary/50 hover:bg-card/50 transition-all duration-300 ${
 										post.featured ? "ring-1 ring-primary/20" : ""
 									}`}
 								>
@@ -120,8 +120,8 @@ export default function BlogPage() {
 
 			{/* Footer */}
 			<footer className="border-t border-border/30 bg-card/20">
-				<div className="max-w-5xl mx-auto px-6 py-12 text-center">
-					<p className="text-muted-foreground">
+				<div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 text-center">
+					<p className="text-sm sm:text-base text-muted-foreground">
 						More posts coming as I ship. Stay tuned.
 					</p>
 				</div>

@@ -63,7 +63,7 @@ export default async function BlogPostPage({ params }: Props) {
 		<main className="min-h-screen bg-background">
 			{/* Header */}
 			<header className="border-b border-border/30 bg-card/20 backdrop-blur-sm sticky top-0 z-10">
-				<div className="max-w-5xl mx-auto px-6 py-4">
+				<div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
 					<Link
 						href="/blog"
 						className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -76,9 +76,9 @@ export default async function BlogPostPage({ params }: Props) {
 
 			{/* Hero */}
 			<div className="bg-gradient-to-b from-card/50 to-transparent">
-				<div className="max-w-5xl mx-auto px-6 py-16">
+				<div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
 					{/* Meta */}
-					<div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
+					<div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">
 						<span className="inline-flex items-center gap-1.5">
 							<Calendar className="w-4 h-4 text-primary" />
 							{formatDate(post.date)}
@@ -94,11 +94,11 @@ export default async function BlogPostPage({ params }: Props) {
 						)}
 					</div>
 
-					<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
+					<h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-4 sm:mb-6">
 						{post.title}
 					</h1>
 
-					<p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-4xl">
+					<p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed mb-6 sm:mb-8 max-w-4xl">
 						{post.description}
 					</p>
 
@@ -118,8 +118,8 @@ export default async function BlogPostPage({ params }: Props) {
 			</div>
 
 			{/* Content */}
-			<article className="max-w-5xl mx-auto px-6 py-12">
-				<div className="prose prose-lg prose-invert max-w-none prose-headings:font-bold prose-headings:text-foreground prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-6 prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-foreground prose-strong:font-semibold prose-ul:my-6 prose-ul:text-muted-foreground prose-li:my-2 prose-li:marker:text-primary prose-code:text-primary prose-code:bg-card prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-normal prose-code:before:content-none prose-code:after:content-none prose-pre:bg-[#0d1117] prose-pre:border prose-pre:border-border/50 prose-pre:rounded-lg prose-pre:my-8 prose-hr:border-border/50 prose-hr:my-12 prose-blockquote:border-primary prose-blockquote:text-muted-foreground prose-blockquote:italic">
+			<article className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+				<div className="prose prose-sm sm:prose-base md:prose-lg prose-invert max-w-none prose-headings:font-bold prose-headings:text-foreground prose-h2:text-xl sm:prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-lg sm:prose-h3:text-xl md:prose-h3:text-2xl prose-h3:mt-6 prose-h3:mb-3 prose-p:text-muted-foreground prose-p:leading-relaxed prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-foreground prose-strong:font-semibold prose-ul:text-muted-foreground prose-li:marker:text-primary prose-code:text-primary prose-code:bg-card prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-[0.8em] prose-code:font-normal prose-code:before:content-none prose-code:after:content-none prose-pre:bg-[#0d1117] prose-pre:border prose-pre:border-border/50 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-pre:text-xs sm:prose-pre:text-sm prose-hr:border-border/50 prose-blockquote:border-primary prose-blockquote:text-muted-foreground prose-blockquote:italic [&_pre]:max-w-[calc(100vw-2rem)] sm:[&_pre]:max-w-full">
 					{/* @ts-expect-error - MDXRemote types are complex */}
 					<MDXRemote source={post.content} options={{ mdxOptions }} />
 				</div>
