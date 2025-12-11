@@ -1,0 +1,211 @@
+---
+title: "You Might Not Need That God Component"
+description: "What 4,000 lines of React taught me about file organization, AI readability, and why your future self will thank you."
+date: "2025-12-11"
+tags: ["React", "Architecture", "Engineering", "Refactoring"]
+readTime: "7 min"
+featured: true
+---
+
+Last week I refactored a component that had grown to nearly 4,000 lines. One file. Dozens of responsibilities. A monument to "just one more feature."
+
+It worked. It shipped. Users were happy.
+
+But every time I needed to change something, I'd lose 20 minutes just *finding* where that logic lived. And when I asked Claude Code to help? It would hallucinate, miss context, or just give up.
+
+Here's what I learned breaking it apart—and why you might want to do the same.
+
+## The Temptation: "It's All Related"
+
+When you're building fast, the easiest path is the one you're already on:
+
+```tsx
+// 🔴 The "God Component" pattern
+function Dashboard() {
+  // 47 useState calls
+  // 12 useEffect hooks
+  // 8 fetch calls
+  // Business logic mixed with UI
+  // Event handlers inline everywhere
+  // 4,000 lines later...
+
+  return (
+    <div>
+      {/* A tangled web of conditional rendering */}
+    </div>
+  );
+}
+```
+
+"It's all the dashboard," you tell yourself. "It makes sense to keep it together."
+
+Until it doesn't.
+
+## The Real Cost
+
+**For you:** Every change requires understanding the entire file. Context-switching between 47 pieces of state becomes a memory game you'll eventually lose.
+
+**For your teammates:** Onboarding takes forever. "Where does X happen?" becomes an archaeological expedition.
+
+**For AI assistants:** Modern LLMs work best with focused context. Feed them 4,000 lines and they'll miss the forest for the trees. Feed them 200 focused lines and they'll nail it.
+
+**For future you:** You *will* forget why you did things. Smaller files with clear names are documentation that doesn't go stale.
+
+## The Better Way: Single Responsibility
+
+```tsx
+// ✅ Clear boundaries, clear purpose
+src/
+├── components/
+│   └── Dashboard/
+│       ├── index.tsx              // Orchestration only
+│       ├── DashboardHeader.tsx    // Header UI + logic
+│       ├── StatsGrid.tsx          // Stats display
+│       ├── ActivityFeed.tsx       // Recent activity
+│       └── hooks/
+│           ├── useDashboardData.ts    // Data fetching
+│           └── useDashboardFilters.ts // Filter state
+```
+
+Each file does **one thing**. The name tells you what. The size lets you hold it in your head.
+
+## The Rule of Thumb
+
+Ask yourself: **"Can I explain what this file does in one sentence?"**
+
+- ✅ "DashboardHeader renders the header with user info and navigation"
+- ✅ "useDashboardData fetches and caches dashboard statistics"
+- 🔴 "Dashboard handles the header, stats, activity feed, filters, user preferences, notifications, and also some shared state that other components need"
+
+If your explanation has "and also" in it, that's a split waiting to happen.
+
+---
+
+## Bonus: You Might Not Need That useEffect
+
+While refactoring, I found something else lurking in those god components: **useEffect abuse**.
+
+The React team wrote a [fantastic article](https://react.dev/learn/you-might-not-need-an-effect) about this. Here's the cliff notes version from my own codebase:
+
+### Pattern 1: Derived State
+
+```tsx
+// 🔴 Avoid: useEffect to sync state
+const [items, setItems] = useState([]);
+const [filteredItems, setFilteredItems] = useState([]);
+
+useEffect(() => {
+  setFilteredItems(items.filter(item => item.active));
+}, [items]);
+
+// ✅ Good: Just calculate it
+const [items, setItems] = useState([]);
+const filteredItems = items.filter(item => item.active);
+```
+
+**Why it matters:** The "avoid" version renders twice—once when `items` changes, then again when the effect runs. The "good" version renders once.
+
+### Pattern 2: Responding to Events
+
+```tsx
+// 🔴 Avoid: Effect to respond to form submission
+const [submitted, setSubmitted] = useState(false);
+
+useEffect(() => {
+  if (submitted) {
+    sendAnalytics('form_submitted');
+    showToast('Success!');
+  }
+}, [submitted]);
+
+const handleSubmit = () => {
+  setSubmitted(true);
+};
+
+// ✅ Good: Just do it in the handler
+const handleSubmit = () => {
+  sendAnalytics('form_submitted');
+  showToast('Success!');
+};
+```
+
+**The question to ask:** "Is this happening because the user *did* something, or because the component *appeared*?"
+
+- User action → Event handler
+- Component appeared → useEffect (maybe)
+
+### Pattern 3: Fetching on Mount (The Only Valid One)
+
+```tsx
+// ✅ Actually good: Data fetching on mount
+useEffect(() => {
+  fetchDashboardData().then(setData);
+}, []);
+```
+
+This is the one place useEffect makes sense—synchronizing with an external system (your API) when the component mounts. Even then, consider using a data fetching library that handles caching, deduplication, and loading states for you.
+
+---
+
+## The AI Readability Factor
+
+Here's something I didn't expect: **smaller files make AI dramatically better at helping you.**
+
+When I point Claude Code at a 4,000-line file:
+- It sometimes misses important context
+- Suggestions might break things in distant parts of the file
+- It can't hold the whole thing in working memory
+
+When I point it at a 150-line focused component:
+- It understands the full context immediately
+- Suggestions are precise and relevant
+- It catches edge cases I missed
+
+I use AI assistance every single day now. My role has shifted from "person who writes code" to "person who designs systems and reviews AI output." Organizing for AI readability isn't optional anymore—it's a competitive advantage.
+
+---
+
+## The Refactor Checklist
+
+When I find a god component now, here's my process:
+
+1. **Map the responsibilities** - List every distinct thing the component does
+2. **Draw the boundaries** - Group related responsibilities
+3. **Extract hooks first** - Pull out stateful logic into custom hooks
+4. **Extract components second** - Split UI into focused pieces
+5. **Name everything clearly** - If you can't name it simply, you haven't found the right boundary
+
+The goal isn't perfection. It's **understanding at a glance**.
+
+---
+
+## What I'd Do Differently
+
+If I could go back 18 months and talk to myself:
+
+1. **Split early, not late.** The longer you wait, the harder it gets. Those tangled dependencies compound.
+
+2. **Name files for what they do, not what they contain.** `UserProfileCard.tsx` beats `Card.tsx`. `useDashboardPolling.ts` beats `usePolling.ts`.
+
+3. **Treat AI readability as a feature.** It's not just about you anymore. Your codebase has another reader now—make it easy for them too.
+
+4. **Read the React docs.** Seriously. [You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect) should be required reading.
+
+---
+
+## The Payoff
+
+After breaking up that 4,000-line component:
+
+- **Finding code:** Seconds instead of minutes
+- **Making changes:** Confident instead of anxious
+- **AI assistance:** Actually useful instead of hit-or-miss
+- **Onboarding:** "Look at the folder structure" instead of "good luck"
+
+The best part? The code still does exactly what it did before. Users don't see the difference.
+
+But I do. Every single day.
+
+---
+
+*The refactor took a week. The peace of mind is permanent.*
