@@ -134,7 +134,7 @@ export default async function BlogPostPage({ params }: Props) {
 								Thanks for reading
 							</p>
 							<p className="text-muted-foreground">
-								Building in public at LineCrush. More posts coming soon.
+								More engineering lessons coming as I ship.
 							</p>
 						</div>
 						<Link
