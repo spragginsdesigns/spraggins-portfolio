@@ -1,76 +1,50 @@
 ---
 title: "Building AI-Powered Sports Analytics at LineCrush"
-description: "A look inside how we're using Claude, GPT-4, and custom ML pipelines to revolutionize sports betting intelligence."
+description: "Lessons from building production AI systems that actually help users make smarter decisions."
 date: "2025-12-11"
-tags: ["AI", "LineCrush", "Claude", "Sports Analytics", "Next.js"]
-readTime: "6 min"
+tags: ["AI", "LineCrush", "Startup Life", "Engineering"]
+readTime: "5 min"
 featured: true
 ---
 
-As Co-Founder and CTO of LineCrush, I spend most of my days knee-deep in code, wrestling with data pipelines, and trying to make AI do useful things with sports data. Here's a glimpse into what that actually looks like.
+As Co-Founder and CTO of LineCrush, I spend most of my days building AI systems that help bettors make smarter decisions. Here's what that journey has taught me.
 
-## The Challenge
+## The Real Challenge
 
-Sports betting is a data-rich domain. We're dealing with:
+Everyone thinks the hard part of AI is the algorithms. It's not.
 
-- Real-time odds from multiple sportsbooks
-- Historical game data going back years
-- Player statistics, injuries, weather conditions
-- Market movements and line changes
+The hard part is making AI *useful*. Taking raw predictions and turning them into something a user can actually act on with confidence. That's the gap most AI products fail to cross.
 
-The challenge isn't getting the data—it's making sense of it in a way that actually helps bettors make smarter decisions.
+At LineCrush, we've spent two years figuring out how to bridge that gap. Not just "here's a prediction" but "here's what you should do, here's why, and here's how confident we are."
 
-## Our AI Stack
+## What I've Learned About Production AI
 
-We've integrated four different LLM providers into LineCrush:
+**1. Users don't want explanations—they want confidence.**
 
-```typescript
-// Our AI service abstraction
-const providers = {
-  claude: new AnthropicClient(),   // Deep analysis, nuanced reasoning
-  gpt4: new OpenAIClient(),        // Fast summaries, broad knowledge
-  perplexity: new PerplexityClient(), // Real-time web search
-  vision: new GoogleVisionClient()    // Image/screenshot analysis
-};
-```
+Early on, we tried showing users all the factors that went into a recommendation. Engagement dropped. Turns out, people want to know *how sure* you are, not *how you got there*. We shifted to confidence scores and win rates. Engagement went up 3x.
 
-Each model has its strengths. Claude excels at nuanced sports analysis and explaining complex betting concepts. GPT-4 is great for quick summaries. Perplexity helps us pull in real-time news and injury reports.
+**2. Speed matters more than perfection.**
 
-## The Architecture
+A good recommendation delivered in time beats a perfect one delivered too late. Sports betting is time-sensitive. We had to rethink our entire pipeline around latency, not just accuracy.
 
-Our backend is Python-heavy—45+ microservices handling everything from web scraping to odds calculation. The frontend is Next.js 15 with 353+ React components (yes, I counted).
+**3. Technical debt compounds faster than you think.**
 
-Here's a simplified view of how a bet recommendation flows through our system:
+This week I refactored a massive component that had grown over 18 months of "just one more feature." What started as 500 lines became nearly 4,000. The performance improvement from breaking it up was immediate.
 
-```
-User Request → API Gateway → Analysis Service
-                                    ↓
-                         ┌─────────────────────┐
-                         │   Data Aggregation  │
-                         │   - Odds data       │
-                         │   - Historical stats│
-                         │   - Injury reports  │
-                         └─────────────────────┘
-                                    ↓
-                            AI Analysis Layer
-                                    ↓
-                         Recommendation Engine
-                                    ↓
-                            User Dashboard
-```
+The lesson? Pay down debt early. Every month you wait, it gets harder.
 
-## What I Learned This Week
+## Building in Public
 
-This week I refactored a 3,900-line React component (yes, a "god component") into smaller, composable pieces. The performance improvement was immediate—hydration time dropped significantly.
+I started this blog because I believe in learning in public. Not the "here's my secret sauce" kind—that would be dumb for a competitive startup. But the meta-lessons about building AI products, leading engineering teams, and navigating startup life.
 
-The lesson? Technical debt compounds. That component started as a reasonable 500 lines and grew over 18 months of "just one more feature." Now I'm paying down that debt, one refactor at a time.
+The wins. The bugs. The 2am debugging sessions. The moments of "why did we build it that way?"
 
 ## What's Next
 
-We're working on smarter bet recommendations that factor in bankroll management and risk tolerance. The AI doesn't just say "bet this"—it explains *why* and *how much* based on your personal strategy.
+We're working on features that make bet recommendations even more personalized—factoring in individual risk tolerance and bankroll management. The AI doesn't just say "bet this." It explains *why* and *how much* based on your personal strategy.
 
-More updates coming as we ship. This blog is my way of documenting the journey—the wins, the bugs, and everything in between.
+More updates coming as we ship.
 
 ---
 
-*Building in public at LineCrush. Follow along as we ship.*
+*Building in public at LineCrush. Follow along as we figure this out.*
