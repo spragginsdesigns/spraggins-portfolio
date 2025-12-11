@@ -62,46 +62,54 @@ export default async function BlogPostPage({ params }: Props) {
 	return (
 		<main className="min-h-screen bg-background">
 			{/* Header */}
-			<div className="border-b border-border/50">
-				<div className="container mx-auto px-4 py-8">
+			<header className="border-b border-border/30 bg-card/20 backdrop-blur-sm sticky top-0 z-10">
+				<div className="max-w-5xl mx-auto px-6 py-4">
 					<Link
 						href="/blog"
-						className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6"
+						className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
 					>
 						<ArrowLeft className="w-4 h-4" />
 						Back to Blog
 					</Link>
+				</div>
+			</header>
 
+			{/* Hero */}
+			<div className="bg-gradient-to-b from-card/50 to-transparent">
+				<div className="max-w-5xl mx-auto px-6 py-16">
 					{/* Meta */}
-					<div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4">
+					<div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
 						<span className="inline-flex items-center gap-1.5">
-							<Calendar className="w-4 h-4" />
+							<Calendar className="w-4 h-4 text-primary" />
 							{formatDate(post.date)}
 						</span>
 						<span className="inline-flex items-center gap-1.5">
-							<Clock className="w-4 h-4" />
+							<Clock className="w-4 h-4 text-primary" />
 							{post.readTime}
 						</span>
 						{post.featured && (
-							<span className="text-primary font-medium">Featured</span>
+							<span className="px-2 py-0.5 rounded text-xs font-medium bg-primary/20 text-primary border border-primary/30">
+								Featured
+							</span>
 						)}
 					</div>
 
-					<h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
+					<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
 						{post.title}
 					</h1>
-					<p className="text-muted-foreground mt-4 text-lg max-w-3xl">
+
+					<p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-4xl">
 						{post.description}
 					</p>
 
 					{/* Tags */}
-					<div className="flex flex-wrap gap-2 mt-6">
+					<div className="flex flex-wrap gap-2">
 						{post.tags.map((tag) => (
 							<span
 								key={tag}
-								className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20"
+								className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-card border border-border/50 text-muted-foreground hover:border-primary/50 transition-colors"
 							>
-								<Tag className="w-3 h-3" />
+								<Tag className="w-3.5 h-3.5" />
 								{tag}
 							</span>
 						))}
@@ -110,28 +118,35 @@ export default async function BlogPostPage({ params }: Props) {
 			</div>
 
 			{/* Content */}
-			<article className="container mx-auto px-4 py-12">
-				<div className="prose prose-invert prose-lg max-w-3xl mx-auto prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary hover:prose-a:text-primary/80 prose-strong:text-foreground prose-code:text-primary prose-pre:bg-[#0d1117] prose-pre:border prose-pre:border-border/50">
+			<article className="max-w-5xl mx-auto px-6 py-12">
+				<div className="prose prose-lg prose-invert max-w-none prose-headings:font-bold prose-headings:text-foreground prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-6 prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-foreground prose-strong:font-semibold prose-ul:my-6 prose-ul:text-muted-foreground prose-li:my-2 prose-li:marker:text-primary prose-code:text-primary prose-code:bg-card prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-normal prose-code:before:content-none prose-code:after:content-none prose-pre:bg-[#0d1117] prose-pre:border prose-pre:border-border/50 prose-pre:rounded-lg prose-pre:my-8 prose-hr:border-border/50 prose-hr:my-12 prose-blockquote:border-primary prose-blockquote:text-muted-foreground prose-blockquote:italic">
 					{/* @ts-expect-error - MDXRemote types are complex */}
 					<MDXRemote source={post.content} options={{ mdxOptions }} />
 				</div>
 			</article>
 
-			{/* Footer CTA */}
-			<div className="border-t border-border/50">
-				<div className="container mx-auto px-4 py-12 text-center">
-					<p className="text-muted-foreground mb-4">
-						Building in public at LineCrush. More posts coming soon.
-					</p>
-					<Link
-						href="/blog"
-						className="inline-flex items-center gap-2 text-primary hover:underline"
-					>
-						<ArrowLeft className="w-4 h-4" />
-						View all posts
-					</Link>
+			{/* Footer */}
+			<footer className="border-t border-border/30 bg-card/20">
+				<div className="max-w-5xl mx-auto px-6 py-16">
+					<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+						<div>
+							<p className="text-foreground font-medium mb-2">
+								Thanks for reading
+							</p>
+							<p className="text-muted-foreground">
+								Building in public at LineCrush. More posts coming soon.
+							</p>
+						</div>
+						<Link
+							href="/blog"
+							className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-card border border-border/50 text-foreground hover:border-primary/50 transition-colors"
+						>
+							<ArrowLeft className="w-4 h-4" />
+							All posts
+						</Link>
+					</div>
 				</div>
-			</div>
+			</footer>
 		</main>
 	);
 }
