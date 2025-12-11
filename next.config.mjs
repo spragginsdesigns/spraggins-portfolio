@@ -1,5 +1,15 @@
+import createMDX from "@next/mdx";
+import rehypePrettyCode from "rehype-pretty-code";
+
+/** @type {import('rehype-pretty-code').Options} */
+const rehypePrettyCodeOptions = {
+	theme: "github-dark",
+	keepBackground: true
+};
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
 	images: {
 		remotePatterns: [
 			{
@@ -34,4 +44,10 @@ const nextConfig = {
 	}
 };
 
-export default nextConfig;
+const withMDX = createMDX({
+	options: {
+		rehypePlugins: [[rehypePrettyCode, rehypePrettyCodeOptions]]
+	}
+});
+
+export default withMDX(nextConfig);

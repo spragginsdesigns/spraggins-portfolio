@@ -1,0 +1,78 @@
+---
+title: "Building AI-Powered Sports Analytics at LineCrush"
+description: "A look inside how we're using Claude, GPT-4, and custom ML pipelines to revolutionize sports betting intelligence."
+date: "2025-12-11"
+tags: ["AI", "LineCrush", "Claude", "Sports Analytics", "Next.js"]
+readTime: "6 min"
+featured: true
+---
+
+# Building AI-Powered Sports Analytics at LineCrush
+
+As Co-Founder and CTO of LineCrush, I spend most of my days knee-deep in code, wrestling with data pipelines, and trying to make AI do useful things with sports data. Here's a glimpse into what that actually looks like.
+
+## The Challenge
+
+Sports betting is a data-rich domain. We're dealing with:
+
+- Real-time odds from multiple sportsbooks
+- Historical game data going back years
+- Player statistics, injuries, weather conditions
+- Market movements and line changes
+
+The challenge isn't getting the data—it's making sense of it in a way that actually helps bettors make smarter decisions.
+
+## Our AI Stack
+
+We've integrated four different LLM providers into LineCrush:
+
+```typescript
+// Our AI service abstraction
+const providers = {
+  claude: new AnthropicClient(),   // Deep analysis, nuanced reasoning
+  gpt4: new OpenAIClient(),        // Fast summaries, broad knowledge
+  perplexity: new PerplexityClient(), // Real-time web search
+  vision: new GoogleVisionClient()    // Image/screenshot analysis
+};
+```
+
+Each model has its strengths. Claude excels at nuanced sports analysis and explaining complex betting concepts. GPT-4 is great for quick summaries. Perplexity helps us pull in real-time news and injury reports.
+
+## The Architecture
+
+Our backend is Python-heavy—45+ microservices handling everything from web scraping to odds calculation. The frontend is Next.js 15 with 353+ React components (yes, I counted).
+
+Here's a simplified view of how a bet recommendation flows through our system:
+
+```
+User Request → API Gateway → Analysis Service
+                                    ↓
+                         ┌─────────────────────┐
+                         │   Data Aggregation  │
+                         │   - Odds data       │
+                         │   - Historical stats│
+                         │   - Injury reports  │
+                         └─────────────────────┘
+                                    ↓
+                            AI Analysis Layer
+                                    ↓
+                         Recommendation Engine
+                                    ↓
+                            User Dashboard
+```
+
+## What I Learned This Week
+
+This week I refactored a 3,900-line React component (yes, a "god component") into smaller, composable pieces. The performance improvement was immediate—hydration time dropped significantly.
+
+The lesson? Technical debt compounds. That component started as a reasonable 500 lines and grew over 18 months of "just one more feature." Now I'm paying down that debt, one refactor at a time.
+
+## What's Next
+
+We're working on smarter bet recommendations that factor in bankroll management and risk tolerance. The AI doesn't just say "bet this"—it explains *why* and *how much* based on your personal strategy.
+
+More updates coming as we ship. This blog is my way of documenting the journey—the wins, the bugs, and everything in between.
+
+---
+
+*Building in public at LineCrush. Follow along as we ship.*
