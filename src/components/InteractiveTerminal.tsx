@@ -843,7 +843,6 @@ const InteractiveTerminal: React.FC = () => {
 										onChange={(e) => setCurrentInput(e.target.value)}
 										onKeyDown={handleKeyDown}
 										className="w-full bg-transparent outline-none text-white caret-primary"
-										autoFocus
 										spellCheck={false}
 										autoComplete="off"
 										disabled={isTyping}
