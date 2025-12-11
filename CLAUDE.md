@@ -158,6 +158,33 @@ When updating portfolio content:
 - Featured GitHub projects: SaveALife CPR, Constrong, Bible AI Explorer, AI Tutor WebApp
 - **IMPORTANT:** When referencing Austin's transformative life experience, describe it as a "difficult period" or "challenging time" that led to personal growth, finding faith, and renewed purpose. Never be more specific than this.
 
+## Blog Post Guidelines (CRITICAL)
+
+**LineCrush Competitive Moat Protection: "Show results, hide methods. Be a black box."**
+
+When writing blog posts about LineCrush work, NEVER reveal:
+- **AI/LLM providers** (don't name Claude, GPT-4, Perplexity, etc.)
+- **Tech stack specifics** (don't list frameworks, databases, or infrastructure)
+- **Architecture details** (no diagrams, component counts, or service breakdowns)
+- **Data sources** (don't mention which sportsbooks, APIs, or providers we use)
+- **Algorithms or methodology** (the "how" behind recommendations)
+
+**What TO write about:**
+- High-level learnings and insights (meta-lessons about building AI products)
+- Results and outcomes without methods (e.g., "engagement increased 3x")
+- Personal journey, struggles, and growth
+- Generic references to "AI" or "our systems" without specifics
+- Leadership lessons and startup life observations
+
+**Before publishing any LineCrush-related content, ask:**
+1. Does this reveal how we generate our edge?
+2. Does this expose our data sources unnecessarily?
+3. Can a competitor reverse-engineer our methodology from this?
+
+If yes to any → rewrite to remove the exposure.
+
+**Goal:** Build Austin's personal brand while protecting LineCrush's competitive advantage.
+
 ## Dependencies
 
 Key packages:
