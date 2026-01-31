@@ -193,6 +193,45 @@ const Expertise: React.FC = () => {
 					))}
 				</div>
 
+				{/* Coding Activity Section */}
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5, delay: 0.2 }}
+					viewport={{ once: true }}
+					className="mt-16"
+				>
+					<Card className="bg-card/30 backdrop-blur-sm border-border/50 p-8">
+						<h3 className="text-2xl font-bold text-center mb-2">Coding Activity</h3>
+						<p className="text-muted-foreground text-center text-sm mb-6">
+							Live coding stats tracked by WakaTime
+						</p>
+						<div className="flex flex-col items-center gap-6">
+							<div className="w-full max-w-3xl overflow-hidden rounded-lg">
+								{/* eslint-disable-next-line @next/next/no-img-element */}
+								<img
+									src="https://wakatime.com/share/@spragginsdesigns/7b07bda4-7e8f-46e7-b8d0-456baac6c2a2.svg"
+									alt="WakaTime coding activity chart"
+									className="w-full h-auto"
+									loading="lazy"
+								/>
+							</div>
+							<a
+								href="https://wakatime.com/badge/github/spragginsdesigns/Context-Pro-AI"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{/* eslint-disable-next-line @next/next/no-img-element */}
+								<img
+									src="https://wakatime.com/badge/github/spragginsdesigns/Context-Pro-AI.svg"
+									alt="WakaTime badge for Context-Pro-AI"
+									loading="lazy"
+								/>
+							</a>
+						</div>
+					</Card>
+				</motion.div>
+
 				{/* Tech Stack Section */}
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
