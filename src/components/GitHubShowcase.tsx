@@ -63,14 +63,14 @@ const GitHubShowcase: React.FC = () => {
 	const { user, repos } = data;
 
 	return (
-		<section id="github" className="bg-surface text-text py-20">
+		<section id="github" className="bg-background text-foreground py-20">
 			<div className="container mx-auto px-4">
-				<h2 className="text-4xl font-heading font-bold mb-12 text-center">
+				<h2 className="text-4xl font-bold mb-12 text-center">
 					My GitHub Activity
 				</h2>
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 					<motion.div
-						className="bg-background p-6 rounded-lg shadow-xl lg:col-span-1"
+						className="bg-card/50 backdrop-blur-sm border border-border/50 p-6 rounded-lg shadow-xl lg:col-span-1"
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5 }}
@@ -106,7 +106,7 @@ const GitHubShowcase: React.FC = () => {
 						</div>
 					</motion.div>
 					<motion.div
-						className="bg-background p-6 rounded-lg shadow-xl lg:col-span-2"
+						className="bg-card/50 backdrop-blur-sm border border-border/50 p-6 rounded-lg shadow-xl lg:col-span-2"
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.2 }}
@@ -123,13 +123,13 @@ const GitHubShowcase: React.FC = () => {
 					{repos.map((repo, index) => (
 						<motion.div
 							key={repo.id}
-							className="bg-background p-6 rounded-lg shadow-xl"
+							className="bg-card/50 backdrop-blur-sm border border-border/50 p-6 rounded-lg shadow-xl"
 							initial={{ opacity: 0, y: 20 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.5, delay: index * 0.1 }}
 						>
 							<h4 className="text-xl font-semibold mb-2">{repo.name}</h4>
-							<p className="text-sm text-text-secondary mb-4 h-12 overflow-hidden">
+							<p className="text-sm text-muted-foreground mb-4 line-clamp-3">
 								{repo.description || "No description available"}
 							</p>
 							<div className="flex justify-between text-sm mb-4">

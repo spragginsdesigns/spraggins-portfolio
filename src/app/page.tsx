@@ -7,6 +7,7 @@ import BlogPreview from "@/components/BlogPreview";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import GitHubShowcase from "@/components/GitHubShowcase";
+import { ErrorBoundary } from "@/components/ui/error-boundary";
 import { getAllPosts } from "@/lib/blog";
 
 // Metadata is defined in layout.tsx to avoid duplication
@@ -23,7 +24,9 @@ export default function Home() {
 				<Projects />
 				<Expertise />
 				<BlogPreview posts={posts} />
-				<GitHubShowcase />
+				<ErrorBoundary>
+					<GitHubShowcase />
+				</ErrorBoundary>
 				<Contact />
 				<Footer />
 			</div>
