@@ -105,6 +105,21 @@ const GitHubShowcase: React.FC = () => {
 							</div>
 						</div>
 					</motion.div>
+					<motion.div
+						className="bg-background p-6 rounded-lg shadow-xl lg:col-span-2"
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.5, delay: 0.2 }}
+					>
+						<h4 className="text-xl font-semibold mb-4 text-center">Contribution Activity</h4>
+						{/* eslint-disable-next-line @next/next/no-img-element */}
+						<img
+							src="https://ghchart.rshah.org/26a641/spragginsdesigns"
+							alt="GitHub contribution graph for spragginsdesigns"
+							className="w-full h-auto"
+							loading="lazy"
+						/>
+					</motion.div>
 					{repos.map((repo, index) => (
 						<motion.div
 							key={repo.id}
