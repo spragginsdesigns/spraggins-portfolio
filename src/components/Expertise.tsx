@@ -210,8 +210,17 @@ const Expertise: React.FC = () => {
 							<div className="w-full max-w-3xl overflow-hidden rounded-lg">
 								{/* eslint-disable-next-line @next/next/no-img-element */}
 								<img
-									src="https://wakatime.com/share/@spragginsdesigns/7b07bda4-7e8f-46e7-b8d0-456baac6c2a2.svg"
-									alt="WakaTime coding activity chart"
+									src="https://wakatime.com/share/@spragginsdesigns/a74426a6-3db3-4e39-8a39-4bc017b18ed8.svg"
+									alt="WakaTime coding activity bar chart"
+									className="w-full h-auto"
+									loading="lazy"
+								/>
+							</div>
+							<div className="w-full max-w-3xl overflow-hidden rounded-lg">
+								{/* eslint-disable-next-line @next/next/no-img-element */}
+								<img
+									src="https://wakatime.com/share/@spragginsdesigns/81a9f812-1214-4bca-a52b-9e69e891c8c7.svg"
+									alt="WakaTime coding activity heatmap"
 									className="w-full h-auto"
 									loading="lazy"
 								/>
