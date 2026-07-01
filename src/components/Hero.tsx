@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { BackgroundLines } from "@/components/ui/background-lines";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { Badge } from "@/components/ui/badge";
@@ -162,7 +162,7 @@ const Hero: React.FC = () => {
 
 							{/* Profile Image */}
 							<Image
-								src="https://spraggins-designs.s3.us-east-1.amazonaws.com/images/profile_pic_main2_lessthan1MB.png"
+								src="/images/profile_pic_main2_lessthan1MB.png"
 								alt="Austin Spraggins - Co-Founder & CTO"
 								width={400}
 								height={400}

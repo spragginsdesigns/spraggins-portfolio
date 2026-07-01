@@ -147,6 +147,12 @@ export default function RootLayout({
 					href="/favicon-16x16.png"
 				/>
 				<link rel="manifest" href="/site.webmanifest" />
+				<link
+					rel="alternate"
+					type="application/rss+xml"
+					title="Austin Spraggins — Dev Blog"
+					href="/feed.xml"
+				/>
 				<meta name="msapplication-TileColor" content="#0a0a0a" />
 				<meta name="theme-color" content="#0a0a0a" />
 				<script
