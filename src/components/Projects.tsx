@@ -30,22 +30,22 @@ import { Button } from "@/components/ui/button";
 const lineCrushFeatures = [
 	{
 		icon: <Layers className="w-5 h-5" />,
-		title: "353+ Components",
+		title: "800+ Components",
 		description: "React/Next.js frontend"
 	},
 	{
 		icon: <Server className="w-5 h-5" />,
-		title: "45+ Services",
-		description: "Python microservices"
+		title: "115+ Services",
+		description: "Python backend modules"
 	},
 	{
 		icon: <Brain className="w-5 h-5" />,
-		title: "4+ LLMs",
-		description: "AI integrations"
+		title: "5 LLM Providers",
+		description: "AI orchestration"
 	},
 	{
 		icon: <Database className="w-5 h-5" />,
-		title: "100+ Tables",
+		title: "120+ Tables",
 		description: "PostgreSQL schema"
 	}
 ];
@@ -173,16 +173,20 @@ interface YouTubeStats {
 	videoCount: string;
 }
 
-const fetchYouTubeStats = async (): Promise<YouTubeStats> => {
+const fetchYouTubeStats = async (): Promise<YouTubeStats | null> => {
 	try {
 		const response = await fetch("/api/youtube-stats");
 		if (!response.ok) {
 			throw new Error(`HTTP error! status: ${response.status}`);
 		}
-		return await response.json();
-	} catch (error) {
-		console.error("Error fetching YouTube stats:", error);
-		return { viewCount: "0", subscriberCount: "0", videoCount: "0" };
+		const data: YouTubeStats = await response.json();
+		// Treat an all-zero payload (missing API key, quota errors) as no data
+		if (!parseInt(data.subscriberCount || "0")) {
+			return null;
+		}
+		return data;
+	} catch {
+		return null;
 	}
 };
 
@@ -213,9 +217,10 @@ const FeaturedProject: React.FC = () => {
 							LineCrush
 						</h3>
 						<p className="text-muted-foreground mb-6 text-lg leading-relaxed">
-							Enterprise-grade sports analytics platform I built almost entirely solo over 2+ years.
-							Real-time AI-powered insights, automated data pipelines, and production infrastructure
-							serving users 24/7.
+							Enterprise-grade sports analytics platform I architected as sole technical
+							founder — 25,000+ commits over 2+ years. Real-time AI-powered insights,
+							automated data pipelines, and production infrastructure serving users 24/7
+							across web, mobile, and browser extensions.
 						</p>
 
 						{/* Feature Grid */}
@@ -278,7 +283,7 @@ const FeaturedProject: React.FC = () => {
 									</div>
 									<div className="p-4">
 										<Globe className="w-8 h-8 text-primary mx-auto mb-2" />
-										<div className="text-2xl font-bold">13 Sports</div>
+										<div className="text-2xl font-bold">12 Sports</div>
 										<div className="text-sm text-muted-foreground">Coverage</div>
 									</div>
 									<div className="p-4">
@@ -538,7 +543,7 @@ const Projects: React.FC = () => {
 							className="flex items-center gap-2"
 						>
 							<Github className="w-4 h-4" />
-							View All 50+ Repositories
+							View All 90+ Repositories
 						</a>
 					</Button>
 				</div>

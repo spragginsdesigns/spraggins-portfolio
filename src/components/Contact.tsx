@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaPaperPlane, FaCheck } from "react-icons/fa";
+import { FaPaperPlane, FaCheck, FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
 
 const Contact: React.FC = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,16 +48,47 @@ const Contact: React.FC = () => {
 	};
 
 	return (
-		<section id="contact" className="bg-background text-text py-20">
+		<section id="contact" className="bg-background text-foreground py-20">
 			<motion.div
 				className="container mx-auto px-4"
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5 }}
 			>
-				<h2 className="text-4xl font-heading font-bold mb-12 text-center">
+				<h2 className="text-4xl font-heading font-bold mb-4 text-center">
 					Get In Touch
 				</h2>
+				<p className="text-muted-foreground text-center max-w-xl mx-auto mb-8">
+					Open to contracts, consulting, and interesting problems. Tell me what
+					you&apos;re building and I&apos;ll get back to you fast.
+				</p>
+				<div className="flex flex-wrap justify-center gap-3 mb-12">
+					<a
+						href="mailto:spragginsdesigns@gmail.com"
+						className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border/50 text-sm text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
+					>
+						<FaEnvelope className="w-4 h-4" />
+						spragginsdesigns@gmail.com
+					</a>
+					<a
+						href="https://github.com/spragginsdesigns"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border/50 text-sm text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
+					>
+						<FaGithub className="w-4 h-4" />
+						GitHub
+					</a>
+					<a
+						href="https://www.linkedin.com/in/spragginsdesigns/"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border/50 text-sm text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
+					>
+						<FaLinkedin className="w-4 h-4" />
+						LinkedIn
+					</a>
+				</div>
 				<form className="max-w-lg mx-auto" onSubmit={handleSubmit}>
 					<motion.div
 						className="mb-6"
@@ -74,7 +105,7 @@ const Contact: React.FC = () => {
 							type="text"
 							id="name"
 							name="name"
-							className="bg-surface border border-gray-600 text-text text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+							className="bg-card/50 border border-border/50 text-foreground placeholder:text-muted-foreground/60 text-sm rounded-lg focus:ring-primary focus:border-primary outline-none block w-full p-2.5 transition-colors"
 							placeholder="Your Name"
 							required
 						/>
@@ -94,7 +125,7 @@ const Contact: React.FC = () => {
 							type="email"
 							id="email"
 							name="email"
-							className="bg-surface border border-gray-600 text-text text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+							className="bg-card/50 border border-border/50 text-foreground placeholder:text-muted-foreground/60 text-sm rounded-lg focus:ring-primary focus:border-primary outline-none block w-full p-2.5 transition-colors"
 							placeholder="name@example.com"
 							required
 						/>
@@ -114,7 +145,7 @@ const Contact: React.FC = () => {
 							id="message"
 							name="message"
 							rows={4}
-							className="bg-surface border border-gray-600 text-text text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+							className="bg-card/50 border border-border/50 text-foreground placeholder:text-muted-foreground/60 text-sm rounded-lg focus:ring-primary focus:border-primary outline-none block w-full p-2.5 transition-colors"
 							placeholder="Your message here..."
 							required
 						></motion.textarea>
@@ -178,7 +209,7 @@ const Contact: React.FC = () => {
 								Message Sent Successfully!
 							</motion.h3>
 							<motion.p
-								className="text-gray-600"
+								className="text-muted-foreground"
 								initial={{ opacity: 0, y: 20 }}
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ delay: 0.5 }}

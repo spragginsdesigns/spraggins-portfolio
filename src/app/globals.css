@@ -13,6 +13,11 @@ html {
 	scroll-behavior: smooth;
 }
 
+/* Offset anchor targets so the fixed header doesn't cover section headings */
+section[id] {
+	scroll-margin-top: 4.5rem;
+}
+
 body {
 	background: rgb(var(--background-rgb));
 }

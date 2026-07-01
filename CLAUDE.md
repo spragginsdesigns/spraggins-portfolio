@@ -151,10 +151,10 @@ YOUTUBE_API_KEY=        # YouTube Data API key
 ## Content Guidelines
 
 When updating portfolio content:
-- **LineCrush** is the flagship project - emphasize scale (353+ components, 100+ tables, etc.)
+- **LineCrush** is the flagship project - emphasize scale (800+ components, 120+ tables, 25,000+ commits, etc.)
 - Highlight CTO leadership and architectural decision-making
 - Emphasize "Open to Contracts & Consulting" (not job seeking)
-- Keep stats accurate: 2+ years production, 4+ LLM integrations, 100+ database tables
+- Keep stats accurate (verified against the Context-Pro-AI repo, July 2026): 2+ years production, 25,000+ commits, 800+ React components, 115+ Python backend services, 145+ API endpoints, 120+ database tables, 5 LLM providers, 12 sports
 - Featured GitHub projects: SaveALife CPR, Constrong, Bible AI Explorer, AI Tutor WebApp
 - **IMPORTANT:** When referencing Austin's transformative life experience, describe it as a "difficult period" or "challenging time" that led to personal growth, finding faith, and renewed purpose. Never be more specific than this.
 

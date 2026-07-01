@@ -96,15 +96,15 @@ const Expertise: React.FC = () => {
 			icon: <Brain className="w-5 h-5" />,
 			title: "AI/ML Engineering",
 			description:
-				"Built production AI systems with 4+ LLM providers. Prompt engineering, streaming responses, sentiment analysis, and NLP pipelines processing millions of data points.",
-			skills: ["OpenAI", "Anthropic", "Perplexity", "Google Vision", "NLP", "Prompt Engineering"],
+				"Built production AI systems orchestrating 5 LLM providers. Custom MCP servers, agent harnesses, streaming responses, and NLP pipelines processing millions of data points.",
+			skills: ["OpenAI", "Anthropic", "Gemini", "Perplexity", "MCP Servers", "AI Agents", "Prompt Engineering"],
 			gradient: "bg-gradient-to-br from-purple-500 to-pink-500"
 		},
 		{
 			icon: <Layers className="w-5 h-5" />,
 			title: "Full-Stack Architecture",
 			description:
-				"Designed and built a 353-component React frontend with 45+ Python microservices. End-to-end ownership from database schema to user interface.",
+				"Designed and built an 800+ component React frontend with 115+ Python backend services. End-to-end ownership from database schema to user interface.",
 			skills: ["Next.js 15", "React", "TypeScript", "Python", "Node.js", "PostgreSQL"],
 			gradient: "bg-gradient-to-br from-cyan-500 to-blue-500"
 		},
@@ -112,7 +112,7 @@ const Expertise: React.FC = () => {
 			icon: <Cpu className="w-5 h-5" />,
 			title: "System Design",
 			description:
-				"Architected real-time data pipelines, distributed cron jobs, Redis caching layers, and 100+ PostgreSQL tables with complex relationships.",
+				"Architected real-time data pipelines, distributed cron jobs, multi-tier Redis caching, and 120+ PostgreSQL tables with complex relationships.",
 			skills: ["Redis", "PostgreSQL", "Real-time Systems", "Caching", "Data Pipelines"],
 			gradient: "bg-gradient-to-br from-green-500 to-emerald-500"
 		},
@@ -143,11 +143,11 @@ const Expertise: React.FC = () => {
 	];
 
 	const stats = [
-		{ value: "353+", label: "React Components" },
-		{ value: "45+", label: "Backend Services" },
-		{ value: "45+", label: "API Endpoints" },
-		{ value: "100+", label: "Database Tables" },
-		{ value: "4+", label: "LLM Integrations" },
+		{ value: "800+", label: "React Components" },
+		{ value: "115+", label: "Backend Services" },
+		{ value: "145+", label: "API Endpoints" },
+		{ value: "120+", label: "Database Tables" },
+		{ value: "25K+", label: "Commits Shipped" },
 		{ value: "2+", label: "Years Production" }
 	];
 
@@ -178,7 +178,7 @@ const Expertise: React.FC = () => {
 					className="mb-16"
 				>
 					<Card className="bg-card/30 backdrop-blur-sm border-border/50">
-						<div className="grid grid-cols-3 md:grid-cols-6 divide-x divide-border/50">
+						<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-y-2 py-2">
 							{stats.map((stat, index) => (
 								<StatCard key={index} {...stat} index={index} />
 							))}
@@ -276,7 +276,7 @@ const Expertise: React.FC = () => {
 								</div>
 								<h4 className="font-semibold mb-2">AI/ML</h4>
 								<p className="text-sm text-muted-foreground">
-									OpenAI, Anthropic, Perplexity, Google Vision
+									OpenAI, Anthropic, Gemini, Perplexity, MCP
 								</p>
 							</div>
 							<div className="text-center">

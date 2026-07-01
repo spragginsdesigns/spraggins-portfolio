@@ -65,10 +65,11 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   the value of hard work.
 
   Today, I architect production systems at scale:
-  • 353+ React components built
-  • 45+ Python microservices deployed
-  • 100+ PostgreSQL tables designed
-  • 4+ LLM integrations in production
+  • 800+ React components built
+  • 115+ Python backend services deployed
+  • 120+ PostgreSQL tables designed
+  • 25,000+ commits shipped in 2+ years
+  • 5 LLM providers orchestrated in production
 
   I believe technology should extend human gifts, not replace
   them. My mission is to build tools that make the world more
@@ -110,18 +111,18 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
 
   ┌─────────────────────────────────────────────────────────┐
   │  CO-FOUNDER & CTO                                       │
-  │  LineCrush Inc. | 2023 - Present                        │
+  │  LineCrush Inc. | 2024 - Present                        │
   └─────────────────────────────────────────────────────────┘
 
-  Leading technical strategy and development for a sports
-  analytics platform serving thousands of users.
+  Sole technical founder of an AI-powered sports analytics
+  platform serving users across web, mobile, and extensions.
 
   Key Achievements:
   • Architected full-stack platform from ground up
-  • Built 353+ React components, 45+ Python microservices
-  • Designed 100+ PostgreSQL tables with Redis caching
-  • Integrated 4+ LLMs for intelligent analytics
-  • Deployed on AWS with 99.9% uptime
+  • Built 800+ React components, 115+ Python services
+  • Designed 120+ PostgreSQL tables with Redis caching
+  • Orchestrated 5 LLM providers for intelligent analytics
+  • 25,000+ commits shipped, 24/7 production infrastructure
 
   ─────────────────────────────────────────────────────────────
 
@@ -132,7 +133,7 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
 
   Taught web development fundamentals to aspiring developers.
   • HTML, CSS, JavaScript, React
-  • Mentored 50+ students into tech careers
+  • Trained 200+ students, many into tech careers
   • Developed curriculum and hands-on projects
 `,
 
@@ -145,7 +146,7 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   ──────────────────────────────────────────────────────────
   Sports analytics platform with AI-powered insights
   Tech: Next.js, Python, PostgreSQL, Redis, AWS
-  Stats: 353+ components | 45+ services | 100+ tables
+  Stats: 800+ components | 115+ services | 120+ tables
   URL: https://linecrush.com
 
   ◆ BIBLE AI EXPLORER
@@ -246,11 +247,12 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
 
   KEY METRICS
   ───────────────────────────────────────────────────────────
-  • 353+ React components built
-  • 45+ Python microservices deployed
-  • 100+ PostgreSQL tables designed
-  • 4+ LLM integrations in production
-  • 50+ students mentored into tech careers
+  • 800+ React components built
+  • 115+ Python backend services deployed
+  • 120+ PostgreSQL tables designed
+  • 5 LLM providers orchestrated in production
+  • 25,000+ commits shipped in 2+ years
+  • 200+ students trained in web development
 
   📄 View full PDF: Scroll down to Skills section
 `,
@@ -384,10 +386,10 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   Shell:     bash 5.1.16
   Terminal:  visitor@austin-portfolio
   ─────────────────────────────────────────────────────────────────────
-  CPU:       353+ React Components
-  Memory:    100+ PostgreSQL Tables
-  Services:  45+ Python Microservices
-  AI:        4+ LLM Integrations
+  CPU:       800+ React Components
+  Memory:    120+ PostgreSQL Tables
+  Services:  115+ Python Backend Services
+  AI:        5 LLM Providers
   ─────────────────────────────────────────────────────────────────────
 `,
 
@@ -413,35 +415,25 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
 	"": () => "",
 };
 
+// Keep this short enough to fit the terminal viewport without scrolling,
+// otherwise the terminal captures the mouse wheel before the page does.
 const WELCOME_MESSAGE_DESKTOP = `
-  ███████╗██████╗ ██████╗  █████╗  ██████╗  ██████╗ ██╗███╗   ██╗███████╗
-  ██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝ ██╔════╝ ██║████╗  ██║██╔════╝
-  ███████╗██████╔╝██████╔╝███████║██║  ███╗██║  ███╗██║██╔██╗ ██║███████╗
-  ╚════██║██╔═══╝ ██╔══██╗██╔══██║██║   ██║██║   ██║██║██║╚██╗██║╚════██║
-  ███████║██║     ██║  ██║██║  ██║╚██████╔╝╚██████╔╝██║██║ ╚████║███████║
-  ╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝╚═╝  ╚═══╝╚══════╝
-                              ██████╗ ███████╗
-                             ██╔═══██╗██╔════╝
-                             ██║   ██║███████╗
-                             ██║   ██║╚════██║
-                             ╚██████╔╝███████║
-                              ╚═════╝ ╚══════╝
-  ─────────────────────────────────────────────────────────────────────
-  OS:        SpragginsOS v2.0 (Portfolio Edition)
+  ╭─────────────────────────────────────────────────────────────╮
+  │   SpragginsOS v2.0 — Portfolio Edition                      │
+  ╰─────────────────────────────────────────────────────────────╯
+
   Host:      Austin Spraggins
   Role:      Co-Founder & CTO @ LineCrush
   Uptime:    2+ years in production
-  Shell:     bash 5.1.16
-  Terminal:  visitor@austin-portfolio
-  ─────────────────────────────────────────────────────────────────────
-  CPU:       353+ React Components
-  Memory:    100+ PostgreSQL Tables
-  Services:  45+ Python Microservices
-  AI:        4+ LLM Integrations
-  ─────────────────────────────────────────────────────────────────────
+  ───────────────────────────────────────────────────────────────
+  CPU:       800+ React Components
+  Memory:    120+ PostgreSQL Tables
+  Services:  115+ Python Backend Services
+  Commits:   25,000+ shipped
+  AI:        5 LLM Providers
+  ───────────────────────────────────────────────────────────────
 
-  Type 'help' for available commands.
-
+  Type 'help' for commands — or try 'neofetch'.
 `;
 
 const WELCOME_MESSAGE_MOBILE = `
@@ -457,10 +449,11 @@ const WELCOME_MESSAGE_MOBILE = `
 
   ────────────────────────────
 
-  Components:  353+
-  Services:    45+
-  DB Tables:   100+
-  LLMs:        4+
+  Components:  800+
+  Services:    115+
+  DB Tables:   120+
+  Commits:     25K+
+  LLMs:        5
 
   ────────────────────────────
 

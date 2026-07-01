@@ -1,38 +1,94 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { Menu, X } from "lucide-react";
+
+const navLinks = [
+	{ label: "About", href: "/#about" },
+	{ label: "Projects", href: "/#projects" },
+	{ label: "Expertise", href: "/#expertise" },
+	{ label: "Blog", href: "/blog" },
+	{ label: "Contact", href: "/#contact" }
+];
 
 const Header: React.FC = () => {
+	const [scrolled, setScrolled] = useState(false);
+	const [menuOpen, setMenuOpen] = useState(false);
+
+	useEffect(() => {
+		const onScroll = () => setScrolled(window.scrollY > 40);
+		onScroll();
+		window.addEventListener("scroll", onScroll, { passive: true });
+		return () => window.removeEventListener("scroll", onScroll);
+	}, []);
+
 	return (
-		<header className="bg-surface text-text shadow-md fixed w-full z-10">
-			<div className="container mx-auto px-4 py-3 flex justify-between items-center">
-				<Link href="/" className="flex items-center">
-					<Image
-						src="https://spraggins-designs.s3.us-east-1.amazonaws.com/images/sd-logo.webp"
-						alt="Spraggins Designs Logo"
-						width={40}
-						height={40}
-						className="mr-2"
-					/>
-					<span className="text-2xl font-heading font-bold text-primary">
-						Spraggins Designs
-					</span>
+		<header
+			className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+				scrolled || menuOpen
+					? "bg-background/80 backdrop-blur-md border-b border-border/40 shadow-lg shadow-background/20"
+					: "bg-transparent border-b border-transparent"
+			}`}
+		>
+			<div className="container mx-auto px-4 h-14 flex items-center justify-between">
+				<Link
+					href="/"
+					className="font-heading font-bold text-lg tracking-tight"
+					onClick={() => setMenuOpen(false)}
+				>
+					<span className="text-primary">Austin</span>{" "}
+					<span className="text-foreground">Spraggins</span>
 				</Link>
-				<nav>
-					<ul className="flex space-x-6">
-						{["Home", "About", "Projects", "Skills", "Contact"].map((item) => (
-							<li key={item}>
-								<Link
-									href={item === "Home" ? "/" : `#${item.toLowerCase()}`}
-									className="hover:text-primary transition-colors text-lg font-medium"
-								>
-									{item}
-								</Link>
-							</li>
-						))}
-					</ul>
+
+				{/* Desktop nav */}
+				<nav className="hidden md:flex items-center gap-6">
+					{navLinks.map((link) => (
+						<Link
+							key={link.label}
+							href={link.href}
+							className="text-sm text-muted-foreground hover:text-primary transition-colors"
+						>
+							{link.label}
+						</Link>
+					))}
+					<Link
+						href="/#contact"
+						className="text-sm font-semibold bg-primary text-background px-4 py-1.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
+					>
+						Hire Me
+					</Link>
 				</nav>
+
+				{/* Mobile menu button */}
+				<button
+					type="button"
+					className="md:hidden p-2 text-muted-foreground hover:text-primary transition-colors"
+					aria-label={menuOpen ? "Close menu" : "Open menu"}
+					aria-expanded={menuOpen}
+					onClick={() => setMenuOpen((open) => !open)}
+				>
+					{menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+				</button>
 			</div>
+
+			{/* Mobile nav */}
+			{menuOpen && (
+				<nav className="md:hidden bg-background/95 backdrop-blur-md border-b border-border/40">
+					<div className="container mx-auto px-4 py-3 flex flex-col gap-1">
+						{navLinks.map((link) => (
+							<Link
+								key={link.label}
+								href={link.href}
+								className="py-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
+								onClick={() => setMenuOpen(false)}
+							>
+								{link.label}
+							</Link>
+						))}
+					</div>
+				</nav>
+			)}
 		</header>
 	);
 };

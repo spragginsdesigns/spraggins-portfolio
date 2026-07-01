@@ -5,13 +5,13 @@ const Footer: React.FC = () => {
 	const currentYear = new Date().getFullYear();
 
 	return (
-		<footer className="bg-surface text-text py-8">
+		<footer className="bg-card/50 border-t border-border/50 text-foreground py-8">
 			<div className="container mx-auto px-4">
 				<div className="flex flex-col md:flex-row justify-between items-center">
 					<div className="mb-4 md:mb-0">
 						<p>&copy; {currentYear} Spraggins Designs. All rights reserved.</p>
 					</div>
-					<div className="flex space-x-4">
+					<div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
 						<Link href="/" className="hover:text-primary transition-colors">
 							Home
 						</Link>
@@ -28,10 +28,10 @@ const Footer: React.FC = () => {
 							Projects
 						</Link>
 						<Link
-							href="#skills"
+							href="#expertise"
 							className="hover:text-primary transition-colors"
 						>
-							Skills
+							Expertise
 						</Link>
 						<Link
 							href="#contact"

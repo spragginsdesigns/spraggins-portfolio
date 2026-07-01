@@ -7,10 +7,15 @@ export const metadata: Metadata = {
 	title: "Dev Blog | Austin Spraggins",
 	description:
 		"Thoughts on building AI-powered sports analytics, full-stack development, and startup life at LineCrush.",
+	alternates: {
+		canonical: "https://www.spragginsdesigns.xyz/blog"
+	},
 	openGraph: {
 		title: "Dev Blog | Austin Spraggins",
 		description:
-			"Thoughts on building AI-powered sports analytics, full-stack development, and startup life at LineCrush."
+			"Thoughts on building AI-powered sports analytics, full-stack development, and startup life at LineCrush.",
+		url: "https://www.spragginsdesigns.xyz/blog",
+		type: "website"
 	}
 };
 

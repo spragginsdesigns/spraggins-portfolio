@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
 import About from "@/components/About";
@@ -18,6 +19,7 @@ export default function Home() {
 	return (
 		<main className="bg-background min-h-screen relative">
 			<div className="relative z-10">
+				<Header />
 				<Hero />
 				<InteractiveTerminal />
 				<About />

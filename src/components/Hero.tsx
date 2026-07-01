@@ -11,7 +11,7 @@ import { ArrowRight, Github, Linkedin, Mail, Twitter, FileDown } from "lucide-re
 
 const Hero: React.FC = () => {
 	const tagline =
-		"I build production systems at scale. 350+ React components, 45+ microservices, 100+ database tables, and AI systems processing millions of data points.";
+		"I build production systems at scale. 800+ React components, 115+ backend services, 25,000+ commits, and AI systems processing millions of data points daily.";
 
 	const highlights = [
 		"Co-Founder & CTO",
@@ -181,17 +181,17 @@ const Hero: React.FC = () => {
 					transition={{ duration: 0.5, delay: 1 }}
 				>
 					<div className="text-center">
-						<div className="text-2xl font-bold text-primary">2+</div>
-						<div className="text-xs text-muted-foreground">Years Production</div>
+						<div className="text-2xl font-bold text-primary">25K+</div>
+						<div className="text-xs text-muted-foreground">Commits Shipped</div>
 					</div>
 					<div className="w-px bg-border/50" />
 					<div className="text-center">
-						<div className="text-2xl font-bold text-primary">4+</div>
-						<div className="text-xs text-muted-foreground">LLM Integrations</div>
+						<div className="text-2xl font-bold text-primary">5</div>
+						<div className="text-xs text-muted-foreground">LLM Providers</div>
 					</div>
 					<div className="w-px bg-border/50" />
 					<div className="text-center">
-						<div className="text-2xl font-bold text-primary">100+</div>
+						<div className="text-2xl font-bold text-primary">120+</div>
 						<div className="text-xs text-muted-foreground">DB Tables</div>
 					</div>
 				</motion.div>

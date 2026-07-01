@@ -1,6 +1,6 @@
 # Austin Spraggins | Co-Founder, CTO & Senior Software Engineer
 
-> Technical co-founder and CTO who architected and built an investor-backed sports analytics platform from zero to production. Deep expertise in AI/ML systems, having integrated 4+ LLMs into production workflows and leveraging AI-assisted development daily. Christian. Father of Julian and Lilly. Open to contracts & consulting.
+> Technical co-founder and CTO who architected and built an investor-backed sports analytics platform from zero to production — 25,000+ commits over 2+ years. Deep expertise in AI/ML systems: 5 LLM providers orchestrated in production, custom MCP servers, and agent infrastructure, with AI-assisted development woven into daily work. Christian. Father of Julian and Lilly. Open to contracts & consulting.
 
 ## Contact
 
@@ -31,11 +31,12 @@ To serve God, be a good father and provider, and build technology that makes the
 
 **Technical Leadership & Architecture**
 - Architected and built the entire technical platform from concept to production as sole technical founder, making all architecture decisions for a system now serving real users and attracting investor funding.
-- Designed scalable full-stack architecture comprising 353+ React components, 45+ Python microservices, 45+ API endpoints, and 100+ PostgreSQL database tables—all built and maintained independently.
+- Designed scalable full-stack architecture comprising 800+ React components, 115+ Python backend services, 145+ API endpoints, and 120+ PostgreSQL database tables—all built and maintained independently across web, native mobile, and browser-extension surfaces.
 - Own the complete technical roadmap including feature prioritization, infrastructure decisions, and technology selection while balancing startup velocity with code quality.
 
 **AI/ML Systems & Integration**
-- Integrated 4+ production LLM systems (OpenAI GPT-4, Anthropic Claude, Perplexity, Google Vision) for intelligent data processing, content generation, and automated analysis pipelines.
+- Orchestrated 5 production LLM providers (including OpenAI, Anthropic Claude, Google Gemini, and Perplexity) for intelligent data processing, content generation, and automated analysis pipelines.
+- Built custom Model Context Protocol (MCP) servers and autonomous agent infrastructure to accelerate development and operations.
 - Engineered sophisticated AI prompting systems with context management, response parsing, and fallback handling to ensure reliable AI-powered features at scale.
 - Built AI-assisted data pipelines combining web scraping, NLP processing, and LLM analysis to transform raw sports data into actionable insights.
 
@@ -89,17 +90,19 @@ To serve God, be a good father and provider, and build technology that makes the
 ## Key Achievements
 
 - Built investor-backed startup from zero lines of code to production platform
-- 353+ React components architected and maintained in production
-- 45+ Python microservices powering backend operations
-- 100+ database tables designed for scalability and performance
-- 4+ LLM integrations in production AI systems
+- 25,000+ commits shipped over 2+ years of continuous development
+- 800+ React components architected and maintained in production
+- 115+ Python backend services powering operations
+- 120+ database tables designed for scalability and performance
+- 5 LLM providers orchestrated in production AI systems
+- Custom MCP servers and agent infrastructure built in-house
 - 200+ students trained in web development fundamentals
 
 ---
 
 ## Projects
 
-- [LineCrush](https://www.linecrush.com): Investor-backed sports analytics platform - 353+ React components, 45+ Python microservices, 100+ database tables, 4+ LLM integrations
+- [LineCrush](https://www.linecrush.com): Investor-backed sports analytics platform - 800+ React components, 115+ Python backend services, 120+ database tables, 5 LLM providers
 - [SaveALife CPR](https://github.com/spragginsdesigns/savealife-cpr): Emergency response training application
 - [Bible AI Explorer](https://github.com/spragginsdesigns/bible-ai-explorer): AI-powered Bible study assistant
 - [AI Tutor WebApp](https://github.com/spragginsdesigns/ai-tutor-webapp): Educational AI tutoring platform

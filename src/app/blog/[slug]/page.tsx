@@ -32,11 +32,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	return {
 		title: `${post.title} | Austin Spraggins`,
 		description: post.description,
+		alternates: {
+			canonical: `https://www.spragginsdesigns.xyz/blog/${slug}`
+		},
+		authors: [{ name: "Austin Spraggins" }],
 		openGraph: {
 			title: post.title,
 			description: post.description,
 			type: "article",
-			publishedTime: post.date
+			publishedTime: post.date,
+			url: `https://www.spragginsdesigns.xyz/blog/${slug}`,
+			authors: ["Austin Spraggins"],
+			tags: post.tags,
+			images: [{ url: "/og-image.png", width: 1200, height: 630, alt: post.title }]
+		},
+		twitter: {
+			card: "summary_large_image",
+			title: post.title,
+			description: post.description,
+			creator: "@spragginsdesign"
 		}
 	};
 }
@@ -61,8 +75,36 @@ export default async function BlogPostPage({ params }: Props) {
 		notFound();
 	}
 
+	const blogPostJsonLd = {
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		headline: post.title,
+		description: post.description,
+		datePublished: post.date,
+		keywords: post.tags.join(", "),
+		url: `https://www.spragginsdesigns.xyz/blog/${slug}`,
+		author: {
+			"@type": "Person",
+			name: "Austin Spraggins",
+			url: "https://www.spragginsdesigns.xyz"
+		},
+		publisher: {
+			"@type": "Person",
+			name: "Austin Spraggins",
+			url: "https://www.spragginsdesigns.xyz"
+		},
+		mainEntityOfPage: {
+			"@type": "WebPage",
+			"@id": `https://www.spragginsdesigns.xyz/blog/${slug}`
+		}
+	};
+
 	return (
 		<main className="min-h-screen bg-background relative overflow-hidden">
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostJsonLd) }}
+			/>
 			{/* Reading Progress Bar */}
 			<ReadingProgress />
 
