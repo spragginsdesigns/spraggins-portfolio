@@ -1,0 +1,70 @@
+---
+title: "When Your Engineering Team Never Clocks Out"
+description: "What I learned handing real engineering chores to scheduled AI agents—and why the boring parts of the setup matter more than the AI."
+date: "2026-07-03"
+tags: ["AI", "Automation", "Engineering", "Workflow"]
+readTime: "6 min"
+featured: true
+---
+
+For two years I've been the guy who does the 6 AM check. Did the overnight jobs run? Did anything silently fail? Is there a dependency alert sitting in the inbox? It's fifteen minutes of work that quietly owns the first hour of every day.
+
+Last month I started handing that work to scheduled AI agents—autonomous runs that kick off on a cron schedule, do a defined job, and report back. No human at the keyboard.
+
+It's the closest thing I've felt to hiring since we started the company. And like every hire, the interesting lessons weren't about talent. They were about onboarding.
+
+## The Pitch Is Obvious. The Reality Is Specific.
+
+The pitch writes itself: an engineering team that never sleeps, never gets bored of repetitive work, and never forgets a step in the runbook.
+
+The reality is that an agent is only as good as the boundaries you draw around it. Here's what my first weeks actually looked like:
+
+- **Day one:** Agent runs perfectly, writes exactly what I asked for, then fails to push because the integration it runs under only has *read* access to the repo.
+- **Day three:** Agent completes the task but interprets "clean up" more ambitiously than I intended. Nothing was lost—because it couldn't push—but it was a wake-up call.
+- **Week two:** Agent catches a real problem I would have missed until Monday.
+
+Notice the pattern? The failures were never intelligence failures. They were *permissions, scope, and specification* failures. The same failures a new junior engineer would hit—except a junior engineer would walk over and ask.
+
+## Treat Agents Like New Hires, Not Like Cron Jobs
+
+A cron job does exactly what it's told and breaks loudly when the world changes. An agent adapts to the world changing—which is the whole point—but that means it needs the things you'd give a person:
+
+**A written runbook.** Vague prompts produce vague work. My scheduled tasks now read like onboarding docs: here's the goal, here's what done looks like, here's what you must never touch, here's how to report what happened.
+
+**Least privilege, granted deliberately.** My first agent couldn't push code. Annoying? Yes. But it made me *decide* what write access it should have instead of defaulting to everything. I'd rather chase a failed push than wake up to an unreviewed change on the main branch.
+
+**A review gate.** Everything an agent produces lands on a branch, as a draft, or in a report. A human merges. This isn't distrust—it's the same PR discipline I'd expect from any engineer, including myself.
+
+**A paper trail.** Every run ends with a summary: what it did, what it couldn't do, and what it needs from me. The runs that fail are often more valuable than the ones that succeed, because they show me where my systems have friction that a human was silently absorbing.
+
+## The Uncomfortable Mirror
+
+Here's the part I didn't expect.
+
+Writing runbooks for agents exposed how much of my own operational knowledge lived nowhere but my head. The morning check I'd done for two years? When I sat down to write it as instructions, I found steps I did out of habit that no longer mattered, and checks I *should* have been doing that I'd quietly dropped.
+
+The agent didn't just take work off my plate. It forced me to look at the plate.
+
+If you can't explain a task clearly enough for an agent to do it, that's rarely the agent's problem. It usually means the task was never actually defined—it was just absorbed by whoever cared the most. In a small company, that person is you, and it doesn't scale.
+
+## What Never Clocking Out Actually Buys You
+
+It's not that the work happens at 3 AM instead of 9 AM. It's what the mornings become.
+
+I used to start my day in reactive mode: checking, verifying, triaging. Now I start it by reading reports—here's what ran, here's what's healthy, here's the one thing that needs a decision. The checking still happens. I'm just no longer the one doing it.
+
+That shift—from performing the routine to *reviewing* the routine—is the real return. Deep work in the morning instead of janitorial work. Presence at dinner instead of "one more check" at night. As a dad of two, that last one isn't a productivity metric, but it's the one I care about most.
+
+## Where I'd Tell You to Start
+
+If you're thinking about handing work to scheduled agents, don't start with your most impressive task. Start with your most *boring* one:
+
+1. **Pick a chore you already do on a schedule.** Something with a clear definition of done.
+2. **Write the runbook first.** If you can't, the agent won't save you.
+3. **Give it read access only.** Let it earn write access the way a new hire earns trust—by producing reviewable work.
+4. **Read every report for the first two weeks.** You're not checking the agent's work so much as debugging your own instructions.
+5. **Expect the failures to be plumbing.** Permissions, credentials, access scopes. Boring. Fixable. And each one is a fix you only make once.
+
+The technology gets the headlines. But the teams that get real leverage from agents won't be the ones with the cleverest prompts. They'll be the ones who did the unglamorous work of defining their tasks, scoping their permissions, and building review gates—the same disciplines that made human teams work all along.
+
+Your engineering team can now work while you sleep. Just make sure you've told it what the job actually is—and that you're still the one who signs off in the morning.
