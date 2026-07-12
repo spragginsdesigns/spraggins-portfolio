@@ -5,9 +5,10 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-	{ label: "About", href: "/#about" },
+	{ label: "AI Systems", href: "/#ai-systems" },
 	{ label: "Projects", href: "/#projects" },
 	{ label: "Expertise", href: "/#expertise" },
+	{ label: "About", href: "/#about" },
 	{ label: "Blog", href: "/blog" },
 	{ label: "Contact", href: "/#contact" }
 ];
@@ -42,7 +43,7 @@ const Header: React.FC = () => {
 				</Link>
 
 				{/* Desktop nav */}
-				<nav className="hidden md:flex items-center gap-6">
+				<nav className="hidden lg:flex items-center gap-5">
 					{navLinks.map((link) => (
 						<Link
 							key={link.label}
@@ -63,7 +64,7 @@ const Header: React.FC = () => {
 				{/* Mobile menu button */}
 				<button
 					type="button"
-					className="md:hidden p-2 text-muted-foreground hover:text-primary transition-colors"
+					className="lg:hidden p-2 text-muted-foreground hover:text-primary transition-colors"
 					aria-label={menuOpen ? "Close menu" : "Open menu"}
 					aria-expanded={menuOpen}
 					onClick={() => setMenuOpen((open) => !open)}
@@ -74,7 +75,7 @@ const Header: React.FC = () => {
 
 			{/* Mobile nav */}
 			{menuOpen && (
-				<nav className="md:hidden bg-background/95 backdrop-blur-md border-b border-border/40">
+				<nav className="lg:hidden bg-background/95 backdrop-blur-md border-b border-border/40">
 					<div className="container mx-auto px-4 py-3 flex flex-col gap-1">
 						{navLinks.map((link) => (
 							<Link

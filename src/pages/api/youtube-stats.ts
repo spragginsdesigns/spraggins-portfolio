@@ -1,26 +1,34 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 const CHANNEL_ID = "UCG33v2g2KT3hXXWLLbCFBcA";
+const EMPTY_STATS = { viewCount: "0", subscriberCount: "0", videoCount: "0" };
 
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
+	const apiKey = process.env.YOUTUBE_API_KEY;
+	if (!apiKey) {
+		return res.status(200).json(EMPTY_STATS);
+	}
+
 	try {
 		const response = await fetch(
-			`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${YOUTUBE_API_KEY}`
+			`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${apiKey}`
 		);
-		const data = await response.json();
-		console.log("YouTube API response:", data); // Debug log
-		if (data.items && data.items.length > 0 && data.items[0].statistics) {
-			res.status(200).json(data.items[0].statistics);
-		} else {
-			console.error("Unexpected API response structure:", data);
-			res.status(500).json({ error: "Unexpected API response structure" });
+		if (!response.ok) {
+			console.warn(`YouTube stats unavailable (${response.status})`);
+			return res.status(200).json(EMPTY_STATS);
 		}
-	} catch (error) {
-		console.error("Error fetching YouTube stats:", error);
-		res.status(500).json({ error: "Error fetching YouTube stats" });
+
+		const data = await response.json();
+		if (data.items && data.items.length > 0 && data.items[0].statistics) {
+			return res.status(200).json(data.items[0].statistics);
+		}
+
+		return res.status(200).json(EMPTY_STATS);
+	} catch {
+		console.warn("YouTube stats unavailable");
+		return res.status(200).json(EMPTY_STATS);
 	}
 }

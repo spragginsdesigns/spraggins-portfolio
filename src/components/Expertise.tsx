@@ -94,18 +94,18 @@ const Expertise: React.FC = () => {
 	const expertiseAreas = [
 		{
 			icon: <Brain className="w-5 h-5" />,
-			title: "AI/ML Engineering",
+			title: "Agentic AI Engineering",
 			description:
-				"Built production AI systems orchestrating 5 LLM providers. Custom MCP servers, agent harnesses, streaming responses, and NLP pipelines processing millions of data points.",
-			skills: ["OpenAI", "Anthropic", "Gemini", "Perplexity", "MCP Servers", "AI Agents", "Prompt Engineering"],
+				"Built autonomous delivery agents and multi-model product systems with durable sessions, provider routing, custom MCP tooling, evidence gates, streaming, vision, and NLP pipelines.",
+			skills: ["Codex", "Claude", "OpenAI", "Gemini", "Perplexity", "MCP", "Agent Skills"],
 			gradient: "bg-gradient-to-br from-purple-500 to-pink-500"
 		},
 		{
 			icon: <Layers className="w-5 h-5" />,
 			title: "Full-Stack Architecture",
 			description:
-				"Designed and built an 800+ component React frontend with 115+ Python backend services. End-to-end ownership from database schema to user interface.",
-			skills: ["Next.js 15", "React", "TypeScript", "Python", "Node.js", "PostgreSQL"],
+				"Owns a production platform spanning nearly 1,000 TSX modules, 366 API handlers, Python data services, native iOS and Android clients, and browser extensions.",
+			skills: ["Next.js 15", "React", "TypeScript", "Python", "SwiftUI", "Kotlin", "PostgreSQL"],
 			gradient: "bg-gradient-to-br from-cyan-500 to-blue-500"
 		},
 		{
@@ -128,8 +128,8 @@ const Expertise: React.FC = () => {
 			icon: <Users className="w-5 h-5" />,
 			title: "Technical Leadership",
 			description:
-				"As Co-Founder & CTO, I make all architectural decisions, manage technical strategy, and built LineCrush almost entirely solo over 2+ years.",
-			skills: ["CTO", "Architecture", "Strategy", "Code Review", "System Design"],
+				"As Co-Founder and CTO, I set technical direction, translate product bets into architecture, and created the agent workflows that let a small team ship with serious leverage.",
+			skills: ["CTO", "Architecture", "Product Strategy", "Agent Operations", "Code Review"],
 			gradient: "bg-gradient-to-br from-yellow-500 to-amber-500"
 		},
 		{
@@ -143,12 +143,12 @@ const Expertise: React.FC = () => {
 	];
 
 	const stats = [
-		{ value: "800+", label: "React Components" },
-		{ value: "115+", label: "Backend Services" },
-		{ value: "145+", label: "API Endpoints" },
-		{ value: "120+", label: "Database Tables" },
-		{ value: "25K+", label: "Commits Shipped" },
-		{ value: "2+", label: "Years Production" }
+		{ value: "27K+", label: "Monorepo Commits" },
+		{ value: "64", label: "Agent Skills" },
+		{ value: "366", label: "API Handlers" },
+		{ value: "4", label: "Product Clients" },
+		{ value: "2", label: "Native Game Builds" },
+		{ value: "2+", label: "Years in Production" }
 	];
 
 	return (
@@ -165,7 +165,7 @@ const Expertise: React.FC = () => {
 						Expertise & Impact
 					</h2>
 					<p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-						Building production systems at scale. From AI-powered analytics to real-time data pipelines.
+						Architecture, product intelligence, autonomous delivery, and the infrastructure to run it all.
 					</p>
 				</motion.div>
 

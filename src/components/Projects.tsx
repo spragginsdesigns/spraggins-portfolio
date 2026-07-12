@@ -6,21 +6,20 @@ import { useInView } from "react-intersection-observer";
 import {
 	ExternalLink,
 	Layers,
-	Database,
 	Brain,
-	Server,
 	Zap,
 	Globe,
 	Code2,
 	Github,
 	Star,
 	Heart,
-	Shield,
 	BookOpen,
 	GraduationCap,
 	Building2,
-	Terminal,
-	Wrench
+	Gamepad2,
+	Bot,
+	Box,
+	MonitorCheck
 } from "lucide-react";
 import { FaYoutube, FaEye, FaUsers, FaVideo } from "react-icons/fa";
 import { Card } from "@/components/ui/card";
@@ -29,24 +28,24 @@ import { Button } from "@/components/ui/button";
 
 const lineCrushFeatures = [
 	{
-		icon: <Layers className="w-5 h-5" />,
-		title: "800+ Components",
-		description: "React/Next.js frontend"
-	},
-	{
-		icon: <Server className="w-5 h-5" />,
-		title: "115+ Services",
-		description: "Python backend modules"
+		icon: <Bot className="w-5 h-5" />,
+		title: "Autonomous Delivery",
+		description: "Agents take issues through proof"
 	},
 	{
 		icon: <Brain className="w-5 h-5" />,
-		title: "5 LLM Providers",
-		description: "AI orchestration"
+		title: "Multi-model AI",
+		description: "Research, picks, reports, vision"
 	},
 	{
-		icon: <Database className="w-5 h-5" />,
-		title: "120+ Tables",
-		description: "PostgreSQL schema"
+		icon: <Layers className="w-5 h-5" />,
+		title: "4 Product Clients",
+		description: "Web, iOS, Android, extensions"
+	},
+	{
+		icon: <Zap className="w-5 h-5" />,
+		title: "Realtime Platform",
+		description: "Signals, alerts, live data"
 	}
 ];
 
@@ -56,10 +55,33 @@ const lineCrushTechStack = [
 	"Python",
 	"PostgreSQL",
 	"Redis",
-	"OpenAI",
-	"Anthropic",
+	"Codex + Claude",
+	"OpenAI + Gemini",
 	"AWS",
 	"Vercel"
+];
+
+const lineCrushGamesHighlights = [
+	{
+		icon: <Gamepad2 className="w-5 h-5" />,
+		title: "Space Miner",
+		description: "Steam Deck-first 2.5D survival miner"
+	},
+	{
+		icon: <Box className="w-5 h-5" />,
+		title: "AI Asset Pipeline",
+		description: "Concepts, rigged models, audio, UI art"
+	},
+	{
+		icon: <Bot className="w-5 h-5" />,
+		title: "Agent-controlled Godot",
+		description: "Scenes, scripts, captures, playtests"
+	},
+	{
+		icon: <MonitorCheck className="w-5 h-5" />,
+		title: "Native Builds",
+		description: "Windows and Linux / Steam Deck proven"
+	}
 ];
 
 // Featured projects with more detail
@@ -217,10 +239,10 @@ const FeaturedProject: React.FC = () => {
 							LineCrush
 						</h3>
 						<p className="text-muted-foreground mb-6 text-lg leading-relaxed">
-							Enterprise-grade sports analytics platform I architected as sole technical
-							founder — 25,000+ commits over 2+ years. Real-time AI-powered insights,
-							automated data pipelines, and production infrastructure serving users 24/7
-							across web, mobile, and browser extensions.
+							The production sports intelligence platform I architect as Co-Founder and CTO.
+							It combines AI picks, realtime signal search, vision-powered betslip analysis,
+							autonomous engineering agents, and one shared data platform across web, native
+							mobile, and browser extensions.
 						</p>
 
 						{/* Feature Grid */}
@@ -294,6 +316,71 @@ const FeaturedProject: React.FC = () => {
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</Card>
+		</motion.div>
+	);
+};
+
+const LineCrushGamesProject: React.FC = () => {
+	const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
+	return (
+		<motion.div
+			ref={ref}
+			initial={{ opacity: 0, y: 30 }}
+			animate={inView ? { opacity: 1, y: 0 } : {}}
+			transition={{ duration: 0.6 }}
+			className="mb-12"
+		>
+			<Card className="overflow-hidden border-violet-500/20 bg-gradient-to-br from-card via-card to-violet-950/20">
+				<div className="grid gap-8 p-8 md:grid-cols-2">
+					<div className="flex flex-col justify-center">
+						<div className="mb-4 flex flex-wrap items-center gap-3">
+							<Badge className="border-violet-400/30 bg-violet-500/15 text-violet-300">
+								LineCrush R&amp;D
+							</Badge>
+							<Badge variant="outline" className="border-cyan-500/40 text-cyan-300">
+								AI-native game studio
+							</Badge>
+						</div>
+						<h3 className="mb-4 bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
+							LineCrush Games
+						</h3>
+						<p className="mb-6 text-lg leading-relaxed text-muted-foreground">
+							I&apos;m building original Godot titles with an AI-accelerated studio workflow:
+							agents can operate the editor, generate and rig production assets, run headless
+							tests and captures, and create repeatable installable builds. Human product taste
+							still owns every gameplay, feel, and art-direction call.
+						</p>
+						<div className="mb-6 flex flex-wrap gap-2">
+							{["Godot 4.7", "GDScript", "Godot MCP", "3D Asset Pipelines", "Headless QA", "Steam Deck"].map((tech) => (
+								<Badge key={tech} variant="secondary" className="text-xs">
+									{tech}
+								</Badge>
+							))}
+						</div>
+						<p className="text-sm font-medium text-violet-200/90">
+							Space Miner, RockHunter, and MERIDIAN are active original game projects.
+						</p>
+					</div>
+
+					<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+						{lineCrushGamesHighlights.map((feature) => (
+							<div
+								key={feature.title}
+								className="rounded-xl border border-border/50 bg-background/60 p-4"
+							>
+								<div className="mb-3 w-fit rounded-lg bg-violet-500/10 p-2 text-violet-300">
+									{feature.icon}
+								</div>
+								<div className="font-semibold">{feature.title}</div>
+								<div className="mt-1 text-sm leading-relaxed text-muted-foreground">
+									{feature.description}
+								</div>
+							</div>
+						))}
 					</div>
 				</div>
 			</Card>
@@ -507,18 +594,19 @@ const Projects: React.FC = () => {
 					className="text-center mb-12"
 				>
 					<h2 className="text-4xl md:text-5xl font-heading font-bold mb-4">
-						Projects
+						Selected Products
 					</h2>
 					<p className="text-muted-foreground max-w-2xl mx-auto">
-						From enterprise SaaS platforms to business automation tools and AI-powered applications
+						Production AI platforms, autonomous delivery systems, original games, and focused independent work.
 					</p>
 				</motion.div>
 
 				{/* LineCrush - Main Featured */}
 				<FeaturedProject />
+				<LineCrushGamesProject />
 
 				{/* Featured Projects Grid */}
-				<h3 className="text-2xl font-bold mb-6">Featured Projects</h3>
+				<h3 className="text-2xl font-bold mb-6">Independent &amp; Client Work</h3>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
 					{featuredProjects.map((project, index) => (
 						<FeaturedProjectCard key={index} project={project} index={index} />

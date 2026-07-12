@@ -11,13 +11,13 @@ import { ArrowRight, Github, Linkedin, Mail, Twitter, FileDown } from "lucide-re
 
 const Hero: React.FC = () => {
 	const tagline =
-		"I build production systems at scale. 800+ React components, 115+ backend services, 25,000+ commits, and AI systems processing millions of data points daily.";
+		"I build AI agents that ship production software—and the platforms they run. At LineCrush, that means autonomous delivery, multi-model intelligence, native apps, and an AI-native game studio.";
 
 	const highlights = [
 		"Co-Founder & CTO",
-		"Full Stack",
-		"AI/ML",
-		"DevOps",
+		"AI Systems",
+		"Agent Orchestration",
+		"Full-Stack Product",
 	];
 
 	return (
@@ -43,7 +43,7 @@ const Hero: React.FC = () => {
 						>
 							<Badge className="bg-cyan-500/20 text-cyan-400 border-cyan-500/30 px-3 md:px-4 py-1 md:py-1.5 text-xs md:text-sm">
 								<span className="w-2 h-2 bg-cyan-400 rounded-full mr-2 animate-pulse inline-block" />
-								Open to Contracts & Consulting
+								Building Production AI at LineCrush
 							</Badge>
 						</motion.div>
 
@@ -181,18 +181,18 @@ const Hero: React.FC = () => {
 					transition={{ duration: 0.5, delay: 1 }}
 				>
 					<div className="text-center">
-						<div className="text-2xl font-bold text-primary">25K+</div>
-						<div className="text-xs text-muted-foreground">Commits Shipped</div>
+						<div className="text-2xl font-bold text-primary">27K+</div>
+						<div className="text-xs text-muted-foreground">Monorepo Commits</div>
 					</div>
 					<div className="w-px bg-border/50" />
 					<div className="text-center">
-						<div className="text-2xl font-bold text-primary">5</div>
-						<div className="text-xs text-muted-foreground">LLM Providers</div>
+						<div className="text-2xl font-bold text-primary">64</div>
+						<div className="text-xs text-muted-foreground">Agent Skills</div>
 					</div>
 					<div className="w-px bg-border/50" />
 					<div className="text-center">
-						<div className="text-2xl font-bold text-primary">120+</div>
-						<div className="text-xs text-muted-foreground">DB Tables</div>
+						<div className="text-2xl font-bold text-primary">366</div>
+						<div className="text-xs text-muted-foreground">API Handlers</div>
 					</div>
 				</motion.div>
 			</div>

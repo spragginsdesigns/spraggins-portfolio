@@ -114,9 +114,10 @@ const About: React.FC = () => {
 					</div>
 					<p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
 						As Co-Founder & CTO at LineCrush Inc, I own every layer of our stack —
-						25,000+ commits over 2+ years of 12+ hour days building production systems
-						that serve users 24/7. When the right tool doesn&apos;t exist, I build it:
-						custom MCP servers, agent harnesses, and automation that runs the shop.
+						27,000+ monorepo commits across web, Python services, native mobile, and
+						games. I built an agent operating system around that work: durable Codex
+						and Claude sessions, custom MCP tooling, shared skills, proof gates, and
+						autonomous issue-to-production delivery.
 					</p>
 
 					{/* Tech highlights */}
@@ -124,7 +125,7 @@ const About: React.FC = () => {
 						<div className="bg-card/50 rounded-lg p-4 text-center border border-border/50">
 							<Brain className="w-6 h-6 text-primary mx-auto mb-2" />
 							<div className="text-sm font-medium">AI/ML</div>
-							<div className="text-xs text-muted-foreground">5 LLM Providers</div>
+							<div className="text-xs text-muted-foreground">Agents + Product AI</div>
 						</div>
 						<div className="bg-card/50 rounded-lg p-4 text-center border border-border/50">
 							<Code className="w-6 h-6 text-primary mx-auto mb-2" />
@@ -148,6 +149,7 @@ const About: React.FC = () => {
 						<Badge variant="secondary">Full Stack</Badge>
 						<Badge variant="secondary">System Design</Badge>
 						<Badge variant="secondary">DevOps</Badge>
+						<Badge variant="secondary">Game Systems</Badge>
 					</div>
 				</div>
 			),

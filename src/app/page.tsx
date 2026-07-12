@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
+import AISystems from "@/components/AISystems";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Expertise from "@/components/Expertise";
@@ -22,9 +23,10 @@ export default function Home() {
 				<Header />
 				<Hero />
 				<InteractiveTerminal />
-				<About />
+				<AISystems />
 				<Projects />
 				<Expertise />
+				<About />
 				<BlogPreview posts={posts} />
 				<ErrorBoundary>
 					<GitHubShowcase />

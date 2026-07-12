@@ -11,21 +11,21 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-	title: "Austin Spraggins | CTO, AI Engineer, Builder",
+	title: "Austin Spraggins | CTO & Agentic AI Engineer",
 	description:
-		"Co-Founder & CTO building production AI systems at scale. 800+ React components, 115+ Python services, 25,000+ commits, and 5 LLM providers in production. Full-stack expertise in Next.js, TypeScript, Python, PostgreSQL, and cloud infrastructure. Open to contracts & consulting.",
+		"Co-Founder and CTO building autonomous engineering agents, multi-model product intelligence, native apps, and AI-assisted games at LineCrush. 27,000+ monorepo commits across Next.js, Python, PostgreSQL, SwiftUI, Kotlin, and Godot.",
 	authors: [{ name: "Austin Spraggins", url: "https://www.spragginsdesigns.xyz" }],
 	creator: "Austin Spraggins",
 	keywords:
-		"Austin Spraggins, CTO, Co-Founder, Senior Software Engineer, Full Stack Developer, AI Engineer, LLM Integration, MCP Servers, AI Agents, React, Next.js, TypeScript, Python, PostgreSQL, LineCrush, DevOps, System Architecture, Fresno CA, Contract Software Engineer, Consulting",
+		"Austin Spraggins, CTO, Co-Founder, Agentic AI Engineer, AI Agents, Autonomous Software Delivery, LLM Orchestration, MCP Servers, Codex, Claude, React, Next.js, TypeScript, Python, PostgreSQL, Godot, LineCrush, LineCrush Games, System Architecture, Fresno CA",
 	metadataBase: new URL("https://www.spragginsdesigns.xyz"),
 	alternates: {
 		canonical: "https://www.spragginsdesigns.xyz"
 	},
 	openGraph: {
-		title: "Austin Spraggins | CTO, AI Engineer, Builder",
+		title: "Austin Spraggins | CTO & Agentic AI Engineer",
 		description:
-			"Co-Founder & CTO building production AI systems at scale. 800+ React components, 115+ Python services, 25,000+ commits. Available for contracts and consulting.",
+			"Building autonomous engineering agents, multi-model product intelligence, native apps, and AI-assisted games at LineCrush.",
 		url: "https://www.spragginsdesigns.xyz/",
 		siteName: "Austin Spraggins - Senior Software Engineer",
 		images: [
@@ -41,9 +41,9 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Austin Spraggins | CTO, AI Engineer, Builder",
+		title: "Austin Spraggins | CTO & Agentic AI Engineer",
 		description:
-			"Co-Founder & CTO building production AI systems at scale. 800+ React components, 115+ Python services, 25,000+ commits. Available for contracts and consulting.",
+			"Building autonomous engineering agents, multi-model product intelligence, native apps, and AI-assisted games at LineCrush.",
 		images: [
 			{
 				url: "/og-image.png",
@@ -96,6 +96,8 @@ const personJsonLd = {
 	knowsAbout: [
 		"Full-Stack Development",
 		"AI Engineering",
+		"Autonomous Software Agents",
+		"Agent Orchestration",
 		"LLM Integration",
 		"MCP Servers",
 		"Next.js",
@@ -104,7 +106,8 @@ const personJsonLd = {
 		"Python",
 		"PostgreSQL",
 		"System Architecture",
-		"DevOps"
+		"DevOps",
+		"Godot Game Development"
 	],
 	sameAs: [
 		"https://github.com/spragginsdesigns",

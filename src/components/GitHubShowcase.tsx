@@ -14,14 +14,11 @@ import {
 import Image from "next/image";
 
 const fetchGitHubData = async () => {
-	const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-	const headers = token ? { Authorization: `Bearer ${token}` } : {};
 	try {
 		const [userResponse, reposResponse] = await Promise.all([
-			axios.get("https://api.github.com/users/spragginsdesigns", { headers }),
+			axios.get("https://api.github.com/users/spragginsdesigns"),
 			axios.get(
-				"https://api.github.com/users/spragginsdesigns/repos?sort=updated&per_page=10",
-				{ headers }
+				"https://api.github.com/users/spragginsdesigns/repos?sort=updated&per_page=10"
 			)
 		]);
 		return { user: userResponse.data, repos: reposResponse.data };

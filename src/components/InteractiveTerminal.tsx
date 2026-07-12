@@ -22,8 +22,10 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   ─────────────────────────────────────────────────────────────
   about       →  Who is Austin Spraggins?
   skills      →  Technical skills & expertise
-  experience  →  Work history & roles
-  projects    →  Featured projects
+	  experience  →  Work history & roles
+	  projects    →  Featured projects
+	  agents      →  Autonomous AI delivery system
+	  games       →  LineCrush Games studio
   education   →  Educational background
   contact     →  Get in touch
   resume      →  View full resume
@@ -64,12 +66,12 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   to CTO. My journey taught me discipline, problem-solving, and
   the value of hard work.
 
-  Today, I architect production systems at scale:
-  • 800+ React components built
-  • 115+ Python backend services deployed
-  • 120+ PostgreSQL tables designed
-  • 25,000+ commits shipped in 2+ years
-  • 5 LLM providers orchestrated in production
+	  Today, I architect AI-native production systems at scale:
+	  • 27,000+ monorepo commits
+	  • Nearly 1,000 tracked TSX modules and 366 API handlers
+	  • 64 agent skills shared across autonomous workflows
+	  • Web, iOS, Android, and browser-extension clients
+	  • Native Godot builds proven for Windows and Steam Deck
 
   I believe technology should extend human gifts, not replace
   them. My mission is to build tools that make the world more
@@ -114,15 +116,15 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   │  LineCrush Inc. | 2024 - Present                        │
   └─────────────────────────────────────────────────────────┘
 
-  Sole technical founder of an AI-powered sports analytics
-  platform serving users across web, mobile, and extensions.
+	  Technical co-founder of an AI-powered sports intelligence
+	  platform serving users across web, mobile, and extensions.
 
   Key Achievements:
   • Architected full-stack platform from ground up
-  • Built 800+ React components, 115+ Python services
-  • Designed 120+ PostgreSQL tables with Redis caching
-  • Orchestrated 5 LLM providers for intelligent analytics
-  • 25,000+ commits shipped, 24/7 production infrastructure
+	  • Built nearly 1,000 TSX modules and 366 API handlers
+	  • Ships AI picks, signal search, vision analysis, and reports
+	  • Created a 64-skill agent operating system for delivery
+	  • 27,000+ commits across web, data, native, and games
 
   ─────────────────────────────────────────────────────────────
 
@@ -146,8 +148,14 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   ──────────────────────────────────────────────────────────
   Sports analytics platform with AI-powered insights
   Tech: Next.js, Python, PostgreSQL, Redis, AWS
-  Stats: 800+ components | 115+ services | 120+ tables
-  URL: https://linecrush.com
+	  Systems: product AI | autonomous agents | 4 clients
+	  URL: https://linecrush.com
+
+	  ★ LINECRUSH GAMES (Private R&D)
+	  ──────────────────────────────────────────────────────────
+	  AI-native Godot studio: Space Miner, RockHunter, MERIDIAN
+	  Tech: Godot 4.7, GDScript, MCP, 3D asset pipelines
+	  Builds: Windows + Linux / Steam Deck smoke-proven
 
   ◆ BIBLE AI EXPLORER
   ──────────────────────────────────────────────────────────
@@ -165,7 +173,43 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   Educational AI assistant for students
   Tech: Next.js, OpenAI, Tailwind
 
-  Type 'socials' to view GitHub for more projects →
+	  Type 'socials' to view GitHub for more projects →
+`,
+
+	agents: () => `
+╭─────────────────────────────────────────────────────────────╮
+│                 AUTONOMOUS DELIVERY SYSTEM                  │
+╰─────────────────────────────────────────────────────────────╯
+
+	  Linear Issue
+	      ↓
+	  Investigate → Build → Prove → Review → Gate → Ship
+
+	  • Durable Codex and Claude sessions
+	  • Provider-neutral recovery and model routing
+	  • 64 shared agent skills and custom MCP tooling
+	  • Real product-path evidence before closeout
+	  • Web, Python, SwiftUI, Kotlin, and infrastructure lanes
+
+	  The goal isn't code generation. It's trustworthy delivery.
+`,
+
+	games: () => `
+╭─────────────────────────────────────────────────────────────╮
+│                    LINECRUSH GAMES                          │
+╰─────────────────────────────────────────────────────────────╯
+
+	  SPACE MINER   → Steam Deck-first 2.5D survival miner
+	  ROCKHUNTER    → Playable mining-action spinoff
+	  MERIDIAN      → Story-first 3D space adventure
+
+	  Studio pipeline:
+	  • Agent-controlled Godot scenes, scripts, and playtests
+	  • Generated concepts, rigged 3D models, UI art, and audio
+	  • Predictive enemy behavior and gameplay automation
+	  • Headless tests, captures, and repeatable native exports
+
+	  Windows and Linux / Steam Deck builds are smoke-proven.
 `,
 
 	education: () => `
@@ -386,10 +430,10 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   Shell:     bash 5.1.16
   Terminal:  visitor@austin-portfolio
   ─────────────────────────────────────────────────────────────────────
-  CPU:       800+ React Components
-  Memory:    120+ PostgreSQL Tables
-  Services:  115+ Python Backend Services
-  AI:        5 LLM Providers
+	  Commits:   27K+ across the monorepo
+	  APIs:      366 tracked handlers
+	  Agents:    64 shared skills
+	  Clients:   Web + iOS + Android + extensions
   ─────────────────────────────────────────────────────────────────────
 `,
 
@@ -399,7 +443,9 @@ const COMMANDS: Record<string, () => string | React.ReactNode> = {
   about       - Display information about Austin
   skills      - Show technical skills
   experience  - View work history
-  projects    - List featured projects
+	  projects    - List featured projects
+	  agents      - Autonomous AI delivery system
+	  games       - LineCrush Games studio
   education   - Educational background
   contact     - Contact information
   resume      - Full resume
@@ -426,11 +472,11 @@ const WELCOME_MESSAGE_DESKTOP = `
   Role:      Co-Founder & CTO @ LineCrush
   Uptime:    2+ years in production
   ───────────────────────────────────────────────────────────────
-  CPU:       800+ React Components
-  Memory:    120+ PostgreSQL Tables
-  Services:  115+ Python Backend Services
-  Commits:   25,000+ shipped
-  AI:        5 LLM Providers
+	  Commits:   27,000+ across the monorepo
+	  APIs:      366 tracked handlers
+	  Agents:    64 shared skills
+	  Clients:   Web + iOS + Android + extensions
+	  Games:     Native Windows + Steam Deck builds
   ───────────────────────────────────────────────────────────────
 
   Type 'help' for commands — or try 'neofetch'.
@@ -449,11 +495,11 @@ const WELCOME_MESSAGE_MOBILE = `
 
   ────────────────────────────
 
-  Components:  800+
-  Services:    115+
-  DB Tables:   120+
-  Commits:     25K+
-  LLMs:        5
+	  Commits:     27K+
+	  APIs:        366
+	  Agent skills: 64
+	  Clients:     4
+	  Game builds: 2
 
   ────────────────────────────
 

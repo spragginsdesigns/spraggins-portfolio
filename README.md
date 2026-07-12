@@ -10,11 +10,14 @@ Personal portfolio website showcasing my work as **Co-Founder, CTO & Senior Soft
 
 ## About Me
 
-I build production systems at scale. At LineCrush, I've architected and built:
-- **353+ React components** in a Next.js 15 frontend
-- **45+ Python microservices** handling real-time data
-- **100+ PostgreSQL tables** with complex relationships
-- **4+ LLM integrations** (OpenAI, Anthropic, Perplexity, Google Vision)
+I build AI agents that ship production software—and the platforms they run. At LineCrush, that includes:
+
+- **27,000+ monorepo commits** across product, data, native, agent, and game work
+- **Nearly 1,000 tracked TSX modules** and **366 API handlers**
+- **64 tracked agent skills** powering autonomous investigation, implementation, proof, review, and release
+- **Multi-model product intelligence** across OpenAI, Gemini, Claude, Perplexity, and vision/OCR workflows
+- **Four client surfaces:** web, native iOS, native Android, and browser extensions
+- **LineCrush Games:** AI-accelerated Godot production with proven Windows and Linux / Steam Deck builds
 
 Currently open to contracts and consulting opportunities.
 
@@ -32,7 +35,8 @@ Currently open to contracts and consulting opportunities.
 - **Frontend:** Next.js 15, React, TypeScript, Tailwind CSS
 - **Backend:** Python, Node.js
 - **Database:** PostgreSQL (Neon), Redis
-- **AI/ML:** OpenAI, Anthropic, Perplexity, Google Vision
+- **AI/Agents:** Codex, Claude, OpenAI, Gemini, Perplexity, MCP, vision/OCR
+- **Native & Games:** SwiftUI, Kotlin/Compose, Godot 4.7, GDScript
 - **Infrastructure:** AWS (S3, SES, CloudFront), Ubuntu VPS, Docker
 
 ## Features
@@ -43,6 +47,12 @@ Currently open to contracts and consulting opportunities.
 - Responsive profile image with glow effect
 - Role badges and floating stat cards
 - "Open to Contracts & Consulting" status indicator
+
+### AI Systems
+- Autonomous Linear-to-production delivery loop
+- Durable Codex and Claude sessions with recovery
+- Multi-model product intelligence and custom MCP tooling
+- AI-native game production with agent-controlled Godot workflows
 
 ### My Journey (Timeline)
 - Scroll-animated timeline showing career progression
@@ -60,7 +70,8 @@ Currently open to contracts and consulting opportunities.
   - Data Engineering
 
 ### Projects Showcase
-- **LineCrush** (Flagship) - Full-stack sports analytics platform
+- **LineCrush** (Flagship) - AI sports intelligence plus autonomous delivery agents
+- **LineCrush Games** - Private AI-native game studio building Space Miner, RockHunter, and MERIDIAN
 - **Featured Projects:**
   - SaveALife CPR - Business automation system
   - Constrong - Client project for concrete contractor
@@ -96,11 +107,13 @@ pnpm start
 
 ## Environment Variables
 
-Create `.env.local` with:
+Create `.env.local` with server-only secrets as needed:
 ```
 GMAIL_APP_PASSWORD=your_gmail_app_password
 YOUTUBE_API_KEY=your_youtube_api_key
 ```
+
+Never expose provider tokens through `NEXT_PUBLIC_*` variables. Public GitHub profile data is fetched without a client-side token.
 
 ## Connect With Me
 

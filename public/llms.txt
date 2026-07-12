@@ -1,121 +1,87 @@
-# Austin Spraggins | Co-Founder, CTO & Senior Software Engineer
+# Austin Spraggins | Co-Founder, CTO & Agentic AI Engineer
 
-> Technical co-founder and CTO who architected and built an investor-backed sports analytics platform from zero to production — 25,000+ commits over 2+ years. Deep expertise in AI/ML systems: 5 LLM providers orchestrated in production, custom MCP servers, and agent infrastructure, with AI-assisted development woven into daily work. Christian. Father of Julian and Lilly. Open to contracts & consulting.
+> Austin builds AI agents that ship production software—and the products, native clients, data systems, and game pipelines those agents support. He is Co-Founder and CTO at LineCrush Inc in Fresno, California.
 
 ## Contact
 
-- Phone: 559-818-0467
 - Email: spragginsdesigns@gmail.com
-- Location: Fresno, CA, USA
-- Status: Open to contracts & consulting
+- Location: Fresno, California, USA
+- Status: Open to contracts and consulting
 
 ## Links
 
-- [Portfolio](https://www.spragginsdesigns.xyz): Main portfolio website
-- [Resume PDF](https://spraggins-designs.s3.us-east-1.amazonaws.com/resume/AustinSpraggins_Resume.pdf): Downloadable resume (PDF)
-- [Resume DOCX](https://spraggins-designs.s3.us-east-1.amazonaws.com/resume/AustinSpraggins_Resume.docx): Downloadable resume (Word)
-- [GitHub](https://github.com/spragginsdesigns): 50+ repositories
+- [Portfolio](https://www.spragginsdesigns.xyz): Main portfolio
+- [LineCrush](https://www.linecrush.com): Production sports intelligence platform
+- [GitHub](https://github.com/spragginsdesigns): Public engineering work
 - [LinkedIn](https://www.linkedin.com/in/spragginsdesigns/): Professional profile
-- [Twitter](https://twitter.com/spragginsdesign): Social updates
+- [Twitter / X](https://twitter.com/spragginsdesign): Social updates
 
-## Mission
+## Current Work
 
-To serve God, be a good father and provider, and build technology that makes the world more intelligent, loving, and just.
+### LineCrush
 
----
+Austin architects a production sports research and analytics platform spanning:
 
-## Experience
+- AI-generated picks and product explanations
+- Real-time signal search across sports interviews, podcasts, news, and social context
+- Vision/OCR-powered betslip analysis and shareable reports
+- Automated grading, reporting, notifications, and data-production pipelines
+- A Next.js web application, native SwiftUI iOS app, native Kotlin/Compose Android app, and browser extensions
+- PostgreSQL, Redis, WebSockets, Python services, AWS, Vercel, and Ubuntu infrastructure
 
-### Co-Founder & Chief Technology Officer
-**LineCrush Inc** (Investor-Backed Sports Analytics Platform) | 04/2024 - Present | Remote
+Verified repository-scale indicators as of July 2026:
 
-**Technical Leadership & Architecture**
-- Architected and built the entire technical platform from concept to production as sole technical founder, making all architecture decisions for a system now serving real users and attracting investor funding.
-- Designed scalable full-stack architecture comprising 800+ React components, 115+ Python backend services, 145+ API endpoints, and 120+ PostgreSQL database tables—all built and maintained independently across web, native mobile, and browser-extension surfaces.
-- Own the complete technical roadmap including feature prioritization, infrastructure decisions, and technology selection while balancing startup velocity with code quality.
+- 27,000+ commits across the production monorepo
+- Nearly 1,000 tracked TSX modules
+- 366 tracked Next.js API handlers
+- 64 tracked agent-skill definitions
 
-**AI/ML Systems & Integration**
-- Orchestrated 5 production LLM providers (including OpenAI, Anthropic Claude, Google Gemini, and Perplexity) for intelligent data processing, content generation, and automated analysis pipelines.
-- Built custom Model Context Protocol (MCP) servers and autonomous agent infrastructure to accelerate development and operations.
-- Engineered sophisticated AI prompting systems with context management, response parsing, and fallback handling to ensure reliable AI-powered features at scale.
-- Built AI-assisted data pipelines combining web scraping, NLP processing, and LLM analysis to transform raw sports data into actionable insights.
+### Autonomous Engineering Agents
 
-**Infrastructure & Data Engineering**
-- Deployed and manage cloud infrastructure on AWS (S3, SES, CloudFront) and Ubuntu VPS with Docker containerization, CI/CD pipelines, and automated deployments via Vercel.
-- Architected real-time data systems including web scrapers, ETL pipelines, Redis caching layers, and cron-based automation processing millions of data points daily.
-- Implemented performance optimizations achieving sub-second load times through code splitting, lazy loading, edge caching, and database query optimization.
+Austin built a provider-neutral software-delivery system around Codex and Claude. It can pick up Linear issues and move through investigation, implementation, real product-path proof, code review, safety gates, and release. Durable sessions recover interrupted work rather than restarting from zero.
 
-**Tech Stack:** Next.js 15, React 18, TypeScript, Python, PostgreSQL/Neon, Redis, AWS, Docker, OpenAI API, Anthropic API, Perplexity API, Google Vision API, Tailwind CSS, Vercel
+The surrounding agent platform includes:
 
-### Web Developer & Marketing Specialist
-**Gelateria Del Centro** | 07/2023 - 04/2024 | Fresno, CA
+- Shared skills, commands, repository maps, and operating rules
+- Custom MCP tooling and cross-platform engineering lanes
+- Model routing, fallbacks, recovery, and evidence-backed closeout
+- Web, Python, SwiftUI, Kotlin, infrastructure, and release workflows
 
-- Rebuilt website achieving 90%+ Lighthouse scores, improving load times by 20% and securing first-page Google rankings.
-- Drove 40% increase in organic traffic through SEO optimization and data-driven digital marketing strategies.
+### Product AI
 
-### Web Development Instructor
-**Bitwise Industries / Geekwise Academy** | 04/2022 - 07/2023 | Fresno, CA
+Austin uses OpenAI, Gemini, Claude, Perplexity, and vision/OCR workflows for different jobs rather than treating one model as a universal answer. Production systems include structured prompting, response parsing, streaming, retries, fallbacks, evaluation, and product-level quality gates.
 
-- Trained 200+ students in modern web development (HTML, CSS, JavaScript, React) with a 95% course completion rate.
-- Developed curriculum and teaching methodologies that increased student engagement by 40% through hands-on projects and interactive learning.
-- Mentored career-changers into tech, helping students from non-traditional backgrounds land their first developer roles.
+### LineCrush Games
 
----
+Austin is building a private AI-native game studio with original Godot 4.7 projects including Space Miner, RockHunter, and MERIDIAN.
 
-## Technical Expertise
+- Space Miner is a Steam Deck-first 2.5D survival miner
+- Windows and Linux / Steam Deck builds are smoke-proven
+- Agents can operate Godot workflows, create and wire scenes, run headless tests, capture playtest evidence, and produce repeatable exports
+- Asset pipelines cover generated concepts, rigged 3D models, UI art, and authored AI-assisted audio
+- Human product taste owns gameplay feel, art direction, and final acceptance
 
-### AI & Machine Learning
-- **LLM Integration:** OpenAI GPT-4/GPT-4o, Anthropic Claude (Opus, Sonnet, Haiku), Perplexity API, Google Vision API
-- **AI Development Practices:** Advanced prompt engineering, context window optimization, chain-of-thought prompting, AI-assisted coding (Claude Code, GitHub Copilot, Cursor), RAG systems, embedding strategies
-- **Daily AI Workflow:** Leverage AI tools for code generation, debugging, architecture planning, documentation, and technical decision-making—deeply integrated into every aspect of development
+## Core Expertise
 
-### Full-Stack Development
-- **Frontend:** Next.js 15 (App Router, Server Components), React 18, TypeScript, Tailwind CSS, Framer Motion, shadcn/ui
-- **Backend:** Python, Node.js, Express, RESTful APIs, GraphQL, WebSockets
-- **Databases:** PostgreSQL, Neon (serverless Postgres), Redis, database design & optimization
-
-### DevOps & Infrastructure
-- **Cloud:** AWS (S3, SES, CloudFront), Vercel, Ubuntu VPS administration
-- **Containerization:** Docker, container orchestration
-- **CI/CD:** GitHub Actions, automated testing & deployment pipelines
-- **Performance:** Caching strategies, CDN optimization, code splitting, lazy loading
-
-### Data Engineering
-- **Pipelines:** ETL systems, real-time data processing, cron automation
-- **Scraping:** Web scraping at scale, data extraction & transformation
-- **Processing:** NLP, data analysis, automated reporting systems
-
----
-
-## Key Achievements
-
-- Built investor-backed startup from zero lines of code to production platform
-- 25,000+ commits shipped over 2+ years of continuous development
-- 800+ React components architected and maintained in production
-- 115+ Python backend services powering operations
-- 120+ database tables designed for scalability and performance
-- 5 LLM providers orchestrated in production AI systems
-- Custom MCP servers and agent infrastructure built in-house
-- 200+ students trained in web development fundamentals
-
----
-
-## Projects
-
-- [LineCrush](https://www.linecrush.com): Investor-backed sports analytics platform - 800+ React components, 115+ Python backend services, 120+ database tables, 5 LLM providers
-- [SaveALife CPR](https://github.com/spragginsdesigns/savealife-cpr): Emergency response training application
-- [Bible AI Explorer](https://github.com/spragginsdesigns/bible-ai-explorer): AI-powered Bible study assistant
-- [AI Tutor WebApp](https://github.com/spragginsdesigns/ai-tutor-webapp): Educational AI tutoring platform
-
----
-
-## Education
-
-- **Associate of Science in Information Systems: Web Design** - Clovis Community College, Clovis, CA (2021)
-- **Certificate of Achievement in Information Systems: Web Design** - Clovis Community College, Clovis, CA (2020)
-
----
+- Agentic AI systems and autonomous software delivery
+- LLM orchestration, MCP servers, vision/OCR, NLP, and evaluation
+- Next.js, React, TypeScript, Python, Node.js, PostgreSQL, and Redis
+- Native SwiftUI iOS and Kotlin/Jetpack Compose Android development
+- Godot 4.7, GDScript, game systems, automated capture, and native exports
+- AWS, Vercel, Ubuntu/Linux, Docker, CI/CD, and real-time data systems
+- Technical leadership, system architecture, product strategy, and code review
 
 ## Background
 
-Father of two wonderful children - Julian and Lilly. Former truck driver who transitioned to tech. Former Web Development instructor at Bitwise Industries and Geekwise Academy. Grew up in the mountains of O'Neals, California.
+Austin moved from truck driving into software, became a web-development instructor at Bitwise Industries and Geekwise Academy, and then co-founded LineCrush. He is a father of two and a hands-on technical leader who can move from product direction to low-level implementation and production proof.
+
+## Independent Public Projects
+
+- [Bible AI Explorer](https://github.com/spragginsdesigns/bible-ai-explorer): AI-powered scripture study
+- [AI Tutor WebApp](https://github.com/spragginsdesigns/ai-tutor-webapp): Socratic learning assistant
+- [Perplexity MCP Server](https://github.com/spragginsdesigns/perplexity-mcp-server): Model Context Protocol integration
+- [SaveALife CPR](https://github.com/spragginsdesigns/savealife-cpr): Business workflow automation
+
+## Hiring Fit
+
+Austin is a strong fit for teams that need a senior builder who can architect AI-native products, create reliable agent workflows, own the full stack, and turn ambiguous product goals into proven production systems.
