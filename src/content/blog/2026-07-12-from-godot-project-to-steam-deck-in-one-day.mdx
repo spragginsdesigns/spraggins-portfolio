@@ -1,0 +1,104 @@
+---
+title: "From Godot Project to Steam Deck in One Day"
+description: "The full story of taking my space mining game from a folder on my PC to running natively on a Steam Deck—export templates, Steampipe prep, a forgotten sudo password, and one very satisfying title screen."
+date: "2026-07-12"
+tags: ["Godot", "Game Development", "Steam Deck", "Linux", "AI"]
+readTime: "9 min"
+featured: true
+---
+
+This morning, Space Miner was a Godot project in a git repo. Tonight, I'm sitting on my couch playing it on a Steam Deck—native, full gamepad support, my own title screen glowing on that 1280×800 display.
+
+Space Miner is the game I've been building at LineCrush Games: a 2.5D space mining roguelite—think Brotato in space—built Steam Deck first from day one. UI designed for 1280×800, twin-stick gamepad controls, Deck-style button prompts baked in. But designing *for* a device and actually *running on* it are very different things, and today was the day we closed that gap.
+
+I say "we" because I did this with an AI pair (Claude Code driving my terminal) handling the builds, the verification, and—as you'll see—most of the debugging. My total typing on the Steam Deck itself, for the entire day: one line. But we earned that one line the hard way, and the getting there is the interesting part.
+
+## Godot's Export Story Is Quietly Excellent
+
+If you've never shipped a Godot game, here's the mental model: your project is data, and Godot ships precompiled engine binaries called **export templates** for every platform. Exporting means fusing your game's data into the right template. One project, three native artifacts:
+
+- `SpaceMiner.exe` for Windows—a single self-contained file
+- `SpaceMiner.x86_64` for Linux
+- `SpaceMiner.app` for macOS
+
+And here's the thing that makes the Steam Deck special: **the Deck is just an Arch Linux PC with sticks attached.** The plain Linux export runs on it natively. No SDK, no Steamworks integration, no Proton compatibility layer, no waiting for approval from anyone. That openness is easy to take for granted, and today made me genuinely appreciate it—there is no console on Earth where "copy the binary over and play" is the whole story.
+
+The entire export, headless, from the command line:
+
+```
+godot --headless --path spaceminer --export-release "Linux" "export/SpaceMiner.x86_64"
+```
+
+My PC only had the Windows templates installed, so step one was pulling down Godot's template archive and dropping the Linux ones into place. Then both builds exported clean: a 2.2 GB Windows exe and a 2.17 GB Linux binary. (Yes, that's huge—it's the HD 2K texture set, and slimming it down is a known to-do before this goes anywhere near a Steam depot.)
+
+## Trust, but Verify—on Real Hardware's Cousin
+
+A build that exports isn't a build that runs. Before anything touched the Deck, every artifact got smoke-launched: the Windows exe headlessly on my PC, and the Linux binary shipped over SSH to our Ubuntu VPS—the closest x86_64 Linux machine—where it launched and exited clean.
+
+This sounds paranoid until you remember the cost of skipping it: you sideload two gigabytes onto a handheld, walk to the couch, and find out the build was broken back at the desk. Verification at every hop is cheaper than one round trip of disappointment.
+
+We also prepped the Steam side while we were at it: **Steampipe** upload scripts—one app, two depots (Windows and Linux), the Deck plays the Linux depot natively. The scripts are committed with placeholder IDs and `Preview` hardcoded to `1`, so nothing can upload or go live by accident before the Steamworks app exists. Guardrails first; the actual store page is its own adventure for another post.
+
+## The Install Saga, or: A Steam Deck Is Not a Flash Drive
+
+Here's where the day got educational.
+
+**Attempt #1: plug the Deck into the PC.** My first instinct. It does nothing. A Steam Deck is a *computer*, not a storage device—USB-C into your desktop doesn't expose a filesystem. There's no "just drag the file over."
+
+**Attempt #2: SSH into the Deck.** The proper way. The Deck ships with an SSH server, disabled, and enabling it takes one command in Desktop Mode... one *sudo* command. Which is when I discovered I had no idea what my sudo password was. I'd set it months ago, exactly once, to install a plugin loader—and it had left my brain entirely.
+
+**Attempt #3: flip the direction.** If the PC can't push to the Deck, the Deck can pull from the PC—and pulling needs no privileges at all. We stood up a tiny HTTP file server on my desktop, poked a temporary firewall rule for the local subnet, and served the game binary over the LAN.
+
+There was still the problem of typing on a Steam Deck. Konsole plus an on-screen keyboard makes a three-line setup script feel like writing a novel with oven mitts on. So the whole procedure got wrapped into a bootstrap script served from the same file server, and my entire contribution on the Deck was:
+
+```
+curl -s 10.0.0.135:8321/go.sh | sh
+```
+
+One line. The script enabled SSH, authorized my desktop's key, downloaded all 2.17 GB of game, and set the executable bit.
+
+(It also failed on the first try—a `--now` flag got mangled somewhere between systemd and my typing—which is a nice reminder that even the "one line" path is really a two-attempt path. It always is.)
+
+## The Bug That Taught Me About SSH Keys
+
+With SSH enabled, the passwordless connection from my desktop... didn't work. `Permission denied (publickey)`. The key was right there. The Deck had it. What gives?
+
+Digging through `ssh -vvv` output told a subtle story: the Deck *accepted* the key as authorized and asked the client to prove ownership—and the client couldn't. My default SSH key is **passphrase-protected**, and in a non-interactive session with no agent running, there's nobody to type the passphrase. The client fails to sign and the whole handshake quietly collapses into a generic denial.
+
+The fix took thirty seconds—generate a dedicated, passphrase-free deploy key and authorize that instead. But the lesson is durable: **machine-to-machine SSH keys must have no passphrase, and a passphrase-protected key in an automated context fails in the most misleading way possible.** The server says the key is fine. The connection still dies. If you didn't know to look for it, you could burn an hour on that.
+
+Final step, because paranoia had served us well all day: SHA-256 checksums on both ends. Byte-for-byte identical. Then Desktop Mode → Steam → *Add a Non-Steam Game* → point it at the binary, and back to Gaming Mode.
+
+## The Moment
+
+There is a specific feeling when a thing you made shows up somewhere real.
+
+The Space Miner title screen came up on the Deck—the exosuit model slowly rotating, "COMMAND DECK" menu, the correct Deck button glyphs on screen because we'd built them in months ago on faith. Full gamepad support with zero configuration, because all that Deck-first design finally got to meet an actual Deck.
+
+And then I just... played it. Launched off the dock, mined asteroids, got swarmed, upgraded, died, ran it back. On the couch. On hardware. The same loop I'd been testing with a keyboard at my desk for months suddenly had thumbsticks and haptics and that handheld intimacy that makes everything feel 20% more like a *game*.
+
+It ran well, too—smooth almost everywhere, with some intermittent frame stalls that I could feel here and there. My money's on first-draw shader compilation (the classic Vulkan hitch: the first time each new effect appears, the driver compiles a pipeline and you eat a stutter). That's already filed, with suspects ranked, as the next issue. A stable 60 fps on Deck is the bar this game has to clear before it ships, and "mostly good with stalls" is not 60—but for a first hardware session, I'll take it.
+
+## What the Day Actually Taught Me
+
+**Every failure was plumbing, not code.** The game itself never broke once. What broke: a missing export template, a USB expectation that was never real, a forgotten password, a firewall, a mangled flag, a passphrase-locked key. This mirrors everything I've learned about automation this year—the intelligence is rarely the bottleneck; the boring connective tissue is.
+
+**Verify at every hop, in proportion to the cost of being wrong.** Exit codes on exports, smoke launches on other machines, checksums after transfer. Each check took seconds. Any one of them failing silently would have cost a couch-to-desk round trip and a mystery.
+
+**The Deck's openness is the whole reason this story is one day long.** No devkit application, no signing ceremony, no platform review. It's a Linux PC. My weird little indie game copied over on a Saturday and just ran.
+
+**Build the pipe, not the transfer.** The real prize of today isn't the installed build—it's that the *next* hundred builds are now one command:
+
+```
+scp export/SpaceMiner.x86_64 deck:Games/SpaceMiner/
+```
+
+Code to couch in seconds, forever. When the shader-stall fix lands, testing it on hardware will take less time than reading this paragraph.
+
+**And working with an AI pair changed the texture of the whole day.** Not because it typed the commands faster than I could—because it never skipped the boring safety steps. Every artifact verified, every temp firewall rule deleted afterward, the bootstrap script (which briefly contained my sudo password) wiped from disk, the whole saga documented in the repo and the issue tracker before I'd even finished playing. It works like the most disciplined engineer I've ever met, and the discipline—not the speed—is what made a one-day version of this possible.
+
+Next stop: Steamworks, a real app ID, and depot uploads. The scripts are sitting there waiting with their safety on.
+
+But tonight, my game is on the shelf of my Steam Deck library, between actual shipped games, wearing its own title art. It's a development build with frame stalls and a 2 GB waistline it needs to lose.
+
+It's also the coolest thing I've ever installed.
