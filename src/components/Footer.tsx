@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
 			<div className="container mx-auto px-4">
 				<div className="flex flex-col md:flex-row justify-between items-center">
 					<div className="mb-4 md:mb-0">
-						<p>&copy; {currentYear} Spraggins Designs. All rights reserved.</p>
+						<p>&copy; {currentYear} Austin Spraggins. All rights reserved.</p>
 					</div>
 					<div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
 						<Link href="/" className="hover:text-primary transition-colors">

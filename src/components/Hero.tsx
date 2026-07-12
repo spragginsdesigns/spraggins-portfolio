@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { BackgroundLines } from "@/components/ui/background-lines";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { Badge } from "@/components/ui/badge";
+import { CountUp } from "@/components/ui/count-up";
 import { ArrowRight, Github, Linkedin, Mail, Twitter, FileDown } from "lucide-react";
 
 const Hero: React.FC = () => {
@@ -173,26 +174,38 @@ const Hero: React.FC = () => {
 					</motion.div>
 				</div>
 
-				{/* Mobile Stats Row - Only visible on mobile */}
+				{/* Stats Row */}
 				<motion.div
-					className="flex md:hidden justify-center gap-6 mt-6"
+					className="flex justify-center gap-6 md:gap-12 mt-6 md:mt-12"
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5, delay: 1 }}
 				>
 					<div className="text-center">
-						<div className="text-2xl font-bold text-primary">27K+</div>
-						<div className="text-xs text-muted-foreground">Monorepo Commits</div>
+						<div className="text-2xl md:text-4xl font-bold text-primary">
+							<CountUp end={27000} format={(v) => `${v.toLocaleString()}+`} />
+						</div>
+						<div className="text-xs md:text-sm text-muted-foreground">
+							Monorepo Commits
+						</div>
 					</div>
 					<div className="w-px bg-border/50" />
 					<div className="text-center">
-						<div className="text-2xl font-bold text-primary">64</div>
-						<div className="text-xs text-muted-foreground">Agent Skills</div>
+						<div className="text-2xl md:text-4xl font-bold text-primary">
+							<CountUp end={64} />
+						</div>
+						<div className="text-xs md:text-sm text-muted-foreground">
+							Agent Skills
+						</div>
 					</div>
 					<div className="w-px bg-border/50" />
 					<div className="text-center">
-						<div className="text-2xl font-bold text-primary">366</div>
-						<div className="text-xs text-muted-foreground">API Handlers</div>
+						<div className="text-2xl md:text-4xl font-bold text-primary">
+							<CountUp end={366} />
+						</div>
+						<div className="text-xs md:text-sm text-muted-foreground">
+							API Handlers
+						</div>
 					</div>
 				</motion.div>
 			</div>

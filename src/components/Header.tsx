@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
+import CommandPalette from "@/components/CommandPalette";
 
 const navLinks = [
 	{ label: "AI Systems", href: "/#ai-systems" },
@@ -53,6 +54,17 @@ const Header: React.FC = () => {
 							{link.label}
 						</Link>
 					))}
+					<button
+						type="button"
+						onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
+						className="flex items-center gap-2 text-sm text-muted-foreground border border-border/50 rounded-full px-3 py-1.5 hover:text-primary hover:border-primary/50 transition-all"
+						aria-label="Open command palette"
+					>
+						<Search className="w-3.5 h-3.5" />
+						<kbd className="text-[10px] bg-card px-1.5 py-0.5 rounded border border-border/50">
+							⌘K
+						</kbd>
+					</button>
 					<Link
 						href="/#contact"
 						className="text-sm font-semibold bg-primary text-background px-4 py-1.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
@@ -61,16 +73,26 @@ const Header: React.FC = () => {
 					</Link>
 				</nav>
 
-				{/* Mobile menu button */}
-				<button
-					type="button"
-					className="lg:hidden p-2 text-muted-foreground hover:text-primary transition-colors"
-					aria-label={menuOpen ? "Close menu" : "Open menu"}
-					aria-expanded={menuOpen}
-					onClick={() => setMenuOpen((open) => !open)}
-				>
-					{menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-				</button>
+				{/* Mobile: search + menu buttons */}
+				<div className="flex items-center gap-1 lg:hidden">
+					<button
+						type="button"
+						className="p-2 text-muted-foreground hover:text-primary transition-colors"
+						aria-label="Open command palette"
+						onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
+					>
+						<Search className="w-5 h-5" />
+					</button>
+					<button
+						type="button"
+						className="p-2 text-muted-foreground hover:text-primary transition-colors"
+						aria-label={menuOpen ? "Close menu" : "Open menu"}
+						aria-expanded={menuOpen}
+						onClick={() => setMenuOpen((open) => !open)}
+					>
+						{menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+					</button>
+				</div>
 			</div>
 
 			{/* Mobile nav */}
@@ -90,6 +112,8 @@ const Header: React.FC = () => {
 					</div>
 				</nav>
 			)}
+
+			<CommandPalette />
 		</header>
 	);
 };

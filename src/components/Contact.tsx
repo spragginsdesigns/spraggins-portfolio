@@ -19,6 +19,8 @@ const Contact: React.FC = () => {
 		const email = (form.elements.namedItem("email") as HTMLInputElement).value;
 		const message = (form.elements.namedItem("message") as HTMLTextAreaElement)
 			.value;
+		const website = (form.elements.namedItem("website") as HTMLInputElement)
+			.value;
 
 		try {
 			const response = await fetch("/api/send-email", {
@@ -26,18 +28,23 @@ const Contact: React.FC = () => {
 				headers: {
 					"Content-Type": "application/json"
 				},
-				body: JSON.stringify({ name, email, message })
+				body: JSON.stringify({ name, email, message, website })
 			});
 
 			if (!response.ok) {
-				throw new Error("Failed to send message");
+				const data = await response.json().catch(() => null);
+				throw new Error(data?.error || "Failed to send message");
 			}
 
 			setIsSubmitted(true);
 			form.reset();
 		} catch (error) {
 			console.error("Error sending email:", error);
-			setError("Failed to send message. Please try again later.");
+			setError(
+				error instanceof Error && error.message !== "Failed to send message"
+					? error.message
+					: "Failed to send message. Please try again later."
+			);
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -90,6 +97,15 @@ const Contact: React.FC = () => {
 					</a>
 				</div>
 				<form className="max-w-lg mx-auto" onSubmit={handleSubmit}>
+					{/* Honeypot — hidden from humans, bots fill it and get silently dropped */}
+					<input
+						type="text"
+						name="website"
+						tabIndex={-1}
+						autoComplete="off"
+						aria-hidden="true"
+						className="absolute -left-[9999px] h-0 w-0 opacity-0"
+					/>
 					<motion.div
 						className="mb-6"
 						initial={{ opacity: 0, x: -20 }}
@@ -214,8 +230,18 @@ const Contact: React.FC = () => {
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ delay: 0.5 }}
 							>
-								Thank you for reaching out. We&apos;ll get back to you soon!
+								Thank you for reaching out. I&apos;ll get back to you soon!
 							</motion.p>
+							<motion.button
+								type="button"
+								onClick={() => setIsSubmitted(false)}
+								className="mt-4 text-sm text-primary hover:underline"
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ delay: 0.7 }}
+							>
+								Send another message
+							</motion.button>
 						</motion.div>
 					)}
 				</AnimatePresence>

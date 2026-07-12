@@ -25,6 +25,11 @@ import { FaYoutube, FaEye, FaUsers, FaVideo } from "react-icons/fa";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	fetchGitHubStars,
+	withLiveStars,
+	type GitHubStarsData
+} from "@/lib/github-stars";
 
 const lineCrushFeatures = [
 	{
@@ -534,7 +539,9 @@ const YouTubeSection: React.FC = () => {
 						<div>
 							<h4 className="text-xl font-bold">Shadow Gaming</h4>
 							<p className="text-sm text-muted-foreground">
-								Gaming content with 10K+ subscribers
+								{stats
+									? `Gaming content with ${parseInt(stats.subscriberCount).toLocaleString()} subscribers`
+									: "Gaming content on YouTube"}
 							</p>
 						</div>
 					</div>
@@ -583,6 +590,12 @@ const YouTubeSection: React.FC = () => {
 };
 
 const Projects: React.FC = () => {
+	const [starsData, setStarsData] = useState<GitHubStarsData | null>(null);
+
+	useEffect(() => {
+		fetchGitHubStars().then(setStarsData);
+	}, []);
+
 	return (
 		<section id="projects" className="bg-background text-foreground py-20">
 			<div className="container mx-auto px-4">
@@ -609,7 +622,11 @@ const Projects: React.FC = () => {
 				<h3 className="text-2xl font-bold mb-6">Independent &amp; Client Work</h3>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
 					{featuredProjects.map((project, index) => (
-						<FeaturedProjectCard key={index} project={project} index={index} />
+						<FeaturedProjectCard
+							key={index}
+							project={withLiveStars(project, starsData)}
+							index={index}
+						/>
 					))}
 				</div>
 
@@ -617,7 +634,11 @@ const Projects: React.FC = () => {
 				<h3 className="text-xl font-bold mb-4 text-muted-foreground">More Projects</h3>
 				<div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
 					{otherProjects.map((project, index) => (
-						<OtherProjectCard key={index} project={project} index={index} />
+						<OtherProjectCard
+							key={index}
+							project={withLiveStars(project, starsData)}
+							index={index}
+						/>
 					))}
 				</div>
 
@@ -631,7 +652,9 @@ const Projects: React.FC = () => {
 							className="flex items-center gap-2"
 						>
 							<Github className="w-4 h-4" />
-							View All 90+ Repositories
+							{starsData
+								? `View All ${starsData.repoCount}${starsData.repoCount >= 100 ? "+" : ""} Repositories`
+								: "View All Repositories"}
 						</a>
 					</Button>
 				</div>

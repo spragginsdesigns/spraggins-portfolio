@@ -366,33 +366,65 @@ export default async function handler(
 				],
 				max_tokens: RATE_LIMIT.MAX_OUTPUT_TOKENS,
 				temperature: 0.7,
+				stream: true,
 			}),
 		});
 
-		// Check content type to ensure we got JSON back
-		const contentType = response.headers.get("content-type");
-		if (!contentType || !contentType.includes("application/json")) {
-			console.error("OpenAI returned non-JSON response:", response.status, contentType);
+		if (!response.ok || !response.body) {
+			let message = "Failed to get AI response";
+			try {
+				const data = await response.json();
+				message = data.error?.message || message;
+			} catch {
+				// Non-JSON error body; keep the generic message
+			}
+			console.error("OpenAI API error:", response.status, message);
 			return res.status(502).json({
 				error: "AI service temporarily unavailable. Please try again.",
 			});
 		}
 
-		const data = await response.json();
+		// Stream plain text chunks to the client as they arrive
+		res.writeHead(200, {
+			"Content-Type": "text/plain; charset=utf-8",
+			"Cache-Control": "no-cache, no-transform",
+			"X-Accel-Buffering": "no",
+		});
 
-		if (!response.ok) {
-			console.error("OpenAI API error:", data);
-			return res.status(response.status).json({
-				error: data.error?.message || "Failed to get AI response",
-			});
+		const reader = response.body.getReader();
+		const decoder = new TextDecoder();
+		let buffer = "";
+
+		while (true) {
+			const { done, value } = await reader.read();
+			if (done) break;
+
+			buffer += decoder.decode(value, { stream: true });
+			const lines = buffer.split("\n");
+			// The last element may be a partial line; keep it in the buffer
+			buffer = lines.pop() || "";
+
+			for (const line of lines) {
+				const trimmed = line.trim();
+				if (!trimmed.startsWith("data: ")) continue;
+				const payload = trimmed.slice(6);
+				if (payload === "[DONE]") continue;
+				try {
+					const parsed = JSON.parse(payload);
+					const delta: string = parsed.choices?.[0]?.delta?.content || "";
+					if (delta) res.write(delta);
+				} catch {
+					// Skip malformed SSE fragments
+				}
+			}
 		}
 
-		const outputText = data.choices?.[0]?.message?.content ||
-			"I couldn't generate a response. Please try again.";
-
-		return res.status(200).json({ response: outputText });
+		return res.end();
 	} catch (error) {
 		console.error("Error calling OpenAI:", error);
+		if (res.headersSent) {
+			return res.end();
+		}
 		return res.status(500).json({ error: "Failed to process request. Please try again." });
 	}
 }
