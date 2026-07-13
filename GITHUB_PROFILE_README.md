@@ -32,7 +32,7 @@
 353+ React Components  •  45+ Python Microservices  •  100+ Database Tables  •  4+ LLM Integrations
 ```
 
-I'm the **Co-Founder & CTO at LineCrush Inc**, where I architect and build the entire technical stack — from AI-powered data pipelines to production web applications serving real users. I believe in shipping fast, keeping code simple, and building systems that actually work.
+I'm the **Co-Founder & CTO at LineCrush Inc**, where I architect and build the entire technical stack - from AI-powered data pipelines to production web applications serving real users. I believe in shipping fast, keeping code simple, and building systems that actually work.
 
 **Currently:** Open to contracts & consulting
 
@@ -47,7 +47,7 @@ I'm the **Co-Founder & CTO at LineCrush Inc**, where I architect and build the e
 ### Frontend
 - **Next.js 15** with App Router
 - **React 18** (353+ production components)
-- **TypeScript** — strict mode, always
+- **TypeScript** - strict mode, always
 - **Tailwind CSS** + shadcn/ui
 - State management with Zustand, SWR
 - Accessibility-first (WCAG/ARIA)
@@ -106,12 +106,12 @@ I'm the **Co-Founder & CTO at LineCrush Inc**, where I architect and build the e
 
 </div>
 
-LineCrush processes interviews, podcasts, social media, and news — turning messy content into clean, decision-ready intelligence. I built the entire stack from the ground up:
+LineCrush processes interviews, podcasts, social media, and news - turning messy content into clean, decision-ready intelligence. I built the entire stack from the ground up:
 
 - **Multi-source AI pipelines** for player context, matchup analysis, and trend detection
 - **Real-time data processing** with Python microservices and Redis
 - **Production web app** with Next.js 15, serving thousands of requests daily
-- **@LineCrushBot** — automated Twitter insights powered by our AI
+- **@LineCrushBot** - automated Twitter insights powered by our AI
 
 ---
 
@@ -136,15 +136,15 @@ LineCrush processes interviews, podcasts, social media, and news — turning mes
 
 ## Experience
 
-**Co-Founder, CTO & Senior Software Engineer** — LineCrush Inc
+**Co-Founder, CTO & Senior Software Engineer** - LineCrush Inc
 *April 2024 → Present*
 
 - Architected multi-source AI pipelines processing millions of data points
 - Built production systems end-to-end: 353+ React components, 45+ microservices, 100+ DB tables
 - Integrated 4+ LLM providers (OpenAI, Anthropic, Perplexity, Google Vision)
-- Led technical decisions across the entire stack — frontend, backend, AI, and infrastructure
+- Led technical decisions across the entire stack - frontend, backend, AI, and infrastructure
 
-**Web Development Instructor** — Bitwise Industries & Geekwise Academy
+**Web Development Instructor** - Bitwise Industries & Geekwise Academy
 *Previously*
 
 - Taught full-stack web development to aspiring engineers
@@ -154,9 +154,9 @@ LineCrush processes interviews, podcasts, social media, and news — turning mes
 
 ## Education
 
-**B.S. Computer Science** — Fresno State *(In Progress, Expected 2026)*
-**A.S. Information Systems: Web Design** — Clovis Community College *(2021)* — GPA: 3.92
-**Certificate, Information Systems: Web Design** — Clovis Community College *(2020)*
+**B.S. Computer Science** - Fresno State *(In Progress, Expected 2026)*
+**A.S. Information Systems: Web Design** - Clovis Community College *(2021)* - GPA: 3.92
+**Certificate, Information Systems: Web Design** - Clovis Community College *(2020)*
 
 ---
 

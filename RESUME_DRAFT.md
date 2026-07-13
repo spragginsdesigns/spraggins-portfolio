@@ -9,7 +9,7 @@ github.com/spragginsdesigns | linkedin.com/in/spragginsdesigns
 
 ## PROFESSIONAL SUMMARY
 
-Technical co-founder and CTO who architected and built an investor-backed sports analytics platform from zero to production. Deep expertise in AI/ML systems, having integrated 4+ LLMs into production workflows and leveraging AI-assisted development daily. Proven ability to own the entire technical stack—from database architecture to cloud infrastructure to user-facing features—while leading product strategy and technical decision-making.
+Technical co-founder and CTO who architected and built an investor-backed sports analytics platform from zero to production. Deep expertise in AI/ML systems, having integrated 4+ LLMs into production workflows and leveraging AI-assisted development daily. Proven ability to own the entire technical stack - from database architecture to cloud infrastructure to user-facing features - while leading product strategy and technical decision-making.
 
 ---
 
@@ -20,7 +20,7 @@ Technical co-founder and CTO who architected and built an investor-backed sports
 
 **Technical Leadership & Architecture**
 - **Architected and built the entire technical platform from concept to production** as sole technical founder, making all architecture decisions for a system now serving real users and attracting investor funding.
-- **Designed scalable full-stack architecture** comprising 353+ React components, 45+ Python microservices, 45+ API endpoints, and 100+ PostgreSQL database tables—all built and maintained independently.
+- **Designed scalable full-stack architecture** comprising 353+ React components, 45+ Python microservices, 45+ API endpoints, and 100+ PostgreSQL database tables - all built and maintained independently.
 - **Own the complete technical roadmap** including feature prioritization, infrastructure decisions, and technology selection while balancing startup velocity with code quality.
 
 **AI/ML Systems & Integration**
@@ -60,7 +60,7 @@ Technical co-founder and CTO who architected and built an investor-backed sports
 ### AI & Machine Learning
 **LLM Integration:** OpenAI GPT-4/GPT-4o, Anthropic Claude (Opus, Sonnet, Haiku), Perplexity API, Google Vision API
 **AI Development Practices:** Advanced prompt engineering, context window optimization, chain-of-thought prompting, AI-assisted coding (Claude Code, GitHub Copilot, Cursor), RAG systems, embedding strategies
-**Daily AI Workflow:** Leverage AI tools for code generation, debugging, architecture planning, documentation, and technical decision-making—deeply integrated into every aspect of development
+**Daily AI Workflow:** Leverage AI tools for code generation, debugging, architecture planning, documentation, and technical decision-making - deeply integrated into every aspect of development
 
 ### Full-Stack Development
 **Frontend:** Next.js 15 (App Router, Server Components), React 18, TypeScript, Tailwind CSS, Framer Motion, shadcn/ui

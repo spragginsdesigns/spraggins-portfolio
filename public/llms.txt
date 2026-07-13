@@ -1,6 +1,6 @@
 # Austin Spraggins | Co-Founder, CTO & Agentic AI Engineer
 
-> Austin builds AI agents that ship production software—and the products, native clients, data systems, and game pipelines those agents support. He is Co-Founder and CTO at LineCrush Inc in Fresno, California.
+> Austin builds AI agents that ship production software - and the products, native clients, data systems, and game pipelines those agents support. He is Co-Founder and CTO at LineCrush Inc in Fresno, California.
 
 ## Contact
 

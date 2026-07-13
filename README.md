@@ -10,7 +10,7 @@ Personal portfolio website showcasing my work as **Co-Founder, CTO & Senior Soft
 
 ## About Me
 
-I build AI agents that ship production software—and the platforms they run. At LineCrush, that includes:
+I build AI agents that ship production software - and the platforms they run. At LineCrush, that includes:
 
 - **27,000+ monorepo commits** across product, data, native, agent, and game work
 - **Nearly 1,000 tracked TSX modules** and **366 API handlers**
