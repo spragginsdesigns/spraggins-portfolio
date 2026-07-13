@@ -113,7 +113,7 @@ const About: React.FC = () => {
 						<h4 className="text-lg font-semibold text-foreground">Leading at LineCrush</h4>
 					</div>
 					<p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
-						As Co-Founder & CTO at LineCrush Inc, I own every layer of our stack —
+						As Co-Founder & CTO at LineCrush Inc, I own every layer of our stack -
 						27,000+ monorepo commits across web, Python services, native mobile, and
 						games. I built an agent operating system around that work: durable Codex
 						and Claude sessions, custom MCP tooling, shared skills, proof gates, and

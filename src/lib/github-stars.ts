@@ -17,7 +17,7 @@ export async function fetchGitHubStars(): Promise<GitHubStarsData | null> {
 			if (Date.now() - timestamp < CACHE_TTL_MS) return data;
 		}
 	} catch {
-		// Storage unavailable — fetch fresh
+		// Storage unavailable - fetch fresh
 	}
 
 	try {

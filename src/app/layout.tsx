@@ -153,7 +153,7 @@ export default function RootLayout({
 				<link
 					rel="alternate"
 					type="application/rss+xml"
-					title="Austin Spraggins — Dev Blog"
+					title="Austin Spraggins - Dev Blog"
 					href="/feed.xml"
 				/>
 				<meta name="msapplication-TileColor" content="#0a0a0a" />

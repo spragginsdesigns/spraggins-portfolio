@@ -97,7 +97,7 @@ const Contact: React.FC = () => {
 					</a>
 				</div>
 				<form className="max-w-lg mx-auto" onSubmit={handleSubmit}>
-					{/* Honeypot — hidden from humans, bots fill it and get silently dropped */}
+					{/* Honeypot - hidden from humans, bots fill it and get silently dropped */}
 					<input
 						type="text"
 						name="website"

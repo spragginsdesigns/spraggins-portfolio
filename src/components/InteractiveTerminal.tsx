@@ -421,21 +421,21 @@ const MAN_PAGES: Record<string, string> = {
 	contact: "Display contact information and services offered.",
 	resume: "Print a condensed resume.",
 	socials: "List social media and profile links.",
-	ask: "ask <question> — Ask the AI assistant about Austin. Responses stream live.",
-	agent: "agent run [issue] — Simulate the autonomous delivery loop. agent status — Show agent fleet status.",
+	ask: "ask <question> - Ask the AI assistant about Austin. Responses stream live.",
+	agent: "agent run [issue] - Simulate the autonomous delivery loop. agent status - Show agent fleet status.",
 	ls: "List files in the current directory.",
 	pwd: "Print the current working directory.",
 	whoami: "Print the current user.",
-	cat: "cat <file> — Print file contents. Try 'ls' to see files.",
-	cd: "cd <dir> — Change directory. Try 'ls' to see directories.",
-	echo: "echo <message> — Print a message to the terminal.",
+	cat: "cat <file> - Print file contents. Try 'ls' to see files.",
+	cd: "cd <dir> - Change directory. Try 'ls' to see directories.",
+	echo: "echo <message> - Print a message to the terminal.",
 	history: "Show your command history for this session.",
 	date: "Print the current date and time.",
 	uptime: "Show system uptime.",
 	neofetch: "Display system information with style.",
 	clear: "Clear the terminal screen (shortcut: Ctrl+L).",
-	man: "man <command> — Show the manual page for a command.",
-	cowsay: "cowsay <message> — A cow says your message.",
+	man: "man <command> - Show the manual page for a command.",
+	cowsay: "cowsay <message> - A cow says your message.",
 };
 
 // Virtual filesystem mappings for cat/cd
@@ -757,7 +757,7 @@ const KONAMI_SEQUENCE = [
 // otherwise the terminal captures the mouse wheel before the page does.
 const WELCOME_MESSAGE_DESKTOP = `
   ╭─────────────────────────────────────────────────────────────╮
-  │   SpragginsOS v2.0 — Portfolio Edition                      │
+  │   SpragginsOS v2.0 - Portfolio Edition                      │
   ╰─────────────────────────────────────────────────────────────╯
 
   Host:      Austin Spraggins
@@ -771,7 +771,7 @@ const WELCOME_MESSAGE_DESKTOP = `
   Games:     Native Windows + Steam Deck builds
   ───────────────────────────────────────────────────────────────
 
-  Type 'help' for commands — or try 'agent run'.
+  Type 'help' for commands - or try 'agent run'.
 `;
 
 const WELCOME_MESSAGE_MOBILE = `
@@ -849,7 +849,7 @@ const InteractiveTerminal: React.FC = () => {
 				const saved = sessionStorage.getItem(HISTORY_STORAGE_KEY);
 				if (saved) setCommandHistory(JSON.parse(saved));
 			} catch {
-				// sessionStorage unavailable (private mode) — start fresh
+				// sessionStorage unavailable (private mode) - start fresh
 			}
 			setIsInitialized(true);
 		}
@@ -970,7 +970,7 @@ const InteractiveTerminal: React.FC = () => {
 			const issue = issueArg?.toUpperCase() || scenario.issue;
 
 			try {
-				appendLine("system", `▸ Issue: ${issue} — "${scenario.title}"`);
+				appendLine("system", `▸ Issue: ${issue} - "${scenario.title}"`);
 				await sleep(300);
 				if (cancelRef.current) return;
 				appendLine(
@@ -1280,7 +1280,7 @@ const InteractiveTerminal: React.FC = () => {
 				case "exit":
 				case "logout":
 				case "quit":
-					appendLine("output", "\n  There is no exit. Only scroll. 👇\n  (or type 'contact' — that's the real exit)");
+					appendLine("output", "\n  There is no exit. Only scroll. 👇\n  (or type 'contact' - that's the real exit)");
 					return;
 
 				case "matrix":
@@ -1349,7 +1349,7 @@ const InteractiveTerminal: React.FC = () => {
 			) {
 				konamiRef.current = [];
 				setCurrentInput("");
-				appendLine("system", "\n  🎮 KONAMI CODE ACCEPTED — cheat mode enabled\n");
+				appendLine("system", "\n  🎮 KONAMI CODE ACCEPTED - cheat mode enabled\n");
 				typeOutput(STATIC_COMMANDS["sudo hire austin"]());
 				return;
 			}
@@ -1502,8 +1502,8 @@ const InteractiveTerminal: React.FC = () => {
 							<div className="flex-1 text-center">
 								<span className="text-xs text-muted-foreground font-mono">
 									{vimMode
-										? "visitor@austin-portfolio — vim 😈"
-										: "visitor@austin-portfolio — bash"}
+										? "visitor@austin-portfolio - vim 😈"
+										: "visitor@austin-portfolio - bash"}
 								</span>
 							</div>
 							{/* Spacer for symmetry */}

@@ -40,7 +40,7 @@ interface GitHubData {
 }
 
 const CACHE_KEY = "github-showcase-cache";
-const CACHE_TTL_MS = 30 * 60 * 1000; // 30 min — dodges the 60/hr anonymous rate limit
+const CACHE_TTL_MS = 30 * 60 * 1000; // 30 min - dodges the 60/hr anonymous rate limit
 
 const readCache = (): GitHubData | null => {
 	try {
@@ -58,7 +58,7 @@ const writeCache = (data: GitHubData) => {
 	try {
 		sessionStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data }));
 	} catch {
-		// Storage unavailable — skip caching
+		// Storage unavailable - skip caching
 	}
 };
 

@@ -81,7 +81,7 @@ const AISystems: React.FC = () => {
 						Production AI, end to end
 					</Badge>
 					<h2 className="mb-5 font-heading text-4xl font-bold md:text-5xl">
-						I build the agents—and the systems they ship.
+						I build the agents - and the systems they ship.
 					</h2>
 					<p className="text-lg leading-relaxed text-muted-foreground">
 						My work at LineCrush goes beyond model calls. I design the product intelligence,

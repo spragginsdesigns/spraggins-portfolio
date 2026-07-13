@@ -12,7 +12,7 @@ import { ArrowRight, Github, Linkedin, Mail, Twitter, FileDown } from "lucide-re
 
 const Hero: React.FC = () => {
 	const tagline =
-		"I build AI agents that ship production software—and the platforms they run. At LineCrush, that means autonomous delivery, multi-model intelligence, native apps, and an AI-native game studio.";
+		"I build AI agents that ship production software - and the platforms they run. At LineCrush, that means autonomous delivery, multi-model intelligence, native apps, and an AI-native game studio.";
 
 	const highlights = [
 		"Co-Founder & CTO",
