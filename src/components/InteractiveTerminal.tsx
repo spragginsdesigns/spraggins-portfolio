@@ -3,20 +3,61 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { FMT, GUNMETAL_ORBIT, STUDIO } from "@/lib/stats";
 
 interface CommandOutput {
 	type: "input" | "output" | "error" | "ascii" | "system";
 	content: string | React.ReactNode;
 }
 
-const STATIC_COMMANDS: Record<string, () => string> = {
-	help: () => `
-╭─────────────────────────────────────────────────────────────╮
-│                    AVAILABLE COMMANDS                       │
-╰─────────────────────────────────────────────────────────────╯
+// ASCII boxes are fixed-width; 61 cols shreds on a 375px phone, so every
+// command takes a mobile flag and draws inside a ~30-col budget instead.
+const box = (title: string, m = false): string => {
+	const width = m ? 30 : 61;
+	const pad = Math.max(0, width - title.length);
+	const left = Math.floor(pad / 2);
+	return [
+		`╭${"─".repeat(width)}╮`,
+		`│${" ".repeat(left)}${title}${" ".repeat(pad - left)}│`,
+		`╰${"─".repeat(width)}╯`
+	].join("\n");
+};
+
+const rule = (m = false): string => "─".repeat(m ? 30 : 61);
+
+const STATIC_COMMANDS: Record<string, (m?: boolean) => string> = {
+	help: (m = false) =>
+		m
+			? `
+${box("AVAILABLE COMMANDS", m)}
 
   PORTFOLIO
-  ─────────────────────────────────────────────────────────────
+  ${rule(m)}
+  about · skills · experience
+  projects · agents · games
+  education · contact · resume
+  socials
+
+  LIVE DEMOS
+  ${rule(m)}
+  agent run → watch a delivery
+  ask <q>   → streaming AI
+
+  UNIX
+  ${rule(m)}
+  ls · pwd · whoami · cat
+  cd · echo · man · history
+  date · uptime · neofetch
+  clear (Ctrl+L)
+
+  Ctrl+C interrupts.
+  There are secrets. Explore.
+`
+			: `
+${box("AVAILABLE COMMANDS", m)}
+
+  PORTFOLIO
+  ${rule(m)}
   about       →  Who is Austin Spraggins?
   skills      →  Technical skills & expertise
   experience  →  Work history & roles
@@ -29,12 +70,12 @@ const STATIC_COMMANDS: Record<string, () => string> = {
   socials     →  Social media links
 
   LIVE DEMOS
-  ─────────────────────────────────────────────────────────────
+  ${rule(m)}
   agent run       →  Watch an autonomous agent ship an issue
   ask <question>  →  Ask AI anything about Austin (streams!)
 
   UNIX COMMANDS
-  ─────────────────────────────────────────────────────────────
+  ${rule(m)}
   ls          →  List files and directories
   pwd         →  Print working directory
   whoami      →  Display current user
@@ -52,27 +93,26 @@ const STATIC_COMMANDS: Record<string, () => string> = {
   There are secrets in here. Explore.
 `,
 
-	about: () => `
-╭─────────────────────────────────────────────────────────────╮
-│                    ABOUT AUSTIN SPRAGGINS                   │
-╰─────────────────────────────────────────────────────────────╯
+	about: (m = false) => `
+${box("ABOUT AUSTIN SPRAGGINS", m)}
 
   👤 Austin Spraggins
   📍 Fresno, California
   💼 Co-Founder & CTO at LineCrush Inc.
 
-  ─────────────────────────────────────────────────────────────
+  ${rule(m)}
 
   I'm a passionate software engineer who went from truck driver
   to CTO. My journey taught me discipline, problem-solving, and
   the value of hard work.
 
   Today, I architect AI-native production systems at scale:
-  • 27,000+ monorepo commits
-  • Nearly 1,000 tracked TSX modules and 366 API handlers
-  • 64 agent skills shared across autonomous workflows
+  • ${FMT.commits} monorepo commits
+  • ${FMT.tsxModules} tracked TSX modules and ${FMT.apiHandlers} API handlers
+  • ${FMT.agentSkills} agent skills shared across autonomous workflows
+  • ${FMT.fleetIssues} agent-shipped issues at ${FMT.fleetCompletion} completion
   • Web, iOS, Android, and browser-extension clients
-  • Native Godot builds proven for Windows and Steam Deck
+  • ${GUNMETAL_ORBIT.name} on Steam ${GUNMETAL_ORBIT.releaseDateDisplay}
 
   I believe technology should extend human gifts, not replace
   them. My mission is to build tools that make the world more
@@ -81,10 +121,50 @@ const STATIC_COMMANDS: Record<string, () => string> = {
   Family man. Christian. Builder.
 `,
 
-	skills: () => `
-╭─────────────────────────────────────────────────────────────╮
-│                    TECHNICAL SKILLS                         │
-╰─────────────────────────────────────────────────────────────╯
+	skills: (m = false) =>
+		m
+			? `
+${box("TECHNICAL SKILLS", m)}
+
+  FRONTEND
+  ${rule(m)}
+  ■■■■■■■■■■ React/Next.js
+  ■■■■■■■■■■ TypeScript
+  ■■■■■■■■■■ Tailwind CSS
+  ■■■■■■■■■░ Framer Motion
+
+  BACKEND
+  ${rule(m)}
+  ■■■■■■■■■■ Python
+  ■■■■■■■■■■ Node.js
+  ■■■■■■■■■░ FastAPI
+  ■■■■■■■■■■ REST APIs
+
+  DATABASE
+  ${rule(m)}
+  ■■■■■■■■■■ PostgreSQL
+  ■■■■■■■■■░ Redis
+  ■■■■■■■■■░ MongoDB
+  ■■■■■■■■■░ Neon
+
+  AI/ML
+  ${rule(m)}
+  ■■■■■■■■■■ OpenAI GPT
+  ■■■■■■■■■░ Anthropic Claude
+  ■■■■■■■■■░ Google Vision
+  ■■■■■■■■■░ Perplexity
+
+  DEVOPS & TOOLS
+  ${rule(m)}
+  ■■■■■■■■■■ Git/GitHub
+  ■■■■■■■■■░ Docker
+  ■■■■■■■■■░ AWS (S3, SES, CF)
+  ■■■■■■■■■■ Vercel
+  ■■■■■■■■■░ Linux/Ubuntu
+  ■■■■■■■■■░ CI/CD
+`
+			: `
+${box("TECHNICAL SKILLS", m)}
 
   FRONTEND                        BACKEND
   ─────────────────────────────   ─────────────────────────────
@@ -101,38 +181,35 @@ const STATIC_COMMANDS: Record<string, () => string> = {
   ■■■■■■■■■░ Neon                 ■■■■■■■■■░ Perplexity
 
   DEVOPS & TOOLS
-  ─────────────────────────────────────────────────────────────
+  ${rule(m)}
   ■■■■■■■■■■ Git/GitHub           ■■■■■■■■■░ Docker
   ■■■■■■■■■░ AWS (S3, SES, CF)    ■■■■■■■■■■ Vercel
   ■■■■■■■■■░ Linux/Ubuntu         ■■■■■■■■■░ CI/CD
 `,
 
-	experience: () => `
-╭─────────────────────────────────────────────────────────────╮
-│                    WORK EXPERIENCE                          │
-╰─────────────────────────────────────────────────────────────╯
+	experience: (m = false) => `
+${box("WORK EXPERIENCE", m)}
 
-  ┌─────────────────────────────────────────────────────────┐
-  │  CO-FOUNDER & CTO                                       │
-  │  LineCrush Inc. | 2024 - Present                        │
-  └─────────────────────────────────────────────────────────┘
+  CO-FOUNDER & CTO
+  LineCrush Inc. | 2024 - Present
+  ${rule(m)}
 
   Technical co-founder of an AI-powered sports intelligence
   platform serving users across web, mobile, and extensions.
 
   Key Achievements:
   • Architected full-stack platform from ground up
-  • Built nearly 1,000 TSX modules and 366 API handlers
+  • Built ${FMT.tsxModules} TSX modules and ${FMT.apiHandlers} API handlers
   • Ships AI picks, signal search, vision analysis, and reports
-  • Created a 64-skill agent operating system for delivery
-  • 27,000+ commits across web, data, native, and games
+  • Created a ${FMT.agentSkills}-skill agent operating system for delivery
+  • ${FMT.commits} commits across web, data, native, and games
+  • Agent fleet: ${FMT.fleetIssues} issues shipped since ${FMT.fleetSince}
 
-  ─────────────────────────────────────────────────────────────
+  ${rule(m)}
 
-  ┌─────────────────────────────────────────────────────────┐
-  │  WEB DEVELOPMENT INSTRUCTOR                             │
-  │  Bitwise Industries / Geekwise Academy | 2021 - 2023    │
-  └─────────────────────────────────────────────────────────┘
+  WEB DEVELOPMENT INSTRUCTOR
+  Bitwise Industries / Geekwise Academy | 2021 - 2023
+  ${rule(m)}
 
   Taught web development fundamentals to aspiring developers.
   • HTML, CSS, JavaScript, React
@@ -140,47 +217,44 @@ const STATIC_COMMANDS: Record<string, () => string> = {
   • Developed curriculum and hands-on projects
 `,
 
-	projects: () => `
-╭─────────────────────────────────────────────────────────────╮
-│                    FEATURED PROJECTS                        │
-╰─────────────────────────────────────────────────────────────╯
+	projects: (m = false) => `
+${box("FEATURED PROJECTS", m)}
 
   ★ LINECRUSH (Flagship)
-  ──────────────────────────────────────────────────────────
+  ${rule(m)}
   Sports analytics platform with AI-powered insights
   Tech: Next.js, Python, PostgreSQL, Redis, AWS
-  Systems: product AI | autonomous agents | 4 clients
+  Systems: product AI | autonomous agents | ${FMT.productClients} clients
   URL: https://linecrush.com
 
-  ★ LINECRUSH GAMES (Private R&D)
-  ──────────────────────────────────────────────────────────
-  AI-native Godot studio: Space Miner, RockHunter, MERIDIAN
-  Tech: Godot 4.7, GDScript, MCP, 3D asset pipelines
-  Builds: Windows + Linux / Steam Deck smoke-proven
+  ★ GUNMETAL ORBIT (LineCrush Games)
+  ${rule(m)}
+  ${GUNMETAL_ORBIT.genre} — ${GUNMETAL_ORBIT.tagline}
+  Steam: ${GUNMETAL_ORBIT.releaseDateDisplay} · ${GUNMETAL_ORBIT.price}
+  Wishlist: ${GUNMETAL_ORBIT.steamUrl}
+  Type 'games' for the full studio.
 
   ◆ BIBLE AI EXPLORER
-  ──────────────────────────────────────────────────────────
+  ${rule(m)}
   AI-powered Bible study application
   Tech: Next.js, OpenAI, TypeScript
   Features: Contextual search, AI explanations
 
   ◆ SAVELIFE CPR
-  ──────────────────────────────────────────────────────────
+  ${rule(m)}
   Emergency CPR guidance application
   Tech: React, Node.js
 
   ◆ AI TUTOR WEBAPP
-  ──────────────────────────────────────────────────────────
+  ${rule(m)}
   Educational AI assistant for students
   Tech: Next.js, OpenAI, Tailwind
 
   Type 'socials' to view GitHub for more projects →
 `,
 
-	agents: () => `
-╭─────────────────────────────────────────────────────────────╮
-│                 AUTONOMOUS DELIVERY SYSTEM                  │
-╰─────────────────────────────────────────────────────────────╯
+	agents: (m = false) => `
+${box("AUTONOMOUS DELIVERY SYSTEM", m)}
 
   Linear Issue
       ↓
@@ -188,37 +262,52 @@ const STATIC_COMMANDS: Record<string, () => string> = {
 
   • Durable Codex and Claude sessions
   • Provider-neutral recovery and model routing
-  • 64 shared agent skills and custom MCP tooling
+  • ${FMT.agentSkills} shared agent skills and custom MCP tooling
   • Real product-path evidence before closeout
   • Web, Python, SwiftUI, Kotlin, and infrastructure lanes
+
+  Fleet ledger since ${FMT.fleetSince}:
+  ${FMT.fleetIssues} issues worked · ${FMT.fleetCompletion} completed · ${FMT.fleetPerDay}/day
 
   The goal isn't code generation. It's trustworthy delivery.
 
   ▶ Watch it in action: type 'agent run'
 `,
 
-	games: () => `
-╭─────────────────────────────────────────────────────────────╮
-│                    LINECRUSH GAMES                          │
-╰─────────────────────────────────────────────────────────────╯
+	games: (m = false) => `
+${box("LINECRUSH GAMES", m)}
 
-  SPACE MINER   → Steam Deck-first 2.5D survival miner
-  ROCKHUNTER    → Playable mining-action spinoff
-  MERIDIAN      → Story-first 3D space adventure
+  "${STUDIO.motto}" — ${STUDIO.location}
+
+  ★ GUNMETAL ORBIT — the flagship
+  ${rule(m)}
+  ${GUNMETAL_ORBIT.genre}.
+  Pilot exosuits with ${GUNMETAL_ORBIT.weaponSlots} auto-firing weapon
+  slots from a ${GUNMETAL_ORBIT.weapons}-weapon arsenal. Mine ore
+  between waves, bank it at the dock, snowball your build.
+
+  Steam:    ${GUNMETAL_ORBIT.releaseDateDisplay} · ${GUNMETAL_ORBIT.price}
+  Wishlist: ${GUNMETAL_ORBIT.steamUrl}
+  "${GUNMETAL_ORBIT.tagline}"
+  Engine: ${GUNMETAL_ORBIT.engine} · Lead platform: Steam Deck
+
+  ALSO IN THE HANGAR
+  ${rule(m)}
+  SPACE MINER   → the predecessor — where it started
+  ROCKHUNTER    → playable mining-action spinoff
+  MERIDIAN      → story-first 3D space adventure
+  LAST CREW     → arcade siege defense
 
   Studio pipeline:
   • Agent-controlled Godot scenes, scripts, and playtests
   • Generated concepts, rigged 3D models, UI art, and audio
-  • Predictive enemy behavior and gameplay automation
   • Headless tests, captures, and repeatable native exports
 
-  Windows and Linux / Steam Deck builds are smoke-proven.
+  ▶ Full studio page: /games · ${STUDIO.url}
 `,
 
-	education: () => `
-╭─────────────────────────────────────────────────────────────╮
-│                    EDUCATION                                │
-╰─────────────────────────────────────────────────────────────╯
+	education: (m = false) => `
+${box("EDUCATION", m)}
 
   🎓 ASSOCIATE OF ARTS - WEB DEVELOPMENT
      Community College | 5+ Years of Study
@@ -230,7 +319,7 @@ const STATIC_COMMANDS: Record<string, () => string> = {
      • Database Design
      • Software Engineering Principles
 
-  ─────────────────────────────────────────────────────────────
+  ${rule(m)}
 
   📚 CONTINUOUS LEARNING
 
@@ -240,21 +329,19 @@ const STATIC_COMMANDS: Record<string, () => string> = {
      • Teaching web development reinforced expertise
 `,
 
-	contact: () => `
-╭─────────────────────────────────────────────────────────────╮
-│                    GET IN TOUCH                             │
-╰─────────────────────────────────────────────────────────────╯
+	contact: (m = false) => `
+${box("GET IN TOUCH", m)}
 
   💼 OPEN TO CONTRACTS & CONSULTING
 
-  ─────────────────────────────────────────────────────────────
+  ${rule(m)}
 
   📧 Email:    spragginsdesigns@gmail.com
   🐙 GitHub:   github.com/spragginsdesigns
   💼 LinkedIn: linkedin.com/in/spragginsdesigns
   🐦 Twitter:  @spragginsdesign
 
-  ─────────────────────────────────────────────────────────────
+  ${rule(m)}
 
   SERVICES OFFERED:
 
@@ -267,25 +354,23 @@ const STATIC_COMMANDS: Record<string, () => string> = {
   Scroll down to use the contact form, or reach out directly!
 `,
 
-	resume: () => `
-╭─────────────────────────────────────────────────────────────╮
-│                    RESUME                                   │
-╰─────────────────────────────────────────────────────────────╯
+	resume: (m = false) => `
+${box("RESUME", m)}
 
   AUSTIN SPRAGGINS
   Co-Founder & CTO | Senior Software Engineer
   Fresno, California
 
-  ═══════════════════════════════════════════════════════════
+  ${rule(m)}
 
   SUMMARY
-  ───────────────────────────────────────────────────────────
-  Full-stack engineer with 2+ years building production
+  ${rule(m)}
+  Full-stack engineer with ${FMT.yearsInProduction} years building production
   systems at scale. Expertise in React, Python, PostgreSQL,
   and AI/ML integration. Former educator, current CTO.
 
   TECHNICAL EXPERTISE
-  ───────────────────────────────────────────────────────────
+  ${rule(m)}
   Frontend:  React, Next.js, TypeScript, Tailwind CSS
   Backend:   Python, Node.js, FastAPI, REST APIs
   Database:  PostgreSQL, Redis, MongoDB
@@ -293,21 +378,19 @@ const STATIC_COMMANDS: Record<string, () => string> = {
   DevOps:    AWS, Docker, Vercel, GitHub Actions
 
   KEY METRICS
-  ───────────────────────────────────────────────────────────
-  • 800+ React components built
-  • 115+ Python backend services deployed
-  • 120+ PostgreSQL tables designed
-  • 5 LLM providers orchestrated in production
-  • 25,000+ commits shipped in 2+ years
+  ${rule(m)}
+  • ${FMT.commitsExact} monorepo commits (${FMT.commits2026} in 2026)
+  • ${FMT.tsxModules} TSX modules · ${FMT.apiHandlers} API handlers
+  • ${FMT.postgresTables} PostgreSQL tables · ${FMT.llmProviders} LLM providers
+  • ${FMT.fleetIssues} agent issues shipped at ${FMT.fleetCompletion}
+  • ${FMT.gameBuilds} shipped game builds incl. Steam
   • 200+ students trained in web development
 
   📄 View full PDF: Scroll down to Skills section
 `,
 
-	socials: () => `
-╭─────────────────────────────────────────────────────────────╮
-│                    SOCIAL LINKS                             │
-╰─────────────────────────────────────────────────────────────╯
+	socials: (m = false) => `
+${box("SOCIAL LINKS", m)}
 
   🐙 GitHub
      https://github.com/spragginsdesigns
@@ -347,7 +430,10 @@ const STATIC_COMMANDS: Record<string, () => string> = {
   Coffee consumed: ∞ cups
 `,
 
-	neofetch: () => `
+	neofetch: (m = false) => `${
+		m
+			? `\n${box("SPRAGGINS OS", m)}`
+			: `
   ███████╗██████╗ ██████╗  █████╗  ██████╗  ██████╗ ██╗███╗   ██╗███████╗
   ██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝ ██╔════╝ ██║████╗  ██║██╔════╝
   ███████╗██████╔╝██████╔╝███████║██║  ███╗██║  ███╗██║██╔██╗ ██║███████╗
@@ -359,26 +445,27 @@ const STATIC_COMMANDS: Record<string, () => string> = {
                              ██║   ██║███████╗
                              ██║   ██║╚════██║
                              ╚██████╔╝███████║
-                              ╚═════╝ ╚══════╝
-  ─────────────────────────────────────────────────────────────────────
+                              ╚═════╝ ╚══════╝`
+	}
+  ${rule(m)}
   OS:        SpragginsOS v2.0 (Portfolio Edition)
   Host:      Austin Spraggins
   Role:      Co-Founder & CTO @ LineCrush
-  Uptime:    2+ years in production
+  Uptime:    ${FMT.yearsInProduction} years in production
   Shell:     bash 5.1.16
   Terminal:  visitor@austin-portfolio
-  ─────────────────────────────────────────────────────────────────────
-  Commits:   27K+ across the monorepo
-  APIs:      366 tracked handlers
-  Agents:    64 shared skills
+  ${rule(m)}
+  Commits:   ${FMT.commitsCompact} across the monorepo
+  APIs:      ${FMT.apiHandlers} tracked handlers
+  Agents:    ${FMT.agentSkills} shared skills
+  Fleet:     ${FMT.fleetIssues} issues at ${FMT.fleetCompletion}
   Clients:   Web + iOS + Android + extensions
-  ─────────────────────────────────────────────────────────────────────
+  Games:     ${GUNMETAL_ORBIT.name} → Steam
+  ${rule(m)}
 `,
 
-	"sudo hire austin": () => `
-╭─────────────────────────────────────────────────────────────╮
-│  🎉 CONGRATULATIONS! YOU'VE UNLOCKED A SECRET!              │
-╰─────────────────────────────────────────────────────────────╯
+	"sudo hire austin": (m = false) => `
+${box("🎉 SECRET UNLOCKED!", m)}
 
   [sudo] password for visitor: ************
 
@@ -386,11 +473,11 @@ const STATIC_COMMANDS: Record<string, () => string> = {
   ✓ Loading Austin's availability...
   ✓ Checking calendar...
 
-  ═══════════════════════════════════════════════════════════
+  ${rule(m)}
 
-        🚀 AUSTIN IS AVAILABLE FOR HIRE! 🚀
+  🚀 AUSTIN IS AVAILABLE FOR HIRE! 🚀
 
-  ═══════════════════════════════════════════════════════════
+  ${rule(m)}
 
   You've discovered that Austin is actively seeking:
 
@@ -404,7 +491,7 @@ const STATIC_COMMANDS: Record<string, () => string> = {
   📧 Email him: spragginsdesigns@gmail.com
   💬 Or scroll down to the contact form!
 
-  ═══════════════════════════════════════════════════════════
+  ${rule(m)}
 `,
 };
 
@@ -416,7 +503,7 @@ const MAN_PAGES: Record<string, string> = {
 	experience: "View Austin's work history and roles.",
 	projects: "List featured projects, including LineCrush.",
 	agents: "Describe the autonomous AI delivery system.",
-	games: "Describe the LineCrush Games studio.",
+	games: "LineCrush Games studio — Gunmetal Orbit on Steam, plus the full roster. See /games.",
 	education: "Show Austin's educational background.",
 	contact: "Display contact information and services offered.",
 	resume: "Print a condensed resume.",
@@ -512,7 +599,7 @@ const AGENT_SCENARIOS: AgentScenario[] = [
 			{
 				phase: "INVESTIGATE",
 				lines: [
-					{ text: "Loading repo map + 64 agent skills", spinMs: 1200 },
+					{ text: `Loading repo map + ${FMT.agentSkills} agent skills`, spinMs: 1200 },
 					{ text: "Tracing signal-search data path", spinMs: 1600 },
 					{ text: "Root cause: cache key ignores live-game state" },
 				],
@@ -762,13 +849,13 @@ const WELCOME_MESSAGE_DESKTOP = `
 
   Host:      Austin Spraggins
   Role:      Co-Founder & CTO @ LineCrush
-  Uptime:    2+ years in production
+  Uptime:    ${FMT.yearsInProduction} years in production
   ───────────────────────────────────────────────────────────────
-  Commits:   27,000+ across the monorepo
-  APIs:      366 tracked handlers
-  Agents:    64 shared skills
+  Commits:   ${FMT.commits} across the monorepo
+  APIs:      ${FMT.apiHandlers} tracked handlers
+  Agents:    ${FMT.agentSkills} skills · ${FMT.fleetIssues} issues shipped
   Clients:   Web + iOS + Android + extensions
-  Games:     Native Windows + Steam Deck builds
+  Games:     ${GUNMETAL_ORBIT.name} — Steam ${GUNMETAL_ORBIT.releaseDateDisplay}
   ───────────────────────────────────────────────────────────────
 
   Type 'help' for commands - or try 'agent run'.
@@ -783,15 +870,15 @@ const WELCOME_MESSAGE_MOBILE = `
   Host:     Austin Spraggins
   Role:     Co-Founder & CTO
   Company:  LineCrush Inc.
-  Uptime:   2+ years production
+  Uptime:   ${FMT.yearsInProduction} years production
 
   ────────────────────────────
 
-  Commits:     27K+
-  APIs:        366
-  Agent skills: 64
-  Clients:     4
-  Game builds: 2
+  Commits:      ${FMT.commitsCompact}
+  APIs:         ${FMT.apiHandlers}
+  Agent skills: ${FMT.agentSkills}
+  Fleet issues: ${FMT.fleetIssues}
+  Game builds:  ${FMT.gameBuilds}
 
   ────────────────────────────
 
@@ -975,7 +1062,7 @@ const InteractiveTerminal: React.FC = () => {
 				if (cancelRef.current) return;
 				appendLine(
 					"system",
-					`▸ Lane: ${scenario.lane} · Skills loaded: 64 · Session: durable`
+					`▸ Lane: ${scenario.lane} · Skills loaded: ${FMT.agentSkills} · Session: durable`
 				);
 				await sleep(500);
 
@@ -1138,13 +1225,13 @@ const InteractiveTerminal: React.FC = () => {
 
 			// Full-string matches first (multi-word secrets & legacy combos)
 			if (lower === "sudo hire austin") {
-				await typeOutput(STATIC_COMMANDS["sudo hire austin"]());
+				await typeOutput(STATIC_COMMANDS["sudo hire austin"](isMobile));
 				return;
 			}
 			if (lower === "sudo rm -rf /" || lower === "rm -rf /") {
 				appendLine("error", "  rm: it would be a shame if something happened to this portfolio...");
 				await sleep(600);
-				appendLine("output", "  ✗ Permission denied: protected by 27,000+ commits of backups");
+				appendLine("output", `  ✗ Permission denied: protected by ${FMT.commits} commits of backups`);
 				appendLine("output", "  Nice try though. Austin appreciates the chaos energy. 😄");
 				return;
 			}
@@ -1177,11 +1264,16 @@ const InteractiveTerminal: React.FC = () => {
 						await typeOutput(`
   AGENT FLEET STATUS
   ─────────────────────────────────────────────
-  Skills loaded:     64
+  Skills loaded:     ${FMT.agentSkills}
   Lanes:             web · python · swiftui · kotlin · godot · infra
   Sessions:          durable (provider-neutral)
   Review gate:       armed
   Evidence policy:   product-path proof required
+  ─────────────────────────────────────────────
+  Ledger since ${FMT.fleetSince}:
+  Issues worked:     ${FMT.fleetIssues} (${FMT.fleetCompletion} completed)
+  Throughput:        ${FMT.fleetPerDay} issues/day
+  Jobs shipped:      ${FMT.fleetJobsCommits} commit-bearing runs
 
   All quiet. Type 'agent run' to watch a delivery.`);
 					} else {
@@ -1198,7 +1290,7 @@ const InteractiveTerminal: React.FC = () => {
 
 				case "man": {
 					if (!args[0]) {
-						await typeOutput(STATIC_COMMANDS.help());
+						await typeOutput(STATIC_COMMANDS.help(isMobile));
 						return;
 					}
 					const page = MAN_PAGES[args[0]];
@@ -1217,7 +1309,7 @@ const InteractiveTerminal: React.FC = () => {
 					}
 					const target = CAT_FILES[args[0]];
 					if (target) {
-						await typeOutput(STATIC_COMMANDS[target]());
+						await typeOutput(STATIC_COMMANDS[target](isMobile));
 					} else {
 						appendLine("error", `cat: ${args[0]}: No such file or directory`);
 					}
@@ -1234,7 +1326,7 @@ const InteractiveTerminal: React.FC = () => {
 					}
 					const dir = CD_DIRS[args[0]];
 					if (dir) {
-						await typeOutput(STATIC_COMMANDS[dir]());
+						await typeOutput(STATIC_COMMANDS[dir](isMobile));
 					} else {
 						appendLine("error", `cd: ${args[0]}: No such directory`);
 					}
@@ -1290,14 +1382,14 @@ const InteractiveTerminal: React.FC = () => {
 				case "--help":
 				case "-h":
 				case "?":
-					await typeOutput(STATIC_COMMANDS.help());
+					await typeOutput(STATIC_COMMANDS.help(isMobile));
 					return;
 			}
 
 			// Single-word static commands
 			const handler = STATIC_COMMANDS[lower];
 			if (handler) {
-				await typeOutput(handler());
+				await typeOutput(handler(isMobile));
 				return;
 			}
 
@@ -1350,7 +1442,7 @@ const InteractiveTerminal: React.FC = () => {
 				konamiRef.current = [];
 				setCurrentInput("");
 				appendLine("system", "\n  🎮 KONAMI CODE ACCEPTED - cheat mode enabled\n");
-				typeOutput(STATIC_COMMANDS["sudo hire austin"]());
+				typeOutput(STATIC_COMMANDS["sudo hire austin"](isMobile));
 				return;
 			}
 
@@ -1602,7 +1694,7 @@ const InteractiveTerminal: React.FC = () => {
 					transition={{ duration: 0.5, delay: 0.4 }}
 					className="flex flex-wrap justify-center gap-2 mt-6"
 				>
-					{["help", "agent run", "about", "skills", "projects", "ask", "contact"].map(
+					{["help", "agent run", "about", "skills", "projects", "games", "ask", "contact"].map(
 						(cmd) => (
 							<button
 								key={cmd}
@@ -1613,7 +1705,7 @@ const InteractiveTerminal: React.FC = () => {
 									}
 									setCurrentInput("");
 								}}
-								className="px-3 py-1.5 text-sm bg-card/50 border border-border/50 rounded-full text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
+								className="px-4 py-2.5 min-h-[44px] text-sm bg-card/50 border border-border/50 rounded-full text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
 							>
 								{cmd}
 							</button>

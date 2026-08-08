@@ -20,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			priority: 1
 		},
 		{
+			url: `${baseUrl}/games`,
+			lastModified: new Date(),
+			changeFrequency: "weekly",
+			priority: 0.9
+		},
+		{
 			url: `${baseUrl}/blog`,
 			lastModified: posts.length ? new Date(posts[0].date) : new Date(),
 			changeFrequency: "weekly",

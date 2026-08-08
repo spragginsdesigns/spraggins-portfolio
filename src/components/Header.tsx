@@ -8,6 +8,7 @@ import CommandPalette from "@/components/CommandPalette";
 const navLinks = [
 	{ label: "AI Systems", href: "/#ai-systems" },
 	{ label: "Projects", href: "/#projects" },
+	{ label: "Games", href: "/games" },
 	{ label: "Expertise", href: "/#expertise" },
 	{ label: "About", href: "/#about" },
 	{ label: "Blog", href: "/blog" },
@@ -77,7 +78,7 @@ const Header: React.FC = () => {
 				<div className="flex items-center gap-1 lg:hidden">
 					<button
 						type="button"
-						className="p-2 text-muted-foreground hover:text-primary transition-colors"
+						className="p-3 text-muted-foreground hover:text-primary transition-colors"
 						aria-label="Open command palette"
 						onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
 					>
@@ -85,7 +86,7 @@ const Header: React.FC = () => {
 					</button>
 					<button
 						type="button"
-						className="p-2 text-muted-foreground hover:text-primary transition-colors"
+						className="p-3 text-muted-foreground hover:text-primary transition-colors"
 						aria-label={menuOpen ? "Close menu" : "Open menu"}
 						aria-expanded={menuOpen}
 						onClick={() => setMenuOpen((open) => !open)}
@@ -103,7 +104,7 @@ const Header: React.FC = () => {
 							<Link
 								key={link.label}
 								href={link.href}
-								className="py-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
+								className="py-3 text-sm text-muted-foreground hover:text-primary transition-colors"
 								onClick={() => setMenuOpen(false)}
 							>
 								{link.label}

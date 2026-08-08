@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import GameSpotlight from "@/components/GameSpotlight";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
 import AISystems from "@/components/AISystems";
 import About from "@/components/About";
@@ -22,6 +23,7 @@ export default function Home() {
 			<div className="relative z-10">
 				<Header />
 				<Hero />
+				<GameSpotlight />
 				<InteractiveTerminal />
 				<AISystems />
 				<Projects />

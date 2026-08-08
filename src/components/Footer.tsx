@@ -16,25 +16,31 @@ const Footer: React.FC = () => {
 							Home
 						</Link>
 						<Link
-							href="#about"
+							href="/#about"
 							className="hover:text-primary transition-colors"
 						>
 							About
 						</Link>
 						<Link
-							href="#projects"
+							href="/#projects"
 							className="hover:text-primary transition-colors"
 						>
 							Projects
 						</Link>
 						<Link
-							href="#expertise"
+							href="/games"
+							className="hover:text-primary transition-colors"
+						>
+							Games
+						</Link>
+						<Link
+							href="/#expertise"
 							className="hover:text-primary transition-colors"
 						>
 							Expertise
 						</Link>
 						<Link
-							href="#contact"
+							href="/#contact"
 							className="hover:text-primary transition-colors"
 						>
 							Contact

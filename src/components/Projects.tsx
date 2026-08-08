@@ -30,6 +30,7 @@ import {
 	withLiveStars,
 	type GitHubStarsData
 } from "@/lib/github-stars";
+import { FMT, GUNMETAL_ORBIT, STUDIO } from "@/lib/stats";
 
 const lineCrushFeatures = [
 	{
@@ -69,8 +70,8 @@ const lineCrushTechStack = [
 const lineCrushGamesHighlights = [
 	{
 		icon: <Gamepad2 className="w-5 h-5" />,
-		title: "Space Miner",
-		description: "Steam Deck-first 2.5D survival miner"
+		title: GUNMETAL_ORBIT.name,
+		description: `${GUNMETAL_ORBIT.genre} — Steam ${GUNMETAL_ORBIT.releaseDateDisplay}`
 	},
 	{
 		icon: <Box className="w-5 h-5" />,
@@ -85,7 +86,7 @@ const lineCrushGamesHighlights = [
 	{
 		icon: <MonitorCheck className="w-5 h-5" />,
 		title: "Native Builds",
-		description: "Windows and Linux / Steam Deck proven"
+		description: "Windows, Linux, and Steam Deck — shipping on Steam"
 	}
 ];
 
@@ -229,7 +230,7 @@ const FeaturedProject: React.FC = () => {
 			className="mb-12"
 		>
 			<Card className="bg-gradient-to-br from-card via-card to-card/80 border-primary/20 overflow-hidden">
-				<div className="grid md:grid-cols-2 gap-8 p-8">
+				<div className="grid md:grid-cols-2 gap-8 p-5 sm:p-8">
 					{/* Left side - Info */}
 					<div className="flex flex-col justify-center">
 						<div className="flex items-center gap-3 mb-4">
@@ -251,7 +252,7 @@ const FeaturedProject: React.FC = () => {
 						</p>
 
 						{/* Feature Grid */}
-						<div className="grid grid-cols-2 gap-4 mb-6">
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
 							{lineCrushFeatures.map((feature, i) => (
 								<div
 									key={i}
@@ -310,7 +311,7 @@ const FeaturedProject: React.FC = () => {
 									</div>
 									<div className="p-4">
 										<Globe className="w-8 h-8 text-primary mx-auto mb-2" />
-										<div className="text-2xl font-bold">12 Sports</div>
+										<div className="text-2xl font-bold">{FMT.sports} Sports</div>
 										<div className="text-sm text-muted-foreground">Coverage</div>
 									</div>
 									<div className="p-4">
@@ -340,24 +341,25 @@ const LineCrushGamesProject: React.FC = () => {
 			className="mb-12"
 		>
 			<Card className="overflow-hidden border-violet-500/20 bg-gradient-to-br from-card via-card to-violet-950/20">
-				<div className="grid gap-8 p-8 md:grid-cols-2">
+				<div className="grid gap-8 p-5 sm:p-8 md:grid-cols-2">
 					<div className="flex flex-col justify-center">
 						<div className="mb-4 flex flex-wrap items-center gap-3">
 							<Badge className="border-violet-400/30 bg-violet-500/15 text-violet-300">
-								LineCrush R&amp;D
+								LineCrush Games
 							</Badge>
 							<Badge variant="outline" className="border-cyan-500/40 text-cyan-300">
-								AI-native game studio
+								Steam · {GUNMETAL_ORBIT.releaseDateDisplay}
 							</Badge>
 						</div>
 						<h3 className="mb-4 bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
-							LineCrush Games
+							{GUNMETAL_ORBIT.name}
 						</h3>
 						<p className="mb-6 text-lg leading-relaxed text-muted-foreground">
-							I&apos;m building original Godot titles with an AI-accelerated studio workflow:
-							agents can operate the editor, generate and rig production assets, run headless
-							tests and captures, and create repeatable installable builds. Human product taste
-							still owns every gameplay, feel, and art-direction call.
+							Our flagship title: a {GUNMETAL_ORBIT.genre.toLowerCase()} built in{" "}
+							{GUNMETAL_ORBIT.engine} with Steam Deck as the lead platform. It comes out of
+							an AI-accelerated studio workflow — agents operate the editor, generate and
+							rig assets, and run headless QA — while human product taste owns every
+							gameplay, feel, and art-direction call.
 						</p>
 						<div className="mb-6 flex flex-wrap gap-2">
 							{["Godot 4.7", "GDScript", "Godot MCP", "3D Asset Pipelines", "Headless QA", "Steam Deck"].map((tech) => (
@@ -366,9 +368,30 @@ const LineCrushGamesProject: React.FC = () => {
 								</Badge>
 							))}
 						</div>
-						<p className="text-sm font-medium text-violet-200/90">
-							Space Miner, RockHunter, and MERIDIAN are active original game projects.
+						<p className="mb-6 text-sm font-medium text-violet-200/90">
+							{GUNMETAL_ORBIT.name} ships on Steam {GUNMETAL_ORBIT.releaseDateDisplay}.
+							Space Miner, RockHunter, and MERIDIAN continue in active development at{" "}
+							{STUDIO.name}.
 						</p>
+						<div className="flex flex-wrap gap-3">
+							<Button asChild className="w-fit">
+								<a
+									href={GUNMETAL_ORBIT.steamUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="flex items-center gap-2"
+								>
+									Wishlist on Steam
+									<ExternalLink className="w-4 h-4" />
+								</a>
+							</Button>
+							<Button asChild variant="outline" className="w-fit border-violet-400/40">
+								<a href="/games" className="flex items-center gap-2">
+									Explore the studio
+									<Gamepad2 className="w-4 h-4" />
+								</a>
+							</Button>
+						</div>
 					</div>
 
 					<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -495,7 +518,7 @@ const OtherProjectCard: React.FC<{
 					<p className="text-xs text-muted-foreground mb-3">{project.description}</p>
 					<div className="flex flex-wrap gap-1 mb-3">
 						{project.tags.slice(0, 3).map((tag, i) => (
-							<Badge key={i} variant="outline" className="text-[10px] px-1.5 py-0">
+							<Badge key={i} variant="outline" className="text-[11px] px-1.5 py-0">
 								{tag}
 							</Badge>
 						))}
@@ -546,7 +569,7 @@ const YouTubeSection: React.FC = () => {
 						</div>
 					</div>
 					{stats && (
-						<div className="flex gap-8 md:ml-auto">
+						<div className="flex flex-wrap justify-center gap-6 md:gap-8 md:ml-auto">
 							<div className="text-center">
 								<FaEye className="w-5 h-5 text-red-400 mx-auto mb-1" />
 								<div className="font-bold">
@@ -632,7 +655,7 @@ const Projects: React.FC = () => {
 
 				{/* Other Projects */}
 				<h3 className="text-xl font-bold mb-4 text-muted-foreground">More Projects</h3>
-				<div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-8">
 					{otherProjects.map((project, index) => (
 						<OtherProjectCard
 							key={index}
