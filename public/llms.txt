@@ -12,6 +12,9 @@
 
 - [Portfolio](https://www.spragginsdesigns.xyz): Main portfolio
 - [LineCrush](https://www.linecrush.com): Production sports intelligence platform
+- [LineCrush Games](https://www.spragginsdesigns.xyz/games): Game studio page — Gunmetal Orbit on Steam
+- [games.linecrush.com](https://games.linecrush.com): Official studio site
+- [Gunmetal Orbit on Steam](https://store.steampowered.com/app/4975430): Wishlist now — releases August 21, 2026
 - [GitHub](https://github.com/spragginsdesigns): Public engineering work
 - [LinkedIn](https://www.linkedin.com/in/spragginsdesigns/): Professional profile
 - [Twitter / X](https://twitter.com/spragginsdesign): Social updates
@@ -29,12 +32,13 @@ Austin architects a production sports research and analytics platform spanning:
 - A Next.js web application, native SwiftUI iOS app, native Kotlin/Compose Android app, and browser extensions
 - PostgreSQL, Redis, WebSockets, Python services, AWS, Vercel, and Ubuntu infrastructure
 
-Verified repository-scale indicators as of July 2026:
+Verified repository-scale indicators as of 2026-08-08 (source of truth: src/lib/stats.ts):
 
-- 27,000+ commits across the production monorepo
-- Nearly 1,000 tracked TSX modules
+- 30,128 commits across the production monorepo (12,873 in 2026)
+- ~1,000 tracked TSX modules
 - 366 tracked Next.js API handlers
 - 64 tracked agent-skill definitions
+- Agent fleet ledger since June 23, 2026: 4,426 Linear issues worked, 95% completed, roughly 90 issues resolved per day, 2,730 jobs shipped commits
 
 ### Autonomous Engineering Agents
 
@@ -53,10 +57,12 @@ Austin uses OpenAI, Gemini, Claude, Perplexity, and vision/OCR workflows for dif
 
 ### LineCrush Games
 
-Austin is building a private AI-native game studio with original Godot 4.7 projects including Space Miner, RockHunter, and MERIDIAN.
+Austin runs an AI-native game studio (games.linecrush.com — "Small crew. Massive games.") with his co-founder Jay in Fresno, CA.
 
-- Space Miner is a Steam Deck-first 2.5D survival miner
-- Windows and Linux / Steam Deck builds are smoke-proven
+- **Gunmetal Orbit** is the flagship: a space-mining arena roguelite where you pilot exosuits with 6 auto-firing weapon slots from a 28-weapon arsenal, mine ore between enemy waves, bank it at the dock, and snowball your build
+- Gunmetal Orbit releases on Steam August 21, 2026 at $4.99 — wishlist at https://store.steampowered.com/app/4975430
+- Built in Godot 4.7 with Steam Deck as the lead platform ("Built on Deck. Unleashed on PC."), native 1280×800 @ 60fps
+- Other original titles in development: Space Miner (the predecessor), RockHunter, MERIDIAN, and Last Crew, plus browser party games
 - Agents can operate Godot workflows, create and wire scenes, run headless tests, capture playtest evidence, and produce repeatable exports
 - Asset pipelines cover generated concepts, rigged 3D models, UI art, and authored AI-assisted audio
 - Human product taste owns gameplay feel, art direction, and final acceptance

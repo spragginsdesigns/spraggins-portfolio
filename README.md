@@ -12,12 +12,13 @@ Personal portfolio website showcasing my work as **Co-Founder, CTO & Senior Soft
 
 I build AI agents that ship production software - and the platforms they run. At LineCrush, that includes:
 
-- **27,000+ monorepo commits** across product, data, native, agent, and game work
-- **Nearly 1,000 tracked TSX modules** and **366 API handlers**
+- **30,000+ monorepo commits** across product, data, native, agent, and game work (source of truth: `src/lib/stats.ts`)
+- **Autonomous agent fleet:** 4,426 Linear issues worked at 95% completion (~90/day) since June 23, 2026 — no human in the merge loop
+- **~1,000 tracked TSX modules** and **366 API handlers**
 - **64 tracked agent skills** powering autonomous investigation, implementation, proof, review, and release
 - **Multi-model product intelligence** across OpenAI, Gemini, Claude, Perplexity, and vision/OCR workflows
 - **Four client surfaces:** web, native iOS, native Android, and browser extensions
-- **LineCrush Games:** AI-accelerated Godot production with proven Windows and Linux / Steam Deck builds
+- **LineCrush Games:** Gunmetal Orbit, a space-mining arena roguelite [shipping on Steam Aug 21, 2026](https://store.steampowered.com/app/4975430)
 
 Currently open to contracts and consulting opportunities.
 
@@ -59,8 +60,13 @@ Currently open to contracts and consulting opportunities.
 - From truck driver to Co-Founder & CTO
 - Milestones: Early Days → First Career → Tech Transition → LineCrush → Today
 
+### LineCrush Games (/games)
+- Dedicated studio page with Gunmetal Orbit flagship, Steam wishlist CTA, and the full roster
+- Homepage GameSpotlight card funnels visitors to it
+- VideoGame + Organization JSON-LD structured data
+
 ### Expertise & Impact
-- Stats row: 353+ Components, 45+ Services, 45+ APIs, 100+ Tables, 4+ LLMs, 2+ Years
+- Stats row: 30K+ Commits, 64 Agent Skills, 366 API Handlers, 4 Product Clients, 3+ Shipped Game Builds, 2+ Years
 - Six expertise cards in bento grid layout:
   - AI/ML Engineering
   - Full-Stack Architecture
@@ -71,7 +77,7 @@ Currently open to contracts and consulting opportunities.
 
 ### Projects Showcase
 - **LineCrush** (Flagship) - AI sports intelligence plus autonomous delivery agents
-- **LineCrush Games** - Private AI-native game studio building Space Miner, RockHunter, and MERIDIAN
+- **Gunmetal Orbit / LineCrush Games** - Flagship Steam title (Aug 21, 2026) plus Space Miner, RockHunter, and MERIDIAN
 - **Featured Projects:**
   - SaveALife CPR - Business automation system
   - Constrong - Client project for concrete contractor
