@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { FMT } from "@/lib/stats";
 
 interface ExpertiseCardProps {
 	icon: React.ReactNode;
@@ -86,7 +87,7 @@ const StatCard: React.FC<{
 		className="text-center p-4"
 	>
 		<div className="text-3xl md:text-4xl font-bold text-primary mb-1">{value}</div>
-		<div className="text-sm text-muted-foreground">{label}</div>
+		<div className="text-xs sm:text-sm leading-tight text-muted-foreground">{label}</div>
 	</motion.div>
 );
 
@@ -104,7 +105,7 @@ const Expertise: React.FC = () => {
 			icon: <Layers className="w-5 h-5" />,
 			title: "Full-Stack Architecture",
 			description:
-				"Owns a production platform spanning nearly 1,000 TSX modules, 366 API handlers, Python data services, native iOS and Android clients, and browser extensions.",
+				`Owns a production platform spanning ${FMT.tsxModules} TSX modules, ${FMT.apiHandlers} API handlers, Python data services, native iOS and Android clients, and browser extensions.`,
 			skills: ["Next.js 15", "React", "TypeScript", "Python", "SwiftUI", "Kotlin", "PostgreSQL"],
 			gradient: "bg-gradient-to-br from-cyan-500 to-blue-500"
 		},
@@ -112,7 +113,7 @@ const Expertise: React.FC = () => {
 			icon: <Cpu className="w-5 h-5" />,
 			title: "System Design",
 			description:
-				"Architected real-time data pipelines, distributed cron jobs, multi-tier Redis caching, and 120+ PostgreSQL tables with complex relationships.",
+				`Architected real-time data pipelines, distributed cron jobs, multi-tier Redis caching, and ${FMT.postgresTables} PostgreSQL tables with complex relationships.`,
 			skills: ["Redis", "PostgreSQL", "Real-time Systems", "Caching", "Data Pipelines"],
 			gradient: "bg-gradient-to-br from-green-500 to-emerald-500"
 		},
@@ -143,12 +144,12 @@ const Expertise: React.FC = () => {
 	];
 
 	const stats = [
-		{ value: "27K+", label: "Monorepo Commits" },
-		{ value: "64", label: "Agent Skills" },
-		{ value: "366", label: "API Handlers" },
-		{ value: "4", label: "Product Clients" },
-		{ value: "2", label: "Native Game Builds" },
-		{ value: "2+", label: "Years in Production" }
+		{ value: FMT.commitsCompact, label: "Monorepo Commits" },
+		{ value: FMT.agentSkills, label: "Agent Skills" },
+		{ value: FMT.apiHandlers, label: "API Handlers" },
+		{ value: FMT.productClients, label: "Product Clients" },
+		{ value: FMT.gameBuilds, label: "Shipped Game Builds" },
+		{ value: FMT.yearsInProduction, label: "Years in Production" }
 	];
 
 	return (
@@ -207,21 +208,25 @@ const Expertise: React.FC = () => {
 							Live coding stats tracked by WakaTime
 						</p>
 						<div className="flex flex-col items-center gap-6">
-							<div className="w-full max-w-3xl overflow-hidden rounded-lg">
+							<div className="w-full max-w-3xl overflow-x-auto rounded-lg">
 								{/* eslint-disable-next-line @next/next/no-img-element */}
 								<img
 									src="https://wakatime.com/share/@spragginsdesigns/a74426a6-3db3-4e39-8a39-4bc017b18ed8.svg"
 									alt="WakaTime coding activity bar chart"
-									className="w-full h-auto"
+									width={800}
+									height={360}
+									className="w-full h-auto min-w-[560px]"
 									loading="lazy"
 								/>
 							</div>
-							<div className="w-full max-w-3xl overflow-hidden rounded-lg">
+							<div className="w-full max-w-3xl overflow-x-auto rounded-lg">
 								{/* eslint-disable-next-line @next/next/no-img-element */}
 								<img
 									src="https://wakatime.com/share/@spragginsdesigns/81a9f812-1214-4bca-a52b-9e69e891c8c7.svg"
 									alt="WakaTime coding activity heatmap"
-									className="w-full h-auto"
+									width={800}
+									height={260}
+									className="w-full h-auto min-w-[560px]"
 									loading="lazy"
 								/>
 							</div>

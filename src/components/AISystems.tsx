@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { FMT, GUNMETAL_ORBIT } from "@/lib/stats";
 
 const systems = [
 	{
@@ -40,7 +41,7 @@ const systems = [
 		title: "An operating system for agents",
 		description:
 			"Shared skills, commands, MCP tooling, repo maps, and evidence gates give every agent the same engineering standards across Next.js, Python, SwiftUI, Kotlin, and infrastructure work.",
-		evidence: "64 tracked agent skills across the LineCrush monorepo",
+		evidence: `${FMT.agentSkills} skills · ${FMT.fleetIssues} issues shipped at ${FMT.fleetCompletion} since ${FMT.fleetSince}`,
 		tags: ["MCP", "Agent Skills", "Code Review", "Cross-platform"]
 	},
 	{
@@ -48,8 +49,8 @@ const systems = [
 		title: "AI-native game production",
 		description:
 			"LineCrush Games combines human art direction with agent-controlled Godot workflows, generated and rigged 3D assets, authored AI audio, predictive enemy behavior, headless capture, and repeatable native exports.",
-		evidence: "Space Miner builds proven on Windows and Linux / Steam Deck",
-		tags: ["Godot 4.7", "GDScript", "3D Pipelines", "Automated QA"]
+		evidence: `${GUNMETAL_ORBIT.name} ships on Steam ${GUNMETAL_ORBIT.releaseDateDisplay} — wishlist now`,
+		tags: ["Godot 4.7", "GDScript", "Steam Deck", "3D Pipelines", "Automated QA"]
 	}
 ];
 

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { FMT } from "@/lib/stats";
+import MotionProvider from "@/components/MotionProvider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -12,12 +14,11 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
 	title: "Austin Spraggins | CTO & Agentic AI Engineer",
-	description:
-		"Co-Founder and CTO building autonomous engineering agents, multi-model product intelligence, native apps, and AI-assisted games at LineCrush. 27,000+ monorepo commits across Next.js, Python, PostgreSQL, SwiftUI, Kotlin, and Godot.",
+	description: `Co-Founder and CTO building autonomous engineering agents, multi-model product intelligence, native apps, and Gunmetal Orbit on Steam at LineCrush. ${FMT.commits} monorepo commits across Next.js, Python, PostgreSQL, SwiftUI, Kotlin, and Godot.`,
 	authors: [{ name: "Austin Spraggins", url: "https://www.spragginsdesigns.xyz" }],
 	creator: "Austin Spraggins",
 	keywords:
-		"Austin Spraggins, CTO, Co-Founder, Agentic AI Engineer, AI Agents, Autonomous Software Delivery, LLM Orchestration, MCP Servers, Codex, Claude, React, Next.js, TypeScript, Python, PostgreSQL, Godot, LineCrush, LineCrush Games, System Architecture, Fresno CA",
+		"Austin Spraggins, CTO, Co-Founder, Agentic AI Engineer, AI Agents, Autonomous Software Delivery, LLM Orchestration, MCP Servers, Codex, Claude, React, Next.js, TypeScript, Python, PostgreSQL, Godot, Gunmetal Orbit, Steam, Steam Deck, Game Development, LineCrush, LineCrush Games, System Architecture, Fresno CA",
 	metadataBase: new URL("https://www.spragginsdesigns.xyz"),
 	alternates: {
 		canonical: "https://www.spragginsdesigns.xyz"
@@ -168,7 +169,7 @@ export default function RootLayout({
 				/>
 			</head>
 			<body className="font-sans bg-background text-foreground">
-				{children}
+				<MotionProvider>{children}</MotionProvider>
 				<Analytics />
 			</body>
 		</html>

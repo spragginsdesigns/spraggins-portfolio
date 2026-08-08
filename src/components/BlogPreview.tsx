@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Calendar, Clock, ArrowRight, PenLine } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { formatDate } from "@/lib/format-date";
 
 interface BlogPostMeta {
 	slug: string;
@@ -20,15 +21,6 @@ interface BlogPostMeta {
 interface BlogPreviewProps {
 	posts: BlogPostMeta[];
 }
-
-const formatDate = (dateString: string): string => {
-	const date = new Date(dateString);
-	return date.toLocaleDateString("en-US", {
-		year: "numeric",
-		month: "short",
-		day: "numeric"
-	});
-};
 
 const BlogPreview: React.FC<BlogPreviewProps> = ({ posts }) => {
 	// Show latest 3 posts
@@ -79,7 +71,7 @@ const BlogPreview: React.FC<BlogPreviewProps> = ({ posts }) => {
 										<div className="flex items-center gap-3 text-sm text-muted-foreground mb-4">
 											<span className="inline-flex items-center gap-1.5">
 												<Calendar className="w-3.5 h-3.5 text-primary" />
-												{formatDate(post.date)}
+												{formatDate(post.date, "short")}
 											</span>
 											<span className="inline-flex items-center gap-1.5">
 												<Clock className="w-3.5 h-3.5 text-primary" />

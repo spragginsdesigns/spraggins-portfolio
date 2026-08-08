@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { Timeline } from "@/components/ui/timeline";
 import { Badge } from "@/components/ui/badge";
+import { FMT } from "@/lib/stats";
 import {
 	Code,
 	Truck,
@@ -114,7 +115,7 @@ const About: React.FC = () => {
 					</div>
 					<p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
 						As Co-Founder & CTO at LineCrush Inc, I own every layer of our stack -
-						27,000+ monorepo commits across web, Python services, native mobile, and
+						{" "}{FMT.commits} monorepo commits across web, Python services, native mobile, and
 						games. I built an agent operating system around that work: durable Codex
 						and Claude sessions, custom MCP tooling, shared skills, proof gates, and
 						autonomous issue-to-production delivery.
