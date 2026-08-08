@@ -1,0 +1,74 @@
+---
+title: "No Humans in the Merge Loop"
+description: "Seven weeks ago we let our AI fleet ship to production without us. 4,426 issues worked, 95% completed, roughly 90 a day. From a two-person company. Here's what it actually took."
+date: "2026-08-08"
+tags: ["AI", "Agents", "Engineering", "Automation", "Startups"]
+readTime: "8 min"
+featured: true
+---
+
+Five weeks ago I wrote a post called [When Your Engineering Team Never Clocks Out](/blog/2026-07-03-when-your-engineering-team-never-clocks-out). In it I said something I believed at the time: everything an agent produces lands on a branch, and a human merges.
+
+That's no longer true at LineCrush. And I want to explain what happened, because the numbers still feel unreal to me and I'm the one who built it.
+
+Since June 23, our agent fleet has worked 4,426 real issues from our tracker. 4,206 of them completed. That's 95%. Roughly 90 issues resolved per day, every day, including weekends. 2,730 of those runs shipped actual commits to production. The monorepo just crossed 30,128 commits since May 2024, and 12,873 of those landed in 2026 alone.
+
+We are a two-person company. Me on architecture and engineering, Jay on product, QA, and the issue pipeline.
+
+## What "closed loop" actually means
+
+The standard setup in 2026, the one everyone on X describes, goes like this: agent picks up a task, writes code, opens a PR, stops. A human reviews it, merges it, deploys it, verifies it, and closes the ticket. Every optimization people talk about targets the part before the human.
+
+Ours has no stop point. An issue gets filed in Linear. An agent claims it from a queue, investigates it (git history, database, a live browser on the real product), fixes it, proves the fix on the actual product path, reviews its own work against our standards, deploys to production, verifies the deploy, and closes the issue with evidence attached.
+
+No human in the merge loop. Not for web. Not for backend. And, this is the part I still shake my head at, not for native mobile either. A version bump on main triggers a full device gate, and if everything is green, signed builds go out to TestFlight and Play Closed Alpha on their own. We wake up and the builds are just... there.
+
+## The unlock was never the code. It was the proof.
+
+If you take one thing from this post, take this: nothing in our pipeline ships on "tests pass."
+
+Proof means the real product path. A live browser at desktop size and at 375px mobile. Real database rows, not fixtures. Actual server log output. And if the code changes after the proof was captured, the proof is invalid and gets redone. Period.
+
+That rule predates the fleet. It was the standard for my own work first, back when I was the one merging everything. The design principle behind the whole system is simple: every loop an agent runs is a loop I would run myself as an engineer. We automated the discipline. We did not automate shortcuts.
+
+That's why removing the human gate wasn't reckless. By the time we removed it, the gate wasn't catching anything the system didn't already catch.
+
+## The tools are not the story
+
+I'll name them because they're the same tools everyone has: Claude models doing the bulk of the fleet work, a Codex lane beside it, Linear as the tracker and the memory, Neon under the database, a VPS and the usual cloud stuff around it. Nothing exotic. You could sign up for all of it this afternoon.
+
+So why does our setup ship 90 issues a day while most teams are still babysitting PRs? Honestly, it's the boring stuff, compounded over a long time:
+
+The prove-it culture existed before the agents did. The tracker already held a year of recorded investigations and settled decisions, so a new agent walks into institutional memory on day one instead of a blank repo. Every failure we ever hit became a permanent guardrail instead of a memo. And I stayed on top of this field daily for years, so each new model generation multiplied through infrastructure that already existed, while other teams were writing their first harness.
+
+I'm deliberately not going deeper than that on the internals. The pattern is describable in a blog post. The year of burned lessons that makes it safe is not.
+
+## The parts that surprised me
+
+Two things genuinely caught me off guard.
+
+First, the self-healing. When a scheduled CI run goes red, it files its own fix issue into the queue and the fleet repairs it. The first time I watched a broken pipeline diagnose itself, queue itself, and fix itself while I was making dinner, I just sat there for a minute.
+
+Second, throughput problems show up in places you'd never guess. At one point our global ship lock (a safety serialization we built early) became the bottleneck for the entire fleet. Mean wait was 1,173 seconds. Hundreds of timeout re-queues a day. We measured it for a day and deleted it. People are currently building merge queues for parallel agents. We already measured ours as a bottleneck and removed it.
+
+## Where the industry actually is
+
+I went looking for anyone else running at this depth, because I assumed somebody was. The research says otherwise. Only about 23% of agent projects ever reach production at all, and the consensus for the ones that do is to keep a human on every risky step. The best practitioner guidance out there still lists mandatory human code review as a required gate and describes 3-5 agents as the frontier. Enterprise surveys claim most companies run agents "autonomously in production," but when you read closely it's mostly ops agents sitting under approval checkpoints.
+
+As far as I can find, nobody has publicly documented a system that investigates, fixes, proves, reviews, deploys, verifies, and closes real production work across web, backend, iOS, and Android with no human in the merge loop. If you know of one, genuinely, email me. I want to compare notes.
+
+## What the fleet actually builds
+
+Here's my favorite part. The machine is not the product. The machine is the multiplier.
+
+All of that throughput points at real things: the LineCrush platform itself, and our game studio. The same fleet that ships backend fixes also helped us build [Gunmetal Orbit](/games), our space-mining roguelite that hits Steam on August 21. Agents operate the Godot editor, run headless playtests, and produce the native builds, and I wrote about what that pipeline feels like in [From Godot Project to Steam Deck in One Day](/blog/2026-07-12-from-godot-project-to-steam-deck-in-one-day). Human taste still owns every gameplay and art call. The fleet just makes two people move like twenty.
+
+## What this means if you're small
+
+I keep coming back to the same thought. The primitives will commoditize. The models get better every quarter whether you do anything or not. But the operational side, the proof culture, the recorded decisions, the guardrails earned from real failures, that compounds privately, and it's years deep here.
+
+If you're a small team wondering whether to start: start with the discipline, not the autonomy. Write down what "proven" means for your product. Make your tracker the memory instead of your head. Let agents earn each new permission the way a new hire would. The loop closes on its own after that, one gate at a time, and one day you'll look up and realize you haven't merged a PR by hand in weeks.
+
+We're two people. The issue tracker crossed LC-8800 last week, and more than half of everything we ever filed was handled in the fleet's first seven weeks. I don't think we're special. I think we just started earlier and refused to skip the boring parts.
+
+Thank you for reading this. And if you're building something similar, or want to, my inbox is open.
