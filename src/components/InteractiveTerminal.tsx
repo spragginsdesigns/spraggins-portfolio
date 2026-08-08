@@ -229,7 +229,7 @@ ${box("FEATURED PROJECTS", m)}
 
   ★ GUNMETAL ORBIT (LineCrush Games)
   ${rule(m)}
-  ${GUNMETAL_ORBIT.genre} — ${GUNMETAL_ORBIT.tagline}
+  ${GUNMETAL_ORBIT.genre} - ${GUNMETAL_ORBIT.tagline}
   Steam: ${GUNMETAL_ORBIT.releaseDateDisplay} · ${GUNMETAL_ORBIT.price}
   Wishlist: ${GUNMETAL_ORBIT.steamUrl}
   Type 'games' for the full studio.
@@ -277,9 +277,9 @@ ${box("AUTONOMOUS DELIVERY SYSTEM", m)}
 	games: (m = false) => `
 ${box("LINECRUSH GAMES", m)}
 
-  "${STUDIO.motto}" — ${STUDIO.location}
+  "${STUDIO.motto}" - ${STUDIO.location}
 
-  ★ GUNMETAL ORBIT — the flagship
+  ★ GUNMETAL ORBIT - the flagship
   ${rule(m)}
   ${GUNMETAL_ORBIT.genre}.
   Pilot exosuits with ${GUNMETAL_ORBIT.weaponSlots} auto-firing weapon
@@ -293,7 +293,7 @@ ${box("LINECRUSH GAMES", m)}
 
   ALSO IN THE HANGAR
   ${rule(m)}
-  SPACE MINER   → the predecessor — where it started
+  SPACE MINER   → the predecessor - where it started
   ROCKHUNTER    → playable mining-action spinoff
   MERIDIAN      → story-first 3D space adventure
   LAST CREW     → arcade siege defense
@@ -503,7 +503,7 @@ const MAN_PAGES: Record<string, string> = {
 	experience: "View Austin's work history and roles.",
 	projects: "List featured projects, including LineCrush.",
 	agents: "Describe the autonomous AI delivery system.",
-	games: "LineCrush Games studio — Gunmetal Orbit on Steam, plus the full roster. See /games.",
+	games: "LineCrush Games studio - Gunmetal Orbit on Steam, plus the full roster. See /games.",
 	education: "Show Austin's educational background.",
 	contact: "Display contact information and services offered.",
 	resume: "Print a condensed resume.",
@@ -855,7 +855,7 @@ const WELCOME_MESSAGE_DESKTOP = `
   APIs:      ${FMT.apiHandlers} tracked handlers
   Agents:    ${FMT.agentSkills} skills · ${FMT.fleetIssues} issues shipped
   Clients:   Web + iOS + Android + extensions
-  Games:     ${GUNMETAL_ORBIT.name} — Steam ${GUNMETAL_ORBIT.releaseDateDisplay}
+  Games:     ${GUNMETAL_ORBIT.name} - Steam ${GUNMETAL_ORBIT.releaseDateDisplay}
   ───────────────────────────────────────────────────────────────
 
   Type 'help' for commands - or try 'agent run'.

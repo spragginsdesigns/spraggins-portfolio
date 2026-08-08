@@ -71,7 +71,7 @@ const lineCrushGamesHighlights = [
 	{
 		icon: <Gamepad2 className="w-5 h-5" />,
 		title: GUNMETAL_ORBIT.name,
-		description: `${GUNMETAL_ORBIT.genre} — Steam ${GUNMETAL_ORBIT.releaseDateDisplay}`
+		description: `${GUNMETAL_ORBIT.genre} - Steam ${GUNMETAL_ORBIT.releaseDateDisplay}`
 	},
 	{
 		icon: <Box className="w-5 h-5" />,
@@ -86,7 +86,7 @@ const lineCrushGamesHighlights = [
 	{
 		icon: <MonitorCheck className="w-5 h-5" />,
 		title: "Native Builds",
-		description: "Windows, Linux, and Steam Deck — shipping on Steam"
+		description: "Windows, Linux, and Steam Deck - shipping on Steam"
 	}
 ];
 
@@ -357,8 +357,8 @@ const LineCrushGamesProject: React.FC = () => {
 						<p className="mb-6 text-lg leading-relaxed text-muted-foreground">
 							Our flagship title: a {GUNMETAL_ORBIT.genre.toLowerCase()} built in{" "}
 							{GUNMETAL_ORBIT.engine} with Steam Deck as the lead platform. It comes out of
-							an AI-accelerated studio workflow — agents operate the editor, generate and
-							rig assets, and run headless QA — while human product taste owns every
+							an AI-accelerated studio workflow - agents operate the editor, generate and
+							rig assets, and run headless QA - while human product taste owns every
 							gameplay, feel, and art-direction call.
 						</p>
 						<div className="mb-6 flex flex-wrap gap-2">

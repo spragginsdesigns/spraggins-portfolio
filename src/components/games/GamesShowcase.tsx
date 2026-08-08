@@ -52,7 +52,7 @@ const rosterTitles = [
 		icon: <Pickaxe className="h-5 w-5" />,
 		title: "Space Miner",
 		description:
-			"The predecessor — the Steam Deck-first survival miner where the studio's mining DNA started."
+			"The predecessor - the Steam Deck-first survival miner where the studio's mining DNA started."
 	},
 	{
 		icon: <Crosshair className="h-5 w-5" />,
@@ -73,7 +73,7 @@ const rosterTitles = [
 		icon: <Users className="h-5 w-5" />,
 		title: "Web Party Games",
 		description:
-			"Ringer, PartyPack, and more — browser multiplayer built on the LineCrush platform."
+			"Ringer, PartyPack, and more - browser multiplayer built on the LineCrush platform."
 	}
 ];
 
@@ -116,7 +116,7 @@ const GamesShowcase: React.FC = () => {
 					>
 						<Badge className="mb-6 border-violet-400/30 bg-violet-500/15 px-4 py-1.5 text-sm text-violet-300">
 							<Gamepad2 className="mr-2 h-4 w-4" />
-							{STUDIO.name} — {STUDIO.location}
+							{STUDIO.name} - {STUDIO.location}
 						</Badge>
 						<h1 className="mx-auto mb-5 max-w-3xl font-heading text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
 							<span className="bg-gradient-to-r from-violet-300 via-primary to-cyan-300 bg-clip-text text-transparent">
@@ -124,7 +124,7 @@ const GamesShowcase: React.FC = () => {
 							</span>
 						</h1>
 						<p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-							An AI-native game studio run by two people — Austin (CTO, engineering
+							An AI-native game studio run by two people - Austin (CTO, engineering
 							and art pipelines) and Jay (product and QA). Original Godot titles,
 							built on Steam Deck first, shipped to Steam.
 						</p>
@@ -184,7 +184,7 @@ const GamesShowcase: React.FC = () => {
 										weapon mounts drawn from a {GUNMETAL_ORBIT.weapons}-weapon
 										arsenal. Mine ore between enemy waves, bank it at the dock,
 										snowball your build, and push higher hazards through
-										procedurally shifting sectors — with outpost base-building
+										procedurally shifting sectors - with outpost base-building
 										between runs and two pilots,{" "}
 										{GUNMETAL_ORBIT.characters.join(" and ")}, to master.
 									</p>
@@ -201,7 +201,7 @@ const GamesShowcase: React.FC = () => {
 										<div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-500/20 to-cyan-500/20 blur-3xl" />
 										<Image
 											src="/images/games/gunmetal-orbit/capsule.jpg"
-											alt={`${GUNMETAL_ORBIT.name} key art — an armored exosuit with multiple weapon mounts against an asteroid field`}
+											alt={`${GUNMETAL_ORBIT.name} key art - an armored exosuit with multiple weapon mounts against an asteroid field`}
 											width={616}
 											height={353}
 											className="relative h-auto w-full rounded-xl border border-border/50 shadow-2xl"

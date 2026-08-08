@@ -66,7 +66,7 @@ const PALETTE_ITEMS: PaletteItem[] = [
 	{
 		id: "games",
 		label: "LineCrush Games",
-		hint: "Gunmetal Orbit — wishlist on Steam",
+		hint: "Gunmetal Orbit - wishlist on Steam",
 		icon: <Gamepad2 className="h-4 w-4" />,
 		keywords: "games gunmetal orbit steam deck godot studio wishlist space miner",
 		href: "/games",

@@ -12,9 +12,9 @@
 
 - [Portfolio](https://www.spragginsdesigns.xyz): Main portfolio
 - [LineCrush](https://www.linecrush.com): Production sports intelligence platform
-- [LineCrush Games](https://www.spragginsdesigns.xyz/games): Game studio page — Gunmetal Orbit on Steam
+- [LineCrush Games](https://www.spragginsdesigns.xyz/games): Game studio page - Gunmetal Orbit on Steam
 - [games.linecrush.com](https://games.linecrush.com): Official studio site
-- [Gunmetal Orbit on Steam](https://store.steampowered.com/app/4975430): Wishlist now — releases August 21, 2026
+- [Gunmetal Orbit on Steam](https://store.steampowered.com/app/4975430): Wishlist now - releases August 21, 2026
 - [GitHub](https://github.com/spragginsdesigns): Public engineering work
 - [LinkedIn](https://www.linkedin.com/in/spragginsdesigns/): Professional profile
 - [Twitter / X](https://twitter.com/spragginsdesign): Social updates
@@ -57,10 +57,10 @@ Austin uses OpenAI, Gemini, Claude, Perplexity, and vision/OCR workflows for dif
 
 ### LineCrush Games
 
-Austin runs an AI-native game studio (games.linecrush.com — "Small crew. Massive games.") with his co-founder Jay in Fresno, CA.
+Austin runs an AI-native game studio (games.linecrush.com - "Small crew. Massive games.") with his co-founder Jay in Fresno, CA.
 
 - **Gunmetal Orbit** is the flagship: a space-mining arena roguelite where you pilot exosuits with 6 auto-firing weapon slots from a 28-weapon arsenal, mine ore between enemy waves, bank it at the dock, and snowball your build
-- Gunmetal Orbit releases on Steam August 21, 2026 at $4.99 — wishlist at https://store.steampowered.com/app/4975430
+- Gunmetal Orbit releases on Steam August 21, 2026 at $4.99 - wishlist at https://store.steampowered.com/app/4975430
 - Built in Godot 4.7 with Steam Deck as the lead platform ("Built on Deck. Unleashed on PC."), native 1280×800 @ 60fps
 - Other original titles in development: Space Miner (the predecessor), RockHunter, MERIDIAN, and Last Crew, plus browser party games
 - Agents can operate Godot workflows, create and wire scenes, run headless tests, capture playtest evidence, and produce repeatable exports

@@ -1,4 +1,4 @@
-// Canonical LineCrush / portfolio stats — single source of truth.
+// Canonical LineCrush / portfolio stats - single source of truth.
 // Verified 2026-08-08 against the LineCrush monorepo and fleet job ledger.
 // Update here first; prose files (llms.txt, README.md, CLAUDE.md, AGENTS.md)
 // must be kept in sync manually.

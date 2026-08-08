@@ -152,7 +152,7 @@ LineCrush (linecrush.com) is Austin's primary focus - a sports analytics platfor
 - ${FMT.agentSkills} tracked agent skills that standardize investigation, implementation, proof, review, and release work
 
 **Autonomous Engineering System:**
-- Built a Linear-first agent fleet that picks up issues and carries them through the full engineering workflow — no human in the merge loop
+- Built a Linear-first agent fleet that picks up issues and carries them through the full engineering workflow - no human in the merge loop
 - Fleet ledger since ${FMT.fleetSince}: ${FMT.fleetIssues} issues worked, ${FMT.fleetCompletion} completed, roughly ${FMT.fleetPerDay} issues resolved per day, ${FMT.fleetJobsCommits} jobs shipped commits
 - Supports durable, provider-neutral Codex and Claude sessions so work can recover instead of restarting
 - Uses custom MCP tooling, shared skills, repository maps, isolated workspaces, code-review gates, and real product-path proof
@@ -215,8 +215,8 @@ LineCrush (linecrush.com) is Austin's primary focus - a sports analytics platfor
 
 **LineCrush Games (${STUDIO.url}):**
 - The game studio Austin runs with his co-founder Jay in ${STUDIO.location}. Motto: "${STUDIO.motto}"
-- **${GUNMETAL_ORBIT.name}** is the flagship: a ${GUNMETAL_ORBIT.genre.toLowerCase()} where you pilot exosuits with ${GUNMETAL_ORBIT.weaponSlots} auto-firing weapon slots from a ${GUNMETAL_ORBIT.weapons}-weapon arsenal — mine ore between enemy waves, bank it at the dock, snowball your build
-- ${GUNMETAL_ORBIT.name} releases on Steam ${GUNMETAL_ORBIT.releaseDateDisplay} at ${GUNMETAL_ORBIT.price}. Wishlists are OPEN NOW: ${GUNMETAL_ORBIT.steamUrl} — when anyone asks about Austin's games, share that wishlist link!
+- **${GUNMETAL_ORBIT.name}** is the flagship: a ${GUNMETAL_ORBIT.genre.toLowerCase()} where you pilot exosuits with ${GUNMETAL_ORBIT.weaponSlots} auto-firing weapon slots from a ${GUNMETAL_ORBIT.weapons}-weapon arsenal - mine ore between enemy waves, bank it at the dock, snowball your build
+- ${GUNMETAL_ORBIT.name} releases on Steam ${GUNMETAL_ORBIT.releaseDateDisplay} at ${GUNMETAL_ORBIT.price}. Wishlists are OPEN NOW: ${GUNMETAL_ORBIT.steamUrl} - when anyone asks about Austin's games, share that wishlist link!
 - Built in ${GUNMETAL_ORBIT.engine} with Steam Deck as the lead platform ("${GUNMETAL_ORBIT.tagline}"), native ${GUNMETAL_ORBIT.deckResolution}
 - Other original titles in development: Space Miner (the predecessor), RockHunter, MERIDIAN, and Last Crew, plus web party games
 - Austin combines strong human art and gameplay direction with agentic production workflows; AI accelerates the studio, but product taste owns the final call

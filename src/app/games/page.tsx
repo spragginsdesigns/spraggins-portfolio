@@ -7,13 +7,13 @@ import { GUNMETAL_ORBIT, STUDIO } from "@/lib/stats";
 const BASE_URL = "https://www.spragginsdesigns.xyz";
 
 export const metadata: Metadata = {
-	title: `LineCrush Games | ${GUNMETAL_ORBIT.name} — Wishlist on Steam`,
-	description: `${STUDIO.motto} ${GUNMETAL_ORBIT.name} is a ${GUNMETAL_ORBIT.genre.toLowerCase()} built on Steam Deck first — releasing on Steam ${GUNMETAL_ORBIT.releaseDateDisplay} at ${GUNMETAL_ORBIT.price}. Wishlist now.`,
+	title: `LineCrush Games | ${GUNMETAL_ORBIT.name} - Wishlist on Steam`,
+	description: `${STUDIO.motto} ${GUNMETAL_ORBIT.name} is a ${GUNMETAL_ORBIT.genre.toLowerCase()} built on Steam Deck first - releasing on Steam ${GUNMETAL_ORBIT.releaseDateDisplay} at ${GUNMETAL_ORBIT.price}. Wishlist now.`,
 	alternates: {
 		canonical: `${BASE_URL}/games`
 	},
 	openGraph: {
-		title: `${GUNMETAL_ORBIT.name} — ${STUDIO.name}`,
+		title: `${GUNMETAL_ORBIT.name} - ${STUDIO.name}`,
 		description: `${GUNMETAL_ORBIT.genre}. "${GUNMETAL_ORBIT.tagline}" Steam release ${GUNMETAL_ORBIT.releaseDateDisplay}.`,
 		url: `${BASE_URL}/games`,
 		siteName: "Austin Spraggins - Senior Software Engineer",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: `${GUNMETAL_ORBIT.name} — ${STUDIO.name}`,
+		title: `${GUNMETAL_ORBIT.name} - ${STUDIO.name}`,
 		description: `${GUNMETAL_ORBIT.genre}. Steam release ${GUNMETAL_ORBIT.releaseDateDisplay} at ${GUNMETAL_ORBIT.price}. Wishlist now.`,
 		images: [
 			{

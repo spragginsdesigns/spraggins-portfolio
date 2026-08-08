@@ -49,7 +49,7 @@ const systems = [
 		title: "AI-native game production",
 		description:
 			"LineCrush Games combines human art direction with agent-controlled Godot workflows, generated and rigged 3D assets, authored AI audio, predictive enemy behavior, headless capture, and repeatable native exports.",
-		evidence: `${GUNMETAL_ORBIT.name} ships on Steam ${GUNMETAL_ORBIT.releaseDateDisplay} — wishlist now`,
+		evidence: `${GUNMETAL_ORBIT.name} ships on Steam ${GUNMETAL_ORBIT.releaseDateDisplay} - wishlist now`,
 		tags: ["Godot 4.7", "GDScript", "Steam Deck", "3D Pipelines", "Automated QA"]
 	}
 ];

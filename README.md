@@ -13,7 +13,7 @@ Personal portfolio website showcasing my work as **Co-Founder, CTO & Senior Soft
 I build AI agents that ship production software - and the platforms they run. At LineCrush, that includes:
 
 - **30,000+ monorepo commits** across product, data, native, agent, and game work (source of truth: `src/lib/stats.ts`)
-- **Autonomous agent fleet:** 4,426 Linear issues worked at 95% completion (~90/day) since June 23, 2026 — no human in the merge loop
+- **Autonomous agent fleet:** 4,426 Linear issues worked at 95% completion (~90/day) since June 23, 2026 - no human in the merge loop
 - **~1,000 tracked TSX modules** and **366 API handlers**
 - **64 tracked agent skills** powering autonomous investigation, implementation, proof, review, and release
 - **Multi-model product intelligence** across OpenAI, Gemini, Claude, Perplexity, and vision/OCR workflows

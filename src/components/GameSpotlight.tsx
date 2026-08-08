@@ -31,7 +31,7 @@ const GameSpotlight: React.FC = () => {
 							>
 								<Image
 									src="/images/games/gunmetal-orbit/capsule.jpg"
-									alt={`${GUNMETAL_ORBIT.name} — an armored exosuit with multiple weapon mounts in deep space`}
+									alt={`${GUNMETAL_ORBIT.name} - an armored exosuit with multiple weapon mounts in deep space`}
 									width={616}
 									height={353}
 									className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
@@ -58,7 +58,7 @@ const GameSpotlight: React.FC = () => {
 									{GUNMETAL_ORBIT.genre}
 								</p>
 								<p className="mb-5 text-sm leading-relaxed text-muted-foreground md:text-base">
-									&ldquo;{GUNMETAL_ORBIT.tagline}&rdquo; — mine ore between enemy
+									&ldquo;{GUNMETAL_ORBIT.tagline}&rdquo; - mine ore between enemy
 									waves, bank it at the dock, and snowball a six-weapon exosuit
 									build. {GUNMETAL_ORBIT.price} on Steam and Steam Deck.
 								</p>
