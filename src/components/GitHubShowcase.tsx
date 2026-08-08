@@ -144,9 +144,9 @@ const GitHubShowcase: React.FC = () => {
 				<h2 className="text-4xl font-bold mb-12 text-center">
 					My GitHub Activity
 				</h2>
-				<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 					<motion.div
-						className="bg-card/50 backdrop-blur-sm border border-border/50 p-6 rounded-lg shadow-xl lg:col-span-1"
+						className="bg-card/50 backdrop-blur-sm border border-border/50 p-6 rounded-lg shadow-xl md:col-span-2 lg:col-span-1"
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5 }}
@@ -182,19 +182,23 @@ const GitHubShowcase: React.FC = () => {
 						</div>
 					</motion.div>
 					<motion.div
-						className="bg-card/50 backdrop-blur-sm border border-border/50 p-6 rounded-lg shadow-xl lg:col-span-2"
+						className="bg-card/50 backdrop-blur-sm border border-border/50 p-6 rounded-lg shadow-xl md:col-span-2"
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.2 }}
 					>
 						<h4 className="text-xl font-semibold mb-4 text-center">Contribution Activity</h4>
-						{/* eslint-disable-next-line @next/next/no-img-element */}
-						<img
-							src="https://ghchart.rshah.org/26a641/spragginsdesigns"
-							alt="GitHub contribution graph for spragginsdesigns"
-							className="w-full h-auto"
-							loading="lazy"
-						/>
+						<div className="overflow-x-auto">
+							{/* eslint-disable-next-line @next/next/no-img-element */}
+							<img
+								src="https://ghchart.rshah.org/26a641/spragginsdesigns"
+								alt="GitHub contribution graph for spragginsdesigns"
+								width={720}
+								height={112}
+								className="w-full h-auto min-w-[640px]"
+								loading="lazy"
+							/>
+						</div>
 					</motion.div>
 					{repos.map((repo, index) => (
 						<motion.div

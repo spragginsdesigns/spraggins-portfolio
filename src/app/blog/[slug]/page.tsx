@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import ReadingProgress from "@/components/ReadingProgress";
+import Footer from "@/components/Footer";
 
 interface Props {
 	params: Promise<{ slug: string }>;
@@ -312,6 +313,7 @@ export default async function BlogPostPage({ params }: Props) {
 					</div>
 				</div>
 			</footer>
+			<Footer />
 		</main>
 	);
 }

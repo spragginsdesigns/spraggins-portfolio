@@ -121,7 +121,7 @@ const Contact: React.FC = () => {
 							type="text"
 							id="name"
 							name="name"
-							className="bg-card/50 border border-border/50 text-foreground placeholder:text-muted-foreground/60 text-sm rounded-lg focus:ring-primary focus:border-primary outline-none block w-full p-2.5 transition-colors"
+							className="bg-card/50 border border-border/50 text-foreground placeholder:text-muted-foreground/60 text-base rounded-lg focus:ring-primary focus:border-primary outline-none block w-full p-3 transition-colors"
 							placeholder="Your Name"
 							required
 						/>
@@ -141,7 +141,7 @@ const Contact: React.FC = () => {
 							type="email"
 							id="email"
 							name="email"
-							className="bg-card/50 border border-border/50 text-foreground placeholder:text-muted-foreground/60 text-sm rounded-lg focus:ring-primary focus:border-primary outline-none block w-full p-2.5 transition-colors"
+							className="bg-card/50 border border-border/50 text-foreground placeholder:text-muted-foreground/60 text-base rounded-lg focus:ring-primary focus:border-primary outline-none block w-full p-3 transition-colors"
 							placeholder="name@example.com"
 							required
 						/>
@@ -161,7 +161,7 @@ const Contact: React.FC = () => {
 							id="message"
 							name="message"
 							rows={4}
-							className="bg-card/50 border border-border/50 text-foreground placeholder:text-muted-foreground/60 text-sm rounded-lg focus:ring-primary focus:border-primary outline-none block w-full p-2.5 transition-colors"
+							className="bg-card/50 border border-border/50 text-foreground placeholder:text-muted-foreground/60 text-base rounded-lg focus:ring-primary focus:border-primary outline-none block w-full p-3 transition-colors"
 							placeholder="Your message here..."
 							required
 						></motion.textarea>

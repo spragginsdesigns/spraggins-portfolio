@@ -2,6 +2,7 @@ import { getAllPosts, formatDate } from "@/lib/blog";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Clock, Tag, ArrowRight, BookOpen } from "lucide-react";
 import type { Metadata } from "next";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
 	title: "Dev Blog | Austin Spraggins",
@@ -146,13 +147,14 @@ export default function BlogPage() {
 			</div>
 
 			{/* Footer */}
-			<footer className="relative border-t border-border/20">
+			<div className="relative border-t border-border/20">
 				<div className="max-w-4xl mx-auto px-6 sm:px-8 py-12 sm:py-16 text-center">
 					<p className="text-muted-foreground">
 						More posts coming as I ship. Stay tuned.
 					</p>
 				</div>
-			</footer>
+			</div>
+			<Footer />
 		</main>
 	);
 }
