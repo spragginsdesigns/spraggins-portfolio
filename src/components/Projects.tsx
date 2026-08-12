@@ -19,7 +19,9 @@ import {
 	Gamepad2,
 	Bot,
 	Box,
-	MonitorCheck
+	MonitorCheck,
+	Smartphone,
+	Laptop
 } from "lucide-react";
 import { FaYoutube, FaEye, FaUsers, FaVideo } from "react-icons/fa";
 import { Card } from "@/components/ui/card";
@@ -90,8 +92,54 @@ const lineCrushGamesHighlights = [
 	}
 ];
 
+const sureWordHighlights = [
+	{
+		icon: <Smartphone className="w-5 h-5" />,
+		title: "Native Android App",
+		description: "Expo/React Native - the lead client"
+	},
+	{
+		icon: <Globe className="w-5 h-5" />,
+		title: "Full Web App",
+		description: "1:1 feature parity at sureword.app"
+	},
+	{
+		icon: <Laptop className="w-5 h-5" />,
+		title: "Native macOS App",
+		description: "SwiftUI client on the same backend"
+	},
+	{
+		icon: <Brain className="w-5 h-5" />,
+		title: "Scripture-Grounded AI",
+		description: "Vector RAG over the KJV + personal memory"
+	}
+];
+
+const sureWordTechStack = [
+	"Next.js 15",
+	"TypeScript",
+	"Vercel AI SDK",
+	"React Native (Expo)",
+	"SwiftUI",
+	"AstraDB Vector Search",
+	"Neon Postgres",
+	"Clerk"
+];
+
+interface FeaturedProjectEntry {
+	title: string;
+	description: string;
+	link: string;
+	github?: string;
+	icon: React.ReactNode;
+	gradient: string;
+	tags: string[];
+	highlight?: string;
+	stars?: number;
+}
+
 // Featured projects with more detail
-const featuredProjects = [
+const featuredProjects: FeaturedProjectEntry[] = [
 	{
 		title: "SaveALife CPR",
 		description:
@@ -111,18 +159,6 @@ const featuredProjects = [
 		gradient: "from-amber-500 to-yellow-500",
 		tags: ["Next.js 16", "TypeScript", "Tailwind", "Business Site"],
 		highlight: "Client Project"
-	},
-	{
-		title: "Bible AI Explorer",
-		description:
-			"Cutting-edge Biblical web application using AI Agents to provide scripture-based answers. Features chat interface, verse lookup, and contextual Bible study tools.",
-		link: "https://bible-ai-explorer.vercel.app/",
-		github: "https://github.com/spragginsdesigns/bible-ai-explorer",
-		icon: <BookOpen className="w-6 h-6" />,
-		gradient: "from-purple-500 to-indigo-500",
-		tags: ["AI Agents", "Next.js", "OpenAI", "Vercel"],
-		highlight: "8 Stars",
-		stars: 8
 	},
 	{
 		title: "AI Tutor WebApp",
@@ -416,6 +452,108 @@ const LineCrushGamesProject: React.FC = () => {
 	);
 };
 
+const SureWordProject: React.FC = () => {
+	const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
+	return (
+		<motion.div
+			ref={ref}
+			initial={{ opacity: 0, y: 30 }}
+			animate={inView ? { opacity: 1, y: 0 } : {}}
+			transition={{ duration: 0.6 }}
+			className="mb-12"
+		>
+			<Card className="overflow-hidden border-amber-500/20 bg-gradient-to-br from-card via-card to-amber-950/20">
+				<div className="grid gap-8 p-5 sm:p-8 md:grid-cols-2">
+					<div className="flex flex-col justify-center">
+						<div className="mb-4 flex flex-wrap items-center gap-3">
+							<Badge className="border-amber-400/30 bg-amber-500/15 text-amber-300">
+								Personal Flagship
+							</Badge>
+							<Badge variant="outline" className="border-cyan-500/40 text-cyan-300">
+								Android · Web · macOS
+							</Badge>
+						</div>
+						<h3 className="mb-4 flex items-center gap-3 bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
+							<span className="rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 p-2 text-white">
+								<BookOpen className="h-7 w-7" />
+							</span>
+							SureWord
+						</h3>
+						<p className="mb-6 text-lg leading-relaxed text-muted-foreground">
+							My AI Bible study companion, grown from a weekend web app into a
+							full multi-platform product. One Next.js + AI SDK backend powers
+							three native clients: streaming chat grounded in Scripture through
+							vector retrieval, a complete offline KJV Bible reader, rich-text
+							notes with per-note AI, and a personal memory system that learns
+							how you study.
+						</p>
+						<div className="mb-6 flex flex-wrap gap-2">
+							{sureWordTechStack.map((tech) => (
+								<Badge key={tech} variant="secondary" className="text-xs">
+									{tech}
+								</Badge>
+							))}
+						</div>
+						<div className="flex flex-wrap gap-3">
+							<Button asChild className="w-fit">
+								<a
+									href="https://sureword.app"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="flex items-center gap-2"
+								>
+									Use SureWord
+									<ExternalLink className="w-4 h-4" />
+								</a>
+							</Button>
+							<Button asChild variant="outline" className="w-fit border-amber-400/40">
+								<a
+									href="https://drive.google.com/file/d/1BvfwTE7Na5pAIbwY8VG6Yvkp6vxJpqKu/view"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="flex items-center gap-2"
+								>
+									Get the Android App
+									<Smartphone className="w-4 h-4" />
+								</a>
+							</Button>
+							<Button asChild variant="ghost" className="w-fit">
+								<a
+									href="https://github.com/spragginsdesigns/bible-ai-explorer"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="flex items-center gap-2"
+								>
+									<Github className="w-4 h-4" />
+									View Code
+								</a>
+							</Button>
+						</div>
+					</div>
+
+					<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+						{sureWordHighlights.map((feature) => (
+							<div
+								key={feature.title}
+								className="rounded-xl border border-border/50 bg-background/60 p-4"
+							>
+								<div className="mb-3 w-fit rounded-lg bg-amber-500/10 p-2 text-amber-300">
+									{feature.icon}
+								</div>
+								<div className="font-semibold">{feature.title}</div>
+								<div className="mt-1 text-sm leading-relaxed text-muted-foreground">
+									{feature.description}
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</Card>
+		</motion.div>
+	);
+};
+
 const FeaturedProjectCard: React.FC<{
 	project: typeof featuredProjects[0];
 	index: number;
@@ -640,6 +778,7 @@ const Projects: React.FC = () => {
 				{/* LineCrush - Main Featured */}
 				<FeaturedProject />
 				<LineCrushGamesProject />
+				<SureWordProject />
 
 				{/* Featured Projects Grid */}
 				<h3 className="text-2xl font-bold mb-6">Independent &amp; Client Work</h3>

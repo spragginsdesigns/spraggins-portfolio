@@ -43,7 +43,7 @@ Personal portfolio website for **Austin Spraggins** - Co-Founder, CTO & Senior S
 
 ### Personal Projects
 
-- **Bible AI Explorer:** An app to help users understand the Bible better with AI assistance (the AI is instructed to act as a believer in Christ)
+- **SureWord** (formerly Bible AI Explorer): Austin's biggest personal project - an AI Bible study companion at [sureword.app](https://sureword.app) with three native clients (Android via Expo, web, macOS via SwiftUI) sharing one Next.js + AI SDK backend. Vector RAG over the KJV, offline Bible reader, notes, and a memory system. The AI is instructed to act as a believer in Christ. Has its own flagship spotlight card in the Projects section.
 
 ## Social Links
 
@@ -172,7 +172,8 @@ When updating portfolio content:
 - Emphasize "Open to Contracts & Consulting" (not job seeking)
 - **Stats single source of truth: `src/lib/stats.ts`** (verified 2026-08-08). Canonical set: 30,128 monorepo commits (30,000+ in prose; 12,873 in 2026), 366 API handlers, 64 agent skills, ~1,000 TSX modules, 4 product clients, 120+ database tables, 5 LLM providers, 12 sports, 2+ years production. Fleet ledger since June 23, 2026: 4,426 Linear issues worked, 95% completed, ~90/day, 2,730 jobs shipped commits. Update stats.ts first; llms.txt, README.md, CLAUDE.md, and AGENTS.md must be kept in sync manually.
 - **Gunmetal Orbit** is the flagship game: space-mining arena roguelite, Steam release August 21, 2026 at $4.99, wishlist URL https://store.steampowered.com/app/4975430, studio site games.linecrush.com
-- Featured GitHub projects: SaveALife CPR, Constrong, Bible AI Explorer, AI Tutor WebApp
+- **SureWord** is the personal flagship (spotlight card alongside LineCrush and Gunmetal Orbit): sureword.app, Android APK via stable Drive link, GitHub repo spragginsdesigns/bible-ai-explorer
+- Featured GitHub projects: SaveALife CPR, Constrong, AI Tutor WebApp
 - **CLAUDE.md and AGENTS.md are twins** - they must be edited in lockstep (they differ only in their title/intro lines)
 - **IMPORTANT:** When referencing Austin's transformative life experience, describe it as a "difficult period" or "challenging time" that led to personal growth, finding faith, and renewed purpose. Never be more specific than this.
 

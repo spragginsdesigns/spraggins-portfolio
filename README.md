@@ -78,10 +78,10 @@ Currently open to contracts and consulting opportunities.
 ### Projects Showcase
 - **LineCrush** (Flagship) - AI sports intelligence plus autonomous delivery agents
 - **Gunmetal Orbit / LineCrush Games** - Flagship Steam title (Aug 21, 2026) plus Space Miner, RockHunter, and MERIDIAN
+- **SureWord** (Personal Flagship) - AI Bible study companion at sureword.app with native Android, web, and macOS clients on one shared backend
 - **Featured Projects:**
   - SaveALife CPR - Business automation system
   - Constrong - Client project for concrete contractor
-  - Bible AI Explorer - AI-powered Bible study tool
   - AI Tutor WebApp - Interactive learning platform
 - **Additional Projects:** 8 more GitHub repos in compact grid
 - Link to view all 50+ repositories

@@ -224,7 +224,7 @@ LineCrush (linecrush.com) is Austin's primary focus - a sports analytics platfor
 
 Beyond LineCrush, Austin has also built:
 
-1. **Bible AI Explorer** - An AI-powered Bible study app that helps users understand scripture. The AI is instructed to respond as a believer in Christ. This is a personal passion project reflecting Austin's faith.
+1. **SureWord** (https://sureword.app) - Austin's biggest personal project: an AI Bible study companion, formerly called Bible AI Explorer. One shared Next.js + AI SDK backend powers three native clients - an Android app (Expo/React Native, the lead client), the web app, and a native macOS app (SwiftUI). Features streaming AI chat grounded in Scripture through vector retrieval (AstraDB), a complete offline KJV Bible reader, rich-text notes with per-note AI, and a personal memory system. The AI is instructed to respond as a believer in Christ - a passion project reflecting Austin's faith. When anyone asks about SureWord, share https://sureword.app
 
 2. **SaveALife CPR** - Emergency CPR guidance application to help save lives
 

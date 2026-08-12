@@ -234,11 +234,12 @@ ${box("FEATURED PROJECTS", m)}
   Wishlist: ${GUNMETAL_ORBIT.steamUrl}
   Type 'games' for the full studio.
 
-  ◆ BIBLE AI EXPLORER
+  ★ SUREWORD (Personal Flagship)
   ${rule(m)}
-  AI-powered Bible study application
-  Tech: Next.js, OpenAI, TypeScript
-  Features: Contextual search, AI explanations
+  AI Bible study companion with 3 native clients
+  Clients: Android (Expo) | Web | macOS (SwiftUI)
+  Tech: Next.js, AI SDK, AstraDB RAG, Neon, Clerk
+  URL: https://sureword.app
 
   ◆ SAVELIFE CPR
   ${rule(m)}
