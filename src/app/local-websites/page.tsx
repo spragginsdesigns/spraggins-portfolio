@@ -54,6 +54,7 @@ const serviceJsonLd = {
 	url: `${BASE_URL}/local-websites`,
 	telephone: "+1-559-818-0467",
 	email: LOCAL_SITES.email,
+	sameAs: [LOCAL_SITES.googleProfileUrl],
 	priceRange: "$",
 	areaServed: {
 		"@type": "City",

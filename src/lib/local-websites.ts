@@ -19,6 +19,7 @@ export const LOCAL_SITES = {
 	hostingPriceValue: "19",
 	sampleUrl: "https://gievs.com",
 	sampleLabel: "gievs.com",
+	googleProfileUrl: "https://share.google/4dXY6UKSVBh3YUIvT",
 	pageUrl: "https://www.spragginsdesigns.xyz/local-websites"
 } as const;
 

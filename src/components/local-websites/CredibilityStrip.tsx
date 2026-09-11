@@ -1,5 +1,5 @@
 import React from "react";
-import { MapPin, Phone, Wrench } from "lucide-react";
+import { BadgeCheck, MapPin, Phone, Wrench } from "lucide-react";
 import { LOCAL_SITES } from "@/lib/local-websites";
 
 const items = [
@@ -32,6 +32,17 @@ const CredibilityStrip: React.FC<{ className?: string }> = ({
 				{item.label}
 			</span>
 		))}
+		<a
+			href={LOCAL_SITES.googleProfileUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			className="inline-flex items-center gap-1.5 rounded-full border border-border/50 bg-card/50 px-3 py-1.5 text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
+		>
+			<span className="text-primary">
+				<BadgeCheck className="h-3.5 w-3.5" />
+			</span>
+			Google Business Profile
+		</a>
 		<a
 			href={LOCAL_SITES.phoneTel}
 			className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1.5 font-semibold text-primary transition-colors hover:bg-primary/20"
