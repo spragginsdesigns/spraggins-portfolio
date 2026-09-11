@@ -70,6 +70,7 @@ src/
 │   ├── layout.tsx      # Root layout with metadata/SEO + MotionProvider
 │   ├── page.tsx        # Main page composing all sections
 │   ├── games/page.tsx  # LineCrush Games studio page (Gunmetal Orbit + VideoGame JSON-LD)
+│   ├── local-websites/page.tsx # Spraggins Designs offer page for Fresno businesses (ProfessionalService + FAQPage JSON-LD)
 │   ├── blog/           # Blog index + [slug] MDX post pages
 │   ├── feed.xml/       # RSS feed route
 │   ├── globals.css     # Global styles + CSS variables + reduced-motion
@@ -78,6 +79,8 @@ src/
 ├── components/
 │   ├── ui/             # shadcn/ui + Aceternity UI components (background-lines, count-up, timeline, card, badge, button, ...)
 │   ├── games/GamesShowcase.tsx # /games page sections
+│   ├── local-websites/ # CredibilityStrip, CallTextButtons, IntakeForm, LocalWebsitesShowcase (/local-websites body)
+│   ├── LocalWebsites.tsx # Homepage "Websites for Fresno businesses" section (above Projects)
 │   ├── Hero.tsx        # Full-screen hero with BackgroundLines + stat row
 │   ├── GameSpotlight.tsx # Homepage Gunmetal Orbit spotlight card
 │   ├── InteractiveTerminal.tsx # Fake shell w/ agent-run demo, streaming ask-ai, mobile-aware ASCII
@@ -94,13 +97,16 @@ src/
 ├── content/blog/       # MDX posts (YYYY-MM-DD-slug.mdx)
 ├── lib/
 │   ├── stats.ts        # SINGLE SOURCE OF TRUTH for all LineCrush/game stats
+│   ├── local-websites.ts # SINGLE SOURCE OF TRUTH for the Spraggins Designs offer (price, phone, copy, FAQ, GBP link)
 │   ├── format-date.ts  # UTC-safe date formatting (client-safe)
 │   ├── blog.ts         # Blog post loading (server-only, imports fs)
 │   └── utils.ts        # cn() utility for Tailwind merging
 └── pages/api/          # API routes (Pages Router)
     ├── ask-ai.ts       # Streaming AI Q&A for the terminal
-    ├── send-email.ts   # Contact form handler
+    ├── send-email.ts   # Contact form handler (also the local-websites intake; accepts phone in place of email)
     └── youtube-stats.ts # YouTube API integration
+docs/
+└── google-business-profile.md # Spraggins Designs GBP: fields, rules, how to edit, current restrictions
 ```
 
 ### Routing Pattern
@@ -117,13 +123,14 @@ The main page (`src/app/page.tsx`) renders sections in order:
 3. **GameSpotlight** - Gunmetal Orbit card with Steam wishlist CTA, funnels to /games
 4. **InteractiveTerminal** - Fake shell with `agent run` demo and streaming `ask` AI
 5. **AISystems** - Agentic engineering showcase (delivery loop + 4 system cards)
-6. **Projects** - LineCrush flagship + Gunmetal Orbit/games card + featured + additional projects
-7. **Expertise** - Stats row + 6 expertise cards + WakaTime + tech stack
-8. **About** - Timeline journey from truck driver to CTO
-9. **BlogPreview** - Latest 3 posts
-10. **GitHubShowcase** - Live GitHub profile/repos/contribution graph
-11. **Contact** - Email contact form
-12. **Footer** - Site links and copyright
+6. **LocalWebsites** - Spraggins Designs offer for Fresno businesses (credibility strip, what you get, $379 + $19/mo price card, call/text CTAs, intake form)
+7. **Projects** - LineCrush flagship + Gunmetal Orbit/games card + featured + additional projects
+8. **Expertise** - Stats row + 6 expertise cards + WakaTime + tech stack
+9. **About** - Timeline journey from truck driver to CTO
+10. **BlogPreview** - Latest 3 posts
+11. **GitHubShowcase** - Live GitHub profile/repos/contribution graph
+12. **Contact** - Email contact form (phone chip next to the email)
+13. **Footer** - Site links and copyright
 
 There is also a dedicated `/games` route (LineCrush Games studio + Gunmetal Orbit flagship) and the `/blog` routes.
 
@@ -173,6 +180,7 @@ When updating portfolio content:
 - **Stats single source of truth: `src/lib/stats.ts`** (verified 2026-08-08). Canonical set: 30,128 monorepo commits (30,000+ in prose; 12,873 in 2026), 366 API handlers, 64 agent skills, ~1,000 TSX modules, 4 product clients, 120+ database tables, 5 LLM providers, 12 sports, 2+ years production. Fleet ledger since June 23, 2026: 4,426 Linear issues worked, 95% completed, ~90/day, 2,730 jobs shipped commits. Update stats.ts first; llms.txt, README.md, CLAUDE.md, and AGENTS.md must be kept in sync manually.
 - **Gunmetal Orbit** is the flagship game: space-mining arena roguelite, Steam release August 21, 2026 at $4.99, wishlist URL https://store.steampowered.com/app/4975430, studio site games.linecrush.com
 - **SureWord** is the personal flagship (spotlight card alongside LineCrush and Gunmetal Orbit): sureword.app, Android APK via stable Drive link, GitHub repo spragginsdesigns/bible-ai-explorer
+- **Spraggins Designs local-business offer** ($379 build + $19/mo hosting, live in a day, call or text 559-818-0467): single source of truth is `src/lib/local-websites.ts`, rendered on the homepage section and `/local-websites`. The matching Google Business Profile is documented in `docs/google-business-profile.md`. Read that file before touching the profile: posting is currently disabled after a policy strike, and the rules there (no phone numbers or prices in posts, no category churn, one edit at a time) are not optional.
 - Featured GitHub projects: SaveALife CPR, Constrong, AI Tutor WebApp
 - **CLAUDE.md and AGENTS.md are twins** - they must be edited in lockstep (they differ only in their title/intro lines)
 - **IMPORTANT:** When referencing Austin's transformative life experience, describe it as a "difficult period" or "challenging time" that led to personal growth, finding faith, and renewed purpose. Never be more specific than this.
