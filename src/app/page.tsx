@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import GameSpotlight from "@/components/GameSpotlight";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
 import AISystems from "@/components/AISystems";
+import LocalWebsites from "@/components/LocalWebsites";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Expertise from "@/components/Expertise";
@@ -26,6 +27,7 @@ export default function Home() {
 				<GameSpotlight />
 				<InteractiveTerminal />
 				<AISystems />
+				<LocalWebsites />
 				<Projects />
 				<Expertise />
 				<About />

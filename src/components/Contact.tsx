@@ -2,7 +2,15 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaPaperPlane, FaCheck, FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
+import {
+	FaPaperPlane,
+	FaCheck,
+	FaEnvelope,
+	FaGithub,
+	FaLinkedin,
+	FaPhone
+} from "react-icons/fa";
+import { LOCAL_SITES } from "@/lib/local-websites";
 
 const Contact: React.FC = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -76,6 +84,13 @@ const Contact: React.FC = () => {
 					>
 						<FaEnvelope className="w-4 h-4" />
 						spragginsdesigns@gmail.com
+					</a>
+					<a
+						href={LOCAL_SITES.phoneTel}
+						className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border/50 text-sm text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
+					>
+						<FaPhone className="w-4 h-4" />
+						Call or text {LOCAL_SITES.phoneDisplay}
 					</a>
 					<a
 						href="https://github.com/spragginsdesigns"

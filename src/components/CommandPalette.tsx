@@ -15,6 +15,7 @@ import {
 	Search,
 	SquareTerminal,
 	Sparkles,
+	Store,
 	Twitter,
 	User,
 	Wrench,
@@ -79,6 +80,14 @@ const PALETTE_ITEMS: PaletteItem[] = [
 		keywords: "wishlist gunmetal orbit steam game buy",
 		href: "https://store.steampowered.com/app/4975430",
 		external: true,
+	},
+	{
+		id: "local-websites",
+		label: "Websites for Fresno Businesses",
+		hint: "$379 build, live in a day",
+		icon: <Store className="h-4 w-4" />,
+		keywords: "local websites fresno business small business web design spraggins designs",
+		href: "/local-websites",
 	},
 	{
 		id: "expertise",

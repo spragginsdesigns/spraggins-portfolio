@@ -26,6 +26,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			priority: 0.9
 		},
 		{
+			url: `${baseUrl}/local-websites`,
+			lastModified: new Date(),
+			changeFrequency: "monthly",
+			priority: 0.9
+		},
+		{
 			url: `${baseUrl}/blog`,
 			lastModified: posts.length ? new Date(posts[0].date) : new Date(),
 			changeFrequency: "weekly",

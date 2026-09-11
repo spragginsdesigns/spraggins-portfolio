@@ -34,6 +34,12 @@ const Footer: React.FC = () => {
 							Games
 						</Link>
 						<Link
+							href="/local-websites"
+							className="hover:text-primary transition-colors"
+						>
+							Local Websites
+						</Link>
+						<Link
 							href="/#expertise"
 							className="hover:text-primary transition-colors"
 						>

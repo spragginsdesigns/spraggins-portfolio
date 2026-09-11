@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 	authors: [{ name: "Austin Spraggins", url: "https://www.spragginsdesigns.xyz" }],
 	creator: "Austin Spraggins",
 	keywords:
-		"Austin Spraggins, CTO, Co-Founder, Agentic AI Engineer, AI Agents, Autonomous Software Delivery, LLM Orchestration, MCP Servers, Codex, Claude, React, Next.js, TypeScript, Python, PostgreSQL, Godot, Gunmetal Orbit, Steam, Steam Deck, Game Development, LineCrush, LineCrush Games, System Architecture, Fresno CA",
+		"Austin Spraggins, CTO, Co-Founder, Agentic AI Engineer, AI Agents, Autonomous Software Delivery, LLM Orchestration, MCP Servers, Codex, Claude, React, Next.js, TypeScript, Python, PostgreSQL, Godot, Gunmetal Orbit, Steam, Steam Deck, Game Development, LineCrush, LineCrush Games, System Architecture, Fresno CA, Spraggins Designs, Fresno web design, small business websites",
 	metadataBase: new URL("https://www.spragginsdesigns.xyz"),
 	alternates: {
 		canonical: "https://www.spragginsdesigns.xyz"
@@ -90,6 +90,7 @@ const personJsonLd = {
 		addressCountry: "US"
 	},
 	email: "mailto:spragginsdesigns@gmail.com",
+	telephone: "+1-559-818-0467",
 	alumniOf: {
 		"@type": "CollegeOrUniversity",
 		name: "Clovis Community College"

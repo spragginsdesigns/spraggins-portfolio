@@ -7,6 +7,7 @@ import CommandPalette from "@/components/CommandPalette";
 
 const navLinks = [
 	{ label: "AI Systems", href: "/#ai-systems" },
+	{ label: "Local Websites", href: "/local-websites" },
 	{ label: "Projects", href: "/#projects" },
 	{ label: "Games", href: "/games" },
 	{ label: "Expertise", href: "/#expertise" },
