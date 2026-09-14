@@ -88,7 +88,7 @@ const lineCrushGamesHighlights = [
 	{
 		icon: <MonitorCheck className="w-5 h-5" />,
 		title: "Native Builds",
-		description: "Windows, Linux, and Steam Deck - shipping on Steam"
+		description: "Windows, Linux, and Steam Deck - available on Steam"
 	}
 ];
 
@@ -405,7 +405,7 @@ const LineCrushGamesProject: React.FC = () => {
 							))}
 						</div>
 						<p className="mb-6 text-sm font-medium text-violet-200/90">
-							{GUNMETAL_ORBIT.name} ships on Steam {GUNMETAL_ORBIT.releaseDateDisplay}.
+							{GUNMETAL_ORBIT.name} released on Steam {GUNMETAL_ORBIT.releaseDateDisplay}.
 							Space Miner, RockHunter, and MERIDIAN continue in active development at{" "}
 							{STUDIO.name}.
 						</p>
@@ -417,7 +417,7 @@ const LineCrushGamesProject: React.FC = () => {
 									rel="noopener noreferrer"
 									className="flex items-center gap-2"
 								>
-									Wishlist on Steam
+									Buy on Steam
 									<ExternalLink className="w-4 h-4" />
 								</a>
 							</Button>

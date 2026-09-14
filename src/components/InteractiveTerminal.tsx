@@ -231,7 +231,7 @@ ${box("FEATURED PROJECTS", m)}
   ${rule(m)}
   ${GUNMETAL_ORBIT.genre} - ${GUNMETAL_ORBIT.tagline}
   Steam: ${GUNMETAL_ORBIT.releaseDateDisplay} · ${GUNMETAL_ORBIT.price}
-  Wishlist: ${GUNMETAL_ORBIT.steamUrl}
+  Steam store: ${GUNMETAL_ORBIT.steamUrl}
   Type 'games' for the full studio.
 
   ★ SUREWORD (Personal Flagship)
@@ -288,7 +288,7 @@ ${box("LINECRUSH GAMES", m)}
   between waves, bank it at the dock, snowball your build.
 
   Steam:    ${GUNMETAL_ORBIT.releaseDateDisplay} · ${GUNMETAL_ORBIT.price}
-  Wishlist: ${GUNMETAL_ORBIT.steamUrl}
+  Steam store: ${GUNMETAL_ORBIT.steamUrl}
   "${GUNMETAL_ORBIT.tagline}"
   Engine: ${GUNMETAL_ORBIT.engine} · Lead platform: Steam Deck
 

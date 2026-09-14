@@ -30,7 +30,7 @@ const GameSpotlight: React.FC = () => {
 								aria-label={`Explore ${GUNMETAL_ORBIT.name} and ${STUDIO.name}`}
 							>
 								<Image
-									src="/images/games/gunmetal-orbit/capsule.jpg"
+									src="/images/games/gunmetal-orbit/capsule-release.jpg"
 									alt={`${GUNMETAL_ORBIT.name} - an armored exosuit with multiple weapon mounts in deep space`}
 									width={616}
 									height={353}
@@ -70,7 +70,7 @@ const GameSpotlight: React.FC = () => {
 										className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-primary px-6 py-2.5 font-semibold text-background transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25"
 									>
 										<FaSteam className="h-4 w-4" />
-										Wishlist on Steam
+										Buy on Steam
 									</a>
 									<Link
 										href="/games"

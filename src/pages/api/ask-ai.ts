@@ -216,7 +216,7 @@ LineCrush (linecrush.com) is Austin's primary focus - a sports analytics platfor
 **LineCrush Games (${STUDIO.url}):**
 - The game studio Austin runs with his co-founder Jay in ${STUDIO.location}. Motto: "${STUDIO.motto}"
 - **${GUNMETAL_ORBIT.name}** is the flagship: a ${GUNMETAL_ORBIT.genre.toLowerCase()} where you pilot exosuits with ${GUNMETAL_ORBIT.weaponSlots} auto-firing weapon slots from a ${GUNMETAL_ORBIT.weapons}-weapon arsenal - mine ore between enemy waves, bank it at the dock, snowball your build
-- ${GUNMETAL_ORBIT.name} releases on Steam ${GUNMETAL_ORBIT.releaseDateDisplay} at ${GUNMETAL_ORBIT.price}. Wishlists are OPEN NOW: ${GUNMETAL_ORBIT.steamUrl} - when anyone asks about Austin's games, share that wishlist link!
+- ${GUNMETAL_ORBIT.name} released on Steam ${GUNMETAL_ORBIT.releaseDateDisplay} at ${GUNMETAL_ORBIT.price}. Available now: ${GUNMETAL_ORBIT.steamUrl} - when anyone asks about Austin's games, share that Steam store link!
 - Built in ${GUNMETAL_ORBIT.engine} with Steam Deck as the lead platform ("${GUNMETAL_ORBIT.tagline}"), native ${GUNMETAL_ORBIT.deckResolution}
 - Other original titles in development: Space Miner (the predecessor), RockHunter, MERIDIAN, and Last Crew, plus web party games
 - Austin combines strong human art and gameplay direction with agentic production workflows; AI accelerates the studio, but product taste owns the final call

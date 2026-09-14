@@ -7,8 +7,8 @@ import { GUNMETAL_ORBIT, STUDIO } from "@/lib/stats";
 const BASE_URL = "https://www.spragginsdesigns.xyz";
 
 export const metadata: Metadata = {
-	title: `LineCrush Games | ${GUNMETAL_ORBIT.name} - Wishlist on Steam`,
-	description: `${STUDIO.motto} ${GUNMETAL_ORBIT.name} is a ${GUNMETAL_ORBIT.genre.toLowerCase()} built on Steam Deck first - releasing on Steam ${GUNMETAL_ORBIT.releaseDateDisplay} at ${GUNMETAL_ORBIT.price}. Wishlist now.`,
+	title: `LineCrush Games | ${GUNMETAL_ORBIT.name} - Buy on Steam`,
+	description: `${STUDIO.motto} ${GUNMETAL_ORBIT.name} is a ${GUNMETAL_ORBIT.genre.toLowerCase()} built on Steam Deck first - available on Steam since ${GUNMETAL_ORBIT.releaseDateDisplay} at ${GUNMETAL_ORBIT.price}. Available now.`,
 	alternates: {
 		canonical: `${BASE_URL}/games`
 	},
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 		siteName: "Austin Spraggins - Senior Software Engineer",
 		images: [
 			{
-				url: "/images/games/gunmetal-orbit/capsule.jpg",
+				url: "/images/games/gunmetal-orbit/capsule-release.jpg",
 				width: 616,
 				height: 353,
 				alt: `${GUNMETAL_ORBIT.name} key art`
@@ -31,10 +31,10 @@ export const metadata: Metadata = {
 	twitter: {
 		card: "summary_large_image",
 		title: `${GUNMETAL_ORBIT.name} - ${STUDIO.name}`,
-		description: `${GUNMETAL_ORBIT.genre}. Steam release ${GUNMETAL_ORBIT.releaseDateDisplay} at ${GUNMETAL_ORBIT.price}. Wishlist now.`,
+		description: `${GUNMETAL_ORBIT.genre}. Steam release ${GUNMETAL_ORBIT.releaseDateDisplay} at ${GUNMETAL_ORBIT.price}. Available now.`,
 		images: [
 			{
-				url: "/images/games/gunmetal-orbit/capsule.jpg",
+				url: "/images/games/gunmetal-orbit/capsule-release.jpg",
 				alt: `${GUNMETAL_ORBIT.name} key art`
 			}
 		]
@@ -47,7 +47,7 @@ const videoGameJsonLd = {
 	name: GUNMETAL_ORBIT.name,
 	description: `${GUNMETAL_ORBIT.genre}: pilot exosuits with ${GUNMETAL_ORBIT.weaponSlots} auto-firing weapon slots from a ${GUNMETAL_ORBIT.weapons}-weapon arsenal. Mine ore between enemy waves, bank it at the dock, and snowball your build. ${GUNMETAL_ORBIT.tagline}`,
 	url: `${BASE_URL}/games`,
-	image: `${BASE_URL}/images/games/gunmetal-orbit/capsule.jpg`,
+	image: `${BASE_URL}/images/games/gunmetal-orbit/capsule-release.jpg`,
 	genre: ["Action Roguelike", "Arena Shooter", "Twin Stick Shooter"],
 	gamePlatform: ["Steam Deck", "PC (Windows)", "Linux (SteamOS)"],
 	playMode: "https://schema.org/SinglePlayer",
@@ -67,7 +67,7 @@ const videoGameJsonLd = {
 		"@type": "Offer",
 		price: "4.99",
 		priceCurrency: "USD",
-		availability: "https://schema.org/PreOrder",
+		availability: "https://schema.org/InStock",
 		url: GUNMETAL_ORBIT.steamUrl
 	}
 };

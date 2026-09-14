@@ -18,7 +18,7 @@ I build AI agents that ship production software - and the platforms they run. At
 - **64 tracked agent skills** powering autonomous investigation, implementation, proof, review, and release
 - **Multi-model product intelligence** across OpenAI, Gemini, Claude, Perplexity, and vision/OCR workflows
 - **Four client surfaces:** web, native iOS, native Android, and browser extensions
-- **LineCrush Games:** Gunmetal Orbit, a space-mining arena roguelite [shipping on Steam Aug 21, 2026](https://store.steampowered.com/app/4975430)
+- **LineCrush Games:** Gunmetal Orbit, a space-mining arena roguelite [available on Steam September 10, 2026](https://store.steampowered.com/app/4975430)
 
 Currently open to contracts and consulting opportunities.
 
@@ -61,7 +61,7 @@ Currently open to contracts and consulting opportunities.
 - Milestones: Early Days → First Career → Tech Transition → LineCrush → Today
 
 ### LineCrush Games (/games)
-- Dedicated studio page with Gunmetal Orbit flagship, Steam wishlist CTA, and the full roster
+- Dedicated studio page with Gunmetal Orbit flagship, Steam purchase CTA, and the full roster
 - Homepage GameSpotlight card funnels visitors to it
 - VideoGame + Organization JSON-LD structured data
 
@@ -77,7 +77,7 @@ Currently open to contracts and consulting opportunities.
 
 ### Projects Showcase
 - **LineCrush** (Flagship) - AI sports intelligence plus autonomous delivery agents
-- **Gunmetal Orbit / LineCrush Games** - Flagship Steam title (Aug 21, 2026) plus Space Miner, RockHunter, and MERIDIAN
+- **Gunmetal Orbit / LineCrush Games** - Flagship Steam title (September 10, 2026) plus Space Miner, RockHunter, and MERIDIAN
 - **SureWord** (Personal Flagship) - AI Bible study companion at sureword.app with native Android, web, and macOS clients on one shared backend
 - **Featured Projects:**
   - SaveALife CPR - Business automation system

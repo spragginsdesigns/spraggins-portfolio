@@ -24,7 +24,7 @@ import { Badge } from "@/components/ui/badge";
 import { CountUp } from "@/components/ui/count-up";
 import { GUNMETAL_ORBIT, STUDIO } from "@/lib/stats";
 
-const WishlistButton: React.FC<{ className?: string }> = ({ className = "" }) => (
+const SteamButton: React.FC<{ className?: string }> = ({ className = "" }) => (
 	<a
 		href={GUNMETAL_ORBIT.steamUrl}
 		target="_blank"
@@ -32,7 +32,7 @@ const WishlistButton: React.FC<{ className?: string }> = ({ className = "" }) =>
 		className={`inline-flex min-h-[48px] items-center gap-2 rounded-full bg-primary px-7 py-3 text-base font-semibold text-background transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/25 ${className}`}
 	>
 		<FaSteam className="h-5 w-5" />
-		Wishlist on Steam
+		Buy on Steam
 	</a>
 );
 
@@ -129,7 +129,7 @@ const GamesShowcase: React.FC = () => {
 							built on Steam Deck first, shipped to Steam.
 						</p>
 						<div className="flex flex-wrap items-center justify-center gap-4">
-							<WishlistButton />
+							<SteamButton />
 							<a
 								href={STUDIO.url}
 								target="_blank"
@@ -192,7 +192,7 @@ const GamesShowcase: React.FC = () => {
 										&ldquo;{GUNMETAL_ORBIT.tagline}&rdquo;
 									</blockquote>
 									<div className="flex flex-wrap gap-3">
-										<WishlistButton />
+										<SteamButton />
 									</div>
 								</div>
 
@@ -200,7 +200,7 @@ const GamesShowcase: React.FC = () => {
 									<div className="relative">
 										<div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-500/20 to-cyan-500/20 blur-3xl" />
 										<Image
-											src="/images/games/gunmetal-orbit/capsule.jpg"
+											src="/images/games/gunmetal-orbit/capsule-release.jpg"
 											alt={`${GUNMETAL_ORBIT.name} key art - an armored exosuit with multiple weapon mounts against an asteroid field`}
 											width={616}
 											height={353}
@@ -212,7 +212,7 @@ const GamesShowcase: React.FC = () => {
 										{[1, 2, 3].map((n) => (
 											<Image
 												key={n}
-												src={`/images/games/gunmetal-orbit/screenshot-${n}.jpg`}
+												src={`/images/games/gunmetal-orbit/screenshot-release-${n}.jpg`}
 												alt={`${GUNMETAL_ORBIT.name} gameplay screenshot ${n}`}
 												width={600}
 												height={338}
@@ -375,17 +375,16 @@ const GamesShowcase: React.FC = () => {
 						<div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-violet-500/20 via-primary/20 to-cyan-500/20 blur-xl opacity-60" />
 						<Card className="relative border-primary/20 bg-card/60 p-8 text-center md:p-12">
 							<h2 className="mb-3 font-heading text-3xl font-bold md:text-4xl">
-								{GUNMETAL_ORBIT.name} lands{" "}
+								{GUNMETAL_ORBIT.name} released{" "}
 								<span className="text-primary">
 									{GUNMETAL_ORBIT.releaseDateDisplay}
 								</span>
 							</h2>
 							<p className="mx-auto mb-8 max-w-xl text-muted-foreground md:text-lg">
-								Wishlists are the single biggest thing that helps an indie launch
-								on Steam. If this looks like your kind of chaos, add it now.
+								Available now on Steam for {GUNMETAL_ORBIT.price}. Mine, fight, and build your next run on PC or Steam Deck.
 							</p>
 							<div className="flex flex-wrap items-center justify-center gap-4">
-								<WishlistButton />
+								<SteamButton />
 								<Link
 									href="/#projects"
 									className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-border/60 bg-card/60 px-7 py-3 text-base font-semibold text-foreground transition-all hover:-translate-y-0.5 hover:border-primary/50"
