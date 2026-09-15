@@ -51,7 +51,7 @@ Custom services added 2026-09-11 (prices are allowed here):
 
 | Service | Price | Description |
 |---------|-------|-------------|
-| Small business website, live in a day | $379 fixed | A full website for your Fresno business, built from your Google listing, photos, hours, and services. Mobile first, set up for Google, with a contact form that emails you. Draft to review the same day, live within a day. Monthly hosting covers your domain, SSL, and the form. No contract. |
+| Small business website, live in a day | $299 fixed | A full website for your Fresno business, built from your Google listing, photos, hours, and services. Mobile first, set up for Google, with a contact form that emails you. Draft to review the same day, live within a day. Monthly hosting covers your domain, SSL, and the form. No contract. |
 | Website hosting with domain, SSL, and contact form | $19 fixed | Monthly hosting for a site I built. Covers your domain name, hosting, SSL (the padlock in the address bar), the contact form that emails you, and keeping the site online. Month to month, no contract, cancel any time. |
 
 ## Single source of truth

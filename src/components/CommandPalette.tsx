@@ -84,7 +84,7 @@ const PALETTE_ITEMS: PaletteItem[] = [
 	{
 		id: "local-websites",
 		label: "Websites for Fresno Businesses",
-		hint: "$379 build, live in a day",
+		hint: "$299 build, live in a day",
 		icon: <Store className="h-4 w-4" />,
 		keywords: "local websites fresno business small business web design spraggins designs",
 		href: "/local-websites",

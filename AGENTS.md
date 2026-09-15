@@ -123,7 +123,7 @@ The main page (`src/app/page.tsx`) renders sections in order:
 3. **GameSpotlight** - Gunmetal Orbit card with Steam purchase CTA, funnels to /games
 4. **InteractiveTerminal** - Fake shell with `agent run` demo and streaming `ask` AI
 5. **AISystems** - Agentic engineering showcase (delivery loop + 4 system cards)
-6. **LocalWebsites** - Spraggins Designs offer for Fresno businesses (credibility strip, what you get, $379 + $19/mo price card, call/text CTAs, intake form)
+6. **LocalWebsites** - Spraggins Designs offer for Fresno businesses (credibility strip, what you get, $299 + $19/mo price card, call/text CTAs, intake form)
 7. **Projects** - LineCrush flagship + Gunmetal Orbit/games card + featured + additional projects
 8. **Expertise** - Stats row + 6 expertise cards + WakaTime + tech stack
 9. **About** - Timeline journey from truck driver to CTO
@@ -180,7 +180,7 @@ When updating portfolio content:
 - **Stats single source of truth: `src/lib/stats.ts`** (verified 2026-08-08). Canonical set: 30,128 monorepo commits (30,000+ in prose; 12,873 in 2026), 366 API handlers, 64 agent skills, ~1,000 TSX modules, 4 product clients, 120+ database tables, 5 LLM providers, 12 sports, 2+ years production. Fleet ledger since June 23, 2026: 4,426 Linear issues worked, 95% completed, ~90/day, 2,730 jobs shipped commits. Update stats.ts first; llms.txt, README.md, CLAUDE.md, and AGENTS.md must be kept in sync manually.
 - **Gunmetal Orbit** is the flagship game: space-mining arena roguelite, Steam release September 10, 2026 at $4.99, store URL https://store.steampowered.com/app/4975430, studio site games.linecrush.com
 - **SureWord** is the personal flagship (spotlight card alongside LineCrush and Gunmetal Orbit): sureword.app, Android APK via stable Drive link, GitHub repo spragginsdesigns/bible-ai-explorer
-- **Spraggins Designs local-business offer** ($379 build + $19/mo hosting, live in a day, call or text 559-818-0467): single source of truth is `src/lib/local-websites.ts`, rendered on the homepage section and `/local-websites`. The matching Google Business Profile is documented in `docs/google-business-profile.md`. Read that file before touching the profile: posting is currently disabled after a policy strike, and the rules there (no phone numbers or prices in posts, no category churn, one edit at a time) are not optional.
+- **Spraggins Designs local-business offer** ($299 build + $19/mo hosting, live in a day, call or text 559-818-0467): single source of truth is `src/lib/local-websites.ts`, rendered on the homepage section and `/local-websites`. The matching Google Business Profile is documented in `docs/google-business-profile.md`. Read that file before touching the profile: posting is currently disabled after a policy strike, and the rules there (no phone numbers or prices in posts, no category churn, one edit at a time) are not optional.
 - Featured GitHub projects: SaveALife CPR, Constrong, AI Tutor WebApp
 - **CLAUDE.md and AGENTS.md are twins** - they must be edited in lockstep (they differ only in their title/intro lines)
 - **IMPORTANT:** When referencing Austin's transformative life experience, describe it as a "difficult period" or "challenging time" that led to personal growth, finding faith, and renewed purpose. Never be more specific than this.
