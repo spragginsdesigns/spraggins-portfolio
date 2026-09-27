@@ -130,6 +130,7 @@ interface FeaturedProjectEntry {
 	title: string;
 	description: string;
 	link: string;
+	linkLabel?: string;
 	github?: string;
 	icon: React.ReactNode;
 	gradient: string;
@@ -143,8 +144,9 @@ const featuredProjects: FeaturedProjectEntry[] = [
 	{
 		title: "SaveALife CPR",
 		description:
-			"Business automation tool that streamlines CPR/First Aid course registration from Bookeo to Canadian Red Cross MyRC portal. Saves hours of manual data entry for training organizations.",
-		link: "https://github.com/spragginsdesigns/savealife-cpr",
+			"Business automation tool that connects Bookeo bookings to Canadian Red Cross MyRC course registration, replacing manual registration steps for training organizations.",
+		link: "https://www.spragginsdesigns.xyz/#contact",
+		linkLabel: "Discuss project",
 		icon: <Heart className="w-6 h-6" />,
 		gradient: "from-red-500 to-pink-500",
 		tags: ["Automation", "Python", "API Integration", "Business Tool"],
@@ -600,7 +602,11 @@ const FeaturedProjectCard: React.FC<{
 							rel="noopener noreferrer"
 							className="text-sm text-primary hover:underline flex items-center gap-1"
 						>
-							{project.link.includes("github") ? (
+							{project.linkLabel ? (
+								<>
+									<ExternalLink className="w-4 h-4" /> {project.linkLabel}
+								</>
+							) : project.link.includes("github") ? (
 								<>
 									<Github className="w-4 h-4" /> View Code
 								</>
