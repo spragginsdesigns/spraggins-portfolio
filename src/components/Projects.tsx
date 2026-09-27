@@ -16,6 +16,7 @@ import {
 	BookOpen,
 	GraduationCap,
 	Building2,
+	Wrench,
 	Gamepad2,
 	Bot,
 	Box,
@@ -161,6 +162,17 @@ const featuredProjects: FeaturedProjectEntry[] = [
 		gradient: "from-amber-500 to-yellow-500",
 		tags: ["Next.js 16", "TypeScript", "Tailwind", "Business Site"],
 		highlight: "Client Project"
+	},
+	{
+		title: "Two Cities Off Road",
+		description:
+			"Responsive client review website for an off-road fabrication business. I built the image-led pages, build gallery, sample catalog with filters and detail pages, and inquiry interface. Development continues; the business site has not launched.",
+		link: "https://www.spragginsdesigns.xyz/#contact",
+		linkLabel: "Discuss project",
+		icon: <Wrench className="w-6 h-6" />,
+		gradient: "from-orange-600 to-amber-500",
+		tags: ["Next.js 16", "TypeScript", "Catalog UI", "Client Site"],
+		highlight: "Client Review Build"
 	},
 	{
 		title: "AI Tutor WebApp",

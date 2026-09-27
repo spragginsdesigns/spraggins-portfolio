@@ -82,6 +82,7 @@ Currently open to contracts and consulting opportunities.
 - **Featured Projects:**
   - SaveALife CPR - Business automation system
   - Constrong - Client project for concrete contractor
+  - Two Cities Off Road - Ongoing, private client review website for an off-road fabrication business; launch pending
   - AI Tutor WebApp - Interactive learning platform
 - **Additional Projects:** 8 more GitHub repos in compact grid
 - Link to view all 50+ repositories
