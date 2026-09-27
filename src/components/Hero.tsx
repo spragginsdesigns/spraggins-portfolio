@@ -9,6 +9,7 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { Badge } from "@/components/ui/badge";
 import { CountUp } from "@/components/ui/count-up";
 import { STATS } from "@/lib/stats";
+import { RESUME_URL } from "@/lib/resume";
 import { ArrowRight, Github, Linkedin, Mail, Twitter, FileDown } from "lucide-react";
 
 const Hero: React.FC = () => {
@@ -27,7 +28,7 @@ const Hero: React.FC = () => {
 			className="flex items-center justify-center w-full min-h-screen relative overflow-hidden"
 			svgOptions={{ duration: 12 }}
 		>
-			<div className="container mx-auto px-4 py-8 md:py-0">
+			<div className="container mx-auto px-4 pt-24 pb-10 md:pt-28 md:pb-12">
 				<div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-12 relative z-20">
 					{/* Left Content */}
 					<motion.div
@@ -85,25 +86,33 @@ const Hero: React.FC = () => {
 
 						{/* CTA Buttons */}
 						<motion.div
-							className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start mb-6 md:mb-8"
+							className="flex flex-col sm:flex-row sm:flex-wrap gap-3 md:gap-4 justify-center lg:justify-start mb-6 md:mb-8"
 							initial={{ opacity: 0, y: 20 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.5, delay: 0.8 }}
 						>
 							<Link
 								href="#projects"
-								className="group bg-primary text-background px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-semibold shadow-lg inline-flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
+								className="group flex-none whitespace-nowrap bg-primary text-background px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-semibold shadow-lg inline-flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
 							>
 								View My Work
 								<ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
 							</Link>
-							<Link
+						<Link
 								href="#contact"
-								className="bg-card/80 backdrop-blur-sm border border-border/50 text-foreground px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-semibold inline-flex items-center justify-center gap-2 transition-all duration-300 hover:border-primary/50 hover:-translate-y-1"
+								className="flex-none whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/50 text-foreground px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-semibold inline-flex items-center justify-center gap-2 transition-all duration-300 hover:border-primary/50 hover:-translate-y-1"
 							>
 								<Mail className="w-4 h-4 md:w-5 md:h-5" />
 								Contact Me
-							</Link>
+						</Link>
+						<a
+							href={RESUME_URL}
+							download
+							className="flex-none whitespace-nowrap bg-card/80 border border-border/50 text-foreground px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-semibold inline-flex items-center justify-center gap-2 transition-all duration-300 hover:border-primary/50 hover:-translate-y-1"
+						>
+							<FileDown className="w-4 h-4 md:w-5 md:h-5" />
+							Download Resume
+						</a>
 						</motion.div>
 
 						{/* Social Links */}
@@ -139,14 +148,6 @@ const Hero: React.FC = () => {
 								aria-label="Twitter"
 							>
 								<Twitter className="w-4 h-4 md:w-5 md:h-5" />
-							</a>
-							<a
-								href="https://spraggins-designs.s3.us-east-1.amazonaws.com/resume/AustinSpraggins_Resume.pdf"
-								download
-								className="p-2.5 md:p-3 rounded-full bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
-								aria-label="Download Resume"
-							>
-								<FileDown className="w-4 h-4 md:w-5 md:h-5" />
 							</a>
 						</motion.div>
 					</motion.div>

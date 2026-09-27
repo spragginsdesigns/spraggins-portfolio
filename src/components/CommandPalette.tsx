@@ -20,6 +20,7 @@ import {
 	User,
 	Wrench,
 } from "lucide-react";
+import { RESUME_URL } from "@/lib/resume";
 
 interface PaletteItem {
 	id: string;
@@ -123,11 +124,11 @@ const PALETTE_ITEMS: PaletteItem[] = [
 	},
 	{
 		id: "resume",
-		label: "Download Resume",
+		label: "View Resume PDF",
 		hint: "PDF",
 		icon: <FileDown className="h-4 w-4" />,
 		keywords: "resume cv download pdf hire",
-		href: "https://spraggins-designs.s3.us-east-1.amazonaws.com/resume/AustinSpraggins_Resume.pdf",
+		href: RESUME_URL,
 		external: true,
 	},
 	{
