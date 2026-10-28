@@ -29,7 +29,7 @@ Personal portfolio website for **Austin Spraggins** - Co-Founder, CTO & Senior S
 
 - **Location:** Fresno, California (grew up in the mountains of O'Neals, CA)
 - **Family:** Proud father of two children - Julian and Lilly
-- **Faith:** Christian - faith is central to his life and work
+- **Faith:** Born-again Christian, saved by grace through faith in Jesus Christ. Public statement at /#faith; faith is central to his life and work.
 - **Background:** Lost his father at age 8; later cared for his mother when she became blind. Former truck driver before transitioning to tech. Went through a transformative life experience that profoundly changed his perspective, helping him find faith, inner peace, and renewed purpose.
 
 ### Values & Approach

@@ -57,6 +57,16 @@ const Hero: React.FC = () => {
 							</span>
 						</h1>
 
+						<p className="mb-5 text-sm leading-relaxed sm:text-base md:mb-6">
+							<Link
+								href="#faith"
+								className="inline-block rounded-sm text-amber-100/90 underline decoration-amber-300/30 underline-offset-4 transition-colors hover:text-amber-200 hover:decoration-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+							>
+								<span className="font-medium">A born-again Christian,</span>{" "}
+								<span className="block sm:inline">saved by grace through faith in Jesus Christ.</span>
+							</Link>
+						</p>
+
 						{/* Role Badges */}
 						<motion.div
 							className="flex flex-wrap gap-2 justify-center lg:justify-start mb-4 md:mb-6"

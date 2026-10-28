@@ -495,7 +495,8 @@ const SureWordProject: React.FC = () => {
 							SureWord
 						</h3>
 						<p className="mb-6 text-lg leading-relaxed text-muted-foreground">
-							My AI Bible study companion, grown from a weekend web app into a
+							Built from my own walk with Christ and a desire to help others study
+							God&apos;s Word. My AI Bible study companion has grown from a weekend web app into a
 							full multi-platform product. One Next.js + AI SDK backend powers
 							three native clients: streaming chat grounded in Scripture through
 							vector retrieval, a complete offline KJV Bible reader, rich-text

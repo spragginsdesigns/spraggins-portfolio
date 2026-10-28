@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Timeline } from "@/components/ui/timeline";
 import { Badge } from "@/components/ui/badge";
 import { FMT } from "@/lib/stats";
@@ -202,6 +203,51 @@ const About: React.FC = () => {
 
 	return (
 		<section id="about" className="bg-background text-foreground">
+			<section
+				id="faith"
+				aria-labelledby="faith-heading"
+				className="border-y border-amber-200/10 bg-gradient-to-br from-amber-300/[0.04] via-background to-background"
+			>
+				<div className="container mx-auto grid gap-10 px-5 py-16 sm:px-8 md:gap-14 md:py-24 lg:grid-cols-[1.3fr_1fr] lg:items-center lg:gap-20">
+					<div className="max-w-2xl">
+						<h2 id="faith-heading" className="mb-5 font-heading text-3xl font-bold text-amber-100 sm:text-4xl md:text-5xl">
+							My faith
+						</h2>
+						<p className="mb-6 max-w-xl font-heading text-2xl font-medium leading-snug text-foreground sm:text-3xl text-balance">
+							Jesus Christ is my Lord and Savior.
+						</p>
+						<div className="space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+							<p>
+								I&apos;m saved by His grace, and I believe the whole Bible, from Genesis
+								to Revelation, is the Word of God. My faith shapes how I raise my
+								children, treat people, and approach my work.
+							</p>
+							<p>
+								I&apos;m still growing and learning to follow Him more closely every
+								day. SureWord comes out of that part of my life, and my desire to
+								keep studying His Word and help others do the same.
+							</p>
+						</div>
+						<Link
+							href="https://sureword.app"
+							className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-sm font-medium text-amber-200 underline decoration-amber-200/40 underline-offset-4 transition-colors hover:text-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+						>
+							Study the Bible with SureWord
+						</Link>
+					</div>
+					<figure className="relative m-0 rounded-3xl border border-amber-200/15 bg-amber-200/[0.03] px-6 py-8 sm:px-9 sm:py-10 lg:py-12">
+						<blockquote className="font-heading text-xl font-medium leading-relaxed text-amber-50 sm:text-2xl lg:text-3xl">
+							<p>
+								For by grace are ye saved through faith; and that not of yourselves:
+								it is the gift of God:
+							</p>
+						</blockquote>
+						<figcaption className="mt-6 text-sm font-medium text-amber-200/80">
+							Ephesians 2:8 <span aria-hidden="true">&middot;</span> KJV
+						</figcaption>
+					</figure>
+				</div>
+			</section>
 			<Timeline data={timelineData} />
 		</section>
 	);

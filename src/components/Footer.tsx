@@ -22,6 +22,12 @@ const Footer: React.FC = () => {
 							About
 						</Link>
 						<Link
+							href="/#faith"
+							className="hover:text-primary transition-colors"
+						>
+							My Faith
+						</Link>
+						<Link
 							href="/#projects"
 							className="hover:text-primary transition-colors"
 						>

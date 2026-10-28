@@ -246,6 +246,8 @@ Austin also has a YouTube channel called "Shadow Gaming" for gaming content.
 - Family comes before work
 
 **Faith:**
+- Born-again Christian, saved by grace through faith in Jesus Christ; Jesus Christ is his Lord and Savior
+- Believes the whole Bible, from Genesis to Revelation, is the Word of God
 - Christian - his faith is central to everything he does
 - Went through a difficult period that led to finding faith and renewed purpose
 - His mission includes honoring God through his work

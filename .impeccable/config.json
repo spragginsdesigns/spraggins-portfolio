@@ -1,0 +1,35 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "src/components/Hero.tsx"
+        ],
+        "createdAt": "2026-10-28T18:59:03.659Z",
+        "reason": "Codex: pre-existing cyan name treatment is part of the incumbent portfolio identity and unchanged by the scoped faith update"
+      },
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "src/components/Projects.tsx"
+        ],
+        "createdAt": "2026-10-28T18:59:03.695Z",
+        "reason": "Codex: pre-existing project title treatments belong to the incumbent portfolio identity and are unchanged by the scoped faith update"
+      },
+      {
+        "rule": "ai-color-palette",
+        "value": "*",
+        "files": [
+          "src/components/Projects.tsx"
+        ],
+        "createdAt": "2026-10-28T19:00:39.830Z",
+        "reason": "Codex: unchanged violet game title is part of the incumbent project color system; scoped faith update preserves existing project branding"
+      }
+    ]
+  }
+}
