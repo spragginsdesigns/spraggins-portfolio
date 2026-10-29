@@ -160,6 +160,7 @@ export default function RootLayout({
 				/>
 				<meta name="msapplication-TileColor" content="#0a0a0a" />
 				<meta name="theme-color" content="#0a0a0a" />
+				<meta name="darkreader-lock" />
 				<script
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

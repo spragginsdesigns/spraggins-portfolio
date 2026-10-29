@@ -1,0 +1,357 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-29T17:13:39.384Z",
+  "title": "Design System: Austin Spraggins portfolio",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Electric Cyan",
+        "tonalRamp": [
+          "oklch(15% 0.1 210)",
+          "oklch(26% 0.1 210)",
+          "oklch(37% 0.1 210)",
+          "oklch(48% 0.1 210)",
+          "oklch(59% 0.1 210)",
+          "oklch(70% 0.1 210)",
+          "oklch(82% 0.1 210)",
+          "oklch(95% 0.1 210)"
+        ]
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "Portfolio Charcoal",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(37% 0 0)",
+          "oklch(48% 0 0)",
+          "oklch(59% 0 0)",
+          "oklch(70% 0 0)",
+          "oklch(82% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "White",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(37% 0 0)",
+          "oklch(48% 0 0)",
+          "oklch(59% 0 0)",
+          "oklch(70% 0 0)",
+          "oklch(82% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Raised Charcoal",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(37% 0 0)",
+          "oklch(48% 0 0)",
+          "oklch(59% 0 0)",
+          "oklch(70% 0 0)",
+          "oklch(82% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "muted-foreground": {
+        "role": "neutral",
+        "displayName": "Muted Gray",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(37% 0 0)",
+          "oklch(48% 0 0)",
+          "oklch(59% 0 0)",
+          "oklch(70% 0 0)",
+          "oklch(82% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Portfolio Border",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(37% 0 0)",
+          "oklch(48% 0 0)",
+          "oklch(59% 0 0)",
+          "oklch(70% 0 0)",
+          "oklch(82% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "input": {
+        "role": "neutral",
+        "displayName": "Input Charcoal",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(37% 0 0)",
+          "oklch(48% 0 0)",
+          "oklch(59% 0 0)",
+          "oklch(70% 0 0)",
+          "oklch(82% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "faith-background": {
+        "role": "neutral",
+        "displayName": "Warm Charcoal",
+        "tonalRamp": [
+          "oklch(15% 0.003 106)",
+          "oklch(26% 0.003 106)",
+          "oklch(37% 0.003 106)",
+          "oklch(48% 0.003 106)",
+          "oklch(59% 0.003 106)",
+          "oklch(70% 0.003 106)",
+          "oklch(82% 0.003 106)",
+          "oklch(95% 0.003 106)"
+        ]
+      },
+      "faith-foreground": {
+        "role": "neutral",
+        "displayName": "Parchment",
+        "tonalRamp": [
+          "oklch(15% 0.016 84)",
+          "oklch(26% 0.016 84)",
+          "oklch(37% 0.016 84)",
+          "oklch(48% 0.016 84)",
+          "oklch(59% 0.016 84)",
+          "oklch(70% 0.016 84)",
+          "oklch(82% 0.016 84)",
+          "oklch(95% 0.016 84)"
+        ]
+      },
+      "faith-body": {
+        "role": "neutral",
+        "displayName": "Warm Gray",
+        "tonalRamp": [
+          "oklch(15% 0.012 80)",
+          "oklch(26% 0.012 80)",
+          "oklch(37% 0.012 80)",
+          "oklch(48% 0.012 80)",
+          "oklch(59% 0.012 80)",
+          "oklch(70% 0.012 80)",
+          "oklch(82% 0.012 80)",
+          "oklch(95% 0.012 80)"
+        ]
+      },
+      "faith-gold": {
+        "role": "secondary",
+        "displayName": "Warm Gold",
+        "tonalRamp": [
+          "oklch(15% 0.09 78)",
+          "oklch(26% 0.09 78)",
+          "oklch(37% 0.09 78)",
+          "oklch(48% 0.09 78)",
+          "oklch(59% 0.09 78)",
+          "oklch(70% 0.09 78)",
+          "oklch(82% 0.09 78)",
+          "oklch(95% 0.09 78)"
+        ]
+      },
+      "faith-rule": {
+        "role": "neutral",
+        "displayName": "Bronze Rule",
+        "tonalRamp": [
+          "oklch(15% 0.066 77)",
+          "oklch(26% 0.066 77)",
+          "oklch(37% 0.066 77)",
+          "oklch(48% 0.066 77)",
+          "oklch(59% 0.066 77)",
+          "oklch(70% 0.066 77)",
+          "oklch(82% 0.066 77)",
+          "oklch(95% 0.066 77)"
+        ]
+      },
+      "faith-hover": {
+        "role": "secondary",
+        "displayName": "Light Gold",
+        "tonalRamp": [
+          "oklch(15% 0.075 81)",
+          "oklch(26% 0.075 81)",
+          "oklch(37% 0.075 81)",
+          "oklch(48% 0.075 81)",
+          "oklch(59% 0.075 81)",
+          "oklch(70% 0.075 81)",
+          "oklch(82% 0.075 81)",
+          "oklch(95% 0.075 81)"
+        ]
+      },
+      "faith-active": {
+        "role": "secondary",
+        "displayName": "Deep Gold",
+        "tonalRamp": [
+          "oklch(15% 0.089 76)",
+          "oklch(26% 0.089 76)",
+          "oklch(37% 0.089 76)",
+          "oklch(48% 0.089 76)",
+          "oklch(59% 0.089 76)",
+          "oklch(70% 0.089 76)",
+          "oklch(82% 0.089 76)",
+          "oklch(95% 0.089 76)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "body": {
+        "displayName": "Portfolio body",
+        "purpose": "Inter is the inherited portfolio body family."
+      },
+      "heading": {
+        "displayName": "Portfolio heading",
+        "purpose": "Poppins heading example from Contact.tsx."
+      },
+        "signature": {
+          "displayName": "Personal signature",
+          "purpose": "Existing Dancing Script name signature in About.tsx, imported by globals.css before the faith redesign. Preserve this scoped legacy treatment."
+        },
+      "faith-display": {
+        "displayName": "Faith display",
+        "purpose": "DM Serif Display 400 normal and italic, scoped to the opening statement."
+      },
+      "faith-title": {
+        "displayName": "Faith title",
+        "purpose": "DM Serif Display 400 for story and SureWord headings."
+      },
+      "faith-body": {
+        "displayName": "Faith body",
+        "purpose": "Readable Inter testimony and SureWord copy."
+      },
+      "faith-scripture": {
+        "displayName": "Faith Scripture",
+        "purpose": "DM Serif Display 400 italic in the semantic blockquote."
+      }
+    },
+    "shadows": [
+      {
+        "name": "portfolio-card",
+        "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "purpose": "Existing Tailwind shadow on portfolio card and primary button primitives. Faith editorial regions have no shadows."
+      }
+    ],
+    "motion": [
+      {
+        "name": "faith-state",
+        "value": "180ms ease-out",
+        "purpose": "Link color, filled action background and arrow translation."
+      },
+      {
+        "name": "faith-arrow",
+        "value": "translateX(4px)",
+        "purpose": "Pointer hover on faith links; removed under reduced motion."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Faith transitions and arrow movement stop; global rules also disable smooth scrolling."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "faith-stacked",
+        "value": "767px"
+      },
+      {
+        "name": "portfolio-desktop-navigation",
+        "value": "1024px"
+      },
+      {
+        "name": "faith-wide-artwork",
+        "value": "1600px"
+      }
+    ],
+    "previewNotes": "Tonal ramps are synthesized preview metadata, not shipping color tokens. Faith previews redeclare scoped variables because they do not exist on :root. Display font rendering uses the loaded application font when available, otherwise the declared fallback."
+  },
+  "components": [
+    {
+      "name": "Portfolio Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Existing cyan shadcn default button.",
+      "html": "<button class=\"ds-primary\">View project</button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;border:0;border-radius:calc(var(--radius) - 2px);padding:8px 16px;background:hsl(var(--primary));color:hsl(var(--primary-foreground));font-family:var(--font-inter),sans-serif;font-size:14px;font-weight:500;white-space:nowrap;box-shadow:0 1px 3px 0 rgb(0 0 0 / .1),0 1px 2px -1px rgb(0 0 0 / .1);transition:color 150ms cubic-bezier(.4,0,.2,1),background-color 150ms cubic-bezier(.4,0,.2,1)}.ds-primary:hover{background:hsl(var(--primary)/.9)}.ds-primary:focus-visible{outline:none;box-shadow:0 0 0 1px hsl(var(--ring))}.ds-primary:disabled{pointer-events:none;opacity:.5}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}}"
+    },
+    {
+      "name": "Portfolio Card",
+      "kind": "card",
+      "refersTo": "portfolio-card",
+      "description": "Existing bordered dark card primitive.",
+      "html": "<article class=\"ds-card\"><h3>Featured project</h3><p>Production work and experience.</p></article>",
+      "css": ".ds-card{border:1px solid hsl(var(--border));border-radius:12px;background:hsl(var(--card));color:hsl(var(--card-foreground));padding:24px;font-family:var(--font-inter),sans-serif;box-shadow:0 1px 3px 0 rgb(0 0 0 / .1),0 1px 2px -1px rgb(0 0 0 / .1)}.ds-card h3{margin:0 0 6px;font-weight:600;line-height:1;letter-spacing:-.025em}.ds-card p{margin:0;color:hsl(var(--muted-foreground));font-size:14px;line-height:20px}"
+    },
+    {
+      "name": "Portfolio Badge",
+      "kind": "chip",
+      "description": "Existing default badge, a noninteractive label.",
+      "html": "<span class=\"ds-badge\">Featured</span>",
+      "css": ".ds-badge{display:inline-flex;align-items:center;border:1px solid transparent;border-radius:calc(var(--radius) - 2px);padding:2px 10px;background:hsl(var(--primary));color:hsl(var(--primary-foreground));font-family:var(--font-inter),sans-serif;font-size:12px;font-weight:600;line-height:16px;box-shadow:0 1px 3px 0 rgb(0 0 0 / .1),0 1px 2px -1px rgb(0 0 0 / .1);transition:background-color 150ms cubic-bezier(.4,0,.2,1)}.ds-badge:hover{background:hsl(var(--primary)/.8)}@media(prefers-reduced-motion:reduce){.ds-badge{transition:none}}"
+    },
+    {
+      "name": "Contact Field",
+      "kind": "input",
+      "refersTo": "contact-field",
+      "description": "Existing labelled portfolio contact input.",
+      "html": "<label class=\"ds-label\" for=\"ds-name\">Name</label><input class=\"ds-field\" id=\"ds-name\" type=\"text\" placeholder=\"Your name\">",
+      "css": ".ds-label{display:block;margin-bottom:8px;color:hsl(var(--foreground));font-family:var(--font-inter),sans-serif;font-size:14px;font-weight:500;line-height:20px}.ds-field{display:block;width:100%;border:1px solid hsl(var(--border)/.5);border-radius:var(--radius);background:hsl(var(--card)/.5);padding:12px;color:hsl(var(--foreground));font-family:var(--font-inter),sans-serif;font-size:16px;line-height:24px;transition:border-color 150ms cubic-bezier(.4,0,.2,1)}.ds-field::placeholder{color:hsl(var(--muted-foreground)/.6)}.ds-field:focus{outline:none;border-color:hsl(var(--primary))}@media(prefers-reduced-motion:reduce){.ds-field{transition:none}}"
+    },
+    {
+      "name": "Portfolio Navigation Link",
+      "kind": "nav",
+      "description": "Existing desktop header link treatment.",
+      "html": "<nav aria-label=\"Portfolio\"><a class=\"ds-nav\" href=\"/#projects\">Projects</a></nav>",
+      "css": ".ds-nav{color:hsl(var(--muted-foreground));font-family:var(--font-inter),sans-serif;font-size:14px;line-height:20px;text-decoration:none;transition:color 150ms cubic-bezier(.4,0,.2,1)}.ds-nav:hover{color:hsl(var(--primary))}.ds-nav:focus-visible{outline:auto}@media(prefers-reduced-motion:reduce){.ds-nav{transition:none}}"
+    },
+    {
+      "name": "Faith SureWord Action",
+      "kind": "button",
+      "refersTo": "faith-primary",
+      "description": "Scoped gold native link with hover, active and focus states.",
+      "html": "<div class=\"ds-faith\"><a class=\"ds-faith-primary\" href=\"https://sureword.app\">Explore SureWord<svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a></div>",
+      "css": ".ds-faith{--faith-background:#0b0b0a;--faith-foreground:#f4eee3;--faith-body:#d0cbc3;--faith-gold:#ddb77b;--faith-rule:#8b7045;font-family:var(--font-inter),sans-serif}.ds-faith-primary{display:flex;align-items:center;justify-content:center;gap:30px;width:100%;min-height:72px;border:1px solid transparent;border-radius:3px;background:var(--faith-gold);padding:20px 24px;color:var(--faith-background);font-size:19px;font-weight:600;text-decoration:none;transition:background-color 180ms ease-out}.ds-faith-primary:hover{background:#edcf9c}.ds-faith-primary:active{background:#cca46a}.ds-faith-primary:focus-visible{outline:2px solid var(--faith-gold);outline-offset:7px}.ds-faith-primary svg{flex-shrink:0;transition:transform 180ms ease-out}.ds-faith-primary:hover svg{transform:translateX(4px)}@media(max-width:767px){.ds-faith-primary{width:auto;min-height:60px;padding-inline:26px;font-size:17px}}@media(prefers-reduced-motion:reduce){.ds-faith-primary,.ds-faith-primary svg{transition:none}.ds-faith-primary:hover svg{transform:none}}"
+    },
+    {
+      "name": "Faith Testimony Anchor",
+      "kind": "custom",
+      "refersTo": "faith-anchor",
+      "description": "Native anchor to the visible focusable testimony region.",
+      "html": "<div class=\"ds-faith-anchor-scope\"><a class=\"ds-faith-anchor\" href=\"#ds-testimony\"><span>Read my testimony</span><svg viewBox=\"0 0 24 24\" width=\"19\" height=\"19\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a><div id=\"ds-testimony\" tabindex=\"-1\" class=\"ds-testimony\"><h3>A new life. A daily walk.</h3></div></div>",
+      "css": ".ds-faith-anchor-scope{--faith-background:#0b0b0a;--faith-foreground:#f4eee3;--faith-body:#d0cbc3;--faith-gold:#ddb77b;--faith-rule:#8b7045;font-family:var(--font-inter),sans-serif}.ds-faith-anchor{display:inline-flex;align-items:center;gap:24px;min-height:48px;margin-top:30px;color:var(--faith-gold);font-size:16px;text-decoration:none;transition:color 180ms ease-out}.ds-faith-anchor span{text-decoration:underline;text-decoration-color:var(--faith-rule);text-underline-offset:10px;text-decoration-thickness:1px}.ds-faith-anchor:hover{color:var(--faith-foreground)}.ds-faith-anchor:focus-visible{outline:2px solid var(--faith-gold);outline-offset:7px}.ds-faith-anchor svg{flex-shrink:0;transition:transform 180ms ease-out}.ds-faith-anchor:hover svg{transform:translateX(4px)}.ds-testimony{scroll-margin-top:96px;color:var(--faith-foreground)}.ds-testimony:focus-visible{outline:1px solid var(--faith-rule);outline-offset:12px}.ds-testimony h3{font-family:var(--font-testimony),\"DM Serif Display\",Georgia,serif;font-weight:400;font-size:clamp(35px,4.7vw,60px);letter-spacing:-.04em;line-height:1.18;margin:28px 0 18px}@media(max-width:767px){.ds-faith-anchor{margin-top:20px}.ds-testimony h3{font-size:clamp(33px,7.8vw,48px)}}@media(prefers-reduced-motion:reduce){.ds-faith-anchor,.ds-faith-anchor svg{transition:none}.ds-faith-anchor:hover svg{transform:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Engineering clarity, personal conviction",
+    "overview": "The established portfolio uses dark surfaces, cyan accents, Inter body text and Poppins headings. Its project cards and navigation support scanning professional work. The faith section is an approved local editorial treatment: warm charcoal, gold, large serif statements and illuminated cross imagery.\n\nThe faith treatment stays inside its section. Its open composition gives readable testimony and Scripture room beside each other, then closes with a SureWord invitation. Source extraction records the implemented styles; refreshed browser acceptance belongs to the finish review.",
+    "keyCharacteristics": [
+      "Dark cyan portfolio with a scoped warm faith palette.",
+      "Clear sans-serif interface paired locally with expressive serif typography.",
+      "Responsive editorial spacing, native links and visible keyboard focus."
+    ],
+    "rules": [
+      {
+        "name": "The Scoped Warmth Rule",
+        "body": "Keep faith colors and serif typography local; preserve the surrounding portfolio identity.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "**Do** preserve the global cyan, Inter and Poppins identity outside faith.",
+      "**Do** use DM Serif Display at weight 400 for faith display text and Scripture.",
+      "**Do** preserve native anchor behavior, visible focus and reduced-motion support.",
+      "**Do** keep testimony readable and visible without opening a modal or disclosure."
+    ],
+    "donts": [
+      "**Don't** promote faith tokens into global replacements.",
+      "**Don't** place faith testimony into a stack of generic cards.",
+      "**Don't** add animation that bypasses reduced-motion preferences."
+    ]
+  }
+}

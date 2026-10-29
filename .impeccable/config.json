@@ -31,5 +31,6 @@
         "reason": "Codex: unchanged violet game title is part of the incumbent project color system; scoped faith update preserves existing project branding"
       }
     ]
-  }
+  },
+  "buildPath": "comp"
 }
