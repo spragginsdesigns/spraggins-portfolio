@@ -87,6 +87,8 @@ src/
 │   ├── AISystems.tsx   # Agentic AI showcase
 │   ├── Projects.tsx    # Featured projects showcase
 │   ├── Expertise.tsx   # Bento grid skills + stats + WakaTime
+│   ├── WorkLedger.tsx  # Homepage "Daily Work Log" section (measured hours, heatmap, buckets)
+│   ├── work-ledger/    # WorkLedger sub-components
 │   ├── About.tsx       # Timeline-based journey section
 │   ├── BlogPreview.tsx # Latest 3 posts on homepage
 │   ├── GitHubShowcase.tsx # Live GitHub stats
@@ -95,7 +97,9 @@ src/
 │   ├── Footer.tsx      # Site footer (uses /#hash links, safe off-homepage)
 │   └── MotionProvider.tsx # framer-motion reduced-motion config
 ├── content/blog/       # MDX posts (YYYY-MM-DD-slug.mdx)
+├── data/work-ledger.json # Bundled snapshot of the work ledger (generated, never hand-edit)
 ├── lib/
+│   ├── work-ledger.ts  # Work ledger types, type guard, summary helpers
 │   ├── stats.ts        # SINGLE SOURCE OF TRUTH for all LineCrush/game stats
 │   ├── local-websites.ts # SINGLE SOURCE OF TRUTH for the Spraggins Designs offer (price, phone, copy, FAQ, GBP link)
 │   ├── format-date.ts  # UTC-safe date formatting (client-safe)
@@ -106,7 +110,10 @@ src/
     ├── send-email.ts   # Contact form handler (also the local-websites intake; accepts phone in place of email)
     └── youtube-stats.ts # YouTube API integration
 docs/
-└── google-business-profile.md # Spraggins Designs GBP: fields, rules, how to edit, current restrictions
+├── google-business-profile.md # Spraggins Designs GBP: fields, rules, how to edit, current restrictions
+└── work-ledger.md      # Daily Work Log: what is measured, privacy rules, how the hourly collector runs
+scripts/
+└── work-ledger/collect.py # Collector run hourly on the PC (pulls the MacBook over SSH), publishes daily totals
 ```
 
 ### Routing Pattern
@@ -126,11 +133,12 @@ The main page (`src/app/page.tsx`) renders sections in order:
 6. **LocalWebsites** - Spraggins Designs offer for Fresno businesses (credibility strip, what you get, $299 + $19/mo price card, call/text CTAs, intake form)
 7. **Projects** - LineCrush flagship + Gunmetal Orbit/games card + featured + additional projects
 8. **Expertise** - Stats row + 6 expertise cards + WakaTime + tech stack
-9. **About** - Timeline journey from truck driver to CTO
-10. **BlogPreview** - Latest 3 posts
-11. **GitHubShowcase** - Live GitHub profile/repos/contribution graph
-12. **Contact** - Email contact form (phone chip next to the email)
-13. **Footer** - Site links and copyright
+9. **WorkLedger** - Daily Work Log: measured workday length, hands-on hours, agent hours and contributions per day, with a year heatmap and project buckets. Data and privacy rules: `docs/work-ledger.md` (bucket patterns hold private repo names and live only in `~/.work-ledger/config.json`, never in this public repo)
+10. **About** - Timeline journey from truck driver to CTO
+11. **BlogPreview** - Latest 3 posts
+12. **GitHubShowcase** - Live GitHub profile/repos/contribution graph
+13. **Contact** - Email contact form (phone chip next to the email)
+14. **Footer** - Site links and copyright
 
 There is also a dedicated `/games` route (LineCrush Games studio + Gunmetal Orbit flagship) and the `/blog` routes.
 

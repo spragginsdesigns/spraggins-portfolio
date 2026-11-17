@@ -11,6 +11,7 @@ import BlogPreview from "@/components/BlogPreview";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import GitHubShowcase from "@/components/GitHubShowcase";
+import WorkLedger from "@/components/WorkLedger";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
 import { getAllPosts } from "@/lib/blog";
 
@@ -30,6 +31,7 @@ export default function Home() {
 				<LocalWebsites />
 				<Projects />
 				<Expertise />
+				<WorkLedger />
 				<About />
 				<BlogPreview posts={posts} />
 				<ErrorBoundary>

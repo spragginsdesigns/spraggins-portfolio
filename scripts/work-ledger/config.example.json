@@ -1,0 +1,14 @@
+{
+  "machine": "pc",
+  "timezone": "America/Los_Angeles",
+  "gistId": "",
+  "remotes": [{ "host": "macbook", "machine": "mac" }],
+  "defaultBucket": "Personal & tooling",
+  "buckets": [
+    { "name": "LineCrush", "match": ["example-main-repo"] },
+    { "name": "LineCrush Games", "match": ["example-games-repo"] },
+    { "name": "SureWord", "match": ["example-sureword-repo"] },
+    { "name": "Client sites", "match": ["example-client-site"] },
+    { "name": "Personal & tooling", "match": [] }
+  ]
+}
