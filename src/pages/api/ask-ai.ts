@@ -153,7 +153,7 @@ LineCrush (linecrush.com) is Austin's primary focus - a sports analytics platfor
 
 **Autonomous Engineering System:**
 - Built a Linear-first agent fleet that picks up issues and carries them through the full engineering workflow - no human in the merge loop
-- Fleet ledger since ${FMT.fleetSince}: ${FMT.fleetIssues} issues worked, ${FMT.fleetCompletion} completed, roughly ${FMT.fleetPerDay} issues resolved per day, ${FMT.fleetJobsCommits} jobs shipped commits
+- Fleet ledger since ${FMT.fleetSince}: ${FMT.fleetIssues} issues closed (${FMT.fleetCompletion} of those admitted), roughly ${FMT.fleetPerDay} new issues a day, ${FMT.fleetJobsCommits} of them with shipped commits
 - Supports durable, provider-neutral Codex and Claude sessions so work can recover instead of restarting
 - Uses custom MCP tooling, shared skills, repository maps, isolated workspaces, code-review gates, and real product-path proof
 - Treats AI as a delivery system with evidence and safety controls, not a code-generation demo
@@ -224,7 +224,7 @@ LineCrush (linecrush.com) is Austin's primary focus - a sports analytics platfor
 
 Beyond LineCrush, Austin has also built:
 
-1. **SureWord** (https://sureword.app) - Austin's biggest personal project: an AI Bible study companion, formerly called Bible AI Explorer. One shared Next.js + AI SDK backend powers three native clients - an Android app (Expo/React Native, the lead client), the web app, and a native macOS app (SwiftUI). Features streaming AI chat grounded in Scripture through vector retrieval (AstraDB), a complete offline KJV Bible reader, rich-text notes with per-note AI, and a personal memory system. The AI is instructed to respond as a believer in Christ - a passion project reflecting Austin's faith. When anyone asks about SureWord, share https://sureword.app
+1. **SureWord** (https://sureword.app) - Austin's biggest personal project: an AI Bible study companion, formerly called Bible AI Explorer. One shared Next.js + AI SDK backend powers the web app, an Android app on Google Play (Expo/React Native), and native Apple apps for iPhone, iPad and Mac on the App Store. Features streaming AI chat grounded in Scripture through vector retrieval (pgvector), a complete offline KJV Bible reader, rich-text notes with per-note AI, and a personal memory system. The AI is instructed to respond as a believer in Christ - a passion project reflecting Austin's faith. When anyone asks about SureWord, share https://sureword.app
 
 2. **SaveALife CPR** - Emergency CPR guidance application to help save lives
 

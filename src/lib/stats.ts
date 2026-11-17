@@ -1,25 +1,26 @@
 // Canonical LineCrush / portfolio stats - single source of truth.
-// Verified 2026-08-08 against the LineCrush monorepo and fleet job ledger.
+// Fleet numbers verified 2026-11-16 against the fleet job ledger; the rest on
+// 2026-08-08 against the LineCrush monorepo.
 // Update here first; prose files (llms.txt, README.md, CLAUDE.md, AGENTS.md)
 // must be kept in sync manually.
 
 export const STATS = {
-	verifiedDate: "2026-08-08",
+	verifiedDate: "2026-11-16",
 	monorepoCommitsExact: 30128,
 	monorepoCommits2026: 12873,
 	apiHandlers: 366,
 	agentSkills: 64,
 	tsxModules: 1000,
 	productClients: 4,
-	sports: 12,
+	sports: 14,
 	postgresTables: 120,
 	llmProviders: 5,
 	fleet: {
 		since: "June 23, 2026",
-		issuesWorked: 4426,
-		completionPct: 95,
-		issuesPerDay: 90,
-		jobsShippedCommits: 2730
+		issuesClosed: 14024,
+		completionPct: 91,
+		issuesPerDay: 125,
+		jobsShippedCommits: 10667
 	}
 } as const;
 
@@ -33,15 +34,15 @@ export const FMT = {
 	agentSkills: "64",
 	tsxModules: "~1,000",
 	productClients: "4",
-	sports: "12",
+	sports: "14+",
 	postgresTables: "120+",
 	llmProviders: "5",
 	yearsInProduction: "2+",
 	gameBuilds: "3+",
-	fleetIssues: "4,426",
-	fleetCompletion: "95%",
-	fleetPerDay: "~90",
-	fleetJobsCommits: "2,730",
+	fleetIssues: "14,024",
+	fleetCompletion: "91%",
+	fleetPerDay: "~125",
+	fleetJobsCommits: "10,667",
 	fleetSince: "June 23, 2026"
 } as const;
 

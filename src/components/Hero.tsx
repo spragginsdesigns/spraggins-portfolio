@@ -208,7 +208,7 @@ const Hero: React.FC = () => {
 					<div className="text-center">
 						<div className="text-2xl md:text-4xl font-bold text-primary">
 							<CountUp
-								end={STATS.fleet.issuesWorked}
+								end={STATS.fleet.issuesClosed}
 								format={(v) => v.toLocaleString()}
 							/>
 						</div>

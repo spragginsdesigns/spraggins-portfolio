@@ -43,7 +43,7 @@ Personal portfolio website for **Austin Spraggins** - Co-Founder, CTO & Senior S
 
 ### Personal Projects
 
-- **SureWord** (formerly Bible AI Explorer): Austin's biggest personal project - an AI Bible study companion at [sureword.app](https://sureword.app) with three native clients (Android via Expo, web, macOS via SwiftUI) sharing one Next.js + AI SDK backend. Vector RAG over the KJV, offline Bible reader, notes, and a memory system. The AI is instructed to act as a believer in Christ. Has its own flagship spotlight card in the Projects section.
+- **SureWord** (formerly Bible AI Explorer): Austin's biggest personal project - an AI Bible study companion at [sureword.app](https://sureword.app) on the web, Google Play (Android via Expo) and the App Store (iPhone, iPad and Mac) sharing one Next.js + AI SDK backend. Vector RAG over the KJV, offline Bible reader, notes, and a memory system. The AI is instructed to act as a believer in Christ. Has its own flagship spotlight card in the Projects section.
 
 ## Social Links
 
@@ -177,9 +177,9 @@ When updating portfolio content:
 - **LineCrush** is the flagship project - emphasize scale and the autonomous agent fleet
 - Highlight CTO leadership and architectural decision-making
 - Emphasize "Open to Contracts & Consulting" (not job seeking)
-- **Stats single source of truth: `src/lib/stats.ts`** (verified 2026-08-08). Canonical set: 30,128 monorepo commits (30,000+ in prose; 12,873 in 2026), 366 API handlers, 64 agent skills, ~1,000 TSX modules, 4 product clients, 120+ database tables, 5 LLM providers, 12 sports, 2+ years production. Fleet ledger since June 23, 2026: 4,426 Linear issues worked, 95% completed, ~90/day, 2,730 jobs shipped commits. Update stats.ts first; llms.txt, README.md, CLAUDE.md, and AGENTS.md must be kept in sync manually.
+- **Stats single source of truth: `src/lib/stats.ts`** (fleet numbers verified 2026-11-16: 14,024 issues closed, 91% of admitted, ~125 a day, 10,667 with shipped commits; the rest 2026-08-08). Canonical set: 30,128 monorepo commits (30,000+ in prose; 12,873 in 2026), 366 API handlers, 64 agent skills, ~1,000 TSX modules, 4 product clients, 120+ database tables, 5 LLM providers, 12 sports, 2+ years production. Fleet ledger since June 23, 2026: 4,426 Linear issues worked, 95% completed, ~90/day, 2,730 jobs shipped commits. Update stats.ts first; llms.txt, README.md, CLAUDE.md, and AGENTS.md must be kept in sync manually.
 - **Gunmetal Orbit** is the flagship game: space-mining arena roguelite, Steam release September 10, 2026 at $4.99, store URL https://store.steampowered.com/app/4975430, studio site games.linecrush.com
-- **SureWord** is the personal flagship (spotlight card alongside LineCrush and Gunmetal Orbit): sureword.app, Android APK via stable Drive link, GitHub repo spragginsdesigns/bible-ai-explorer
+- **SureWord** is the personal flagship (spotlight card alongside LineCrush and Gunmetal Orbit): sureword.app, Android on Google Play (com.spragginsdesigns.sureword), Apple apps on the App Store (id6820260211); the GitHub repo is private, so never link it (spragginsdesigns/bible-ai-explorer)
 - **Spraggins Designs local-business offer** ($299 build + $19/mo hosting, live in a day, call or text 559-818-0467): single source of truth is `src/lib/local-websites.ts`, rendered on the homepage section and `/local-websites`. The matching Google Business Profile is documented in `docs/google-business-profile.md`. Read that file before touching the profile: posting is currently disabled after a policy strike, and the rules there (no phone numbers or prices in posts, no category churn, one edit at a time) are not optional.
 - Featured GitHub projects: SaveALife CPR, Constrong, AI Tutor WebApp
 - **CLAUDE.md and AGENTS.md are twins** - they must be edited in lockstep (they differ only in their title/intro lines)

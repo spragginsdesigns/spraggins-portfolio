@@ -35,11 +35,11 @@ const capabilities = [
 	},
 	{
 		title: "Applied AI",
-		copy: "Multi-provider features, retrieval, vision/OCR, model routing, agent workflows, and failure handling."
+		copy: "An autonomous Claude Code and Codex fleet, MCP servers, multi-provider features, retrieval, vision/OCR, model routing, and review gates."
 	},
 	{
 		title: "Cross-platform delivery",
-		copy: "Web products, SwiftUI and Android client work, browser extensions, and a commercial Godot game."
+		copy: "Web products, native SwiftUI and Kotlin apps in both stores, a ChatGPT plugin, and a commercial Godot game on Steam."
 	}
 ];
 
@@ -62,7 +62,7 @@ export default function ResumePage() {
 						Co-Founder &amp; CTO at LineCrush. Software architect and applied AI engineer.
 					</p>
 					<p className="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
-						I build products from interface and data model through AI behavior, infrastructure, and release. My work spans the live LineCrush platform, an independent AI study product across web and mobile, client automation, and a commercial Steam game.
+						I build products from interface and data model through AI behavior, infrastructure, and release. I designed and run the agent fleet LineCrush ships with: Claude Code and Codex workers have closed 14,000+ tracker issues since June 2026. My shipped work spans the LineCrush platform on the web, the App Store and Google Play, an official ChatGPT plugin, SureWord on Google Play and the App Store, and a commercial game on Steam.
 					</p>
 					<div className="mt-8 flex flex-wrap gap-3">
 						<a

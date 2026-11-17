@@ -89,15 +89,15 @@ const lineCrushGamesHighlights = [
 	{
 		icon: <MonitorCheck className="w-5 h-5" />,
 		title: "Native Builds",
-		description: "Windows, Linux, and Steam Deck - available on Steam"
+		description: "Windows, macOS, Linux, and Steam Deck - available on Steam"
 	}
 ];
 
 const sureWordHighlights = [
 	{
 		icon: <Smartphone className="w-5 h-5" />,
-		title: "Native Android App",
-		description: "Expo/React Native - the lead client"
+		title: "Android on Google Play",
+		description: "Expo/React Native app, in production on Play"
 	},
 	{
 		icon: <Globe className="w-5 h-5" />,
@@ -106,8 +106,8 @@ const sureWordHighlights = [
 	},
 	{
 		icon: <Laptop className="w-5 h-5" />,
-		title: "Native macOS App",
-		description: "SwiftUI client on the same backend"
+		title: "iPhone, iPad, and Mac",
+		description: "Native Apple apps on the App Store"
 	},
 	{
 		icon: <Brain className="w-5 h-5" />,
@@ -122,7 +122,7 @@ const sureWordTechStack = [
 	"Vercel AI SDK",
 	"React Native (Expo)",
 	"SwiftUI",
-	"AstraDB Vector Search",
+	"pgvector",
 	"Neon Postgres",
 	"Clerk"
 ];
@@ -485,7 +485,7 @@ const SureWordProject: React.FC = () => {
 								Personal Flagship
 							</Badge>
 							<Badge variant="outline" className="border-cyan-500/40 text-cyan-300">
-								Android · Web · macOS
+								Web · Android · iPhone · iPad · Mac
 							</Badge>
 						</div>
 						<h3 className="mb-4 flex items-center gap-3 bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
@@ -497,8 +497,8 @@ const SureWordProject: React.FC = () => {
 						<p className="mb-6 text-lg leading-relaxed text-muted-foreground">
 							Built from my own walk with Christ and a desire to help others study
 							God&apos;s Word. My AI Bible study companion has grown from a weekend web app into a
-							full multi-platform product. One Next.js + AI SDK backend powers
-							three native clients: streaming chat grounded in Scripture through
+							full multi-platform product on Google Play and the App Store. One
+							Next.js + AI SDK backend powers every client: streaming chat grounded in Scripture through
 							vector retrieval, a complete offline KJV Bible reader, rich-text
 							notes with per-note AI, and a personal memory system that learns
 							how you study.
@@ -524,24 +524,24 @@ const SureWordProject: React.FC = () => {
 							</Button>
 							<Button asChild variant="outline" className="w-fit border-amber-400/40">
 								<a
-									href="https://drive.google.com/file/d/1BvfwTE7Na5pAIbwY8VG6Yvkp6vxJpqKu/view"
+									href="https://play.google.com/store/apps/details?id=com.spragginsdesigns.sureword"
 									target="_blank"
 									rel="noopener noreferrer"
 									className="flex items-center gap-2"
 								>
-									Get the Android App
+									Get it on Google Play
 									<Smartphone className="w-4 h-4" />
 								</a>
 							</Button>
 							<Button asChild variant="ghost" className="w-fit">
 								<a
-									href="https://github.com/spragginsdesigns/bible-ai-explorer"
+									href="https://apps.apple.com/app/id6820260211"
 									target="_blank"
 									rel="noopener noreferrer"
 									className="flex items-center gap-2"
 								>
-									<Github className="w-4 h-4" />
-									View Code
+									<Laptop className="w-4 h-4" />
+									iPhone, iPad, and Mac
 								</a>
 							</Button>
 						</div>

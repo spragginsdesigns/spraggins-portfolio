@@ -44,7 +44,7 @@ Verified repository-scale indicators as of 2026-08-08 (source of truth: src/lib/
 - ~1,000 tracked TSX modules
 - 366 tracked Next.js API handlers
 - 64 tracked agent-skill definitions
-- Agent fleet ledger since June 23, 2026: 4,426 Linear issues worked, 95% completed, roughly 90 issues resolved per day, 2,730 jobs shipped commits
+- Agent fleet ledger since June 23, 2026: 14,024 tracker issues closed (91% of those admitted), roughly 125 new issues a day, 10,667 of them with shipped commits (measured 2026-11-16)
 
 ### Autonomous Engineering Agents
 
@@ -89,7 +89,7 @@ Austin moved from truck driving into software, became a web-development instruct
 
 ## Independent Public Projects
 
-- [SureWord](https://sureword.app): AI Bible study companion (formerly Bible AI Explorer) - native Android (Expo), web, and macOS (SwiftUI) clients on one Next.js + AI SDK backend, with vector RAG over the KJV, an offline Bible reader, notes, and a personal memory system ([code](https://github.com/spragginsdesigns/bible-ai-explorer))
+- [SureWord](https://sureword.app): AI Bible study companion (formerly Bible AI Explorer) - web, Android on Google Play (Expo), and iPhone, iPad and Mac apps on the App Store, on one Next.js + AI SDK backend, with vector RAG over the KJV, an offline Bible reader, notes, and a personal memory system ([code](https://github.com/spragginsdesigns/bible-ai-explorer))
 - [AI Tutor WebApp](https://github.com/spragginsdesigns/ai-tutor-webapp): Socratic learning assistant
 - [Perplexity MCP Server](https://github.com/spragginsdesigns/perplexity-mcp-server): Model Context Protocol integration
 - [SaveALife CPR](https://github.com/spragginsdesigns/savealife-cpr): Business workflow automation

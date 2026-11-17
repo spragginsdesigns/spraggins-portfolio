@@ -236,9 +236,9 @@ ${box("FEATURED PROJECTS", m)}
 
   ★ SUREWORD (Personal Flagship)
   ${rule(m)}
-  AI Bible study companion with 3 native clients
-  Clients: Android (Expo) | Web | macOS (SwiftUI)
-  Tech: Next.js, AI SDK, AstraDB RAG, Neon, Clerk
+  AI Bible study on web, Google Play and the App Store
+  Clients: Web | Android (Expo) | iPhone, iPad, Mac
+  Tech: Next.js, AI SDK, pgvector RAG, Neon, Clerk
   URL: https://sureword.app
 
   ◆ SAVELIFE CPR
@@ -268,7 +268,7 @@ ${box("AUTONOMOUS DELIVERY SYSTEM", m)}
   • Web, Python, SwiftUI, Kotlin, and infrastructure lanes
 
   Fleet ledger since ${FMT.fleetSince}:
-  ${FMT.fleetIssues} issues worked · ${FMT.fleetCompletion} completed · ${FMT.fleetPerDay}/day
+  ${FMT.fleetIssues} issues closed · ${FMT.fleetCompletion} of admitted · ${FMT.fleetPerDay}/day
 
   The goal isn't code generation. It's trustworthy delivery.
 
@@ -1272,7 +1272,7 @@ const InteractiveTerminal: React.FC = () => {
   Evidence policy:   product-path proof required
   ─────────────────────────────────────────────
   Ledger since ${FMT.fleetSince}:
-  Issues worked:     ${FMT.fleetIssues} (${FMT.fleetCompletion} completed)
+  Issues closed:     ${FMT.fleetIssues} (${FMT.fleetCompletion} of admitted)
   Throughput:        ${FMT.fleetPerDay} issues/day
   Jobs shipped:      ${FMT.fleetJobsCommits} commit-bearing runs
 
