@@ -83,7 +83,8 @@ src/
 │   ├── games/GamesShowcase.tsx # /games page sections
 │   ├── local-websites/ # CredibilityStrip, CallTextButtons, IntakeForm, LocalWebsitesShowcase (/local-websites body)
 │   ├── Hero.tsx        # Product engineering introduction, real product screenshots, and sourced metrics
-│   ├── InteractiveTerminal.tsx # Fake shell w/ agent-run demo, streaming ask-ai, mobile-aware ASCII
+│   ├── InteractiveTerminal.tsx # "Ask about my work" agent console (tool-call rows, streamed Markdown) + the collapsible fake shell
+│   ├── ask/            # AnswerMarkdown (safe Markdown renderer), usePortfolioWebMcp (WebMCP tool registration)
 │   ├── SelectedWork.tsx # LineCrush, SureWord, C2, Gunmetal Orbit, client work, and open source
 │   ├── Expertise.tsx   # Bento grid skills + stats + WakaTime
 │   ├── WorkLedger.tsx  # Homepage "Daily Work Log" section (measured hours, heatmap, buckets)
@@ -98,6 +99,8 @@ src/
 ├── content/blog/       # MDX posts (YYYY-MM-DD-slug.mdx)
 ├── data/work-ledger.json # Bundled snapshot of the work ledger (generated, never hand-edit)
 ├── lib/
+│   ├── ask/            # Portfolio agent: agent.ts (model + tool loop), tools.ts (read-only tools), prompt.ts (system prompt), rate-limit.ts
+│   ├── portfolio-answers.ts # Curated public facts: the agent's search corpus and its no-model fallback
 │   ├── work-ledger.ts  # Work ledger types, type guard, summary helpers
 │   ├── stats.ts        # SINGLE SOURCE OF TRUTH for all LineCrush/game stats
 │   ├── local-websites.ts # SINGLE SOURCE OF TRUTH for the Spraggins Designs offer (price, phone, copy, FAQ, GBP link)
@@ -105,10 +108,12 @@ src/
 │   ├── blog.ts         # Blog post loading (server-only, imports fs)
 │   └── utils.ts        # cn() utility for Tailwind merging
 └── pages/api/          # API routes (Pages Router)
-    ├── ask-ai.ts       # Streaming AI Q&A for the terminal
+    ├── ask-ai.ts       # Portfolio agent endpoint (gpt-6.2-sol + tool calls, NDJSON stream)
+    ├── portfolio-tools.ts # Public read-only tool endpoint behind the page's WebMCP tools
     ├── send-email.ts   # Contact form handler (also the local-websites intake; accepts phone in place of email)
     └── youtube-stats.ts # YouTube API integration
 docs/
+├── ask-agent.md        # Portfolio agent: tools, safety rules, system prompt, WebMCP, limits, how to verify
 ├── google-business-profile.md # Spraggins Designs GBP: fields, rules, how to edit, current restrictions
 └── work-ledger.md      # Daily Work Log: what is measured, privacy rules, how the hourly collector runs
 scripts/
@@ -137,6 +142,8 @@ The homepage leads with the engineering introduction, selected work, and Austin'
 
 ### API Routes
 
+- `/api/ask-ai` - Portfolio agent: OpenAI Responses API (`gpt-6.2-sol`, medium reasoning) with read-only tools over the portfolio, the live work ledger, public GitHub and Steam. Read `docs/ask-agent.md` before changing it; its privacy rules mirror the Content and Blog Post Guidelines below.
+- `/api/portfolio-tools` - The same tools over plain HTTP for WebMCP browser agents (no model runs)
 - `/api/send-email` - Contact form submission using Nodemailer (Gmail SMTP)
 - `/api/youtube-stats` - Fetches YouTube channel statistics
 
@@ -146,6 +153,8 @@ Required in `.env.local`:
 ```
 GMAIL_APP_PASSWORD=     # Gmail app password for contact form
 YOUTUBE_API_KEY=        # YouTube Data API key
+OPENAI_API_KEY=         # Portfolio agent (needs gpt-6.2-sol access); without it answers fall back to curated facts
+GITHUB_TOKEN=           # Optional, raises the GitHub rate limit for the agent's public-repo tools
 ```
 
 ### Styling

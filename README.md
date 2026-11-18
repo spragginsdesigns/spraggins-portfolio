@@ -73,6 +73,7 @@ Create `.env.local` with server-only secrets as needed:
 ```
 GMAIL_APP_PASSWORD=your_gmail_app_password
 YOUTUBE_API_KEY=your_youtube_api_key
+OPENAI_API_KEY=your_openai_api_key   # portfolio agent, see docs/ask-agent.md
 ```
 
 Never expose provider tokens through `NEXT_PUBLIC_*` variables. Public GitHub profile data is fetched without a client-side token.

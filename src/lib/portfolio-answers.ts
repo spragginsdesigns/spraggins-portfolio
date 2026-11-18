@@ -135,6 +135,9 @@ const entries: readonly Entry[] = [
 	}
 ];
 
+/** Every curated public fact, for the ask agent's portfolio search. */
+export const portfolioEvidence: readonly PortfolioEvidence[] = [overviewEvidence, ...entries];
+
 const explicitTopics = /\b(line\s?crush|c2|sure\s?word|gunmetal|steam|godot|tty7|savealife|two cities|gelateria|faith|jesus|christian|truck\w*|bitwise|geekwise|college|contact|email|resume|résumé|work[ -]?(log|ledger))\b/;
 const contextualFollowUp = /^(?:(?:and|also|but|so)\s+)?(?:what about\b|how about\b|what (?:did|does|has|is|was) (?:he|it|that|this|his)\b|how (?:did|does|has|is|was|would|can) (?:he|it|that|this)\b|(?:can|could) you (?:explain|expand|elaborate)\b|tell me more\b|more (?:detail|about)\b|why\b|how\??$|examples?\??$)/;
 const generalAbout = /^(?:(?:tell me|what can you tell me|give me (?:an? )?(?:overview|summary)) (?:about )?|who (?:is|was) )?(?:austin(?: spraggins)?|yourself|him)[?.!\s]*$/;

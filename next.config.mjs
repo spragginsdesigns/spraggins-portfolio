@@ -10,6 +10,13 @@ const rehypePrettyCodeOptions = {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+	experimental: {
+		// The ask agent's tools read blog posts from disk at request time.
+		outputFileTracingIncludes: {
+			"/api/ask-ai": ["./src/content/blog/**/*"],
+			"/api/portfolio-tools": ["./src/content/blog/**/*"]
+		}
+	},
 	images: {
 		remotePatterns: [
 			{
