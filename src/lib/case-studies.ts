@@ -51,9 +51,9 @@ const github = { label: "Austin's GitHub", href: "https://github.com/spragginsde
 export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 	linecrush: {
 		name: "LineCrush",
-		title: "Building and running LineCrush.",
-		intro: "I started the codebase in May 2024 and co-founded LineCrush Inc. with Jay Raynor. As CTO, I led engineering as we grew a sports research prototype into a subscription business with live web and mobile products. I built both native apps, the engineering agent fleet, and C2, our internal issue tracker.",
-		description: "Austin Spraggins's CTO case study on co-founding LineCrush, building both native apps, and creating C2 and the production engineering fleet.",
+		title: "The AI fleet, C2, and two native apps.",
+		intro: "I built LineCrush's self-sustaining, self-improving AI engineering fleet and C2, our replacement for Linear. I also built both native apps from scratch and shipped them to the App Store and Google Play.",
+		description: "How Austin Spraggins built LineCrush's self-sustaining, self-improving AI fleet, replaced Linear with C2, and shipped native iOS and Android apps.",
 		role: "Co-founder & CTO",
 		result: "Operating subscription business · Web, iOS and Android",
 		period: "May 2024 to present",
@@ -71,9 +71,42 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 		],
 		sections: [
 			{
+				id: "c2", label: "AI fleet & C2", title: "How the fleet keeps shipping",
+				paragraphs: [
+					"I built the fleet in June 2026 around the process we already used to take an issue from investigation through release. I designed it to sustain and improve itself, so routine work rarely needs a person to step in. Jay and I oversee it together.",
+					"I built C2 to replace Linear and keep the issue, the work, and the evidence together. I led the move and brought over roughly 19,000 historical issues while active work kept moving.",
+					"One trail ends in LineCrush iOS 2.9.0. The team and fleet delivered first-quarter passing, rushing and receiving leaders in Signals. You can see where that work landed in the App Store release notes."
+				],
+				steps: ["Investigate", "Implement", "Verify the product", "Review", "Ship", "Check the release"],
+				media: [
+					{ src: "/images/work/c2-sunburst-26.webp", alt: "Compute modules arranged around a gold light with cyan connections", caption: "Engineering fleet · GPT Image 2.6 Sunburst", shape: "landscape" }
+				],
+				metrics: [
+					{ label: "Completed fleet jobs", value: FMT.fleetCompletedJobs },
+					{ label: "Completed jobs with a recorded commit URL", value: FMT.fleetJobsWithCommitLinks },
+					{ label: "Admitted jobs completed", value: FMT.fleetCompletion }
+				],
+				metricNote: "Fleet ledger snapshot, November 17, 2026. Jobs include implementation, investigation and documentation. The commit-URL count measures job records with a link.",
+				proof: [{ ...lineCrushApple, label: "iOS 2.9.0 release notes" }, { label: "Published fleet walkthrough", href: "/blog/2026-08-08-no-humans-in-the-merge-loop" }]
+			},
+			{
+				id: "native-apps", label: "iOS & Android", title: "I built and shipped both native apps",
+				paragraphs: [
+					"Jay and I decided to move from a Capacitor wrapper to platform-native apps so we could build the research experience around how people use each phone. I started both apps from scratch in June 2026. In SwiftUI, I built the swipeable research cards, stats and insights on their reverse faces, and a chart fed by line history. In Kotlin and Jetpack Compose, I built the typed API client, native sign-in and guest entry, and the swipe deck with rewind and cart.",
+					"Both apps use the existing LineCrush backend. I also worked on StoreKit purchases, Android push delivery and the release paths that keep the apps moving.",
+					"App Review hit a case the demo account had missed. A fresh user with no history got an error. I traced the review requests, reproduced the failure with an empty account on an iPad simulator, and fixed the empty state. It made the new-account journey part of what a release had to prove.",
+					"I shipped Android to Google Play in August 2026 and iOS to the App Store in September. I built release automation for signed test builds, store cuts and staged rollout. Jay and I continue to operate the product alongside the fleet, which carries substantial implementation and release work."
+				],
+				media: [
+					{ src: "/images/work/linecrush-research.webp", alt: "LineCrush iPhone research card with player data and a chart", caption: "Player research · App Store screenshot", shape: "portrait" },
+					{ src: "/images/work/linecrush-native.webp", alt: "A second screen from the released LineCrush mobile app", caption: "LineCrush mobile · App Store screenshot", shape: "portrait" }
+				],
+				proof: [lineCrushChangelog, lineCrushApple, lineCrushPlay]
+			},
+			{
 				id: "ownership", label: "Founding & ownership", title: "From athlete search to a paid research product",
 				paragraphs: [
-					"I took the Gelateria Del Centro job because I wanted to build software full time. After I built their site, an introduction through that work led to the project that became LineCrush and to meeting Jay. He brought deep sports research expertise. I started the original Next.js, TypeScript and Python codebase.",
+					"I took the Gelateria Del Centro job because I wanted to build software full time. After I built their site, an introduction through that work led to the project that became LineCrush and to meeting Jay Raynor. He brought deep sports research expertise. I started the original Next.js, TypeScript and Python codebase in May 2024.",
 					"The first player search, profiles and AI summaries answered a practical question: what's changed about an athlete since the last time you looked? I added source-linked quotes and reports, then built account access, Stripe subscriptions and scheduled processing so people could use it every day.",
 					"Jay and I built out the product together. My work included the swipeable Picks experience, matchup and player research, LineCrushBot, and Sonar search and alerts. We connected those surfaces to the data and services behind them so readers could move from a current story to the quote, the matchup and the numbers in context.",
 					"In 2025 the LineCrush repository recorded a non-merge commit under my Git identity on 355 of 365 days. That was before the fleet launched. The count measures days with recorded Git activity."
@@ -109,45 +142,12 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				]
 			},
 			{
-				id: "native-apps", label: "iOS & Android", title: "Two native apps, from the first screen to the stores",
-				paragraphs: [
-					"Jay and I decided to move from a Capacitor wrapper to platform-native apps so we could build the research experience around how people use each phone. I started both apps from scratch in June 2026. In SwiftUI, I built the swipeable research cards, stats and insights on their reverse faces, and a chart fed by line history. In Kotlin and Jetpack Compose, I built the typed API client, native sign-in and guest entry, and the swipe deck with rewind and cart.",
-					"Both apps use the existing LineCrush backend. I also worked on StoreKit purchases, Android push delivery and the release paths that keep the apps moving.",
-					"App Review hit a case the demo account had missed. A fresh user with no history got an error. I traced the review requests, reproduced the failure with an empty account on an iPad simulator, and fixed the empty state. It made the new-account journey part of what a release had to prove.",
-					"Android went to production in August 2026 and the iOS app reached the App Store in September. I built release automation for signed test builds, store cuts and staged rollout. Jay and I continue to operate the product alongside the fleet, which carries substantial implementation and release work."
-				],
-				media: [
-					{ src: "/images/work/linecrush-research.webp", alt: "LineCrush iPhone research card with player data and a chart", caption: "Player research · App Store screenshot", shape: "portrait" },
-					{ src: "/images/work/linecrush-native.webp", alt: "A second screen from the released LineCrush mobile app", caption: "LineCrush mobile · App Store screenshot", shape: "portrait" }
-				],
-				proof: [lineCrushChangelog, lineCrushApple, lineCrushPlay]
-			},
-			{
 				id: "integrations", label: "Integrations", title: "Put research where people already work",
 				paragraphs: [
 					"I built a Chrome extension and worked on betslip image analysis, research chat and voice, and notifications outside the site. The common product problem was preserving useful context when users moved between a research session, a browser and a phone.",
 					"In October 2026 I built the hosted ChatGPT MCP integration. It exposes a bounded set of read-only public research tools that return structured results with source context. I also built WebMCP tools for the browser. With Jay and the fleet, we delivered a real-time sports news API for a business customer."
 				],
 				proof: [{ label: "LineCrush in ChatGPT", href: "https://chatgpt.com/plugins/plugin_asdk_app_6ad6200f5d308191826093af74536aa2" }]
-			},
-			{
-				id: "c2", label: "C2 & the agent fleet", title: "Build a delivery system that can show its work",
-				paragraphs: [
-					"Before I built the fleet, I already had a repeatable way to take an issue from investigation through release. As coding models got better at following that process, I saw a way for a small team to handle more work. I built the fleet in June 2026 to put that process into practice. I use Claude Code and Codex in my daily engineering, and Jay and I operate the fleet together.",
-					"I built C2 because issue tracking had become part of how the agents worked. I wanted an issue to hold the brief, the run history and the evidence in one place. A run can stop and the next one can pick up what was learned. I led the move from Linear in the fall and brought roughly 19,000 historical issues into the new system.",
-					"One trail ends in LineCrush iOS 2.9.0. The team and fleet delivered first-quarter passing, rushing and receiving leaders in Signals. The App Store release notes give a customer-visible place to check where that work landed."
-				],
-				steps: ["Investigate", "Implement", "Verify the product", "Review", "Ship", "Check the release"],
-				media: [
-					{ src: "/images/work/c2-sunburst-26.webp", alt: "Compute modules arranged around a gold light with cyan connections", caption: "Engineering fleet · GPT Image 2.6 Sunburst", shape: "landscape" }
-				],
-				metrics: [
-					{ label: "Completed fleet jobs", value: FMT.fleetCompletedJobs },
-					{ label: "Completed jobs with a recorded commit URL", value: FMT.fleetJobsWithCommitLinks },
-					{ label: "Admitted jobs completed", value: FMT.fleetCompletion }
-				],
-				metricNote: "Fleet ledger snapshot, November 17, 2026. Jobs include implementation, investigation and documentation. The commit-URL count measures job records with a link.",
-				proof: [{ ...lineCrushApple, label: "iOS 2.9.0 release notes" }, { label: "Published fleet walkthrough", href: "/blog/2026-08-08-no-humans-in-the-merge-loop" }]
 			},
 			{
 				id: "founder-operations", label: "Founder operations", title: "Build tools the business can make decisions with",
