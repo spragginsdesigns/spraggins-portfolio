@@ -94,7 +94,7 @@ Austin moved from truck driving into software, became a web-development instruct
 
 ## Independent Public Projects
 
-- [SureWord](https://sureword.app): AI Bible study companion (formerly Bible AI Explorer) - web, Android on Google Play (Expo), and iPhone, iPad and Mac apps on the App Store, on one Next.js + AI SDK backend, with vector RAG over the KJV, an offline Bible reader, notes, and a personal memory system ([code](https://github.com/spragginsdesigns/bible-ai-explorer))
+- [SureWord](https://sureword.app): AI Bible study companion (formerly Bible AI Explorer) - web, Android on Google Play (Expo), and iPhone, iPad and Mac apps on the App Store, on one Next.js + AI SDK backend, with vector RAG over the KJV, an offline Bible reader, notes, and a personal memory system
 - [AI Tutor WebApp](https://github.com/spragginsdesigns/ai-tutor-webapp): Socratic learning assistant
 - [Perplexity MCP Server](https://github.com/spragginsdesigns/perplexity-mcp-server): Model Context Protocol integration
 - [SaveALife CPR](https://github.com/spragginsdesigns/savealife-cpr): Business workflow automation
