@@ -17,7 +17,7 @@ const workSource = { label: "Selected work", href: "/#projects" };
 
 export const overviewEvidence: PortfolioEvidence = {
 	id: "overview",
-	answer: "Austin Spraggins is a Fresno-based product engineer and the co-founder and CTO of LineCrush. He started its codebase in 2024 and built the sports research product with his co-founder, Jay. His work spans full-stack systems, native SwiftUI and Kotlin apps, applied AI, and the C2 engineering delivery system. He also created SureWord, a Bible study companion across web and mobile, and released Gunmetal Orbit on Steam. Before founding products, he drove trucks, returned to college, and taught web development.",
+	answer: "Austin Spraggins is a Fresno-based product engineer and the co-founder and CTO of LineCrush. He started its codebase in 2024 and built the sports research product with Jay. He personally built the iOS and Android apps for both LineCrush and SureWord. He also designed the C2 engineering delivery system and released Gunmetal Orbit on Steam. Before founding products, he drove trucks, returned to college, and taught web development.",
 	sources: [resumeSource, workSource, aboutSource]
 };
 
@@ -34,13 +34,13 @@ const entries: readonly Entry[] = [
 	{
 		id: "personal-ownership", topic: "ownership",
 		patterns: [/\b(personally|himself|hands[ -]on|own hands|actually (build|built|code|coded))\b/, /\bwhat (did|does|has) (austin|he) (build|built|make|made|ship|shipped|own|create|created)\b/, /\b(ownership|individual contribution|his contribution)\b/, /\b(?:only|just) (?:use |using )?(?:ai|agents?)\b/, /\b(?:ai|agents?).{0,30}\b(?:write|wrote|code|coded|coding)\b/],
-		answer: "Austin started LineCrush's codebase and built the product with Jay. His concrete early work includes scaffolding its SwiftUI app, implementing the first research cards, search and filters, and starting the Kotlin client with API access, authentication and a swipeable research deck. He also owns SureWord's product and engineering and designed C2 and the engineering fleet. He uses Claude Code and Codex, and the fleet now does substantial implementation and release work. Those team and fleet results aren't all hand-written code by Austin.",
+		answer: "Austin started LineCrush's codebase and built the business with Jay. He personally built both LineCrush mobile apps, using SwiftUI for iOS and Kotlin with Jetpack Compose for Android. He also built SureWord's web, iOS and Android apps himself. At LineCrush, examples of his mobile work include the first iOS research cards, the Kotlin API client, Android authentication and the swipeable research deck. He designed C2 and the engineering fleet, which contributes to ongoing implementation and releases.",
 		sources: [linecrushSource, surewordSource, c2Source]
 	},
 	{
 		id: "native-apps", topic: "native",
 		patterns: [/\b(native|swiftui|swift|kotlin|jetpack|android|ios|iphone|ipad|mobile|app stores?)\b/],
-		answer: "Austin scaffolded LineCrush's SwiftUI app in June 2026 and built its first research cards, search, filters, stats and insights. He then started its Kotlin and Jetpack Compose client, including the API client, authentication and research deck. Android reached Google Play in August 2026 and iOS reached the App Store in September. Both share the existing backend. Austin built the foundations, while Jay and the engineering fleet contribute to ongoing delivery. SureWord uses Expo and React Native on Android and SwiftUI on Apple devices.",
+		answer: "Austin personally built the iOS and Android apps for LineCrush and SureWord. He built LineCrush's iOS app in SwiftUI and its Android app in Kotlin with Jetpack Compose. His early work included the iOS research cards and search, and the Android API client, authentication and research deck. For SureWord, he built the Android app with Expo and React Native and the iPhone, iPad and Mac apps with SwiftUI. Both products reached the App Store and Google Play.",
 		sources: [{ label: "Native app ownership", href: "/work/linecrush#native-apps" }, surewordSource, resumeSource]
 	},
 	{
@@ -58,7 +58,7 @@ const entries: readonly Entry[] = [
 	{
 		id: "sureword-product", topic: "sureword",
 		patterns: [/\bsure\s?word\b/, /\b(bible (study|app)|scripture|study (memory|context)|rag|retrieval|pgvector)\b/],
-		answer: "Austin created SureWord to support a person's relationship with God through Scripture. It began as a web app in July 2024 and expanded in 2026 into web, Expo Android and native SwiftUI Apple clients. He owns the product and engineering, using Claude Code and Codex throughout development. Readers can study passages, ask questions and keep notes across devices. Optional saved memory carries study context and stated preferences into later conversations. People can view, correct, delete or disable that memory.",
+		answer: "Austin created SureWord to support a person's relationship with God through Scripture. He built the original web app in July 2024, then personally built the Android app with Expo and React Native and its iPhone, iPad and Mac apps in SwiftUI. He owns the product and engineering, using Claude Code and Codex throughout development. Readers can study passages, ask questions and keep notes across devices. Optional saved memory carries study context into later conversations.",
 		sources: [surewordSource, { label: "Try SureWord", href: "https://sureword.app" }, { label: "SureWord on the App Store", href: "https://apps.apple.com/app/id6820260211" }]
 	},
 	{

@@ -39,7 +39,7 @@ const chapters = [
 	{
 		period: "2026",
 		title: "More products. A different way to build.",
-		text: "I built the first native iOS and Android clients for LineCrush and designed the agent fleet our team now uses to keep shipping. I also brought SureWord to web, mobile, and Mac, and released Gunmetal Orbit on Steam.",
+		text: "I built the iOS and Android apps for both LineCrush and SureWord myself. I also brought SureWord to Mac, released Gunmetal Orbit on Steam, and designed the agent fleet our team uses to keep shipping.",
 		footnote: "Native apps, applied AI, and games",
 		href: "/work/sureword",
 		linkLabel: "Why I built SureWord",

@@ -33,7 +33,7 @@ export const caseStudies = {
 		eyebrow: "Product engineering & developer tooling",
 		title: "From the first commit to daily operation.",
 		intro:
-			"I started the LineCrush codebase in 2024. Jay and I built it into a sports research platform, then extended the product to native apps and built the engineering system that helps us keep shipping.",
+			"I started the LineCrush codebase in 2024 and built the sports research platform with Jay. I built both native apps myself and designed the engineering system that helps us keep shipping.",
 		description:
 			"How Austin Spraggins co-built LineCrush, launched native SwiftUI and Kotlin apps, and designed C2 and an engineering agent fleet for ongoing delivery.",
 		role: "Co-founder & CTO",
@@ -67,11 +67,11 @@ export const caseStudies = {
 			{
 				id: "native-apps",
 				label: "From scratch to the stores",
-				title: "Native apps started with working user journeys.",
+				title: "I built both native apps from scratch.",
 				paragraphs: [
-					"I scaffolded the SwiftUI app in June 2026 and built its first research cards, search, filters, stats and insights. Later that month I started the Kotlin and Jetpack Compose client, including its API client, authentication and swipeable research deck. Both use the existing product backend.",
+					"I built the iOS app in SwiftUI, starting with its research cards, search, filters, stats and insights in June 2026. I built the Android app in Kotlin and Jetpack Compose that same month, starting with its API client, authentication and swipeable research deck. Both use the existing product backend.",
 					"App Review exposed a case our demo account had missed. A fresh account with no history hit an error. I traced the review requests, reproduced the failure on an iPad simulator, and fixed the empty state. That experience made the new-account journey part of what a release has to prove.",
-					"The Android app reached Google Play in August 2026 and iOS reached the App Store in September. The fleet now carries substantial implementation and release work across both clients. I built the foundations and the delivery system, and the ongoing product is a team effort."
+					"The Android app reached Google Play in August 2026 and iOS reached the App Store in September. The fleet now carries substantial implementation and release work across the apps I built."
 				]
 			}
 		],
@@ -83,7 +83,7 @@ export const caseStudies = {
 		eyebrow: "Applied AI & cross-platform product",
 		title: "A Bible study companion that can pick up where you left off.",
 		intro:
-			"I built SureWord to support a person's relationship with God through Scripture. It brings Bible reading, questions, notes and optional saved study context into one product, across web, Android and Apple devices.",
+			"I built SureWord to support a person's relationship with God through Scripture. I built the web, iOS and Android apps myself so Bible reading, questions, notes and saved study context could carry across devices.",
 		description:
 			"Austin Spraggins's SureWord case study: meaning-based Scripture search, canonical quotations, optional study memory, and released web and mobile apps.",
 		role: "Founder & product engineer",
@@ -107,7 +107,7 @@ export const caseStudies = {
 				label: "The product",
 				title: "Study has continuity beyond one conversation.",
 				paragraphs: [
-					"SureWord began as a small Bible study web app in July 2024. I rebuilt and expanded it in 2026, adding an Expo Android app and native SwiftUI clients for Apple devices. I own the product and engineering, using Claude Code and Codex throughout the build.",
+					"SureWord began as a small Bible study web app in July 2024. In 2026, I built the Android app with Expo and React Native, and built the iPhone, iPad and Mac apps in SwiftUI. I own the product and engineering, using Claude Code and Codex throughout the build.",
 					"A reader can ask a question, return to a passage, write notes and continue studying across devices. With memory enabled, saved context can carry their study and stated preferences into later conversations. They can view, correct, delete or turn that memory off."
 				]
 			},

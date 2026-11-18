@@ -10,6 +10,7 @@ const PortfolioShell = dynamic(() => import("./PortfolioShell"), {
 
 const SUGGESTED_QUESTIONS = [
 	{ label: "The engineering", question: "What did Austin personally build?" },
+	{ label: "Mobile apps", question: "Which iOS and Android apps did Austin build?" },
 	{ label: "The delivery system", question: "How does C2 help LineCrush ship?" },
 	{ label: "The journey", question: "How did Austin go from trucking to CTO?" },
 	{ label: "The Bible companion", question: "How does SureWord keep its answers grounded?" },

@@ -40,7 +40,7 @@ const capabilities = [
 	},
 	{
 		title: "Cross-platform delivery",
-		copy: "Web products, native SwiftUI and Kotlin apps in both stores, a ChatGPT plugin, and a commercial Godot game on Steam."
+		copy: "Built the iOS and Android apps for LineCrush and SureWord. Shipped both products across web and mobile, plus a commercial Godot game on Steam."
 	}
 ];
 

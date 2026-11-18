@@ -197,6 +197,7 @@ ${box("WORK EXPERIENCE", m)}
 
   Key Achievements:
   • Started the codebase and built the product with Jay
+  • Personally built the iOS and Android apps for LineCrush and SureWord
   • Platform scale: ${FMT.tsxModules} TSX modules and ${FMT.apiHandlers} API handlers
   • Ships AI picks, signal search, vision analysis, and reports
   • Created a ${FMT.agentSkills}-skill agent operating system for delivery

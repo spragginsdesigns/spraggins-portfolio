@@ -45,8 +45,8 @@ export default function Hero() {
 						<p className={styles.role}>Senior Product Engineer</p>
 						<p className={styles.heroHeadline}>I build products.<br /><span>From the interface<br className={styles.desktopBreak} /> to the infrastructure.</span></p>
 						<p className={styles.intro}>
-							Co-Founder &amp; CTO at LineCrush. I build across web, native mobile,
-							and applied AI, from the first commit through the work of running it in production.
+							Co-Founder &amp; CTO at LineCrush. I started the codebase, built the business with Jay,
+							and built the iOS and Android apps for both LineCrush and SureWord myself.
 						</p>
 						<div className={styles.actions}>
 							<a href="#projects" className={styles.primaryAction}>
