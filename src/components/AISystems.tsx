@@ -41,7 +41,7 @@ const systems = [
 		title: "An operating system for agents",
 		description:
 			"Shared skills, commands, MCP tooling, repo maps, and evidence gates give every agent the same engineering standards across Next.js, Python, SwiftUI, Kotlin, and infrastructure work.",
-		evidence: `${FMT.agentSkills} skills · ${FMT.fleetIssues} issues shipped at ${FMT.fleetCompletion} since ${FMT.fleetSince}`,
+		evidence: `${FMT.agentSkills} skills · ${FMT.fleetIssues} issues closed since ${FMT.fleetSince}`,
 		tags: ["MCP", "Agent Skills", "Code Review", "Cross-platform"]
 	},
 	{

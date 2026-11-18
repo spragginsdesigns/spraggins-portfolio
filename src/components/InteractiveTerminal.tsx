@@ -110,7 +110,7 @@ ${box("ABOUT AUSTIN SPRAGGINS", m)}
   • ${FMT.commits} monorepo commits
   • ${FMT.tsxModules} tracked TSX modules and ${FMT.apiHandlers} API handlers
   • ${FMT.agentSkills} agent skills shared across autonomous workflows
-  • ${FMT.fleetIssues} agent-shipped issues at ${FMT.fleetCompletion} completion
+  • ${FMT.fleetIssues} issues closed by the fleet (${FMT.fleetCompletion} of admitted work)
   • Web, iOS, Android, and browser-extension clients
   • ${GUNMETAL_ORBIT.name} on Steam ${GUNMETAL_ORBIT.releaseDateDisplay}
 
@@ -203,7 +203,7 @@ ${box("WORK EXPERIENCE", m)}
   • Ships AI picks, signal search, vision analysis, and reports
   • Created a ${FMT.agentSkills}-skill agent operating system for delivery
   • ${FMT.commits} commits across web, data, native, and games
-  • Agent fleet: ${FMT.fleetIssues} issues shipped since ${FMT.fleetSince}
+  • Agent fleet: ${FMT.fleetIssues} issues closed since ${FMT.fleetSince}
 
   ${rule(m)}
 
@@ -268,7 +268,7 @@ ${box("AUTONOMOUS DELIVERY SYSTEM", m)}
   • Web, Python, SwiftUI, Kotlin, and infrastructure lanes
 
   Fleet ledger since ${FMT.fleetSince}:
-  ${FMT.fleetIssues} issues closed · ${FMT.fleetCompletion} of admitted · ${FMT.fleetPerDay}/day
+  ${FMT.fleetIssues} issues closed · ${FMT.fleetCompletion} of admitted · ${FMT.fleetPerDay} new issues/day
 
   The goal isn't code generation. It's trustworthy delivery.
 
@@ -383,7 +383,7 @@ ${box("RESUME", m)}
   • ${FMT.commitsExact} monorepo commits (${FMT.commits2026} in 2026)
   • ${FMT.tsxModules} TSX modules · ${FMT.apiHandlers} API handlers
   • ${FMT.postgresTables} PostgreSQL tables · ${FMT.llmProviders} LLM providers
-  • ${FMT.fleetIssues} agent issues shipped at ${FMT.fleetCompletion}
+  • ${FMT.fleetIssues} issues closed by the fleet
   • ${FMT.gameBuilds} shipped game builds incl. Steam
   • 200+ students trained in web development
 
@@ -854,7 +854,7 @@ const WELCOME_MESSAGE_DESKTOP = `
   ───────────────────────────────────────────────────────────────
   Commits:   ${FMT.commits} across the monorepo
   APIs:      ${FMT.apiHandlers} tracked handlers
-  Agents:    ${FMT.agentSkills} skills · ${FMT.fleetIssues} issues shipped
+  Agents:    ${FMT.agentSkills} skills · ${FMT.fleetIssues} issues closed
   Clients:   Web + iOS + Android + extensions
   Games:     ${GUNMETAL_ORBIT.name} - Steam ${GUNMETAL_ORBIT.releaseDateDisplay}
   ───────────────────────────────────────────────────────────────
@@ -1273,7 +1273,7 @@ const InteractiveTerminal: React.FC = () => {
   ─────────────────────────────────────────────
   Ledger since ${FMT.fleetSince}:
   Issues closed:     ${FMT.fleetIssues} (${FMT.fleetCompletion} of admitted)
-  Throughput:        ${FMT.fleetPerDay} issues/day
+  New issues/day:    ${FMT.fleetPerDay}
   Jobs shipped:      ${FMT.fleetJobsCommits} commit-bearing runs
 
   All quiet. Type 'agent run' to watch a delivery.`);

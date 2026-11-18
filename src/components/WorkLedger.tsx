@@ -72,20 +72,24 @@ const rise = (delay: number) => ({
 const MethodNote: React.FC<{ ledger: WorkLedgerData }> = ({ ledger }) => {
 	const start = hourLabel(ledger.dayStartHour);
 	const tracksAgentsLate = ledger.days.some((d) => d.date < ledger.agentTrackingSince);
+	const claudeSince = ledger.claudeAgentTrackingSince ?? "2026-09-21";
 	return (
 		<div className="mx-auto mt-10 max-w-3xl space-y-2 text-center text-xs leading-relaxed text-muted-foreground">
 			<p>
 				<span className="font-semibold text-foreground/80">Workday</span> is the time from my first prompt to my
 				last prompt of the day, breaks included, so it is not continuous work.{" "}
 				<span className="font-semibold text-foreground/80">Hands-on</span> is the time I spend actively directing
-				my coding agents, counted from the timestamps of the prompts I send on my PC and MacBook. Gaps longer than{" "}
-				{ledger.idleGapMinutes} minutes are dropped from it, so reviewing, testing, calls and meetings between
-				prompts are not counted as hands-on.
+				my coding agents, estimated from gaps of up to {ledger.idleGapMinutes} minutes between prompts on the
+				same workday. Reviewing, testing, calls and meetings can fall outside that estimate.
+				{" "}Phone prompts count when they reach a recorded session on my PC or MacBook.
 			</p>
 			<p>
 				A day runs {start} to {start} {zoneLabel(ledger.timezone)} so late nights count for the day they started.
 				{tracksAgentsLate
 					? ` Agent hours, peak agents and agent actions have been tracked since ${formatLongDate(ledger.agentTrackingSince)}.`
+					: ""}
+				{ledger.agentTrackingSince < claudeSince
+					? ` Agent metrics before ${formatLongDate(claudeSince)} cover Codex only.`
 					: ""}
 				{ledger.presenceSince
 					? ` Time at the computer counts minutes with keyboard or mouse input and has been tracked since ${formatLongDate(ledger.presenceSince)}.`
@@ -183,7 +187,7 @@ const WorkLedger: React.FC = () => {
 	}, []);
 
 	const index = useMemo(() => indexLedger(ledger), [ledger]);
-	const summary = useMemo(() => summarize(ledger, index), [ledger, index]);
+	const summary = useMemo(() => summarize(ledger, index, now), [ledger, index, now]);
 	const updatedAbsolute = formatUpdatedAt(ledger.generatedAt, ledger.timezone);
 
 	return (
@@ -262,13 +266,12 @@ const WorkLedger: React.FC = () => {
 							</motion.div>
 						</div>
 
-						<WorkScale />
-
 						<DataTable index={index} end={summary.latestDate} agentTrackingSince={ledger.agentTrackingSince} />
 					</div>
 				)}
 
 				<MethodNote ledger={ledger} />
+				<WorkScale />
 			</div>
 		</section>
 	);

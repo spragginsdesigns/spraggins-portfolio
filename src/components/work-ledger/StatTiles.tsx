@@ -132,7 +132,7 @@ export const HeroStats: React.FC<{ summary: WorkLedgerSummary; index: LedgerInde
 				label="Average workday"
 				value={formatHours(workday.avgSpan)}
 				unit="hours"
-				sub={`First prompt to last prompt, averaged over the ${workday.days} days worked in the last 30.`}
+				sub={`First prompt to last prompt, averaged over ${workday.days} full days with a measured span in the last 30.`}
 			>
 				<WorkdayMeter span={workday.avgSpan} handsOn={workday.avgHandsOn} />
 			</HeroTile>
@@ -177,7 +177,7 @@ export function buildSecondaryTiles(s: WorkLedgerSummary, agentTrackingSince: st
 				{
 					label: `Agent hours, ${agentScope}`,
 					value: `${formatHours(s.agentHours)}h`,
-					sub: `${formatInt(s.agentSessions)} sessions, run in parallel`
+					sub: `${formatInt(s.agentSessions)} parent sessions tallied by day`
 				},
 				{
 					label: "Peak agents at once",
@@ -206,7 +206,7 @@ export function buildSecondaryTiles(s: WorkLedgerSummary, agentTrackingSince: st
 			? {
 					label: s.latestIsCurrent ? "At the computer today" : "At the computer, latest day",
 					value: `${formatHours(s.latestActive)}h`,
-					sub: "keyboard or mouse in use, PC and MacBook"
+					sub: "recent keyboard or mouse input, games excluded"
 				}
 			: {
 					label: "Current streak",
@@ -228,7 +228,7 @@ export function buildSecondaryTiles(s: WorkLedgerSummary, agentTrackingSince: st
 		thirdTile,
 		{ label: "Prompts sent", value: formatInt(s.prompts30), sub: "last 30 days" },
 		...agentTiles,
-		{ label: "Contributions", value: formatInt(s.contributions365), sub: "last 365 days" }
+		{ label: "GitHub contributions", value: formatInt(s.contributions365), sub: "last 365 days, includes fleet work" }
 	];
 }
 
@@ -239,7 +239,7 @@ export const SecondaryStats: React.FC<{ tiles: Tile[] }> = ({ tiles }) => (
 				key={tile.label}
 				{...reveal(i * 0.5)}
 				className={`flex flex-col bg-card/90 px-4 py-4 md:px-6 md:py-5${
-					tiles.length % 2 === 1 && i === tiles.length - 1 ? "col-span-2 md:col-span-1" : ""
+					tiles.length % 2 === 1 && i === tiles.length - 1 ? " col-span-2 md:col-span-1" : ""
 				}`}
 			>
 				<dt className="text-xs leading-tight text-muted-foreground">{tile.label}</dt>

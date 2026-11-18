@@ -36,6 +36,7 @@ export interface WorkLedger {
 	dayStartHour: number;
 	idleGapMinutes: number;
 	agentTrackingSince: string;
+	claudeAgentTrackingSince?: string;
 	/** First day the at-the-computer tracker ran. That day is partial, so it is never shown. */
 	presenceSince?: string | null;
 	machines?: number;
@@ -92,9 +93,8 @@ export function isIsoDate(value: unknown): value is string {
 
 /**
  * The ledger day an instant belongs to. A ledger day starts at dayStartHour
- * local time, so shifting the instant back by that many hours and reading the
- * local calendar date gives the right day. Returns null when the timestamp or
- * time zone is unusable.
+ * local time. Read the local clock before applying the cutoff so daylight
+ * saving transitions still use the same wall-clock hour.
  */
 export function ledgerDayOf(
 	isoTimestamp: string,
@@ -108,11 +108,14 @@ export function ledgerDayOf(
 			timeZone,
 			year: "numeric",
 			month: "2-digit",
-			day: "2-digit"
-		}).formatToParts(new Date(ms - dayStartHour * 3_600_000));
+			day: "2-digit",
+			hour: "2-digit",
+			hourCycle: "h23"
+		}).formatToParts(new Date(ms));
 		const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
 		const date = `${get("year")}-${get("month")}-${get("day")}`;
-		return isIsoDate(date) ? date : null;
+		if (!isIsoDate(date)) return null;
+		return Number(get("hour")) < dayStartHour ? addDays(date, -1) : date;
 	} catch {
 		return null;
 	}
@@ -134,23 +137,30 @@ function isOptionalNonNegative(value: unknown): value is number | undefined {
 	return value === undefined || isNonNegative(value);
 }
 
+function isCount(value: unknown): value is number {
+	return isNonNegative(value) && Number.isSafeInteger(value);
+}
+
 function isWorkLedgerDay(value: unknown, bucketCount: number): value is WorkLedgerDay {
 	if (!isRecord(value)) return false;
 	const { byBucket } = value;
 	return (
 		isIsoDate(value.date) &&
 		isNonNegative(value.hours) &&
+		value.hours <= 25 &&
 		isOptionalNonNegative(value.span) &&
+		(value.span ?? 0) <= 25 &&
 		isOptionalNonNegative(value.active) &&
-		isOptionalNonNegative(value.peakAgents) &&
-		isOptionalNonNegative(value.toolCalls) &&
+		(value.active ?? 0) <= 25 &&
+		(value.peakAgents === undefined || isCount(value.peakAgents)) &&
+		(value.toolCalls === undefined || isCount(value.toolCalls)) &&
 		Array.isArray(byBucket) &&
 		byBucket.length === bucketCount &&
-		byBucket.every(isNonNegative) &&
-		isNonNegative(value.prompts) &&
+		byBucket.every((hours) => isNonNegative(hours) && hours <= 25) &&
+		isCount(value.prompts) &&
 		isNonNegative(value.agentHours) &&
-		isNonNegative(value.sessions) &&
-		isNonNegative(value.contributions)
+		isCount(value.sessions) &&
+		isCount(value.contributions)
 	);
 }
 
@@ -161,7 +171,7 @@ export function isWorkLedger(value: unknown): value is WorkLedger {
 	if (typeof value.generatedAt !== "string" || Number.isNaN(Date.parse(value.generatedAt))) {
 		return false;
 	}
-	if (typeof value.timezone !== "string" || value.timezone.length === 0) return false;
+	if (value.timezone !== "America/Los_Angeles") return false;
 	if (
 		typeof dayStartHour !== "number" ||
 		!Number.isInteger(dayStartHour) ||
@@ -171,7 +181,8 @@ export function isWorkLedger(value: unknown): value is WorkLedger {
 		return false;
 	}
 	if (!isNonNegative(value.idleGapMinutes)) return false;
-	if (!isIsoDate(value.agentTrackingSince)) return false;
+	if (!isIsoDate(value.agentTrackingSince) || value.agentTrackingSince < "2024-01-01") return false;
+	if (value.claudeAgentTrackingSince !== undefined && !isIsoDate(value.claudeAgentTrackingSince)) return false;
 	if (value.presenceSince !== undefined && value.presenceSince !== null && !isIsoDate(value.presenceSince)) {
 		return false;
 	}
@@ -183,13 +194,26 @@ export function isWorkLedger(value: unknown): value is WorkLedger {
 	) {
 		return false;
 	}
-	if (!Array.isArray(days)) return false;
-	return days.every((d) => isWorkLedgerDay(d, buckets.length));
+	if (!Array.isArray(days) || days.length === 0 || days.length > 401) return false;
+	const currentDay = ledgerDayOf(value.generatedAt, value.timezone, dayStartHour);
+	if (!currentDay) return false;
+	const firstAllowed = addDays(currentDay, -400);
+	const lastAllowed = addDays(currentDay, 1);
+	if (value.agentTrackingSince > lastAllowed) return false;
+	const dates = new Set<string>();
+	for (const day of days) {
+		if (!isWorkLedgerDay(day, buckets.length) || day.date < firstAllowed || day.date > lastAllowed || dates.has(day.date)) {
+			return false;
+		}
+		dates.add(day.date);
+	}
+	return true;
 }
 
 /** Newer wins; an unparsable candidate never replaces what we have. */
 export function isNewerLedger(candidate: WorkLedger, current: WorkLedger): boolean {
-	return Date.parse(candidate.generatedAt) > Date.parse(current.generatedAt);
+	const latest = (ledger: WorkLedger) => ledger.days.reduce((date, day) => day.date > date ? day.date : date, "");
+	return Date.parse(candidate.generatedAt) > Date.parse(current.generatedAt) && latest(candidate) >= latest(current);
 }
 
 // ---------------------------------------------------------------------------
@@ -349,11 +373,11 @@ export interface WorkLedgerSummary {
 	contributions365: number;
 }
 
-export function summarize(ledger: WorkLedger, index: LedgerIndex = indexLedger(ledger)): WorkLedgerSummary | null {
+export function summarize(ledger: WorkLedger, index: LedgerIndex = indexLedger(ledger), now: number | null = null): WorkLedgerSummary | null {
 	const latest = index.latest;
 	if (latest === null) return null;
 
-	const currentDay = ledgerDayOf(ledger.generatedAt, ledger.timezone, ledger.dayStartHour);
+	const currentDay = ledgerDayOf(now === null ? ledger.generatedAt : new Date(now).toISOString(), ledger.timezone, ledger.dayStartHour);
 	const latestIsCurrent = currentDay === latest;
 	const today = dayOrZero(index, latest);
 	const latestHours = today.hours;
