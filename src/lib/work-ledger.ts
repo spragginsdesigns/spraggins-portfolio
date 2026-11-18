@@ -12,10 +12,13 @@ export const WORK_LEDGER_URL =
  */
 export interface WorkLedgerDay {
 	date: string;
-	/** Hands-on hours: time between prompts, idle gaps over idleGapMinutes dropped. */
+	/** Active prompting hours: time between prompts, idle gaps over idleGapMinutes dropped. */
 	hours: number;
 	/** First prompt to last prompt, breaks included. */
 	span?: number;
+	/** Wall-clock "HH:MM" of the first and last prompt in the ledger time zone; absent on days without prompts. */
+	start?: string;
+	end?: string;
 	/** Hours with keyboard or mouse input on any machine, games left out. */
 	active?: number;
 	byBucket: number[];
@@ -51,6 +54,8 @@ export function normalizeDay(day: WorkLedgerDay): LedgerDay {
 	return {
 		...day,
 		span: day.span ?? 0,
+		start: day.start ?? "",
+		end: day.end ?? "",
 		active: day.active ?? 0,
 		peakAgents: day.peakAgents ?? 0,
 		toolCalls: day.toolCalls ?? 0
@@ -141,6 +146,12 @@ function isCount(value: unknown): value is number {
 	return isNonNegative(value) && Number.isSafeInteger(value);
 }
 
+const CLOCK_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+function isOptionalClock(value: unknown): value is string | undefined {
+	return value === undefined || (typeof value === "string" && CLOCK_RE.test(value));
+}
+
 function isWorkLedgerDay(value: unknown, bucketCount: number): value is WorkLedgerDay {
 	if (!isRecord(value)) return false;
 	const { byBucket } = value;
@@ -150,6 +161,8 @@ function isWorkLedgerDay(value: unknown, bucketCount: number): value is WorkLedg
 		value.hours <= 25 &&
 		isOptionalNonNegative(value.span) &&
 		(value.span ?? 0) <= 25 &&
+		isOptionalClock(value.start) &&
+		isOptionalClock(value.end) &&
 		isOptionalNonNegative(value.active) &&
 		(value.active ?? 0) <= 25 &&
 		(value.peakAgents === undefined || isCount(value.peakAgents)) &&
@@ -255,6 +268,8 @@ export function dayOrZero(index: LedgerIndex, date: string): LedgerDay {
 			date,
 			hours: 0,
 			span: 0,
+			start: "",
+			end: "",
 			active: 0,
 			byBucket: new Array<number>(index.bucketCount).fill(0),
 			prompts: 0,
@@ -335,23 +350,39 @@ export function bucketTotals(index: LedgerIndex, start: string, end: string): nu
 /** A day counts as worked when at least one prompt was sent. */
 export const isWorked = (day: LedgerDay): boolean => day.prompts > 0;
 
-/** The bar the "10+ hour days" tile counts against, on the workday span. */
+/** The bar the "10+ hour days" tile counts against, on the first-to-last-prompt span. */
 export const LONG_DAY_HOURS = 10;
+
+/** Full days of at-the-computer data needed before its average replaces the span as the lead number. */
+export const PRESENCE_LEAD_MIN_DAYS = 7;
+
+/**
+ * True when the day has a trustworthy at-the-computer measurement. The day
+ * tracking began is partial, so presence counts from the day after.
+ */
+export function hasPresence(date: string, presenceSince: string | null | undefined): boolean {
+	return typeof presenceSince === "string" && date > presenceSince;
+}
 
 export interface WorkLedgerSummary {
 	latestDate: string;
 	/** True when the latest date is the ledger day still in progress at generatedAt. */
 	latestIsCurrent: boolean;
 	latestHours: number;
-	/** Workday length of the latest day: first prompt to last prompt so far. */
+	/** Span of the latest day: first prompt to last prompt so far. */
 	latestSpan: number;
 	/** At-the-computer hours of the latest day, or null until the tracker has a full day behind it. */
 	latestActive: number | null;
 	/** Last day of the full-day windows: the day before today when today is still in progress. */
 	fullDayEnd: string;
 	avg7: number;
-	/** Mean workday span and hands-on hours over the days worked in the last 30 full days. */
+	/** Mean first-to-last-prompt span and active prompting hours over the days worked in the last 30 full days. */
 	workday: { avgSpan: number; avgHandsOn: number; days: number };
+	/**
+	 * Mean at-the-computer and active prompting hours over the measured full days in the last 30,
+	 * or null until PRESENCE_LEAD_MIN_DAYS of them exist.
+	 */
+	presence: { avgActive: number; avgHandsOn: number; days: number; since: string } | null;
 	/** Length of the 90-day window the prompt history actually covers (90 once history is long enough). */
 	window90: number;
 	tenHourDays: number;
@@ -382,23 +413,40 @@ export function summarize(ledger: WorkLedger, index: LedgerIndex = indexLedger(l
 	const today = dayOrZero(index, latest);
 	const latestHours = today.hours;
 	const presenceSince = ledger.presenceSince ?? null;
-	const latestActive = presenceSince !== null && latest > presenceSince ? today.active : null;
+	const latestActive = hasPresence(latest, presenceSince) ? today.active : null;
 
 	// A day still in progress would drag averages down, so averages use full days only.
 	const fullDayEnd = latestIsCurrent ? addDays(latest, -1) : latest;
 	const avg7 = sumMetric(index, addDays(fullDayEnd, -6), fullDayEnd, "hours") / 7;
 
-	// Average workday is over days actually worked; days off are not short workdays.
+	// Averages are over days actually worked; days off are not short days.
 	let spanTotal = 0;
 	let handsOnTotal = 0;
 	let workdays = 0;
+	let activeTotal = 0;
+	let activeHandsOn = 0;
+	let activeDays = 0;
 	for (const date of dateRange(addDays(fullDayEnd, -29), fullDayEnd)) {
 		const day = dayOrZero(index, date);
+		if (hasPresence(date, presenceSince) && day.active > 0) {
+			activeTotal += day.active;
+			activeHandsOn += day.hours;
+			activeDays++;
+		}
 		if (!isWorked(day) || day.span <= 0) continue;
 		spanTotal += day.span;
 		handsOnTotal += day.hours;
 		workdays++;
 	}
+	const presence =
+		presenceSince !== null && activeDays >= PRESENCE_LEAD_MIN_DAYS
+			? {
+					avgActive: activeTotal / activeDays,
+					avgHandsOn: activeHandsOn / activeDays,
+					days: activeDays,
+					since: addDays(presenceSince, 1)
+				}
+			: null;
 	const workday = {
 		avgSpan: workdays > 0 ? spanTotal / workdays : 0,
 		avgHandsOn: workdays > 0 ? handsOnTotal / workdays : 0,
@@ -464,6 +512,7 @@ export function summarize(ledger: WorkLedger, index: LedgerIndex = indexLedger(l
 		fullDayEnd,
 		avg7,
 		workday,
+		presence,
 		window90,
 		tenHourDays,
 		daysWorked,
@@ -531,8 +580,8 @@ export function buildHeatmap(index: LedgerIndex, end: string, weekCount = 53): H
 }
 
 // Hour bins are fixed so a given shade always means the same amount of time.
-// The workday bins put the 10-hour line at a shade boundary, matching the
-// "10+ hour days" tile; hands-on bins sit lower because hands-on runs ~3h/day.
+// The span bins put the 10-hour line at a shade boundary, matching the
+// "10+ hour days" tile; active prompting bins sit lower because it runs ~3h/day.
 export const SPAN_THRESHOLDS: readonly [number, number, number] = [4, 8, 12];
 export const HOURS_THRESHOLDS: readonly [number, number, number] = [2, 4, 6];
 
@@ -578,6 +627,20 @@ export function formatInt(value: number): string {
 export function formatHours(value: number): string {
 	if (value === 0) return "0";
 	return value >= 100 ? intFormat.format(Math.round(value)) : oneDecimal.format(value);
+}
+
+/** "08:06" to "8:06 AM". Empty when the day has no recorded time. */
+export function formatClock(clock: string): string {
+	if (!CLOCK_RE.test(clock)) return "";
+	const hour = Number(clock.slice(0, 2));
+	return `${hour % 12 === 0 ? 12 : hour % 12}:${clock.slice(3)} ${hour < 12 ? "AM" : "PM"}`;
+}
+
+/** "8:06 AM to 10:20 PM" for a day's first and last prompt, or empty when either is unknown. */
+export function formatClockRange(day: Pick<LedgerDay, "start" | "end">): string {
+	const start = formatClock(day.start);
+	const end = formatClock(day.end);
+	return start && end ? `${start} to ${end}` : "";
 }
 
 function formatUtc(date: string, options: Intl.DateTimeFormatOptions): string {

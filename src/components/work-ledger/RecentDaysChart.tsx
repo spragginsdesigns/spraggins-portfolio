@@ -6,12 +6,13 @@ import {
 	formatInt,
 	formatLongDate,
 	formatWeekdayInitial,
+	hasPresence,
 	niceScale,
 	recentDays,
 	type LedgerIndex
 } from "@/lib/work-ledger";
 import { bucketColor } from "./colors";
-import { ChartTooltip, TooltipRow, useMarkTooltip } from "./ChartTooltip";
+import { ChartTooltip, DayTimeRows, TooltipRow, dayTimeText, useMarkTooltip } from "./ChartTooltip";
 import BucketLegend from "./BucketLegend";
 
 const PLOT_HEIGHT = 176;
@@ -22,22 +23,35 @@ interface RecentDaysChartProps {
 	end: string;
 	buckets: string[];
 	agentTrackingSince: string;
+	presenceSince: string | null;
+	idleGapMinutes: number;
 }
 
-const RecentDaysChart: React.FC<RecentDaysChartProps> = ({ index, end, buckets, agentTrackingSince }) => {
+const RecentDaysChart: React.FC<RecentDaysChartProps> = ({
+	index,
+	end,
+	buckets,
+	agentTrackingSince,
+	presenceSince,
+	idleGapMinutes
+}) => {
 	const days = useMemo(() => recentDays(index, end, DAYS), [index, end]);
 	const [active, setActive] = useState<number | null>(null);
 	const { wrapRef, anchor, showIndex, onPointerMove, hide } = useMarkTooltip();
 	const hintId = useId();
 
-	// One axis for both measures: hands-on hours always sit inside the workday span.
-	const maxValue = days.reduce((m, d) => Math.max(m, d.hours, d.span), 0);
+	// The first-to-last span is clock time, not a duration of work, so it stays off this
+	// axis and lives in the tooltip as a time range. At-the-computer hours share the axis.
+	const presenceOf = (d: (typeof days)[number]) => (hasPresence(d.date, presenceSince) ? d.active : 0);
+	const showPresence = days.some((d) => presenceOf(d) > 0);
+	const maxValue = days.reduce((m, d) => Math.max(m, d.hours, presenceOf(d)), 0);
 	const scale = niceScale(maxValue);
 	const ticks: number[] = [];
 	for (let t = 0; t <= scale.max + 1e-9; t += scale.step) ticks.push(Number(t.toFixed(4)));
-	const maxSpan = days.reduce((m, d) => Math.max(m, d.span), 0);
-	// Label sparingly: only the longest workday in view.
-	const peakIndex = maxSpan > 0 ? days.findIndex((d) => d.span === maxSpan) : -1;
+	const maxHours = days.reduce((m, d) => Math.max(m, d.hours), 0);
+	// Label sparingly: only the tallest bar in view. With presence markers drawn above the
+	// bars the label would sit on a marker and read as its value, so it is dropped then.
+	const peakIndex = maxHours > 0 && !showPresence ? days.findIndex((d) => d.hours === maxHours) : -1;
 	const lastIndex = days.length - 1;
 	const px = (hours: number) => (hours / scale.max) * PLOT_HEIGHT;
 
@@ -66,7 +80,8 @@ const RecentDaysChart: React.FC<RecentDaysChartProps> = ({ index, end, buckets, 
 		<div>
 			<h3 className="font-heading text-xl font-bold">Last 14 days</h3>
 			<p className="mb-4 text-sm text-muted-foreground">
-				Hands-on hours by project, inside each day&apos;s workday
+				Hours of active prompting by project. Gaps of more than {idleGapMinutes} minutes between prompts
+				are left out, so long agent runs, reviews and calls don&apos;t show here.
 			</p>
 
 			<div
@@ -104,7 +119,7 @@ const RecentDaysChart: React.FC<RecentDaysChartProps> = ({ index, end, buckets, 
 						<div
 							tabIndex={0}
 							role="group"
-							aria-label="Hours per day for the last 14 days"
+							aria-label="Hours of active prompting per day for the last 14 days"
 							aria-describedby={hintId}
 							onKeyDown={onKeyDown}
 							onFocus={(event) => {
@@ -119,6 +134,7 @@ const RecentDaysChart: React.FC<RecentDaysChartProps> = ({ index, end, buckets, 
 							{days.map((day, i) => {
 								const top = day.byBucket.reduce((last, v, b) => (v > 0 ? b : last), -1);
 								const bottom = day.byBucket.findIndex((v) => v > 0);
+								const present = presenceOf(day);
 								return (
 									<div
 										key={day.date}
@@ -129,17 +145,17 @@ const RecentDaysChart: React.FC<RecentDaysChartProps> = ({ index, end, buckets, 
 									>
 										{i === peakIndex ? (
 											<span className="mb-1 text-[10px] font-semibold text-foreground">
-												{formatHours(day.span)}h
+												{formatHours(day.hours)}h
 											</span>
 										) : null}
 										<div
 											className="relative flex w-full max-w-[26px] items-end justify-center"
-											style={{ height: px(Math.max(day.span, day.hours)) }}
+											style={{ height: px(Math.max(present, day.hours)) }}
 										>
-											{day.span > 0 ? (
+											{present > 0 ? (
 												<div
-													className="absolute inset-x-0 bottom-0 rounded-t-[5px] border border-b-0 border-foreground/35 bg-foreground/[0.04]"
-													style={{ height: px(day.span) }}
+													className="absolute inset-x-0 h-[2px] rounded-full bg-foreground/70"
+													style={{ bottom: px(present) - 1 }}
 												/>
 											) : null}
 											<div className="relative flex w-full max-w-[18px] flex-col-reverse gap-[2px]">
@@ -177,8 +193,7 @@ const RecentDaysChart: React.FC<RecentDaysChartProps> = ({ index, end, buckets, 
 				{anchor && tipDay ? (
 					<ChartTooltip anchor={anchor}>
 						<div className="mb-1 font-semibold text-foreground">{formatLongDate(tipDay.date)}</div>
-						<TooltipRow value={`${formatHours(tipDay.span)}h`} label="workday" />
-						<TooltipRow value={`${formatHours(tipDay.hours)}h`} label="hands-on, by project:" />
+						<DayTimeRows day={tipDay} presenceSince={presenceSince} promptingLabel="active prompting, by project:" />
 						{tipDay.byBucket.map((hours, b) =>
 							hours > 0 ? (
 								<TooltipRow
@@ -212,7 +227,7 @@ const RecentDaysChart: React.FC<RecentDaysChartProps> = ({ index, end, buckets, 
 			</p>
 			<p className="sr-only" aria-live="polite">
 				{activeDay
-					? `${formatLongDate(activeDay.date)}: ${formatHours(activeDay.span)} hour workday, ${formatHours(activeDay.hours)} hours hands-on. ${activeDay.byBucket
+					? `${formatLongDate(activeDay.date)}: ${dayTimeText(activeDay, presenceSince)}. ${activeDay.byBucket
 							.map((h, b) => (h > 0 ? `${buckets[b]} ${formatHours(h)}` : ""))
 							.filter(Boolean)
 							.join(", ")}`
@@ -220,13 +235,12 @@ const RecentDaysChart: React.FC<RecentDaysChartProps> = ({ index, end, buckets, 
 			</p>
 
 			<BucketLegend buckets={buckets} className="mt-4">
-				<li className="inline-flex items-center gap-1.5">
-					<span
-						aria-hidden="true"
-						className="inline-block h-3 w-2.5 rounded-t-[3px] border border-b-0 border-foreground/50 bg-foreground/[0.04]"
-					/>
-					Workday, first to last prompt
-				</li>
+				{showPresence ? (
+					<li className="inline-flex items-center gap-1.5">
+						<span aria-hidden="true" className="inline-block h-[2px] w-3 rounded-full bg-foreground/70" />
+						At the computer
+					</li>
+				) : null}
 			</BucketLegend>
 		</div>
 	);

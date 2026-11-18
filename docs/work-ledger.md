@@ -4,10 +4,11 @@ The homepage "Daily Work Log" section (`src/components/WorkLedger.tsx`, `#work-l
 
 | Field | Meaning | Source |
 |-------|---------|--------|
-| `span` | Elapsed time from first to last prompt, including breaks | Prompt timestamps |
-| `hours` | Hands-on estimate from gaps of up to 30 minutes between prompts on the same workday | Prompt timestamps |
-| `active` | Sampled minutes with keyboard or mouse input in the prior 3 minutes on either machine, excluding configured games | Presence sampler |
-| `byBucket` | Hands-on time split across the public buckets | Working directory of the prompt ending each gap |
+| `span` | Elapsed time from first to last prompt, including breaks. Shown as "First to last prompt" | Prompt timestamps |
+| `start`, `end` | Pacific wall-clock time (`HH:MM`) of the day's first and last prompt. Absent on days without prompts | Prompt timestamps |
+| `hours` | Active prompting: gaps of up to 30 minutes between prompts on the same ledger day. Shown as "Active prompting" | Prompt timestamps |
+| `active` | Sampled minutes with keyboard or mouse input in the prior 3 minutes on either machine, excluding configured games. Shown as "At the computer" | Presence sampler |
+| `byBucket` | Active prompting time split across the public buckets | Working directory of the prompt ending each gap |
 | `prompts` | Prompts sent by the user to coding agents | Claude Code history and transcripts, Codex databases and CLI history |
 | `agentHours` | Measured parent and spawned agent runtime, summed across parallel sessions | Claude Code transcripts and Codex databases |
 | `sessions` | Interactive parent sessions with measured runtime, once per day | Same |
@@ -15,7 +16,15 @@ The homepage "Daily Work Log" section (`src/components/WorkLedger.tsx`, `#work-l
 | `toolCalls` | Recorded tool actions, including commands, edits and searches | Same |
 | `contributions` | GitHub contributions, public and private, including fleet commits | GitHub GraphQL via `gh` |
 
-A workday runs from 4 AM to 4 AM Pacific, including clock-change days. Hands-on gaps stay within the workday. Agent intervals that cross 4 AM are split at the boundary. Reviewing, testing, calls and meetings can fall outside the hands-on estimate. Short gaps can include other activity.
+A ledger day runs from 4 AM to 4 AM Pacific, including clock-change days. Active prompting gaps stay within the ledger day. Agent intervals that cross 4 AM are split at the boundary. Long agent runs, reviewing, testing, calls and meetings fall outside active prompting, so it reads low. Short gaps can include other activity.
+
+## How the page presents the three time measures
+
+`span` and `hours` answer different questions, and drawing one inside the other reads as "worked 2.8 of 14.2 hours". On November 4, 2026 the 56 prompts came in eight bursts between 8:06 AM and 10:20 PM: 2.8 hours counted, 11.5 hours of gaps over 30 minutes dropped. The page therefore keeps them apart (changed November 17, 2026):
+
+- **First to last prompt** (`span`) is clock time. Tooltips and the 30-day table show it as a time range ("8:06 AM to 10:20 PM") with the hours next to it. The 14-day chart no longer draws it as a bar.
+- **Active prompting** (`hours`) is what the 14-day chart, the project breakdown and the "Prompting" heatmap show. The words "workday" and "hands-on" are not used on the page.
+- **At the computer** (`active`) is the closest measure of real working time. It appears on a day once that day is after `presenceSince`: a row in the tooltips, a column in the table and a thin marker above the day's bar. After `PRESENCE_LEAD_MIN_DAYS` (7) measured full days in the last 30, its average replaces the first-to-last average as the first hero tile. Days before presence tracking keep the prompt-based numbers and show "n/a" for this measure.
 
 The C2 and LineCrush fleet panel uses the dated fleet job-ledger totals in `src/lib/stats.ts`. GitHub's contribution calendar includes fleet commits. Its counts and the fleet's job counts describe different events.
 
@@ -37,7 +46,7 @@ Presence starts on November 17, 2026. That first day is partial and the site sho
 
 ## Privacy
 
-The collector maps private working directories to the five public bucket names. Only daily totals are published. Content matching happens in memory. Prompt text, code, paths, repository names and app names are excluded from the public payload. The private patterns live only in `~/.work-ledger/config.json`. `scripts/work-ledger/config.example.json` contains placeholders.
+The collector maps private working directories to the five public bucket names. Only daily totals and each day's first and last prompt time are published. Content matching happens in memory. Prompt text, code, paths, repository names and app names are excluded from the public payload. The private patterns live only in `~/.work-ledger/config.json`. `scripts/work-ledger/config.example.json` contains placeholders.
 
 ## Operation and recovery
 

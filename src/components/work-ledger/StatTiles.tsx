@@ -26,7 +26,7 @@ function dateWithYear(date: string, referenceDate: string): string {
 }
 
 // ---------------------------------------------------------------------------
-// Hero tiles: the workday numbers lead
+// Hero tiles: how long the days run leads
 // ---------------------------------------------------------------------------
 
 const HeroTile: React.FC<{
@@ -53,8 +53,8 @@ const HeroTile: React.FC<{
 	</motion.div>
 );
 
-const WorkdayMeter: React.FC<{ span: number; handsOn: number }> = ({ span, handsOn }) => {
-	const share = span > 0 ? Math.min(1, handsOn / span) : 0;
+const PromptingMeter: React.FC<{ total: number; handsOn: number; rest: string }> = ({ total, handsOn, rest }) => {
+	const share = total > 0 ? Math.min(1, handsOn / total) : 0;
 	return (
 		<div>
 			<div className="h-2.5 w-full rounded-full bg-primary/15">
@@ -63,11 +63,11 @@ const WorkdayMeter: React.FC<{ span: number; handsOn: number }> = ({ span, hands
 			<div className="mt-2.5 flex flex-wrap justify-between gap-x-3 gap-y-1 text-xs text-muted-foreground">
 				<span className="inline-flex items-center gap-1.5">
 					<span className="h-2 w-2 rounded-full bg-primary" />
-					{formatHours(handsOn)}h of it hands-on
+					{formatHours(handsOn)}h actively prompting
 				</span>
 				<span className="inline-flex items-center gap-1.5">
 					<span className="h-2 w-2 rounded-full bg-primary/25" />
-					rest of the workday, breaks included
+					{rest}
 				</span>
 			</div>
 		</div>
@@ -124,24 +124,44 @@ export const HeroStats: React.FC<{ summary: WorkLedgerSummary; index: LedgerInde
 		() => recentDays(index, summary.latestDate, summary.window90),
 		[index, summary.latestDate, summary.window90]
 	);
-	const { workday, window90 } = summary;
+	const { workday, presence, window90 } = summary;
 	return (
 		<div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-			<HeroTile
-				index={0}
-				label="Average workday"
-				value={formatHours(workday.avgSpan)}
-				unit="hours"
-				sub={`First prompt to last prompt, averaged over ${workday.days} full days with a measured span in the last 30.`}
-			>
-				<WorkdayMeter span={workday.avgSpan} handsOn={workday.avgHandsOn} />
-			</HeroTile>
+			{presence ? (
+				<HeroTile
+					index={0}
+					label="Average day at the computer"
+					value={formatHours(presence.avgActive)}
+					unit="hours"
+					sub={`Time with keyboard or mouse input, games excluded, averaged over ${presence.days} measured days since ${formatShortDate(presence.since)}.`}
+				>
+					<PromptingMeter
+						total={presence.avgActive}
+						handsOn={presence.avgHandsOn}
+						rest="reviewing, testing and other work"
+					/>
+				</HeroTile>
+			) : (
+				<HeroTile
+					index={0}
+					label="Average day, first to last prompt"
+					value={formatHours(workday.avgSpan)}
+					unit="hours"
+					sub={`Clock time from the first prompt to the last, breaks included, averaged over ${workday.days} full days in the last 30.`}
+				>
+					<PromptingMeter
+						total={workday.avgSpan}
+						handsOn={workday.avgHandsOn}
+						rest="agent runs, reviews, calls and breaks"
+					/>
+				</HeroTile>
+			)}
 			<HeroTile
 				index={1}
 				label={`${LONG_DAY_HOURS}+ hour days`}
 				value={formatInt(summary.tenHourDays)}
 				unit={`of the last ${window90}`}
-				sub={`Days whose workday ran ${LONG_DAY_HOURS} hours or longer, first prompt to last prompt.`}
+				sub={`Days with ${LONG_DAY_HOURS} hours or more between the first prompt and the last, breaks included.`}
 			>
 				<SpanSparkline spans={days90.map((d) => d.span)} />
 			</HeroTile>
@@ -199,7 +219,7 @@ export function buildSecondaryTiles(s: WorkLedgerSummary, agentTrackingSince: st
 			];
 
 	const day = formatShortDate(s.latestDate);
-	const handsOn = `${formatHours(s.latestHours)}h hands-on`;
+	const handsOn = `${formatHours(s.latestHours)}h actively prompting`;
 	// The streak is already in the hero row, so measured time at the computer replaces it once it exists.
 	const thirdTile: Tile =
 		s.latestActive !== null
@@ -216,12 +236,12 @@ export function buildSecondaryTiles(s: WorkLedgerSummary, agentTrackingSince: st
 
 	return [
 		{
-			label: s.latestIsCurrent ? "Today's workday so far" : "Latest workday",
+			label: s.latestIsCurrent ? "Today, first to last prompt so far" : "Latest day, first to last prompt",
 			value: `${formatHours(s.latestSpan)}h`,
 			sub: `${handsOn}, ${day}`
 		},
 		{
-			label: "7-day average, hands-on",
+			label: "Active prompting, 7-day average",
 			value: `${formatHours(s.avg7)}h`,
 			sub: "per day, last 7 full days"
 		},

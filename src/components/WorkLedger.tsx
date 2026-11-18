@@ -8,12 +8,14 @@ import snapshotJson from "@/data/work-ledger.json";
 import {
 	WORK_LEDGER_URL,
 	addDays,
+	formatClock,
 	formatHours,
 	formatInt,
 	formatLongDate,
 	formatRelative,
 	formatShortDate,
 	formatUpdatedAt,
+	hasPresence,
 	indexLedger,
 	isNewerLedger,
 	isWorkLedger,
@@ -59,20 +61,32 @@ const rise = (delay: number) => ({
 	viewport: { once: true }
 });
 
-const DataTable: React.FC<{ index: LedgerIndex; end: string; agentTrackingSince: string }> = ({
-	index,
-	end,
-	agentTrackingSince
-}) => {
+const DataTable: React.FC<{
+	index: LedgerIndex;
+	end: string;
+	agentTrackingSince: string;
+	presenceSince: string | null;
+}> = ({ index, end, agentTrackingSince, presenceSince }) => {
 	const rows = useMemo(() => recentDays(index, end, 30).reverse(), [index, end]);
-	const heads = ["Workday", "Hands-on", "Prompts", "Agent hours", "Peak agents", "Agent actions", "Contributions"];
+	const heads = [
+		"First prompt",
+		"Last prompt",
+		"First to last, hours",
+		"At the computer, hours",
+		"Active prompting, hours",
+		"Prompts",
+		"Agent hours",
+		"Peak agents",
+		"Agent actions",
+		"Contributions"
+	];
 	return (
 		<details className="rounded-xl border border-border/50 bg-card/20 text-sm">
 			<summary className="cursor-pointer select-none rounded-xl px-5 py-3.5 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
 				Show the last 30 days as a table
 			</summary>
 			<div className="overflow-x-auto px-5 pb-5">
-				<table className="w-full min-w-[720px] text-left tabular-nums">
+				<table className="w-full min-w-[1040px] text-left tabular-nums">
 					<caption className="sr-only">Daily work log, last 30 days, newest first</caption>
 					<thead className="text-xs text-muted-foreground">
 						<tr className="border-b border-border/50">
@@ -90,7 +104,10 @@ const DataTable: React.FC<{ index: LedgerIndex; end: string; agentTrackingSince:
 						{rows.map((day) => {
 							const tracked = day.date >= agentTrackingSince;
 							const cells = [
+								formatClock(day.start) || "n/a",
+								formatClock(day.end) || "n/a",
 								formatHours(day.span),
+								hasPresence(day.date, presenceSince) ? formatHours(day.active) : "n/a",
 								formatHours(day.hours),
 								formatInt(day.prompts),
 								tracked ? formatHours(day.agentHours) : "n/a",
@@ -147,6 +164,7 @@ const WorkLedger: React.FC = () => {
 	const index = useMemo(() => indexLedger(ledger), [ledger]);
 	const summary = useMemo(() => summarize(ledger, index, now), [ledger, index, now]);
 	const updatedAbsolute = formatUpdatedAt(ledger.generatedAt, ledger.timezone);
+	const presenceSince = ledger.presenceSince ?? null;
 
 	return (
 		<section id="work-log" className="relative overflow-hidden bg-background py-24 text-foreground">
@@ -174,7 +192,8 @@ const WorkLedger: React.FC = () => {
 					<h2 className="mb-4 font-heading text-4xl font-bold md:text-5xl">Daily Work Log</h2>
 					<p className="mx-auto max-w-2xl text-lg text-muted-foreground">
 						Measured from real activity across {machinesPhrase(ledger.machines)} and updated through the day:
-						how long each workday runs, how much of it is hands-on with my coding agents, and what ships.
+						when each day starts and ends, how much of it I spend actively prompting my coding agents, and
+						what ships.
 					</p>
 				</motion.div>
 
@@ -199,6 +218,7 @@ const WorkLedger: React.FC = () => {
 									index={index}
 									end={summary.latestDate}
 									agentTrackingSince={ledger.agentTrackingSince}
+									presenceSince={presenceSince}
 								/>
 							</Card>
 						</motion.div>
@@ -211,6 +231,8 @@ const WorkLedger: React.FC = () => {
 										end={summary.latestDate}
 										buckets={ledger.buckets}
 										agentTrackingSince={ledger.agentTrackingSince}
+										presenceSince={presenceSince}
+										idleGapMinutes={ledger.idleGapMinutes}
 									/>
 								</Card>
 							</motion.div>
@@ -224,7 +246,12 @@ const WorkLedger: React.FC = () => {
 							</motion.div>
 						</div>
 
-						<DataTable index={index} end={summary.latestDate} agentTrackingSince={ledger.agentTrackingSince} />
+						<DataTable
+							index={index}
+							end={summary.latestDate}
+							agentTrackingSince={ledger.agentTrackingSince}
+							presenceSince={presenceSince}
+						/>
 					</div>
 				)}
 
@@ -233,9 +260,15 @@ const WorkLedger: React.FC = () => {
 						How the work log is measured
 					</summary>
 					<p className="max-w-2xl px-2 pb-2 text-sm leading-relaxed">
-						The workday spans my first to last recorded prompt, including breaks. Hands-on time is
-						estimated from gaps of up to {ledger.idleGapMinutes} minutes between prompts. Agent runtime
-						and GitHub contributions are tracked separately.
+						First to last prompt is clock time: when I sent the day&apos;s first prompt and when I sent
+						its last, breaks included. It is not hours worked. Active prompting only counts the time
+						between prompts sent up to {ledger.idleGapMinutes} minutes apart, so a long agent run, a
+						review, testing or a call falls outside it and the number reads low. My real working time
+						sits between the two.
+						{presenceSince
+							? ` Time at the computer, measured from keyboard and mouse input with games excluded, fills that gap from ${formatShortDate(addDays(presenceSince, 1))} on.`
+							: ""}{" "}
+						Agent runtime and GitHub contributions are tracked separately.
 					</p>
 				</details>
 				<WorkScale />

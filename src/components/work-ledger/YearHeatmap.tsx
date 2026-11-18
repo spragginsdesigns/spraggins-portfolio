@@ -16,7 +16,7 @@ import {
 	type LedgerIndex
 } from "@/lib/work-ledger";
 import { HEAT_RAMP } from "./colors";
-import { ChartTooltip, TooltipRow, useMarkTooltip } from "./ChartTooltip";
+import { ChartTooltip, DayTimeRows, TooltipRow, dayTimeText, useMarkTooltip } from "./ChartTooltip";
 
 const CELL = 11;
 const STEP = 14;
@@ -29,8 +29,8 @@ const DAY_LABELS: [number, string][] = [
 ];
 
 const METRICS: { id: HeatMetric; label: string; legend: string }[] = [
-	{ id: "span", label: "Workday", legend: "Workday length" },
-	{ id: "hours", label: "Hands-on", legend: "Hands-on hours" },
+	{ id: "span", label: "First to last", legend: "Hours from first to last prompt" },
+	{ id: "hours", label: "Prompting", legend: "Hours of active prompting" },
 	{ id: "contributions", label: "Contributions", legend: "Contributions" }
 ];
 
@@ -42,13 +42,9 @@ function legendLabels(metric: HeatMetric, t: readonly [number, number, number]):
 	return ["0", span(1, t[0] - 1), span(t[0], t[1] - 1), span(t[1], t[2] - 1), `${t[2]}+`];
 }
 
-function cellLabel(cell: HeatCell, agentTrackingSince: string): string {
+function cellLabel(cell: HeatCell, agentTrackingSince: string, presenceSince: string | null): string {
 	const { day } = cell;
-	const parts = [
-		`${formatHours(day.span)} hour workday`,
-		`${formatHours(day.hours)} hours hands-on`,
-		`${formatInt(day.prompts)} prompts`
-	];
+	const parts = [dayTimeText(day, presenceSince), `${formatInt(day.prompts)} prompts`];
 	if (cell.date >= agentTrackingSince) {
 		parts.push(
 			`${formatHours(day.agentHours)} agent hours`,
@@ -61,8 +57,8 @@ function cellLabel(cell: HeatCell, agentTrackingSince: string): string {
 }
 
 function headline(metric: HeatMetric, total: number): string {
-	if (metric === "span") return `${formatInt(total)} hours of workdays`;
-	if (metric === "hours") return `${formatInt(total)} hands-on hours`;
+	if (metric === "span") return `${formatInt(total)} hours between first and last prompts`;
+	if (metric === "hours") return `${formatInt(total)} hours of active prompting`;
 	return `${formatInt(total)} contributions`;
 }
 
@@ -70,9 +66,10 @@ interface YearHeatmapProps {
 	index: LedgerIndex;
 	end: string;
 	agentTrackingSince: string;
+	presenceSince: string | null;
 }
 
-const YearHeatmap: React.FC<YearHeatmapProps> = ({ index, end, agentTrackingSince }) => {
+const YearHeatmap: React.FC<YearHeatmapProps> = ({ index, end, agentTrackingSince, presenceSince }) => {
 	const [metric, setMetric] = useState<HeatMetric>("span");
 	const [active, setActive] = useState<number | null>(null);
 	const scrollRef = useRef<HTMLDivElement>(null);
@@ -179,7 +176,7 @@ const YearHeatmap: React.FC<YearHeatmapProps> = ({ index, end, agentTrackingSinc
 					ref={scrollRef}
 					tabIndex={0}
 					role="group"
-					aria-label={`${metricInfo.legend} per day for the last year`}
+					aria-label={`${metricInfo.legend}, per day for the last year`}
 					aria-describedby={hintId}
 					onKeyDown={onKeyDown}
 					onFocus={(event) => {
@@ -249,8 +246,7 @@ const YearHeatmap: React.FC<YearHeatmapProps> = ({ index, end, agentTrackingSinc
 				{anchor && tipCell ? (
 					<ChartTooltip anchor={anchor}>
 						<div className="mb-1 font-semibold text-foreground">{formatLongDate(tipCell.date)}</div>
-						<TooltipRow value={`${formatHours(tipCell.day.span)}h`} label="workday" />
-						<TooltipRow value={`${formatHours(tipCell.day.hours)}h`} label="hands-on" />
+						<DayTimeRows day={tipCell.day} presenceSince={presenceSince} />
 						<TooltipRow value={formatInt(tipCell.day.prompts)} label="prompts" />
 						{tipCell.date >= agentTrackingSince ? (
 							<>
@@ -271,11 +267,11 @@ const YearHeatmap: React.FC<YearHeatmapProps> = ({ index, end, agentTrackingSinc
 				Use the arrow keys to move between days. Left and right move a week, up and down move a day.
 			</p>
 			<p className="sr-only" aria-live="polite">
-				{activeCell ? cellLabel(activeCell, agentTrackingSince) : ""}
+				{activeCell ? cellLabel(activeCell, agentTrackingSince, presenceSince) : ""}
 			</p>
 
 			<div className="mt-4 flex flex-wrap items-center justify-end gap-x-3 gap-y-1.5 text-xs text-muted-foreground">
-				<span className="w-full text-right sm:w-auto">{metricInfo.legend} per day</span>
+				<span className="w-full text-right sm:w-auto">{metricInfo.legend}, per day</span>
 				{labels.map((label, level) => (
 					<span key={label + level} className="inline-flex items-center gap-1.5">
 						<span

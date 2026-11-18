@@ -94,7 +94,7 @@ const entries: readonly Entry[] = [
 	{
 		id: "work-metrics", topic: "metrics",
 		patterns: [/\b(hours?|metrics?|measur\w*|work[ -]?(log|ledger)|wakatime|contributions?|commits?|counts?|statistics|stats|throughput|productivity)\b/],
-		answer: "Austin's Daily Work Log separates elapsed workday span, a hands-on estimate and summed agent runtime. Span runs from first to last prompt and includes breaks. Hands-on time estimates gaps of up to 30 minutes between prompts, so it can miss review, testing and meetings. Agent hours sum runtime across parallel sessions and aren't Austin's working hours. GitHub contributions include fleet commits. Days run from 4 AM to 4 AM Pacific. Only daily totals and public work buckets are published. Prompt text, code and private working directories stay off the public page.",
+		answer: "Austin's Daily Work Log separates the clock time from first to last prompt, active prompting time, time at the computer and summed agent runtime. First to last prompt includes breaks and isn't hours worked. Active prompting only counts gaps of up to 30 minutes between prompts, so it misses long agent runs, review, testing and meetings and reads low. Time at the computer comes from keyboard and mouse input and is measured from November 18, 2026. Agent hours sum runtime across parallel sessions and aren't Austin's working hours. GitHub contributions include fleet commits. Days run from 4 AM to 4 AM Pacific. Only daily totals and public work buckets are published. Prompt text, code and private working directories stay off the public page.",
 		sources: [{ label: "Daily Work Log and definitions", href: "/#work-log" }, c2Source, aboutSource]
 	},
 	{

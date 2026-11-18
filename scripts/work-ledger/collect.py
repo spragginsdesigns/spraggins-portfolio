@@ -44,7 +44,7 @@ LOG_PATH = LEDGER_DIR / "run.log"
 # A day starts at 4 AM Pacific, including on clock-change days.
 DAY_START_HOUR = 4
 PACIFIC = ZoneInfo("America/Los_Angeles")
-# Hands-on time: gaps between prompts longer than this are treated as away time.
+# Active prompting time: gaps between prompts longer than this are treated as away time.
 IDLE_GAP_SECONDS = 30 * 60
 # Agent time: a session is considered running while its log lines are this close together.
 AGENT_GAP_SECONDS = 5 * 60
@@ -838,10 +838,10 @@ def build_ledger(config):
             "seconds": [0] * len(bucket_names), "prompts": 0, "first": 0, "last": 0,
         }
         by_bucket = [round(seconds / 3600, 2) for seconds in entry["seconds"]]
-        rows.append({
+        row = {
             "date": day,
             "hours": round(sum(entry["seconds"]) / 3600, 2),
-            # First prompt to last prompt of the day: how long the workday ran, breaks included.
+            # First prompt to last prompt of the day, breaks included.
             "span": (entry["last"] - entry["first"]) / 3600,
             # Minutes with keyboard or mouse input on any machine, games left out.
             "active": round(present.get(day, 0) / 60, 2),
@@ -852,7 +852,15 @@ def build_ledger(config):
             "peakAgents": peaks.get(day, 0),
             "toolCalls": tool_calls.get(day, 0),
             "contributions": contributions.get(day, 0),
-        })
+        }
+        if entry["prompts"]:
+            # Pacific wall-clock times of the first and last prompt, so the site can show
+            # the span as a time range instead of a bar that reads like hours worked.
+            row["start"], row["end"] = (
+                datetime.fromtimestamp(epoch, PACIFIC).strftime("%H:%M")
+                for epoch in (entry["first"], entry["last"])
+            )
+        rows.append(row)
 
     tracked = sorted(day for day, minutes in agent_minutes.items() if minutes > 0)
     return {

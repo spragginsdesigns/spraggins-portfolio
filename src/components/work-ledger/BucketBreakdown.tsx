@@ -33,9 +33,9 @@ const BucketBreakdown: React.FC<BucketBreakdownProps> = ({ index, end, buckets }
 
 	return (
 		<div>
-			<h3 className="font-heading text-xl font-bold">Where the hands-on time went</h3>
+			<h3 className="font-heading text-xl font-bold">Where the prompting time went</h3>
 			<p className="mb-4 text-sm text-muted-foreground">
-				{formatHours(total)} hands-on hours over the last 30 days
+				{formatHours(total)} hours of active prompting over the last 30 days
 			</p>
 
 			{total > 0 ? (
@@ -48,7 +48,7 @@ const BucketBreakdown: React.FC<BucketBreakdownProps> = ({ index, end, buckets }
 						if (event.pointerType === "mouse") hide();
 					}}
 				>
-					<div className="flex h-7 w-full gap-[2px]" role="list" aria-label="Share of hours by project, last 30 days">
+					<div className="flex h-7 w-full gap-[2px]" role="list" aria-label="Share of active prompting hours by project, last 30 days">
 						{parts.map((part, i) =>
 							part.hours > 0 ? (
 								<div

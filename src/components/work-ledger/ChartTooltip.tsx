@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useRef, useState } from "react";
+import { formatClockRange, formatHours, hasPresence, type LedgerDay } from "@/lib/work-ledger";
 
 // Marks opt in with a data-mark="<index>" attribute. One tooltip per chart is
 // positioned against the wrapper (not the mark's scroll parent) so it is never
@@ -89,3 +90,36 @@ export const TooltipRow: React.FC<{ color?: string; value: string; label: string
 		<span className="truncate text-muted-foreground">{label}</span>
 	</div>
 );
+
+/**
+ * The time lines every day tooltip opens with. The first-to-last span reads as
+ * a clock range so it is not mistaken for hours worked.
+ */
+export const DayTimeRows: React.FC<{
+	day: LedgerDay;
+	presenceSince: string | null;
+	promptingLabel?: string;
+}> = ({ day, presenceSince, promptingLabel = "active prompting" }) => {
+	const range = formatClockRange(day);
+	return (
+		<>
+			{range ? <div className="leading-5 text-foreground">{range}</div> : null}
+			<TooltipRow value={`${formatHours(day.span)}h`} label="first to last prompt" />
+			{hasPresence(day.date, presenceSince) ? (
+				<TooltipRow value={`${formatHours(day.active)}h`} label="at the computer" />
+			) : null}
+			<TooltipRow value={`${formatHours(day.hours)}h`} label={promptingLabel} />
+		</>
+	);
+};
+
+/** The same lines as one sentence, for the screen reader announcement. */
+export function dayTimeText(day: LedgerDay, presenceSince: string | null): string {
+	const range = formatClockRange(day);
+	const parts = [
+		`${formatHours(day.span)} hours from first to last prompt${range ? `, ${range}` : ""}`,
+		...(hasPresence(day.date, presenceSince) ? [`${formatHours(day.active)} hours at the computer`] : []),
+		`${formatHours(day.hours)} hours of active prompting`
+	];
+	return parts.join(", ");
+}
