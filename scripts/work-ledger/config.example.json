@@ -4,7 +4,7 @@
   "gistId": "",
   "remotes": [{ "host": "macbook", "machine": "mac" }],
   "presence": {
-    "exclude": ["steamapps\\common", "example-game-folder"],
+    "exclude": ["example-game-install-marker"],
     "include": ["example-game-engine"]
   },
   "defaultBucket": "Personal & tooling",

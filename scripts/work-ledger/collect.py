@@ -18,7 +18,10 @@ Commands:
 """
 
 import argparse
-import calendar
+from bisect import bisect_left
+from collections import defaultdict, deque
+from contextlib import closing, contextmanager
+from datetime import datetime, timedelta
 import hashlib
 import json
 import os
@@ -29,6 +32,8 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+from tempfile import NamedTemporaryFile
+from zoneinfo import ZoneInfo
 
 HOME = Path.home()
 LEDGER_DIR = HOME / ".work-ledger"
@@ -36,28 +41,29 @@ CONFIG_PATH = LEDGER_DIR / "config.json"
 LEDGER_PATH = LEDGER_DIR / "work-ledger.json"
 LOG_PATH = LEDGER_DIR / "run.log"
 
-# A day runs 4 AM to 4 AM local time so a late night counts for the day it started.
+# A day starts at 4 AM Pacific, including on clock-change days.
 DAY_START_HOUR = 4
+PACIFIC = ZoneInfo("America/Los_Angeles")
 # Hands-on time: gaps between prompts longer than this are treated as away time.
 IDLE_GAP_SECONDS = 30 * 60
 # Agent time: a session is considered running while its log lines are this close together.
 AGENT_GAP_SECONDS = 5 * 60
 # At the computer: a sampled minute counts when there was input this recently.
 PRESENCE_IDLE_SECONDS = 3 * 60
-# A prompt found in a session log is the same prompt as a history entry this close to it.
 SAME_PROMPT_SECONDS = 90
 # Codex item types that are an action the agent took (the Claude side counts tool_use blocks).
 CODEX_TOOL_ITEMS = ("commandExecution", "mcpToolCall", "fileChange", "webSearch", "collabAgentToolCall", "imageView")
 PUBLISH_DAYS = 400
-MIN_EPOCH = calendar.timegm((2024, 1, 1, 0, 0, 0))
+MIN_EPOCH = 1704067200
 TASK_NAME = "WorkLedgerCollector"
 PRESENCE_TASK_NAME = "WorkLedgerPresence"
 MAC_AGENT_LABEL = "xyz.spragginsdesigns.work-ledger-presence"
 
-ISO_RE = re.compile(r"(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)")
-# Unescaped key only, so timestamps quoted inside tool output are not matched.
-TS_KEY_RE = re.compile(r'"timestamp":"(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d)')
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+PUBLIC_BUCKETS = ("LineCrush", "LineCrush Games", "SureWord", "Client sites", "Personal & tooling")
+CLAUDE_AGENT_TRACKING_SINCE = "2026-09-21"
+IMAGE_REF = re.compile(r"\[Image #\d+\]")
+PASTE_REF = re.compile(r"\[Pasted text #(\d+)(?: [^\]]*)?\]")
 
 
 def log(message):
@@ -71,19 +77,31 @@ def log(message):
 
 
 def parse_iso_utc(text):
-    match = ISO_RE.match(text)
-    if not match:
+    try:
+        stamp = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        return stamp.timestamp() if stamp.tzinfo is not None else None
+    except (AttributeError, ValueError):
         return None
-    return calendar.timegm(tuple(int(part) for part in match.groups()))
 
 
 def valid_epoch(epoch):
-    return epoch is not None and MIN_EPOCH <= epoch <= time.time() + 86400
+    return isinstance(epoch, (int, float)) and MIN_EPOCH <= epoch <= time.time() + 60
 
 
 def day_of(epoch):
-    shifted = time.localtime(epoch - DAY_START_HOUR * 3600)
-    return f"{shifted.tm_year:04d}-{shifted.tm_mon:02d}-{shifted.tm_mday:02d}"
+    local = datetime.fromtimestamp(epoch, PACIFIC).replace(tzinfo=None)
+    return (local - timedelta(hours=DAY_START_HOUR)).date().isoformat()
+
+
+def split_run(start, end):
+    """Yield (day, start, end) slices at actual Pacific 4 AM boundaries."""
+    while start < end:
+        day = day_of(start)
+        next_day = datetime.fromisoformat(day).replace(hour=DAY_START_HOUR, tzinfo=PACIFIC)
+        boundary = (next_day + timedelta(days=1)).timestamp()
+        stop = min(end, boundary)
+        yield day, start, stop
+        start = stop
 
 
 def read_json(path, default):
@@ -94,16 +112,45 @@ def read_json(path, default):
 
 
 def write_json(path, value):
+    write_atomic(path, json.dumps(value, separators=(",", ":"), allow_nan=False).encode("utf-8"))
+
+
+def write_atomic(path, data):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix(path.suffix + ".tmp")
-    tmp.write_text(json.dumps(value, separators=(",", ":")), encoding="utf-8")
-    os.replace(tmp, path)
+    with NamedTemporaryFile(dir=path.parent, delete=False) as handle:
+        tmp = Path(handle.name)
+        handle.write(data)
+    try:
+        os.replace(tmp, path)
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
+@contextmanager
+def ledger_lock(name):
+    """Use an OS lock that is released on exit, including after a crash."""
+    LEDGER_DIR.mkdir(exist_ok=True)
+    with (LEDGER_DIR / name).open("a+b") as handle:
+        handle.seek(0)
+        if os.name == "nt":
+            import msvcrt
+
+            msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
+
+            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        yield
 
 
 def load_config():
     config = read_json(CONFIG_PATH, None)
-    if not isinstance(config, dict) or not config.get("buckets"):
+    if not isinstance(config, dict) or tuple(
+        bucket.get("name") if isinstance(bucket, dict) else None for bucket in config.get("buckets", [])
+    ) != PUBLIC_BUCKETS or config.get("defaultBucket") not in PUBLIC_BUCKETS or config.get(
+        "timezone", PACIFIC.key
+    ) != PACIFIC.key:
         sys.exit(
             f"Missing or invalid {CONFIG_PATH}. Copy config.example.json there and "
             "fill in the bucket patterns."
@@ -122,113 +169,107 @@ def bucket_index(path, config):
 
 
 def file_id(path):
-    return hashlib.sha1(str(path).encode("utf-8", "replace")).hexdigest()[:16]
+    return fingerprint(str(path))[:16]
+
+
+def fingerprint(text):
+    return hashlib.sha1(text.encode("utf-8", "replace")).hexdigest()
 
 
 def iter_lines(path):
     try:
-        with open(path, encoding="utf-8", errors="replace") as handle:
-            for line in handle:
-                yield line
-    except OSError:
+        handle = open(path, encoding="utf-8", errors="replace")
+    except FileNotFoundError:
         return
+    with handle:
+        yield from handle
 
 
-# --- hands-on events (prompts the human sent) ------------------------------
-
-
-def codex_rollouts():
-    root = HOME / ".codex" / "sessions"
-    return sorted(root.rglob("*.jsonl")) if root.exists() else []
-
-
-def codex_session_meta(path):
-    """Return (session ids, cwd, is_subagent) from a rollout's session_meta line."""
+def records(path):
     for line in iter_lines(path):
-        if '"type":"session_meta"' not in line:
-            continue
-        try:
-            payload = json.loads(line).get("payload") or {}
-        except ValueError:
-            break
-        ids = {str(payload[key]) for key in ("id", "session_id") if payload.get(key)}
-        source = payload.get("source")
-        is_subagent = isinstance(source, dict) and "subagent" in source
-        return ids, payload.get("cwd") or "", is_subagent
-    return set(), "", False
-
-
-def collect_human(config, previous, scan_rollouts=True):
-    """Return {event key: [epoch seconds, bucket index]} merged with the previous store.
-
-    scan_rollouts is False when the Codex database was read instead, which is
-    the complete record; rollout files only hold the sessions not yet archived.
-    """
-    events = dict(previous)
-
-    for line in iter_lines(HOME / ".claude" / "history.jsonl"):
         try:
             entry = json.loads(line)
         except ValueError:
             continue
+        if isinstance(entry, dict):
+            yield entry
+
+
+# --- prompt and session collection --------------------------------------------
+
+
+def prompt_text(content):
+    if isinstance(content, list):
+        content = "\n".join(
+            block.get("text", "") for block in content if isinstance(block, dict) and block.get("type") == "text"
+        )
+    return content.strip() if isinstance(content, str) else ""
+
+
+def history_text(entry):
+    text = entry.get("display") or ""
+    for pasted in (entry.get("pastedContents") or {}).values():
+        if pasted.get("type") == "text" and isinstance(pasted.get("content"), str):
+            number = pasted.get("id")
+            text = re.sub(rf"\[Pasted text #{number}(?: [^\]]*)?\]", lambda _: pasted["content"], text)
+    return IMAGE_REF.sub("", text).strip()
+
+
+def paste_template(entry):
+    """Recognize a send even when history retains only hashes of its pastes."""
+    pasted = {str(item.get("id")): item for item in (entry.get("pastedContents") or {}).values()}
+    display = IMAGE_REF.sub("", entry.get("display") or "").strip()
+    pieces, hashes = [], []
+    end = 0
+    for match in PASTE_REF.finditer(display):
+        item = pasted.get(match[1], {})
+        digest = item.get("contentHash")
+        content = item.get("content")
+        if not digest and not isinstance(content, str):
+            return None
+        pieces.append(re.escape(display[end:match.start()]))
+        if digest:
+            hashes.append(digest)
+            pieces.append("(.*?)")
+        else:
+            pieces.append(re.escape(content))
+        end = match.end()
+    if not hashes:
+        return None
+    pieces.append(re.escape(display[end:]))
+    return re.compile("".join(pieces), re.DOTALL), hashes
+
+
+def claude_history(config, previous):
+    human = {key: value for key, value in previous.items() if not re.fullmatch(r"x\d+", key)}
+    candidates = defaultdict(list)
+    paste_candidates = defaultdict(list)
+    collisions = defaultdict(set)
+    for entry in records(HOME / ".claude" / "history.jsonl"):
         stamp = entry.get("timestamp")
-        if not isinstance(stamp, (int, float)):
+        if not isinstance(stamp, (int, float)) or not valid_epoch(stamp / 1000):
             continue
-        epoch = int(stamp / 1000)
-        if valid_epoch(epoch):
-            events[f"c{int(stamp)}"] = [epoch, bucket_index(entry.get("project"), config)]
-
-    session_cwd = {}
-    for rollout in codex_rollouts() if scan_rollouts else []:
-        ids, cwd, is_subagent = codex_session_meta(rollout)
-        for session in ids:
-            session_cwd[session] = cwd
-        if is_subagent:
+        session = entry.get("sessionId")
+        identity = stamp, session, fingerprint(history_text(entry))
+        if identity[1:] in collisions[stamp]:
             continue
-        bucket = bucket_index(cwd, config)
-        for line in iter_lines(rollout):
-            if '"type":"task_started"' not in line:
-                continue
-            epoch = parse_iso_utc(line[14:40])
-            if epoch is not None and valid_epoch(epoch):
-                # Keyed by minute so the same turn seen in history.jsonl is not counted twice.
-                events[f"x{epoch // 60}"] = [epoch, bucket]
-
-    for line in iter_lines(HOME / ".codex" / "history.jsonl"):
-        try:
-            entry = json.loads(line)
-        except ValueError:
-            continue
-        epoch = entry.get("ts")
-        if not isinstance(epoch, (int, float)) or not valid_epoch(int(epoch)):
-            continue
-        epoch = int(epoch)
-        key = f"x{epoch // 60}"
-        if key not in events:
-            cwd = session_cwd.get(str(entry.get("session_id")), "")
-            events[key] = [epoch, bucket_index(cwd, config)]
-
-    return events
-
-
-# --- agent session time -----------------------------------------------------
-
-
-def session_day_minutes(stamps):
-    stamps.sort()
-    per_day = {}
-    for earlier, later in zip(stamps, stamps[1:]):
-        gap = later - earlier
-        if 0 < gap <= AGENT_GAP_SECONDS:
-            day = day_of(later)
-            per_day[day] = per_day.get(day, 0) + gap / 60
-    return {day: round(minutes, 1) for day, minutes in per_day.items() if minutes >= 0.1}
+        suffix = f":{len(collisions[stamp])}" if collisions[stamp] else ""
+        collisions[stamp].add(identity[1:])
+        key = f"c{int(stamp)}{suffix}"
+        human[key] = [stamp / 1000, bucket_index(entry.get("project"), config)]
+        if session:
+            for signature in {identity[2], fingerprint(IMAGE_REF.sub("", (entry.get("display") or "")).strip())}:
+                candidates[session, signature].append((stamp / 1000, key))
+            template = paste_template(entry)
+            if template:
+                paste_candidates[session].append((stamp / 1000, key, *template))
+    return human, candidates, paste_candidates
 
 
 def session_runs(stamps):
-    """Merge sorted activity stamps into [start, end] stretches of continuous running."""
+    """Merge activity separated by at most five minutes."""
     runs = []
-    for epoch in stamps:
+    for epoch in sorted(stamps):
         if runs and epoch - runs[-1][1] <= AGENT_GAP_SECONDS:
             runs[-1][1] = epoch
         else:
@@ -244,247 +285,305 @@ def count_by_day(stamps):
     return per_day
 
 
-def human_prompt_cwd(line):
-    """Working directory of a prompt the human sent, or None for any other log line.
-
-    history.jsonl misses prompts sent while an agent is still working (they are
-    queued), so the session log is the only record of them.
-    """
-    try:
-        entry = json.loads(line)
-    except ValueError:
-        return None
-    origin = entry.get("origin")
-    if entry.get("type") != "user" or not isinstance(origin, dict) or origin.get("kind") != "human":
-        return None
-    if entry.get("isMeta") or entry.get("isSidechain"):
-        return None
-    return entry.get("cwd") or ""
+def is_human_claude(entry):
+    source = entry.get("promptSource")
+    from_desktop = (
+        source == "sdk" and entry.get("entrypoint") == "claude-desktop" and entry.get("turnOrigin") == "human"
+    )
+    return (
+        entry.get("type") == "user"
+        and (entry.get("origin") or {}).get("kind") == "human"
+        and (source in (None, "typed", "queued") or from_desktop)
+        and entry.get("turnOrigin") in (None, "human")
+        and not (entry.get("isMeta") or entry.get("isSidechain") or entry.get("toolUseResult"))
+    )
 
 
-def claude_session_stamps(path, config):
-    """Return (activity stamps, tool-call stamps, human prompts) for a Claude Code session log."""
-    stamps, tools, prompts = [], [], []
-    for line in iter_lines(path):
-        if '"type":"assistant"' not in line and '"type":"user"' not in line:
-            continue
-        match = TS_KEY_RE.search(line)
-        if match:
-            epoch = parse_iso_utc(match.group(1))
-            if epoch is not None and valid_epoch(epoch):
-                stamps.append(epoch)
-                tools.extend([epoch] * line.count('"type":"tool_use"'))
-                if '"origin":{"kind":"human"' in line:
-                    cwd = human_prompt_cwd(line)
-                    if cwd is not None:
-                        prompts.append([epoch, bucket_index(cwd, config)])
-    return stamps, tools, prompts
-
-
-def codex_session_stamps(path, _config):
-    """Return (activity stamps, tool-call stamps, []) for a Codex rollout.
-
-    Codex prompts are already complete in collect_human, so none are returned here.
-    """
+def claude_session(path, config, human, candidates, paste_candidates, matched):
     stamps, tools = [], []
-    for line in iter_lines(path):
-        if line.startswith('{"timestamp":"'):
-            epoch = parse_iso_utc(line[14:40])
-            if epoch is not None and valid_epoch(epoch):
-                stamps.append(epoch)
-                if '"type":"function_call"' in line or '"type":"custom_tool_call"' in line:
-                    tools.append(epoch)
-    return stamps, tools, []
+    queued = defaultdict(deque)
+    main = "subagents" not in path.parts
+    for entry in records(path):
+        epoch = parse_iso_utc(entry.get("timestamp"))
+        if not valid_epoch(epoch):
+            continue
+        kind = entry.get("type")
+        if kind == "queue-operation" and entry.get("operation") == "enqueue":
+            queued[prompt_text(entry.get("content"))].append(epoch)
+        if kind not in ("assistant", "user"):
+            continue
+        stamps.append(epoch)
+        content = (entry.get("message") or {}).get("content")
+        if kind == "assistant" and isinstance(content, list):
+            tools.extend(epoch for block in content if block.get("type") == "tool_use")
+        if not main or not is_human_claude(entry):
+            continue
+        prompt_id = entry.get("promptId") or entry.get("uuid")
+        if not prompt_id:
+            continue
+        key = f"q{prompt_id}"
+        if key in matched:
+            continue
+        text = prompt_text(content)
+        is_queued = entry.get("promptSource") == "queued"
+        if is_queued and text and queued[text]:
+            # Enqueue is when the human sent it; the user line is delivery to the model.
+            epoch = queued[text].popleft()
+        text = IMAGE_REF.sub("", text).strip()
+        session = entry.get("sessionId")
+        possible = candidates[session, fingerprint(text)]
+        # Claude writes history before the session message. A queued delivery
+        # only matches history when the two send timestamps closely agree.
+        tolerance = 2 if is_queued else SAME_PROMPT_SECONDS
+        matches = [
+            (abs(stamp - epoch), history_key) for stamp, history_key in possible
+            if history_key not in matched and -2 <= epoch - stamp <= tolerance
+        ]
+        if not matches:
+            for stamp, history_key, pattern, hashes in paste_candidates[session]:
+                if history_key in matched or not -2 <= epoch - stamp <= min(tolerance, 10):
+                    continue
+                match = pattern.fullmatch(text)
+                if match and all(
+                    hashlib.sha256(chunk.encode("utf-8")).hexdigest().startswith(digest)
+                    for chunk, digest in zip(match.groups(), hashes)
+                ):
+                    matches.append((abs(stamp - epoch), history_key))
+        if matches:
+            matched.update((key, min(matches)[1]))
+            human.pop(key, None)
+        else:
+            human[key] = [epoch, bucket_index(entry.get("cwd"), config)]
+    return {"source": "claude", "main": main, "runs": session_runs(stamps), "tools": count_by_day(tools)}
+
+
+def collect_claude(config, previous_agent, previous_human):
+    human, candidates, paste_candidates = claude_history(config, previous_human)
+    matched = set()
+    claude_root = HOME / ".claude" / "projects"
+    agent = dict(previous_agent)
+    for path in sorted(claude_root.rglob("*.jsonl")):
+        # Do not replace a cached session if its log is removed mid-scan.
+        if path.exists():
+            key = file_id(path)
+            session = claude_session(path, config, human, candidates, paste_candidates, matched)
+            if session["runs"] or session["tools"] or key not in agent:
+                agent[key] = session
+
+    # Preserve previously recovered prompts whose Claude transcripts were pruned.
+    # Their old format has no session/prompt identity beyond the enclosing file.
+    history = sorted(value[0] for key, value in human.items() if key.startswith("c"))
+    for key, session in agent.items():
+        for epoch, bucket in session.get("prompts", []):
+            position = bisect_left(history, epoch - SAME_PROMPT_SECONDS)
+            if position == len(history) or history[position] > epoch + SAME_PROMPT_SECONDS:
+                human.setdefault(f"qlegacy:{key}:{epoch}", [epoch, bucket])
+    return human, agent
 
 
 def newest(pattern):
-    """The highest-versioned Codex database matching the pattern, or None."""
-    matches = sorted((HOME / ".codex").glob(pattern))
-    return matches[-1] if matches else None
+    """The highest numeric schema version, independent of filename sort order."""
+    matches = (HOME / ".codex").glob(pattern)
+    return max(matches, key=lambda path: int(path.stem.rsplit("_", 1)[-1]), default=None)
 
 
 def rollout_file_ids(rollout_path):
     """Store keys the old rollout-file reader could have used for a Codex thread."""
-    name = re.split(r"[\\/]", rollout_path or "")[-1]
-    if name.endswith(".zst"):
-        name = name[:-4]
+    name = re.split(r"[\\/]", rollout_path or "")[-1].removesuffix(".zst")
     match = re.match(r"rollout-(\d{4})-(\d\d)-(\d\d)T", name)
     if not match:
         return []
-    year, month, day = match.groups()
-    return [file_id(HOME / ".codex" / "sessions" / year / month / day / name)]
+    return [file_id(HOME / ".codex" / "sessions" / Path(*match.groups()) / name)]
 
 
-def read_codex_db(config, previous):
-    """Read prompts and agent time from the Codex app's own database.
+def codex_turn_interval(start, end, duration_ms, status):
+    if status not in ("completed", "interrupted", "failed"):
+        return None
+    if not valid_epoch(start) or not valid_epoch(end) or end <= start:
+        return None
+    if not isinstance(duration_ms, (int, float)) or duration_ms <= 0:
+        return None
+    # The completion time anchors the interval when the wall clock and the
+    # recorded elapsed runtime disagree (for example after sleep or resume).
+    return [max(start, end - duration_ms / 1000), end]
 
-    The Codex desktop app does not write history.jsonl and it archives and
-    compresses its rollout files, so the database is the only complete record.
-    Returns (prompts, sessions, replaced file ids), or None when it cannot be
-    read, in which case the rollout files are used as before.
-    """
+
+def read_codex_db(config, agent, human):
     history, state = newest("thread_history_*.sqlite"), newest("state_*.sqlite")
+    known_threads = {}
+    db_prompts = defaultdict(list)
     if history is None or state is None:
-        return None
-    try:
-        con = sqlite3.connect(f"file:{history.as_posix()}?mode=ro", uri=True, timeout=20)
-        con.execute("attach database ? as st", (f"file:{state.as_posix()}?mode=ro",))
-        threads = con.execute(
-            "select id, source, cwd, coalesce(updated_at_ms, updated_at * 1000), rollout_path from st.threads"
-        ).fetchall()
-        prompts, sessions, replaced = {}, {}, set()
-        recent = (time.time() - 2 * 86400) * 1000
-        for thread, source, cwd, updated, rollout_path in threads:
-            replaced.update(rollout_file_ids(rollout_path))
-            # A subagent thread's source is a JSON object; exec threads are scripted runs.
-            is_main = not (source or "").startswith("{")
-            if source in ("vscode", "cli"):
-                bucket = bucket_index(cwd, config)
-                for (stamp,) in con.execute(
-                    "select created_at_ms from thread_items where thread_id = ? and item_type = 'userMessage'",
-                    (thread,),
-                ):
-                    if stamp and valid_epoch(stamp // 1000):
-                        # Same minute key as history.jsonl so a prompt seen in both counts once.
-                        prompts[f"x{stamp // 60000}"] = [stamp // 1000, bucket]
-            key = f"cx{thread}"
-            known = previous.get(key)
-            if known and known.get("m") == updated and (updated or 0) < recent:
-                continue
-            runs = []
-            for start, end in con.execute(
-                "select started_at, completed_at from thread_turns where thread_id = ? "
-                "and started_at is not null and completed_at > started_at order by started_at",
-                (thread,),
-            ):
-                if not valid_epoch(start):
+        if history or state or any(key.startswith("cx") for key in agent):
+            raise ValueError("Codex database missing")
+    else:
+        with closing(sqlite3.connect(history.as_uri() + "?mode=ro", uri=True, timeout=20)) as con:
+            con.execute("attach database ? as st", (state.as_uri() + "?mode=ro",))
+            con.execute("begin")
+            # Establish the read snapshot for both attached databases
+            # before iterating the threads while Codex continues to write.
+            con.execute(
+                "select (select id from st.threads limit 1), "
+                "(select thread_id from thread_turns limit 1)"
+            ).fetchone()
+            threads = con.execute(
+                "select id, source, cwd, rollout_path, thread_source, attached_thread_parent_id from st.threads"
+            ).fetchall()
+            for thread, source, cwd, rollout_path, thread_source, parent in threads:
+                key = f"cx{thread}"
+                main = source in ("vscode", "cli") and thread_source in (None, "user") and not parent
+                subagent = json.loads(source).get("subagent") if (source or "").startswith("{") else None
+                child = isinstance(subagent, dict) and "thread_spawn" in subagent
+                known_threads[thread] = main
+                for old_key in rollout_file_ids(rollout_path):
+                    agent.pop(old_key, None)
+                if not (main or child):
+                    agent.pop(key, None)
                     continue
-                if runs and start <= runs[-1][1]:
-                    runs[-1][1] = max(runs[-1][1], end)
-                else:
-                    runs.append([start, end])
-            minutes = {}
-            for start, end in runs:
-                minutes[day_of(end)] = minutes.get(day_of(end), 0) + (end - start) / 60
-            tools = [
-                stamp // 1000
-                for (stamp,) in con.execute(
-                    f"select created_at_ms from thread_items where thread_id = ? and item_type in "
-                    f"({','.join('?' * len(CODEX_TOOL_ITEMS))})",
-                    (thread, *CODEX_TOOL_ITEMS),
-                )
-                if stamp
-            ]
-            sessions[key] = {
-                "m": updated,
-                "main": is_main,
-                "days": {day: round(value, 1) for day, value in minutes.items() if value >= 0.1},
-                "runs": runs,
-                "tools": count_by_day(tools),
-                "prompts": [],
-            }
-        con.close()
-        return prompts, sessions, replaced
-    except sqlite3.Error as error:
-        log(f"codex database not read ({type(error).__name__})")
-        return None
+                if main:
+                    bucket = bucket_index(cwd, config)
+                    for turn, item, stamp, payload in con.execute(
+                        "select turn_id, item_id, created_at_ms, item_json from thread_items "
+                        "where thread_id = ? and item_type = 'userMessage' order by created_at_ms, rollout_ordinal",
+                        (thread,),
+                    ):
+                        if stamp is None or not valid_epoch(stamp / 1000):
+                            continue
+                        item_data = json.loads(payload) if payload else {}
+                        client = item_data.get("clientId")
+                        identity = f"client:{client}" if client else f"turn:{turn or thread}:{item}"
+                        human.pop(f"xid:{thread}:{item}", None)
+                        prompt_key = f"xid:{identity}"
+                        known_prompt = human.get(prompt_key)
+                        if known_prompt is None or stamp / 1000 < known_prompt[0]:
+                            human[prompt_key] = [stamp / 1000, bucket]
+                        signature = fingerprint(prompt_text(item_data.get("content")))
+                        db_prompts[thread, signature].append((stamp / 1000, identity))
 
+                intervals = [
+                    interval for row in con.execute(
+                        "select started_at, completed_at, duration_ms, status from thread_turns "
+                        "where thread_id = ? order by started_at", (thread,),
+                    )
+                    if (interval := codex_turn_interval(*row)) is not None
+                ]
+                tools = [
+                    stamp / 1000 for (stamp,) in con.execute(
+                        f"select created_at_ms from thread_items where thread_id = ? and item_type in "
+                        f"({','.join('?' * len(CODEX_TOOL_ITEMS))})", (thread, *CODEX_TOOL_ITEMS),
+                    )
+                    if stamp is not None and valid_epoch(stamp / 1000)
+                ]
+                # A newly indexed thread may be absent from history while the
+                # writer catches up. Preserve its last usable completed data.
+                known = agent.get(key, {})
+                if known.get("source") == "codex" and (
+                    len(intervals) < known.get("turns", 0) or len(tools) < sum(known.get("tools", {}).values())
+                ):
+                    continue
+                agent[key] = {
+                    "source": "codex", "main": main, "runs": merge_intervals(intervals),
+                    "tools": count_by_day(tools), "turns": len(intervals),
+                }
 
-def collect_agent(previous, config, scan_rollouts=True):
-    """Return {file id: {m, s, main, days, runs, tools, prompts}}; unchanged files are not re-read.
-
-    Entries for log files that were later pruned are kept, which is how the
-    ledger holds history longer than the tools keep their own logs.
-    """
-    sessions = dict(previous)
-    sources = []
-    claude_root = HOME / ".claude" / "projects"
-    if claude_root.exists():
-        for path in claude_root.rglob("*.jsonl"):
-            sources.append((path, "subagents" not in path.parts, claude_session_stamps))
-    for path in codex_rollouts() if scan_rollouts else []:
-        sources.append((path, None, codex_session_stamps))
-
-    for path, is_main, reader in sources:
-        try:
-            stat = path.stat()
-        except OSError:
+    # CLI history can contain a prompt the database never indexed, even
+    # within an indexed thread. Consume duplicates one to one.
+    live_cli = set()
+    matched = set()
+    for entry in records(HOME / ".codex" / "history.jsonl"):
+        epoch, thread = entry.get("ts"), entry.get("session_id")
+        if not valid_epoch(epoch) or not thread:
             continue
-        key = file_id(path)
-        known = sessions.get(key)
-        unchanged = known and known.get("m") == int(stat.st_mtime) and known.get("s") == stat.st_size
-        # "runs" and "prompts" were added after the first release; entries without them are re-read once.
-        if unchanged and "runs" in known and "prompts" in known:
-            continue
-        if is_main is None:
-            is_main = not codex_session_meta(path)[2]
-        stamps, tools, prompts = reader(path, config)
-        stamps.sort()
-        sessions[key] = {
-            "m": int(stat.st_mtime),
-            "s": stat.st_size,
-            "main": bool(is_main),
-            "days": session_day_minutes(stamps),
-            "runs": session_runs(stamps),
-            "tools": count_by_day(tools),
-            "prompts": prompts if is_main else [],
-        }
-    return sessions
+        identity = f"xcli:{thread}:{epoch}"
+        ordinal = 0
+        while (key := f"{identity}:{ordinal}") in live_cli:
+            ordinal += 1
+        live_cli.add(key)
+        signature = fingerprint(prompt_text(entry.get("text")))
+        matches = [
+            (abs(epoch - stamp), item) for stamp, item in db_prompts[thread, signature]
+            if item not in matched and abs(epoch - stamp) <= SAME_PROMPT_SECONDS
+        ]
+        if matches or known_threads.get(thread) is False:
+            if matches:
+                matched.add(min(matches)[1])
+            human.pop(key, None)
+        else:
+            human[key] = [epoch, bucket_index("", config)]
+    return human, agent
 
 
-def missed_prompts(store):
-    """Session-log prompts of one machine that have no history entry close to them."""
-    known = sorted(value[0] for value in (store.get("human") or {}).values())
-    found = {}
-    for session in (store.get("agent") or {}).values():
-        for epoch, bucket in session.get("prompts") or []:
-            found[epoch] = bucket
-    missed = []
-    position = 0
-    for epoch in sorted(found):
-        while position < len(known) and known[position] < epoch - SAME_PROMPT_SECONDS:
-            position += 1
-        if position == len(known) or known[position] > epoch + SAME_PROMPT_SECONDS:
-            missed.append([epoch, found[epoch]])
-    return missed
+def merge_intervals(intervals):
+    runs = []
+    for start, end in sorted(intervals):
+        if runs and start <= runs[-1][1]:
+            runs[-1][1] = max(runs[-1][1], end)
+        else:
+            runs.append([start, end])
+    return runs
 
 
-def peak_parallel(runs):
-    """Most sessions running at the same moment, per day, from every session's runs."""
-    edges = []
-    for start, end in runs:
-        edges.append((start, 1))
-        edges.append((end, -1))
-    # Ends sort before starts at the same second so back-to-back runs do not count as overlap.
-    edges.sort(key=lambda edge: (edge[0], edge[1]))
-    peaks = {}
-    active = 0
-    for epoch, change in edges:
-        active += change
-        day = day_of(epoch)
-        if active > peaks.get(day, 0):
-            peaks[day] = active
-    return peaks
+def read_store(path, machine):
+    return validate_store(read_json(path, None), machine)
+
+
+def validate_store(store, machine):
+    if not isinstance(store, dict) or store.get("machine") != machine:
+        raise ValueError("missing or invalid event store")
+    if not isinstance(store.get("updatedAt"), int):
+        raise ValueError("invalid store timestamp")
+    if not isinstance(store.get("human"), dict) or not isinstance(store.get("agent"), dict):
+        raise ValueError("invalid event store")
+    if not store["human"] or not store["agent"]:
+        raise ValueError("empty event store")
+    if store.get("version") is not None and (
+        store.get("version") != 2 or store.get("checksum") != store_checksum(store)
+    ):
+        raise ValueError("event store checksum mismatch")
+    for row in store["human"].values():
+        if (
+            not isinstance(row, list) or len(row) != 2 or not valid_epoch(row[0])
+            or type(row[1]) is not int or not 0 <= row[1] < len(PUBLIC_BUCKETS)
+        ):
+            raise ValueError("invalid prompt in event store")
+    for session in store["agent"].values():
+        if not isinstance(session, dict) or not isinstance(session.get("main"), bool):
+            raise ValueError("invalid session in event store")
+        for start, end in session.get("runs", []):
+            if not valid_epoch(start) or not valid_epoch(end) or end <= start:
+                raise ValueError("invalid session interval")
+        for field in ("days", "tools"):
+            for day, value in session.get(field, {}).items():
+                datetime.strptime(day, "%Y-%m-%d")
+                if not isinstance(value, (int, float)) or not 0 <= value < float("inf"):
+                    raise ValueError("invalid session total")
+        for epoch, bucket in session.get("prompts", []):
+            if not valid_epoch(epoch) or type(bucket) is not int or not 0 <= bucket < len(PUBLIC_BUCKETS):
+                raise ValueError("invalid cached prompt")
+    return store
+
+
+def store_checksum(store):
+    payload = {key: value for key, value in store.items() if key != "checksum"}
+    return fingerprint(json.dumps(payload, sort_keys=True, separators=(",", ":")))
 
 
 def cmd_collect(args):
-    config = load_config()
-    store_path = LEDGER_DIR / f"events-{args.machine}.json"
-    store = read_json(store_path, {})
-    previous_agent = store.get("agent") or {}
-    codex = read_codex_db(config, previous_agent)
-    human = collect_human(config, store.get("human") or {}, scan_rollouts=codex is None)
-    agent = collect_agent(previous_agent, config, scan_rollouts=codex is None)
-    if codex is not None:
-        prompts, sessions, replaced = codex
-        human.update(prompts)
-        # The database covers these threads in full, so their rollout-file entries would count twice.
-        for key in replaced:
-            agent.pop(key, None)
-        agent.update(sessions)
-    store = {"machine": args.machine, "updatedAt": int(time.time()), "human": human, "agent": agent}
-    write_json(store_path, store)
-    print(f"{args.machine}: {len(store['human'])} prompts, {len(store['agent'])} sessions")
+    with ledger_lock("collect.lock"):
+        config = load_config()
+        store_path = LEDGER_DIR / f"events-{args.machine}.json"
+        marker = store_path.with_suffix(".initialized")
+        if not store_path.exists() and (marker.exists() or LEDGER_PATH.exists()):
+            raise ValueError("previous event store missing")
+        store = read_store(store_path, args.machine) if store_path.exists() else {"human": {}, "agent": {}}
+        human, agent = collect_claude(config, store["agent"], store["human"])
+        human, agent = read_codex_db(config, agent, human)
+        store = {"version": 2, "machine": args.machine, "updatedAt": int(time.time()), "human": human, "agent": agent}
+        store["checksum"] = store_checksum(store)
+        validate_store(store, args.machine)
+        write_json(store_path, store)
+        if not marker.exists():
+            marker.touch()
+        print(f"{args.machine}: {len(human)} prompts, {len(agent)} sessions")
 
 
 # --- presence: was anyone at the keyboard ----------------------------------------
@@ -540,53 +639,70 @@ def foreground_app():
         try:
             front = subprocess.run(["lsappinfo", "front"], capture_output=True, text=True, timeout=10)
             info = subprocess.run(
-                ["lsappinfo", "info", "-only", "name", front.stdout.strip()],
+                ["lsappinfo", "info", "-only", "bundlepath", "-only", "name", front.stdout.strip()],
                 capture_output=True, text=True, timeout=10,
             ).stdout
         except (OSError, subprocess.SubprocessError):
             return ""
-        names = re.findall(r'"([^"]+)"', info)
-        return names[-1].lower() if names else ""
+        attributes = dict(re.findall(r'"?(bundle path|bundlepath|executable path|name)"?\s*=\s*"([^"]+)"', info.lower()))
+        return attributes.get("bundle path") or attributes.get("bundlepath") or attributes.get("executable path") or attributes.get("name", "")
     return ""
 
 
 def app_is_excluded(app, config):
     """True when the app in front is one the private config says is not work (games)."""
     presence = config.get("presence") or {}
-    if any(pattern.lower() in app for pattern in presence.get("include", [])):
+    app = app.lower().replace("\\", "/")
+    if any(pattern.lower().replace("\\", "/") in app for pattern in presence.get("include", [])):
         return False
-    return any(pattern.lower() in app for pattern in presence.get("exclude", []))
+    return any(pattern.lower().replace("\\", "/") in app for pattern in presence.get("exclude", []))
 
 
 def cmd_sample(args):
     """Append this minute to the presence log when there was recent input.
 
-    Only the minute, the app's file name and a work/not-work flag are kept, and
-    only on this machine. Nothing here is published except the daily total.
+    Only the minute and exclusion flag are kept. Start a new file each month.
     """
     config = load_config()
     idle = idle_seconds()
     if idle is None or idle > PRESENCE_IDLE_SECONDS:
         return
     app = foreground_app()
+    if not app:
+        return
     flag = "x" if app_is_excluded(app, config) else ""
-    name = re.split(r"[\\/]", app)[-1].replace("\t", " ")
     machine = args.machine or config.get("machine", "pc")
-    with open(LEDGER_DIR / f"presence-{machine}.log", "a", encoding="utf-8") as handle:
-        handle.write(f"{int(time.time()) // 60}\t{name}\t{flag}\n")
+    minute = int(time.time()) // 60
+    with ledger_lock("presence.lock"):
+        path = presence_path(machine, minute)
+        with path.open("a+b") as handle:
+            size = handle.tell()
+            handle.seek(max(0, size - 64))
+            tail = handle.read().splitlines()
+            if not tail or tail[-1].split(b"\t")[0] != str(minute).encode("ascii"):
+                handle.write(f"{minute}\t\t{flag}\n".encode("ascii"))
 
 
-def presence_minutes(config):
+def presence_path(machine, minute):
+    return LEDGER_DIR / f"presence-{machine}-{day_of(minute * 60)[:7]}.log"
+
+
+def presence_minutes(config, machine=None):
     """Minutes with someone at a keyboard, across every machine, games left out."""
     minutes = set()
-    for path in LEDGER_DIR.glob("presence-*.log"):
+    for path in LEDGER_DIR.glob(f"presence-{machine or '*'}*.log"):
         for line in iter_lines(path):
             parts = line.rstrip("\n").split("\t")
             if len(parts) != 3 or not parts[0].isdigit():
                 continue
-            if parts[2] != "x" and not app_is_excluded(parts[1], config):
-                minutes.add(int(parts[0]))
+            minute = int(parts[0])
+            if valid_epoch(minute * 60) and parts[2] == "" and not app_is_excluded(parts[1], config):
+                minutes.add(minute)
     return minutes
+
+
+def cmd_presence_export(args):
+    print(json.dumps(sorted(presence_minutes(load_config(), args.machine))))
 
 
 # --- publish ------------------------------------------------------------------
@@ -606,7 +722,11 @@ def github_contributions():
             [gh, "api", "graphql", "-f", f"query={query}"],
             capture_output=True, text=True, timeout=60, creationflags=NO_WINDOW,
         )
-        weeks = json.loads(result.stdout)["data"]["viewer"]["contributionsCollection"][
+        result.check_returncode()
+        response = json.loads(result.stdout)
+        if response.get("errors"):
+            return None
+        weeks = response["data"]["viewer"]["contributionsCollection"][
             "contributionCalendar"]["weeks"]
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError):
         return None
@@ -616,29 +736,55 @@ def github_contributions():
     }
 
 
+def last_publication():
+    if not LEDGER_PATH.exists() and not (LEDGER_DIR / "upload.json").exists():
+        return {"days": []}
+    ledger = read_json(LEDGER_PATH, None)
+    if not isinstance(ledger, dict) or not isinstance(ledger.get("days"), list) or not ledger["days"]:
+        raise ValueError("missing or invalid publication checkpoint")
+    return ledger
+
+
 def build_ledger(config):
     bucket_names = [bucket["name"] for bucket in config["buckets"]]
     human = {}
     agent_minutes = {}
     sessions = {}
     tool_calls = {}
-    all_runs = []
-    machines = []
-    for store_path in sorted(LEDGER_DIR.glob("events-*.json")):
-        store = read_json(store_path, {})
-        machines.append(store.get("machine", store_path.stem))
-        for key, value in (store.get("human") or {}).items():
-            human[f"{store.get('machine')}:{key}"] = value
-        for epoch, bucket in missed_prompts(store):
-            human[f"{store.get('machine')}:s{epoch}"] = [epoch, bucket]
-        for session in (store.get("agent") or {}).values():
-            all_runs.extend(session.get("runs") or [])
-            for day, count in (session.get("tools") or {}).items():
-                tool_calls[day] = tool_calls.get(day, 0) + count
-            for day, minutes in (session.get("days") or {}).items():
+    runs_by_day = defaultdict(list)
+    machines = [config.get("machine", "pc"), *(remote["machine"] for remote in config.get("remotes", []))]
+    merged_sessions = {}
+    for machine in machines:
+        store = read_store(LEDGER_DIR / f"events-{machine}.json", machine)
+        for key, value in store["human"].items():
+            # Native IDs deduplicate copies of the same prompt. Legacy history
+            # timestamps have no global identity and are scoped to the machine.
+            identity = key if key.startswith(("x", "q")) and not key.startswith("qlegacy:") else f"{machine}:{key}"
+            human.setdefault(identity, value)
+        for key, session in store["agent"].items():
+            identity = key if key.startswith("cx") else f"{machine}:{key}"
+            # A recently copied store can contain an older copy of a thread.
+            known = merged_sessions.get(identity)
+            completeness = (session.get("turns", 0), sum(session.get("tools", {}).values()), store["updatedAt"])
+            if known is None or completeness > known[0]:
+                merged_sessions[identity] = (completeness, session)
+
+    for _, session in merged_sessions.values():
+        for day, count in session.get("tools", {}).items():
+            tool_calls[day] = tool_calls.get(day, 0) + count
+        days_with_runs = set()
+        for start, end in session.get("runs", []):
+            for day, first, last in split_run(start, end):
+                days_with_runs.add(day)
+                runs_by_day[day].append((first, last))
+                agent_minutes[day] = agent_minutes.get(day, 0) + (last - first) / 60
+        if "runs" not in session:
+            for day, minutes in session.get("days", {}).items():
+                days_with_runs.add(day)
                 agent_minutes[day] = agent_minutes.get(day, 0) + minutes
-                if session.get("main"):
-                    sessions[day] = sessions.get(day, 0) + 1
+        if session["main"]:
+            for day in days_with_runs:
+                sessions[day] = sessions.get(day, 0) + 1
 
     days = {}
 
@@ -656,11 +802,12 @@ def build_ledger(config):
             entry["first"] = epoch
         entry["last"] = epoch
         if index:
-            gap = epoch - ordered[index - 1][0]
-            if 0 < gap <= IDLE_GAP_SECONDS:
+            previous_epoch = ordered[index - 1][0]
+            gap = epoch - previous_epoch
+            if 0 < gap <= IDLE_GAP_SECONDS and day_of(previous_epoch) == day_of(epoch):
                 entry["seconds"][bucket] += gap
 
-    previous = read_json(LEDGER_PATH, {})
+    previous = last_publication()
     contributions = {
         day["date"]: day.get("contributions", 0)
         for day in previous.get("days", []) if day.get("contributions")
@@ -676,9 +823,15 @@ def build_ledger(config):
         day = day_of(minute * 60)
         present[day] = present.get(day, 0) + 1
 
-    peaks = peak_parallel(all_runs)
+    peaks = {}
+    for day, runs in runs_by_day.items():
+        edges = sorted((epoch, change) for start, end in runs for epoch, change in ((start, 1), (end, -1)))
+        running = 0
+        for _, change in edges:
+            running += change
+            peaks[day] = max(peaks.get(day, 0), running)
     all_days = set(days) | set(agent_minutes) | set(present) | {d for d, n in contributions.items() if n}
-    cutoff = day_of(time.time() - PUBLISH_DAYS * 86400)
+    cutoff = (datetime.fromisoformat(day_of(time.time())) - timedelta(days=PUBLISH_DAYS)).date().isoformat()
     rows = []
     for day in sorted(d for d in all_days if d >= cutoff):
         entry = days.get(day) or {
@@ -689,7 +842,7 @@ def build_ledger(config):
             "date": day,
             "hours": round(sum(entry["seconds"]) / 3600, 2),
             # First prompt to last prompt of the day: how long the workday ran, breaks included.
-            "span": round((entry["last"] - entry["first"]) / 3600, 1),
+            "span": (entry["last"] - entry["first"]) / 3600,
             # Minutes with keyboard or mouse input on any machine, games left out.
             "active": round(present.get(day, 0) / 60, 2),
             "byBucket": by_bucket,
@@ -705,10 +858,11 @@ def build_ledger(config):
     return {
         "version": 1,
         "generatedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        "timezone": config.get("timezone", "America/Los_Angeles"),
+        "timezone": PACIFIC.key,
         "dayStartHour": DAY_START_HOUR,
         "idleGapMinutes": IDLE_GAP_SECONDS // 60,
         "agentTrackingSince": tracked[0] if tracked else None,
+        "claudeAgentTrackingSince": CLAUDE_AGENT_TRACKING_SINCE,
         # The first day is partial, so the site starts using presence the day after.
         "presenceSince": min(present) if present else None,
         "machines": len(machines),
@@ -718,12 +872,18 @@ def build_ledger(config):
 
 
 def cmd_publish(args):
-    ledger = build_ledger(load_config())
-    write_json(LEDGER_PATH, ledger)
-    if args.out:
-        Path(args.out).write_text(json.dumps(ledger, separators=(",", ":")) + "\n", encoding="utf-8")
-    print(f"published {len(ledger['days'])} days to {LEDGER_PATH}")
-    return ledger
+    with ledger_lock("run.lock"):
+        if load_config().get("gistId"):
+            # Export the acknowledged upload so the fallback and gist agree.
+            ledger = last_publication()
+            if not ledger["days"]:
+                raise ValueError("no prior upload")
+        else:
+            ledger = build_ledger(load_config())
+            write_json(LEDGER_PATH, ledger)
+        if args.out:
+            write_atomic(args.out, (json.dumps(ledger, separators=(",", ":")) + "\n").encode("utf-8"))
+        print(f"published {len(ledger['days'])} days")
 
 
 # --- run: collect everywhere, publish, upload --------------------------------
@@ -747,20 +907,34 @@ def pull_remote(host, machine):
         run_quiet(base + ["mkdir -p ~/.work-ledger"], timeout=20).check_returncode()
         for name in ("collect.py", "config.json"):
             source = (Path(__file__).resolve() if name == "collect.py" else CONFIG_PATH).read_bytes()
-            run_quiet(base + [f"cat > ~/.work-ledger/{name}"], source, 30).check_returncode()
+            command = (
+                f'umask 077; target=~/.work-ledger/{name}; tmp=$(mktemp "$target.XXXXXX") && '
+                'cat > "$tmp" && mv -f "$tmp" "$target"'
+            )
+            run_quiet(base + [command], source, 30).check_returncode()
         run_quiet(
             base + [f"python3 ~/.work-ledger/collect.py collect --machine {machine}"], timeout=900,
         ).check_returncode()
         fetched = run_quiet(base + [f"cat ~/.work-ledger/events-{machine}.json"], timeout=60)
         fetched.check_returncode()
-        store = json.loads(fetched.stdout.decode("utf-8"))
-        if store.get("machine") != machine:
-            raise ValueError("unexpected store contents")
+        store = validate_store(json.loads(fetched.stdout), machine)
         write_json(LEDGER_DIR / f"events-{machine}.json", store)
-        presence = run_quiet(base + [f"cat ~/.work-ledger/presence-{machine}.log 2>/dev/null"], timeout=60)
-        if presence.stdout:
-            (LEDGER_DIR / f"presence-{machine}.log").write_bytes(presence.stdout)
         log(f"{machine}: pulled {len(store.get('human', {}))} prompts")
+        fetched = run_quiet(
+            base + [f"python3 ~/.work-ledger/collect.py presence-export --machine {machine}"], timeout=60,
+        )
+        fetched.check_returncode()
+        minutes = json.loads(fetched.stdout)
+        if not isinstance(minutes, list) or not all(type(m) is int and valid_epoch(m * 60) for m in minutes):
+            raise ValueError("invalid remote presence")
+        grouped = defaultdict(list)
+        for minute in sorted(set(minutes) | presence_minutes(load_config(), machine)):
+            grouped[presence_path(machine, minute)].append(minute)
+        for path, values in grouped.items():
+            data = "".join(f"{minute}\t\t\n" for minute in values).encode("ascii")
+            if not path.exists() or path.read_bytes() != data:
+                write_atomic(path, data)
+        log(f"{machine}: pulled {len(minutes)} presence minutes")
     except (OSError, ValueError, subprocess.SubprocessError) as error:
         # An asleep or off-network laptop is normal; its last pulled store is still used.
         log(f"{machine}: not pulled ({type(error).__name__})")
@@ -786,18 +960,30 @@ def upload_gist(gist_id, ledger):
 
 
 def cmd_run(args):
-    config = load_config()
-    cmd_collect(argparse.Namespace(machine=config.get("machine", "pc")))
-    for remote in config.get("remotes", []):
-        pull_remote(remote["host"], remote["machine"])
-    before = read_json(LEDGER_PATH, {}).get("days")
-    ledger = cmd_publish(argparse.Namespace(out=None))
-    if not config.get("gistId"):
-        log("run: no gistId in config, not uploaded")
-    elif ledger["days"] == before and not args.force:
-        log("run: no change")
-    elif upload_gist(config["gistId"], ledger):
-        log(f"run: uploaded {len(ledger['days'])} days")
+    with ledger_lock("run.lock"):
+        config = load_config()
+        before = last_publication()["days"]
+        cmd_collect(argparse.Namespace(machine=config.get("machine", "pc")))
+        for remote in config.get("remotes", []):
+            pull_remote(remote["host"], remote["machine"])
+        ledger = build_ledger(config)
+        if not ledger["days"]:
+            raise ValueError("empty ledger")
+        if not config.get("gistId"):
+            write_json(LEDGER_PATH, ledger)
+            log("run: no gistId in config, not uploaded")
+        elif not args.force and ledger["days"] == before and read_json(LEDGER_DIR / "upload.json", None) == ledger_hash(ledger):
+            log("run: no change")
+        elif upload_gist(config["gistId"], ledger):
+            write_json(LEDGER_PATH, ledger)
+            write_json(LEDGER_DIR / "upload.json", ledger_hash(ledger))
+            log(f"run: uploaded {len(ledger['days'])} days")
+        else:
+            raise RuntimeError("gist upload failed")
+
+
+def ledger_hash(ledger):
+    return fingerprint(json.dumps({key: value for key, value in ledger.items() if key != "generatedAt"}))
 
 
 def install_mac_presence(target, machine):
@@ -832,7 +1018,7 @@ def cmd_install(args):
     target = LEDGER_DIR / "collect.py"
     source = Path(__file__).resolve()
     if source != target:
-        shutil.copyfile(source, target)
+        write_atomic(target, source.read_bytes())
         print(f"copied collector to {target}")
     if sys.platform == "darwin":
         # The hourly collect is run from the PC over SSH; only presence runs here.
@@ -852,6 +1038,7 @@ def cmd_install(args):
             ["schtasks", "/Create", "/F", "/TN", name, *schedule, "/TR", f'"{pythonw}" "{target}" {command}'],
             capture_output=True, text=True,
         )
+        result.check_returncode()
         print((result.stdout or result.stderr).strip())
 
 
@@ -867,12 +1054,17 @@ def main():
     run = commands.add_parser("run")
     run.add_argument("--force", action="store_true", help="upload even if nothing changed")
     run.set_defaults(handler=cmd_run)
-    for name, handler in (("sample", cmd_sample), ("install", cmd_install)):
+    for name, handler in (("sample", cmd_sample), ("install", cmd_install), ("presence-export", cmd_presence_export)):
         command = commands.add_parser(name)
         command.add_argument("--machine", help="machine name, when it differs from the config")
         command.set_defaults(handler=handler)
     args = parser.parse_args()
-    args.handler(args)
+    try:
+        args.handler(args)
+    except (OSError, ValueError, TypeError, KeyError, AttributeError, sqlite3.Error, RuntimeError) as error:
+        log(f"{args.command}: stopped ({type(error).__name__})")
+        print(f"{args.command}: stopped ({type(error).__name__}); see run.log", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
