@@ -16,6 +16,8 @@ export interface WorkLedgerDay {
 	hours: number;
 	/** First prompt to last prompt, breaks included. */
 	span?: number;
+	/** Hours with keyboard or mouse input on any machine, games left out. */
+	active?: number;
 	byBucket: number[];
 	prompts: number;
 	agentHours: number;
@@ -34,6 +36,8 @@ export interface WorkLedger {
 	dayStartHour: number;
 	idleGapMinutes: number;
 	agentTrackingSince: string;
+	/** First day the at-the-computer tracker ran. That day is partial, so it is never shown. */
+	presenceSince?: string | null;
 	machines?: number;
 	buckets: string[];
 	days: WorkLedgerDay[];
@@ -43,7 +47,13 @@ export interface WorkLedger {
 export type LedgerDay = Required<WorkLedgerDay>;
 
 export function normalizeDay(day: WorkLedgerDay): LedgerDay {
-	return { ...day, span: day.span ?? 0, peakAgents: day.peakAgents ?? 0, toolCalls: day.toolCalls ?? 0 };
+	return {
+		...day,
+		span: day.span ?? 0,
+		active: day.active ?? 0,
+		peakAgents: day.peakAgents ?? 0,
+		toolCalls: day.toolCalls ?? 0
+	};
 }
 
 // ---------------------------------------------------------------------------
@@ -131,6 +141,7 @@ function isWorkLedgerDay(value: unknown, bucketCount: number): value is WorkLedg
 		isIsoDate(value.date) &&
 		isNonNegative(value.hours) &&
 		isOptionalNonNegative(value.span) &&
+		isOptionalNonNegative(value.active) &&
 		isOptionalNonNegative(value.peakAgents) &&
 		isOptionalNonNegative(value.toolCalls) &&
 		Array.isArray(byBucket) &&
@@ -161,6 +172,9 @@ export function isWorkLedger(value: unknown): value is WorkLedger {
 	}
 	if (!isNonNegative(value.idleGapMinutes)) return false;
 	if (!isIsoDate(value.agentTrackingSince)) return false;
+	if (value.presenceSince !== undefined && value.presenceSince !== null && !isIsoDate(value.presenceSince)) {
+		return false;
+	}
 	if (!isOptionalNonNegative(value.machines)) return false;
 	if (
 		!Array.isArray(buckets) ||
@@ -217,6 +231,7 @@ export function dayOrZero(index: LedgerIndex, date: string): LedgerDay {
 			date,
 			hours: 0,
 			span: 0,
+			active: 0,
 			byBucket: new Array<number>(index.bucketCount).fill(0),
 			prompts: 0,
 			agentHours: 0,
@@ -244,6 +259,7 @@ export function recentDays(index: LedgerIndex, end: string, length: number): Led
 export type DayMetric =
 	| "hours"
 	| "span"
+	| "active"
 	| "prompts"
 	| "agentHours"
 	| "sessions"
@@ -303,6 +319,10 @@ export interface WorkLedgerSummary {
 	/** True when the latest date is the ledger day still in progress at generatedAt. */
 	latestIsCurrent: boolean;
 	latestHours: number;
+	/** Workday length of the latest day: first prompt to last prompt so far. */
+	latestSpan: number;
+	/** At-the-computer hours of the latest day, or null until the tracker has a full day behind it. */
+	latestActive: number | null;
 	/** Last day of the full-day windows: the day before today when today is still in progress. */
 	fullDayEnd: string;
 	avg7: number;
@@ -337,6 +357,8 @@ export function summarize(ledger: WorkLedger, index: LedgerIndex = indexLedger(l
 	const latestIsCurrent = currentDay === latest;
 	const today = dayOrZero(index, latest);
 	const latestHours = today.hours;
+	const presenceSince = ledger.presenceSince ?? null;
+	const latestActive = presenceSince !== null && latest > presenceSince ? today.active : null;
 
 	// A day still in progress would drag averages down, so averages use full days only.
 	const fullDayEnd = latestIsCurrent ? addDays(latest, -1) : latest;
@@ -413,6 +435,8 @@ export function summarize(ledger: WorkLedger, index: LedgerIndex = indexLedger(l
 		latestDate: latest,
 		latestIsCurrent,
 		latestHours,
+		latestSpan: today.span,
+		latestActive,
 		fullDayEnd,
 		avg7,
 		workday,

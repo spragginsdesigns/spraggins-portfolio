@@ -86,6 +86,9 @@ const MethodNote: React.FC<{ ledger: WorkLedgerData }> = ({ ledger }) => {
 				A day runs {start} to {start} {zoneLabel(ledger.timezone)} so late nights count for the day they started.
 				{tracksAgentsLate
 					? ` Agent hours, peak agents and agent actions have been tracked since ${formatLongDate(ledger.agentTrackingSince)}.`
+					: ""}
+				{ledger.presenceSince
+					? ` Time at the computer counts minutes with keyboard or mouse input and has been tracked since ${formatLongDate(ledger.presenceSince)}.`
 					: ""}{" "}
 				Contributions include commits shipped by my agent fleet. No repo names, code or prompt text ever leave my
 				machines.

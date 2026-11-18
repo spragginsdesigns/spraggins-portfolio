@@ -198,22 +198,34 @@ export function buildSecondaryTiles(s: WorkLedgerSummary, agentTrackingSince: st
 				}
 			];
 
+	const day = formatShortDate(s.latestDate);
+	const handsOn = `${formatHours(s.latestHours)}h hands-on`;
+	// The streak is already in the hero row, so measured time at the computer replaces it once it exists.
+	const thirdTile: Tile =
+		s.latestActive !== null
+			? {
+					label: s.latestIsCurrent ? "At the computer today" : "At the computer, latest day",
+					value: `${formatHours(s.latestActive)}h`,
+					sub: "keyboard or mouse in use, PC and MacBook"
+				}
+			: {
+					label: "Current streak",
+					value: formatInt(s.streak),
+					sub: s.streak === 1 ? "day worked" : "consecutive days worked"
+				};
+
 	return [
 		{
-			label: s.latestIsCurrent ? "Today, hands-on" : "Latest day, hands-on",
-			value: `${formatHours(s.latestHours)}h`,
-			sub: s.latestIsCurrent ? `so far, ${formatShortDate(s.latestDate)}` : formatShortDate(s.latestDate)
+			label: s.latestIsCurrent ? "Today's workday so far" : "Latest workday",
+			value: `${formatHours(s.latestSpan)}h`,
+			sub: `${handsOn}, ${day}`
 		},
 		{
 			label: "7-day average, hands-on",
 			value: `${formatHours(s.avg7)}h`,
 			sub: "per day, last 7 full days"
 		},
-		{
-			label: "Current streak",
-			value: formatInt(s.streak),
-			sub: s.streak === 1 ? "day worked" : "consecutive days worked"
-		},
+		thirdTile,
 		{ label: "Prompts sent", value: formatInt(s.prompts30), sub: "last 30 days" },
 		...agentTiles,
 		{ label: "Contributions", value: formatInt(s.contributions365), sub: "last 365 days" }

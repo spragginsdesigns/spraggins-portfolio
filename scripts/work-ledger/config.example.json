@@ -3,6 +3,10 @@
   "timezone": "America/Los_Angeles",
   "gistId": "",
   "remotes": [{ "host": "macbook", "machine": "mac" }],
+  "presence": {
+    "exclude": ["steamapps\\common", "example-game-folder"],
+    "include": ["example-game-engine"]
+  },
   "defaultBucket": "Personal & tooling",
   "buckets": [
     { "name": "LineCrush", "match": ["example-main-repo"] },

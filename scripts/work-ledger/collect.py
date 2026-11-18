@@ -13,7 +13,8 @@ Commands:
   collect   Update this machine's private event store (~/.work-ledger).
   publish   Merge every machine's store into work-ledger.json.
   run       collect, pull the MacBook, publish, upload (what the scheduled task runs).
-  install   Copy this script to ~/.work-ledger and register the hourly task (Windows).
+  sample    Record whether the keyboard or mouse was used in the last few minutes.
+  install   Copy this script to ~/.work-ledger and register the scheduled jobs.
 """
 
 import argparse
@@ -40,9 +41,15 @@ DAY_START_HOUR = 4
 IDLE_GAP_SECONDS = 30 * 60
 # Agent time: a session is considered running while its log lines are this close together.
 AGENT_GAP_SECONDS = 5 * 60
+# At the computer: a sampled minute counts when there was input this recently.
+PRESENCE_IDLE_SECONDS = 3 * 60
+# A prompt found in a session log is the same prompt as a history entry this close to it.
+SAME_PROMPT_SECONDS = 90
 PUBLISH_DAYS = 400
 MIN_EPOCH = calendar.timegm((2024, 1, 1, 0, 0, 0))
 TASK_NAME = "WorkLedgerCollector"
+PRESENCE_TASK_NAME = "WorkLedgerPresence"
+MAC_AGENT_LABEL = "xyz.spragginsdesigns.work-ledger-presence"
 
 ISO_RE = re.compile(r"(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)")
 # Unescaped key only, so timestamps quoted inside tool output are not matched.
@@ -230,9 +237,27 @@ def count_by_day(stamps):
     return per_day
 
 
-def claude_session_stamps(path):
-    """Return (activity stamps, one stamp per tool call) for a Claude Code session log."""
-    stamps, tools = [], []
+def human_prompt_cwd(line):
+    """Working directory of a prompt the human sent, or None for any other log line.
+
+    history.jsonl misses prompts sent while an agent is still working (they are
+    queued), so the session log is the only record of them.
+    """
+    try:
+        entry = json.loads(line)
+    except ValueError:
+        return None
+    origin = entry.get("origin")
+    if entry.get("type") != "user" or not isinstance(origin, dict) or origin.get("kind") != "human":
+        return None
+    if entry.get("isMeta") or entry.get("isSidechain"):
+        return None
+    return entry.get("cwd") or ""
+
+
+def claude_session_stamps(path, config):
+    """Return (activity stamps, tool-call stamps, human prompts) for a Claude Code session log."""
+    stamps, tools, prompts = [], [], []
     for line in iter_lines(path):
         if '"type":"assistant"' not in line and '"type":"user"' not in line:
             continue
@@ -242,11 +267,18 @@ def claude_session_stamps(path):
             if epoch is not None and valid_epoch(epoch):
                 stamps.append(epoch)
                 tools.extend([epoch] * line.count('"type":"tool_use"'))
-    return stamps, tools
+                if '"origin":{"kind":"human"' in line:
+                    cwd = human_prompt_cwd(line)
+                    if cwd is not None:
+                        prompts.append([epoch, bucket_index(cwd, config)])
+    return stamps, tools, prompts
 
 
-def codex_session_stamps(path):
-    """Return (activity stamps, one stamp per tool call) for a Codex rollout."""
+def codex_session_stamps(path, _config):
+    """Return (activity stamps, tool-call stamps, []) for a Codex rollout.
+
+    Codex prompts are already complete in collect_human, so none are returned here.
+    """
     stamps, tools = [], []
     for line in iter_lines(path):
         if line.startswith('{"timestamp":"'):
@@ -255,11 +287,11 @@ def codex_session_stamps(path):
                 stamps.append(epoch)
                 if '"type":"function_call"' in line or '"type":"custom_tool_call"' in line:
                     tools.append(epoch)
-    return stamps, tools
+    return stamps, tools, []
 
 
-def collect_agent(previous):
-    """Return {file id: {m, s, main, days, runs, tools}}; unchanged files are not re-read.
+def collect_agent(previous, config):
+    """Return {file id: {m, s, main, days, runs, tools, prompts}}; unchanged files are not re-read.
 
     Entries for log files that were later pruned are kept, which is how the
     ledger holds history longer than the tools keep their own logs.
@@ -281,12 +313,12 @@ def collect_agent(previous):
         key = file_id(path)
         known = sessions.get(key)
         unchanged = known and known.get("m") == int(stat.st_mtime) and known.get("s") == stat.st_size
-        # "runs" was added after the first release; entries without it are re-read once.
-        if unchanged and "runs" in known:
+        # "runs" and "prompts" were added after the first release; entries without them are re-read once.
+        if unchanged and "runs" in known and "prompts" in known:
             continue
         if is_main is None:
             is_main = not codex_session_meta(path)[2]
-        stamps, tools = reader(path)
+        stamps, tools, prompts = reader(path, config)
         stamps.sort()
         sessions[key] = {
             "m": int(stat.st_mtime),
@@ -295,8 +327,26 @@ def collect_agent(previous):
             "days": session_day_minutes(stamps),
             "runs": session_runs(stamps),
             "tools": count_by_day(tools),
+            "prompts": prompts if is_main else [],
         }
     return sessions
+
+
+def missed_prompts(store):
+    """Session-log prompts of one machine that have no history entry close to them."""
+    known = sorted(value[0] for value in (store.get("human") or {}).values())
+    found = {}
+    for session in (store.get("agent") or {}).values():
+        for epoch, bucket in session.get("prompts") or []:
+            found[epoch] = bucket
+    missed = []
+    position = 0
+    for epoch in sorted(found):
+        while position < len(known) and known[position] < epoch - SAME_PROMPT_SECONDS:
+            position += 1
+        if position == len(known) or known[position] > epoch + SAME_PROMPT_SECONDS:
+            missed.append([epoch, found[epoch]])
+    return missed
 
 
 def peak_parallel(runs):
@@ -325,10 +375,112 @@ def cmd_collect(args):
         "machine": args.machine,
         "updatedAt": int(time.time()),
         "human": collect_human(config, store.get("human") or {}),
-        "agent": collect_agent(store.get("agent") or {}),
+        "agent": collect_agent(store.get("agent") or {}, config),
     }
     write_json(store_path, store)
     print(f"{args.machine}: {len(store['human'])} prompts, {len(store['agent'])} sessions")
+
+
+# --- presence: was anyone at the keyboard ----------------------------------------
+
+
+def idle_seconds():
+    """Seconds since the last keyboard or mouse input, or None when it cannot be read."""
+    if os.name == "nt":
+        import ctypes
+
+        class LastInputInfo(ctypes.Structure):
+            _fields_ = [("cbSize", ctypes.c_uint), ("dwTime", ctypes.c_uint)]
+
+        info = LastInputInfo()
+        info.cbSize = ctypes.sizeof(info)
+        if not ctypes.windll.user32.GetLastInputInfo(ctypes.byref(info)):
+            return None
+        return ((ctypes.windll.kernel32.GetTickCount() - info.dwTime) & 0xFFFFFFFF) / 1000
+    if sys.platform == "darwin":
+        try:
+            output = subprocess.run(
+                ["ioreg", "-c", "IOHIDSystem"], capture_output=True, text=True, timeout=10,
+            ).stdout
+        except (OSError, subprocess.SubprocessError):
+            return None
+        match = re.search(r'"HIDIdleTime" = (\d+)', output)
+        return int(match.group(1)) / 1e9 if match else None
+    return None
+
+
+def foreground_app():
+    """Lowercase path (Windows) or name (macOS) of the app in front, or "" when unknown."""
+    if os.name == "nt":
+        import ctypes
+        from ctypes import wintypes
+
+        user32, kernel32 = ctypes.windll.user32, ctypes.windll.kernel32
+        user32.GetForegroundWindow.restype = wintypes.HWND
+        kernel32.OpenProcess.restype = wintypes.HANDLE
+        pid = wintypes.DWORD()
+        user32.GetWindowThreadProcessId(user32.GetForegroundWindow(), ctypes.byref(pid))
+        handle = kernel32.OpenProcess(0x1000, False, pid.value)
+        if not handle:
+            return ""
+        try:
+            buffer = ctypes.create_unicode_buffer(1024)
+            size = wintypes.DWORD(len(buffer))
+            ok = kernel32.QueryFullProcessImageNameW(wintypes.HANDLE(handle), 0, buffer, ctypes.byref(size))
+            return buffer.value.lower() if ok else ""
+        finally:
+            kernel32.CloseHandle(wintypes.HANDLE(handle))
+    if sys.platform == "darwin":
+        try:
+            front = subprocess.run(["lsappinfo", "front"], capture_output=True, text=True, timeout=10)
+            info = subprocess.run(
+                ["lsappinfo", "info", "-only", "name", front.stdout.strip()],
+                capture_output=True, text=True, timeout=10,
+            ).stdout
+        except (OSError, subprocess.SubprocessError):
+            return ""
+        names = re.findall(r'"([^"]+)"', info)
+        return names[-1].lower() if names else ""
+    return ""
+
+
+def app_is_excluded(app, config):
+    """True when the app in front is one the private config says is not work (games)."""
+    presence = config.get("presence") or {}
+    if any(pattern.lower() in app for pattern in presence.get("include", [])):
+        return False
+    return any(pattern.lower() in app for pattern in presence.get("exclude", []))
+
+
+def cmd_sample(args):
+    """Append this minute to the presence log when there was recent input.
+
+    Only the minute, the app's file name and a work/not-work flag are kept, and
+    only on this machine. Nothing here is published except the daily total.
+    """
+    config = load_config()
+    idle = idle_seconds()
+    if idle is None or idle > PRESENCE_IDLE_SECONDS:
+        return
+    app = foreground_app()
+    flag = "x" if app_is_excluded(app, config) else ""
+    name = re.split(r"[\\/]", app)[-1].replace("\t", " ")
+    machine = args.machine or config.get("machine", "pc")
+    with open(LEDGER_DIR / f"presence-{machine}.log", "a", encoding="utf-8") as handle:
+        handle.write(f"{int(time.time()) // 60}\t{name}\t{flag}\n")
+
+
+def presence_minutes(config):
+    """Minutes with someone at a keyboard, across every machine, games left out."""
+    minutes = set()
+    for path in LEDGER_DIR.glob("presence-*.log"):
+        for line in iter_lines(path):
+            parts = line.rstrip("\n").split("\t")
+            if len(parts) != 3 or not parts[0].isdigit():
+                continue
+            if parts[2] != "x" and not app_is_excluded(parts[1], config):
+                minutes.add(int(parts[0]))
+    return minutes
 
 
 # --- publish ------------------------------------------------------------------
@@ -371,6 +523,8 @@ def build_ledger(config):
         machines.append(store.get("machine", store_path.stem))
         for key, value in (store.get("human") or {}).items():
             human[f"{store.get('machine')}:{key}"] = value
+        for epoch, bucket in missed_prompts(store):
+            human[f"{store.get('machine')}:s{epoch}"] = [epoch, bucket]
         for session in (store.get("agent") or {}).values():
             all_runs.extend(session.get("runs") or [])
             for day, count in (session.get("tools") or {}).items():
@@ -411,8 +565,13 @@ def build_ledger(config):
     else:
         contributions.update(fresh)
 
+    present = {}
+    for minute in presence_minutes(config):
+        day = day_of(minute * 60)
+        present[day] = present.get(day, 0) + 1
+
     peaks = peak_parallel(all_runs)
-    all_days = set(days) | set(agent_minutes) | {d for d, n in contributions.items() if n}
+    all_days = set(days) | set(agent_minutes) | set(present) | {d for d, n in contributions.items() if n}
     cutoff = day_of(time.time() - PUBLISH_DAYS * 86400)
     rows = []
     for day in sorted(d for d in all_days if d >= cutoff):
@@ -425,6 +584,8 @@ def build_ledger(config):
             "hours": round(sum(entry["seconds"]) / 3600, 2),
             # First prompt to last prompt of the day: how long the workday ran, breaks included.
             "span": round((entry["last"] - entry["first"]) / 3600, 1),
+            # Minutes with keyboard or mouse input on any machine, games left out.
+            "active": round(present.get(day, 0) / 60, 2),
             "byBucket": by_bucket,
             "prompts": entry["prompts"],
             "agentHours": round(agent_minutes.get(day, 0) / 60, 1),
@@ -442,6 +603,8 @@ def build_ledger(config):
         "dayStartHour": DAY_START_HOUR,
         "idleGapMinutes": IDLE_GAP_SECONDS // 60,
         "agentTrackingSince": tracked[0] if tracked else None,
+        # The first day is partial, so the site starts using presence the day after.
+        "presenceSince": min(present) if present else None,
         "machines": len(machines),
         "buckets": bucket_names,
         "days": rows,
@@ -488,6 +651,9 @@ def pull_remote(host, machine):
         if store.get("machine") != machine:
             raise ValueError("unexpected store contents")
         write_json(LEDGER_DIR / f"events-{machine}.json", store)
+        presence = run_quiet(base + [f"cat ~/.work-ledger/presence-{machine}.log 2>/dev/null"], timeout=60)
+        if presence.stdout:
+            (LEDGER_DIR / f"presence-{machine}.log").write_bytes(presence.stdout)
         log(f"{machine}: pulled {len(store.get('human', {}))} prompts")
     except (OSError, ValueError, subprocess.SubprocessError) as error:
         # An asleep or off-network laptop is normal; its last pulled store is still used.
@@ -528,22 +694,59 @@ def cmd_run(args):
         log(f"run: uploaded {len(ledger['days'])} days")
 
 
-def cmd_install(_args):
-    load_config()
-    target = LEDGER_DIR / "collect.py"
-    shutil.copyfile(Path(__file__).resolve(), target)
-    print(f"copied collector to {target}")
-    if os.name != "nt":
-        print("not Windows: no scheduled task registered (this machine is pulled over SSH)")
-        return
-    # pythonw has no console, so the hourly run never flashes a window.
-    pythonw = Path(sys.executable).with_name("pythonw.exe")
-    command = f'"{pythonw}" "{target}" run'
-    result = subprocess.run(
-        ["schtasks", "/Create", "/F", "/TN", TASK_NAME, "/SC", "HOURLY", "/TR", command],
-        capture_output=True, text=True,
+def install_mac_presence(target, machine):
+    """Register a per-user launchd job that samples presence every minute."""
+    plist = HOME / "Library" / "LaunchAgents" / f"{MAC_AGENT_LABEL}.plist"
+    # The unversioned python3 on PATH survives a Homebrew upgrade; sys.executable does not.
+    python = shutil.which("python3") or sys.executable
+    arguments = [python, str(target), "sample", "--machine", machine]
+    plist.parent.mkdir(parents=True, exist_ok=True)
+    plist.write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" '
+        '"http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n'
+        '<plist version="1.0"><dict>\n'
+        f"<key>Label</key><string>{MAC_AGENT_LABEL}</string>\n"
+        "<key>ProgramArguments</key><array>"
+        + "".join(f"<string>{argument}</string>" for argument in arguments)
+        + "</array>\n"
+        "<key>StartInterval</key><integer>60</integer>\n"
+        "<key>RunAtLoad</key><true/>\n"
+        "</dict></plist>\n",
+        encoding="utf-8",
     )
-    print((result.stdout or result.stderr).strip())
+    domain = f"gui/{os.getuid()}"
+    subprocess.run(["launchctl", "bootout", f"{domain}/{MAC_AGENT_LABEL}"], capture_output=True)
+    result = subprocess.run(["launchctl", "bootstrap", domain, str(plist)], capture_output=True, text=True)
+    print(f"presence job: {'registered' if result.returncode == 0 else result.stderr.strip()}")
+
+
+def cmd_install(args):
+    config = load_config()
+    target = LEDGER_DIR / "collect.py"
+    source = Path(__file__).resolve()
+    if source != target:
+        shutil.copyfile(source, target)
+        print(f"copied collector to {target}")
+    if sys.platform == "darwin":
+        # The hourly collect is run from the PC over SSH; only presence runs here.
+        install_mac_presence(target, args.machine or config.get("machine", "mac"))
+        return
+    if os.name != "nt":
+        print("no scheduled jobs registered on this platform")
+        return
+    # pythonw has no console, so neither job ever flashes a window.
+    pythonw = Path(sys.executable).with_name("pythonw.exe")
+    jobs = (
+        (TASK_NAME, ["/SC", "HOURLY"], "run"),
+        (PRESENCE_TASK_NAME, ["/SC", "MINUTE", "/MO", "1"], "sample"),
+    )
+    for name, schedule, command in jobs:
+        result = subprocess.run(
+            ["schtasks", "/Create", "/F", "/TN", name, *schedule, "/TR", f'"{pythonw}" "{target}" {command}'],
+            capture_output=True, text=True,
+        )
+        print((result.stdout or result.stderr).strip())
 
 
 def main():
@@ -558,7 +761,10 @@ def main():
     run = commands.add_parser("run")
     run.add_argument("--force", action="store_true", help="upload even if nothing changed")
     run.set_defaults(handler=cmd_run)
-    commands.add_parser("install").set_defaults(handler=cmd_install)
+    for name, handler in (("sample", cmd_sample), ("install", cmd_install)):
+        command = commands.add_parser(name)
+        command.add_argument("--machine", help="machine name, when it differs from the config")
+        command.set_defaults(handler=handler)
     args = parser.parse_args()
     args.handler(args)
 
