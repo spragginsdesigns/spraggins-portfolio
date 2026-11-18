@@ -29,7 +29,7 @@ Personal portfolio website for **Austin Spraggins** - Co-Founder, CTO & Senior S
 
 - **Location:** Fresno, California (grew up in the mountains of O'Neals, CA)
 - **Family:** Proud father of two children - Julian and Lilly
-- **Faith:** Born-again Christian, saved by grace through faith in Jesus Christ. Public statement at /#faith; faith is central to his life and work.
+- **Faith:** Born-again Christian, saved by grace through faith in Jesus Christ. Public testimony page at /faith (old /#faith links redirect there); faith is central to his life and work.
 - **Background:** Lost his father at age 8; later cared for his mother when she became blind. Former truck driver before transitioning to tech. Went through a transformative life experience that profoundly changed his perspective, helping him find faith, inner peace, and renewed purpose.
 
 ### Values & Approach
@@ -71,6 +71,7 @@ src/
 │   ├── page.tsx        # Main page composing all sections
 │   ├── work/[slug]/page.tsx # LineCrush and SureWord engineering case studies
 │   ├── games/page.tsx  # LineCrush Games studio page (Gunmetal Orbit + VideoGame JSON-LD)
+│   ├── faith/page.tsx  # Austin's testimony (Faith.tsx); the landing page for SureWord's creator link
 │   ├── local-websites/page.tsx # Spraggins Designs offer page for Fresno businesses (ProfessionalService + FAQPage JSON-LD)
 │   ├── blog/           # Blog index + [slug] MDX post pages
 │   ├── feed.xml/       # RSS feed route
@@ -122,7 +123,7 @@ This project uses a **hybrid routing approach**:
 
 ### Key Sections
 
-The homepage leads with the engineering introduction, selected work, and Austin's journey and faith. Expertise, Daily Work Log, writing, the interactive terminal, GitHub, and contact follow. Product case studies live at `/work/linecrush` and `/work/sureword`. The LineCrush case study includes a linkable C2 section at `#c2`. Games, the résumé, and the Fresno website offer have dedicated routes.
+The homepage leads with the engineering introduction, selected work, and Austin's journey. Expertise, Daily Work Log, writing, the interactive terminal, GitHub, and contact follow. Product case studies live at `/work/linecrush` and `/work/sureword`. The LineCrush case study includes a linkable C2 section at `#c2`. Games, the résumé, and the Fresno website offer have dedicated routes. Austin's testimony lives on its own page, `/faith`, and stays off the homepage (Austin, 2026-11-18): it is there for people who follow SureWord's "Created by Austin Spraggins" link, and it has nothing to do with hiring. The shipped SureWord apps link to `/#faith`, so `FaithHashRedirect` on the homepage must keep forwarding that hash.
 
 ### UI Components
 

@@ -49,8 +49,8 @@
 }
 
 .headline,
-.story h3,
-.sureword h3,
+.story h2,
+.sureword h2,
 .scripture blockquote {
 	font-family: var(--font-testimony), Georgia, serif;
 	font-weight: 400;
@@ -142,8 +142,8 @@
 	outline-offset: 12px;
 }
 
-.story h3,
-.sureword h3 {
+.story h2,
+.sureword h2 {
 	margin: 0 0 18px;
 	font-size: clamp(35px, 4.7vw, 60px);
 	letter-spacing: -0.04em;

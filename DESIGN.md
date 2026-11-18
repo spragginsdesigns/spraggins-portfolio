@@ -103,7 +103,7 @@ components:
 
 The established portfolio uses dark surfaces, cyan accents, Inter body text and Poppins headings. Its project cards and navigation support scanning professional work. The faith section is an approved local editorial treatment: warm charcoal, gold, large serif statements and illuminated cross imagery.
 
-The faith treatment stays inside its section. Its open composition gives readable testimony and Scripture room beside each other, then closes with a SureWord invitation. Source extraction records the implemented styles; refreshed browser acceptance belongs to the finish review.
+The faith treatment stays inside its section, which since November 18, 2026 is the whole `/faith` page (headline is the page `h1`, story and SureWord headings are `h2`). Its open composition gives readable testimony and Scripture room beside each other, then closes with a SureWord invitation. Source extraction records the implemented styles; refreshed browser acceptance belongs to the finish review.
 
 **Key Characteristics:**
 

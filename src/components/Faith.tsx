@@ -30,10 +30,10 @@ export default function Faith() {
 					/>
 				</div>
 				<div className={`${styles.container} ${styles.heroContent}`}>
-					<h2 id="faith-heading" className={styles.headline}>
+					<h1 id="faith-heading" className={styles.headline}>
 						<span>Saved by grace.</span>
 						<em>Living for Him.</em>
-					</h2>
+					</h1>
 					<p className={styles.declaration}>
 						Jesus Christ is my Lord and Savior.
 					</p>
@@ -51,7 +51,7 @@ export default function Faith() {
 			<div className={styles.container}>
 				<div id="my-testimony" className={styles.testimony} tabIndex={-1}>
 					<div className={styles.story}>
-						<h3>A new life. A daily walk.</h3>
+						<h2>A new life. A daily walk.</h2>
 						<p>
 							I went through a difficult period in my life when I was afraid
 							of what might happen to me. But God kept me safe. He gave me
@@ -80,7 +80,7 @@ export default function Faith() {
 
 				<div className={styles.sureword}>
 					<div className={styles.surewordCopy}>
-						<h3>Faith, put into practice.</h3>
+						<h2>Faith, put into practice.</h2>
 						<p>
 							I built SureWord to honor God and help others in their own walk with Him.
 						</p>

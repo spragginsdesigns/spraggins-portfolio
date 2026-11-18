@@ -12,7 +12,7 @@ Show Austin's professional work, experience, personal projects and faith. Visito
 
 ## Constraints
 
-The current request replaces only the faith section. Preserve the surrounding portfolio and the existing `/#faith` entry points. Austin approved a warm, cinematic direction on October 29, 2026.
+The current request replaces only the faith section. Preserve the surrounding portfolio and the existing `/#faith` entry points. Since November 18, 2026 the faith section is its own page at `/faith`; the homepage forwards `/#faith` and `/#my-testimony` there. Austin approved a warm, cinematic direction on October 29, 2026.
 
 Faith copy must reflect Austin's own testimony and beliefs. Describe the transformative circumstances only as a difficult period or challenging time. Never publish private circumstances or invent conversion events. SureWord is an expression of his faith and desire to help others study God's Word.
 

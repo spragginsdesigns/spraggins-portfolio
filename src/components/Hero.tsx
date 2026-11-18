@@ -56,7 +56,7 @@ export default function Hero() {
 								<FileText size={17} aria-hidden="true" /> View résumé
 							</Link>
 						</div>
-						<a href="#faith" className={styles.faithLink}>Saved by grace through faith in Jesus Christ</a>
+						<Link href="/faith" className={styles.faithLink}>Saved by grace through faith in Jesus Christ</Link>
 					</div>
 					<WorkPreview />
 				</div>

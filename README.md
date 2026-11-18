@@ -44,7 +44,8 @@ Currently open to contracts and consulting opportunities.
 
 - **Selected work:** LineCrush, SureWord, C2, Gunmetal Orbit, paid client work, and open-source contributions.
 - **Engineering case studies:** [LineCrush](https://www.spragginsdesigns.xyz/work/linecrush) and [SureWord](https://www.spragginsdesigns.xyz/work/sureword).
-- **Journey:** Career milestones from trucking through teaching and co-founding LineCrush, with Austin's testimony and a sourced work log.
+- **Journey:** Career milestones from trucking through teaching and co-founding LineCrush, with a sourced work log.
+- **Faith:** Austin's testimony and why he built SureWord, on its own [page](https://www.spragginsdesigns.xyz/faith).
 - **Résumé:** A mobile-friendly [résumé page](https://www.spragginsdesigns.xyz/resume) with a PDF download.
 - **Dedicated pages:** LineCrush Games, Fresno business websites, and the engineering blog.
 - **SEO:** Route-specific canonical URLs and social cards, static case studies with Article and Breadcrumb structured data, sitemap, and robots.txt.

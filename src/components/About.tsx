@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
-import Faith from "@/components/Faith";
+import { ArrowUpRight } from "lucide-react";
 import styles from "./About.module.css";
 
 const chapters = [
@@ -48,7 +47,6 @@ const chapters = [
 
 export default function About() {
 	return (
-		<>
 			<section id="about" aria-labelledby="about-heading" className={styles.about}>
 				<div className={styles.container}>
 					<div className={styles.sectionLabel}>
@@ -76,9 +74,9 @@ export default function About() {
 									I want to serve God, provide for my family, and build things
 									that help people. That&apos;s what I&apos;m working toward.
 								</p>
-								<a href="#faith" className={styles.personalLink}>
-									My faith and testimony <ArrowDown size={16} aria-hidden="true" />
-								</a>
+								<Link href="/faith" className={styles.personalLink}>
+									My faith and testimony <ArrowUpRight size={16} aria-hidden="true" />
+								</Link>
 							</div>
 							<div className={styles.consistency}>
 								<span className={styles.smallLabel}>Showing up / 2025</span>
@@ -116,7 +114,5 @@ export default function About() {
 					</div>
 				</div>
 			</section>
-			<Faith />
-		</>
 	);
 }

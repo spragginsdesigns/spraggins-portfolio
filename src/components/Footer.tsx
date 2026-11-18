@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
 							About
 						</Link>
 						<Link
-							href="/#faith"
+							href="/faith"
 							className="hover:text-primary transition-colors"
 						>
 							My Faith

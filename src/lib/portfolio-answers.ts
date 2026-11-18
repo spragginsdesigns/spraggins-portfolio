@@ -89,7 +89,7 @@ const entries: readonly Entry[] = [
 		id: "faith-and-family", topic: "faith",
 		patterns: [/\b(faith|christian|christ|jesus|god|testimony|belie(?:f|fs|ver)|father(?:hood)?|family|children|values|purpose|difficult period|challenging time)\b/],
 		answer: "Austin describes himself as a father of two, a believer and a builder. After a difficult period in his life, he found faith in Jesus Christ and renewed purpose. His public testimony says faith shapes how he raises his children, treats people and approaches his work. He wants to serve God, provide for his family and build things that help people. SureWord is a direct expression of that purpose, built to support people in studying Scripture and their relationship with God.",
-		sources: [{ label: "Faith and testimony", href: "/#faith" }, aboutSource, surewordSource]
+		sources: [{ label: "Faith and testimony", href: "/faith" }, aboutSource, surewordSource]
 	},
 	{
 		id: "work-metrics", topic: "metrics",
