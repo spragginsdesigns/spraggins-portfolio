@@ -19,15 +19,18 @@ export default function Home() {
 
 	return (
 		<>
+			<a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-[#72f3df] focus:px-4 focus:py-3 focus:font-semibold focus:text-[#0a1015]">
+				Skip to content
+			</a>
 			<Header />
-			<main id="main-content" className="bg-background min-h-screen">
+			<main id="main-content" tabIndex={-1} className="bg-background min-h-screen">
 				<Hero />
 				<SelectedWork />
 				<About />
+				<InteractiveTerminal />
+				<BlogPreview posts={posts} />
 				<Expertise />
 				<WorkLedger />
-				<BlogPreview posts={posts} />
-				<InteractiveTerminal />
 				<ErrorBoundary>
 					<GitHubShowcase />
 				</ErrorBoundary>

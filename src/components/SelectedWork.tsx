@@ -9,8 +9,8 @@ const projects = [
 		slug: "linecrush",
 		name: "LineCrush",
 		role: "Co-Founder & CTO",
-		title: "Sports research across web and native apps",
-		description: "I started the codebase, built the product with Jay, and wrote the first SwiftUI research cards and Kotlin API client. Today the same product ships on web, iOS, and Android.",
+		title: "From a web codebase to two native app stores",
+		description: "I started the codebase and built LineCrush with Jay. For the native apps, I wrote the first SwiftUI research cards and Kotlin API client, then took both apps through release and store review.",
 		stack: "Next.js · Python · SwiftUI · Kotlin",
 		image: "/images/work/linecrush-research.webp",
 		alt: "LineCrush on iPhone with player statistics, a research card, and a historical chart",
@@ -20,8 +20,8 @@ const projects = [
 		slug: "sureword",
 		name: "SureWord",
 		role: "Creator & Engineer",
-		title: "A Bible study companion that remembers your study",
-		description: "I built SureWord from a web prototype into a paid product. Its AI grounds answers in Scripture, and your notes and study context stay with you across conversations and devices.",
+		title: "One study that continues across devices",
+		description: "I took SureWord from a web prototype into a paid cross-platform product. To keep verse quotations exact, the server supplies the Scripture text while the AI explains it.",
 		stack: "Next.js · AI SDK · React Native · SwiftUI",
 		image: "/images/work/sureword-study.webp",
 		alt: "SureWord on iPhone answering a study question with Scripture citations",
@@ -44,7 +44,7 @@ export default function SelectedWork() {
 								<p className={styles.projectText}>{project.description}</p>
 								<p className={styles.projectStack}>{project.stack}</p>
 								<Link className={styles.textAction} href={`/work/${project.slug}`}>
-									Read case study <span className="sr-only">for {project.name}</span>
+									Explore {project.name}
 									<ArrowRight size={17} aria-hidden="true" />
 								</Link>
 							</div>
@@ -62,7 +62,7 @@ export default function SelectedWork() {
 						<h3 id="fleet-title">C2 and the engineering fleet</h3>
 						<p className={styles.projectText}>
 							I designed the agent fleet we use at LineCrush and led the move from Linear to our own issue tracker, C2.
-							We can follow a change from the issue through verification and release.
+							The LineCrush case study follows one change all the way to the App Store release notes.
 						</p>
 						<Link href="/work/linecrush#c2" className={styles.textAction}>
 							See how we ship <ArrowRight size={17} aria-hidden="true" />

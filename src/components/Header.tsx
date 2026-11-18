@@ -8,6 +8,7 @@ import CommandPalette from "@/components/CommandPalette";
 const navLinks = [
 	{ label: "Selected work", href: "/#projects" },
 	{ label: "My story", href: "/#about" },
+	{ label: "Ask about me", href: "/#terminal" },
 	{ label: "Résumé", href: "/resume" },
 	{ label: "Games", href: "/games" },
 	{ label: "Blog", href: "/blog" },

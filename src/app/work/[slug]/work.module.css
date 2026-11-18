@@ -22,7 +22,7 @@
 .imageFrame { position: relative; width: min(100%, 240px); aspect-ratio: 9 / 19.5; margin: auto; }
 .productImage { object-fit: contain; }
 .productFigure figcaption { color: #8c9da5; font-size: 11px; line-height: 1.7; margin: 18px auto 0; max-width: 300px; }
-.facts { display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 40px; padding: 30px 0; border-top: 1px solid #2a343b; border-bottom: 1px solid #2a343b; }
+.facts { display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 16px; margin-top: 24px; padding: 16px 0; border-top: 1px solid #2a343b; border-bottom: 1px solid #2a343b; }
 .facts dt { font-size: 11px; color: #93a4ad; margin-bottom: 9px; }
 .facts dd { font-size: 14px; line-height: 1.7; }
 .stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; }
@@ -39,7 +39,7 @@
 .metrics dd { font-size: clamp(32px, 4vw, 48px); font-weight: 400; letter-spacing: -.05em; line-height: 1; color: var(--accent); }
 .sectionBody > p.metricNote { color: #8f9fa8; font-size: 11px; line-height: 1.8; margin-top: 16px; }
 .proof { padding: 26px; margin-top: 32px; background: #101c20; border-left: 2px solid var(--accent); }
-.proof h3 { margin: 12px 0; font-size: 20px; line-height: 1.45; letter-spacing: -.025em; font-weight: 500; }
+.proof h3 { margin: 0 0 12px; font-size: 20px; line-height: 1.45; letter-spacing: -.025em; font-weight: 500; }
 .proof > p:not(.eyebrow) { color: #b1bfc6; font-size: 13px; line-height: 1.9; }
 .proof > a { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; margin-top: 20px; color: var(--accent); }
 .takeaway { padding: 70px 0; margin-left: 332px; max-width: 720px; }
@@ -64,8 +64,8 @@
   .productFigure { padding: 16px 0; }
   .imageFrame { width: 260px; max-width: 100%; }
   .productFigure figcaption { max-width: 260px; }
-  .facts { gap: 24px; grid-template-columns: 1fr; padding: 26px 0; }
-  .facts > div { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 14px; }
+  .facts { gap: 8px; grid-template-columns: 1fr; padding: 12px 0; }
+  .facts > div { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 12px; }
   .facts dt { margin: 3px 0 0; }
   .facts dd { font-size: 13px; }
   .story { padding-top: 8px; }

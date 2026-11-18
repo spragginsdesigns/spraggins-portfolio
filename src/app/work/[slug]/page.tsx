@@ -108,6 +108,11 @@ export default function CaseStudyPage({ params }: PageProps) {
 								<p className={styles.productName}>{study.name}</p>
 								<h1>{study.title}</h1>
 								<p className={styles.intro}>{study.intro}</p>
+								<dl className={styles.facts}>
+									<div><dt>My role</dt><dd>{study.role}</dd></div>
+									<div><dt>Shipped</dt><dd>{study.result}</dd></div>
+									<div><dt>Timeline</dt><dd>{study.period}</dd></div>
+								</dl>
 								<div className={styles.links}>
 									{study.links.map((link) => (
 										<a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
@@ -127,18 +132,13 @@ export default function CaseStudyPage({ params }: PageProps) {
 								<figcaption>{study.imageCaption}</figcaption>
 							</figure>
 						</header>
-						<dl className={styles.facts}>
-							<div><dt>My role</dt><dd>{study.role}</dd></div>
-							<div><dt>Result</dt><dd>{study.result}</dd></div>
-							<div><dt>Timeline</dt><dd>{study.period}</dd></div>
-						</dl>
 						<div className={styles.stack} aria-label="Technologies used">
 							{study.stack.map((item) => <span key={item}>{item}</span>)}
 						</div>
 						<div className={styles.story}>
-								{study.sections.map((section) => (
+							{study.sections.map((section) => (
 								<section key={section.id} id={section.id} className={styles.storySection} aria-labelledby={`${section.id}-title`}>
-										<div className={styles.sectionLabel}>{section.label}</div>
+									<div className={styles.sectionLabel}>{section.label}</div>
 									<div className={styles.sectionBody}>
 										<h2 id={`${section.id}-title`}>{section.title}</h2>
 										{section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
@@ -147,22 +147,21 @@ export default function CaseStudyPage({ params }: PageProps) {
 							))}
 							{slug === "linecrush" && (
 								<section id="c2" className={styles.storySection} aria-labelledby="c2-title">
-										<div className={styles.sectionLabel}>Developer tooling</div>
+									<div className={styles.sectionLabel}>Developer tooling</div>
 									<div className={styles.sectionBody}>
-											<h2 id="c2-title">C2 and the engineering fleet</h2>
+										<h2 id="c2-title">C2 and the engineering fleet</h2>
+										<div className={styles.proof}>
+											<h3>NFL first-quarter statistics in iOS 2.9.0</h3>
+											<p>The iOS release notes list first-quarter passing, rushing and receiving leaders in Signals. The delivery record ties that feature to completed work by the team and fleet.</p>
+											<a href={study.links[1].href} target="_blank" rel="noopener noreferrer">Read the App Store release notes <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
+										</div>
 										<p>I designed the engineering agent fleet and C2, the tracker we use to carry work from an issue through delivery. Jay and I operate it together. Durable work history means an interrupted run doesn&apos;t have to erase what was already learned or built.</p>
 										<p>C2 brought roughly 19,000 historical issue records into the same system as new work. It connects the request, the run and the delivery evidence, so a completed task has something concrete behind it. The engineering pattern is investigate, implement, verify the actual product, review, ship and check the result.</p>
 										<dl className={styles.metrics}>
 											<div><dt>Completed fleet jobs</dt><dd>{FMT.fleetCompletedJobs}</dd></div>
 											<div><dt>Completed jobs with a recorded commit URL</dt><dd>{FMT.fleetJobsWithCommitLinks}</dd></div>
 										</dl>
-											<p className={styles.metricNote}>Job ledger snapshot, <time dateTime={STATS.verifiedDate}>November 17, 2026</time>. Completed work includes investigations and documentation. The second figure counts job records that contain a commit URL.</p>
-										<div className={styles.proof}>
-											<p className={styles.eyebrow}>A public result</p>
-											<h3>NFL first-quarter statistics, in the released app.</h3>
-											<p>The iOS 2.9.0 release notes list first-quarter passing, rushing and receiving leaders in Signals. The underlying delivery record connects this feature to completed team and fleet work. It&apos;s one concrete example of the system contributing to a product people can use.</p>
-											<a href={study.links[1].href} target="_blank" rel="noopener noreferrer">Read the App Store release notes <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
-										</div>
+										<p className={styles.metricNote}>Job ledger snapshot, <time dateTime={STATS.verifiedDate}>November 17, 2026</time>. Completed work includes investigations and documentation. The second figure counts job records that contain a commit URL.</p>
 										<Link href="/blog/2026-08-08-no-humans-in-the-merge-loop" className={styles.sectionLink}>Read the published fleet walkthrough <ArrowRight size={15} aria-hidden="true" /></Link>
 									</div>
 								</section>

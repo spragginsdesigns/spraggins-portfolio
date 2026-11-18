@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowDownRight, ArrowRight, FileText, MapPin } from "lucide-react";
 import { FMT, STATS } from "@/lib/stats";
 import styles from "./Portfolio.module.css";
+import WorkPreview from "./WorkPreview";
 
 const evidence = [
 	{
@@ -36,15 +37,16 @@ export default function Hero() {
 								height={52}
 								className={styles.portrait}
 							/>
-							<span><MapPin size={16} aria-hidden="true" /> Fresno, California</span>
+							<div>
+								<h1 id="portfolio-title">Austin Spraggins</h1>
+								<span><MapPin size={12} aria-hidden="true" /> Fresno, California</span>
+							</div>
 						</div>
-						<h1 id="portfolio-title">Austin <span>Spraggins</span></h1>
 						<p className={styles.role}>Senior Product Engineer</p>
-						<p className={styles.disciplines}>Full-Stack · Native Mobile · Applied AI</p>
-						<p className={styles.currentRole}>Co-Founder &amp; CTO at LineCrush</p>
+						<p className={styles.heroHeadline}>I build products.<br /><span>From the interface<br className={styles.desktopBreak} /> to the infrastructure.</span></p>
 						<p className={styles.intro}>
-							I started LineCrush and built it with my co-founder, Jay. I also built SureWord,
-							shipped a game on Steam, and designed the agent fleet our team uses to deliver software.
+							Co-Founder &amp; CTO at LineCrush. I build across web, native mobile,
+							and applied AI, from the first commit through the work of running it in production.
 						</p>
 						<div className={styles.actions}>
 							<a href="#projects" className={styles.primaryAction}>
@@ -56,33 +58,7 @@ export default function Hero() {
 						</div>
 						<a href="#faith" className={styles.faithLink}>Saved by grace through faith in Jesus Christ</a>
 					</div>
-					<div className={styles.heroVisual}>
-						<div className={styles.showcase}>
-							<Link className={styles.heroLineCrush} href="/work/linecrush" aria-label="Read the LineCrush case study">
-								<Image
-									src="/images/work/linecrush-native.webp"
-									alt="LineCrush's native sports research app showing a research card and historical chart"
-									width={720}
-									height={1564}
-									sizes="(max-width: 640px) 135px, (max-width: 880px) 200px, 290px"
-									priority
-								/>
-							</Link>
-							<Link className={styles.heroSureWord} href="/work/sureword" aria-label="Read the SureWord case study">
-								<Image
-									src="/images/work/sureword-reader.webp"
-									alt="SureWord's Bible reader showing highlighted Scripture on iPhone"
-									width={600}
-									height={1304}
-									sizes="(max-width: 640px) 110px, (max-width: 880px) 165px, 220px"
-								/>
-							</Link>
-						</div>
-						<div className={styles.visualLinks}>
-							<Link href="/work/linecrush">LineCrush <ArrowRight size={14} aria-hidden="true" /></Link>
-							<Link href="/work/sureword">SureWord <ArrowRight size={14} aria-hidden="true" /></Link>
-						</div>
-					</div>
+					<WorkPreview />
 				</div>
 				<dl className={styles.evidence}>
 					{evidence.map(({ value, label, href }) => (
