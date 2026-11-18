@@ -10,8 +10,8 @@ The homepage "Daily Work Log" section (`src/components/WorkLedger.tsx`, `#work-l
 | `hours` | Hands-on time: time between prompts, gaps over 30 minutes dropped | Prompt timestamps |
 | `active` | At the computer: minutes with keyboard or mouse input in the last 3 minutes, on either machine, games left out | Per-minute presence sampler |
 | `byBucket` | `hours` split across the public buckets | Working directory of each prompt |
-| `prompts` | Prompts Austin sent to coding agents | `~/.claude/history.jsonl`, Claude Code session logs, `~/.codex/history.jsonl`, Codex rollouts |
-| `agentHours` | Running time of the agent sessions he drove; parallel sessions add up | Claude Code and Codex session logs |
+| `prompts` | Prompts Austin sent to coding agents | `~/.claude/history.jsonl`, Claude Code session logs, the Codex databases, `~/.codex/history.jsonl` |
+| `agentHours` | Running time of the agent sessions he drove; parallel sessions add up | Claude Code session logs and the Codex databases |
 | `sessions` | Agent sessions that day (subagents not counted) | Same |
 | `contributions` | GitHub contributions, public and private, including fleet commits | GitHub GraphQL via `gh` |
 
@@ -20,6 +20,14 @@ A day runs 4 AM to 4 AM Pacific so a late night counts for the day it started.
 `hours` is a floor, not the whole workday: reviewing agent output, testing, calls and meetings between prompts are not in it. `span` is the whole day but includes breaks. The section shows both and labels them so neither is mistaken for the other. Do not relabel `span` as hours worked.
 
 History: prompts go back to August 2025. Agent session time starts in late September 2026 (`agentTrackingSince`), because the tools prune their own session logs; the collector keeps the totals from then on.
+
+Codex is read from the Codex app's own databases in `~/.codex` (`thread_history_*.sqlite` for turns and items, `state_*.sqlite` for each thread's source and working directory), opened read-only. This matters because the Codex desktop app does not write `history.jsonl`, and it archives and compresses its rollout files, so the files under `~/.codex/sessions` hold only a small part of the work. Before 2026-11-17 the collector read only those files and counted 0 to 4 Codex prompts a day when the real figure was 10 to 50. From the database:
+
+- A prompt is a `userMessage` item in a thread whose source is `vscode` (the desktop app and IDE) or `cli`. Subagent threads, guardian reviews and scripted `exec` runs are not prompts.
+- Agent time is each turn's start to finish, for every thread including subagents. Agent actions are the command, file change, tool call, search and image items.
+- If the databases cannot be read, the collector falls back to the rollout files and logs it in `run.log`.
+
+The Codex database goes back to mid 2026, so `agentTrackingSince` is earlier than the Claude Code session history, which starts in late September 2026. Agent numbers between those dates are Codex only.
 
 Two gaps to know about:
 

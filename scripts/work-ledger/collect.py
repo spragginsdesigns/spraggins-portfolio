@@ -24,6 +24,7 @@ import json
 import os
 import re
 import shutil
+import sqlite3
 import subprocess
 import sys
 import time
@@ -45,6 +46,8 @@ AGENT_GAP_SECONDS = 5 * 60
 PRESENCE_IDLE_SECONDS = 3 * 60
 # A prompt found in a session log is the same prompt as a history entry this close to it.
 SAME_PROMPT_SECONDS = 90
+# Codex item types that are an action the agent took (the Claude side counts tool_use blocks).
+CODEX_TOOL_ITEMS = ("commandExecution", "mcpToolCall", "fileChange", "webSearch", "collabAgentToolCall", "imageView")
 PUBLISH_DAYS = 400
 MIN_EPOCH = calendar.timegm((2024, 1, 1, 0, 0, 0))
 TASK_NAME = "WorkLedgerCollector"
@@ -155,8 +158,12 @@ def codex_session_meta(path):
     return set(), "", False
 
 
-def collect_human(config, previous):
-    """Return {event key: [epoch seconds, bucket index]} merged with the previous store."""
+def collect_human(config, previous, scan_rollouts=True):
+    """Return {event key: [epoch seconds, bucket index]} merged with the previous store.
+
+    scan_rollouts is False when the Codex database was read instead, which is
+    the complete record; rollout files only hold the sessions not yet archived.
+    """
     events = dict(previous)
 
     for line in iter_lines(HOME / ".claude" / "history.jsonl"):
@@ -172,7 +179,7 @@ def collect_human(config, previous):
             events[f"c{int(stamp)}"] = [epoch, bucket_index(entry.get("project"), config)]
 
     session_cwd = {}
-    for rollout in codex_rollouts():
+    for rollout in codex_rollouts() if scan_rollouts else []:
         ids, cwd, is_subagent = codex_session_meta(rollout)
         for session in ids:
             session_cwd[session] = cwd
@@ -290,7 +297,100 @@ def codex_session_stamps(path, _config):
     return stamps, tools, []
 
 
-def collect_agent(previous, config):
+def newest(pattern):
+    """The highest-versioned Codex database matching the pattern, or None."""
+    matches = sorted((HOME / ".codex").glob(pattern))
+    return matches[-1] if matches else None
+
+
+def rollout_file_ids(rollout_path):
+    """Store keys the old rollout-file reader could have used for a Codex thread."""
+    name = re.split(r"[\\/]", rollout_path or "")[-1]
+    if name.endswith(".zst"):
+        name = name[:-4]
+    match = re.match(r"rollout-(\d{4})-(\d\d)-(\d\d)T", name)
+    if not match:
+        return []
+    year, month, day = match.groups()
+    return [file_id(HOME / ".codex" / "sessions" / year / month / day / name)]
+
+
+def read_codex_db(config, previous):
+    """Read prompts and agent time from the Codex app's own database.
+
+    The Codex desktop app does not write history.jsonl and it archives and
+    compresses its rollout files, so the database is the only complete record.
+    Returns (prompts, sessions, replaced file ids), or None when it cannot be
+    read, in which case the rollout files are used as before.
+    """
+    history, state = newest("thread_history_*.sqlite"), newest("state_*.sqlite")
+    if history is None or state is None:
+        return None
+    try:
+        con = sqlite3.connect(f"file:{history.as_posix()}?mode=ro", uri=True, timeout=20)
+        con.execute("attach database ? as st", (f"file:{state.as_posix()}?mode=ro",))
+        threads = con.execute(
+            "select id, source, cwd, coalesce(updated_at_ms, updated_at * 1000), rollout_path from st.threads"
+        ).fetchall()
+        prompts, sessions, replaced = {}, {}, set()
+        recent = (time.time() - 2 * 86400) * 1000
+        for thread, source, cwd, updated, rollout_path in threads:
+            replaced.update(rollout_file_ids(rollout_path))
+            # A subagent thread's source is a JSON object; exec threads are scripted runs.
+            is_main = not (source or "").startswith("{")
+            if source in ("vscode", "cli"):
+                bucket = bucket_index(cwd, config)
+                for (stamp,) in con.execute(
+                    "select created_at_ms from thread_items where thread_id = ? and item_type = 'userMessage'",
+                    (thread,),
+                ):
+                    if stamp and valid_epoch(stamp // 1000):
+                        # Same minute key as history.jsonl so a prompt seen in both counts once.
+                        prompts[f"x{stamp // 60000}"] = [stamp // 1000, bucket]
+            key = f"cx{thread}"
+            known = previous.get(key)
+            if known and known.get("m") == updated and (updated or 0) < recent:
+                continue
+            runs = []
+            for start, end in con.execute(
+                "select started_at, completed_at from thread_turns where thread_id = ? "
+                "and started_at is not null and completed_at > started_at order by started_at",
+                (thread,),
+            ):
+                if not valid_epoch(start):
+                    continue
+                if runs and start <= runs[-1][1]:
+                    runs[-1][1] = max(runs[-1][1], end)
+                else:
+                    runs.append([start, end])
+            minutes = {}
+            for start, end in runs:
+                minutes[day_of(end)] = minutes.get(day_of(end), 0) + (end - start) / 60
+            tools = [
+                stamp // 1000
+                for (stamp,) in con.execute(
+                    f"select created_at_ms from thread_items where thread_id = ? and item_type in "
+                    f"({','.join('?' * len(CODEX_TOOL_ITEMS))})",
+                    (thread, *CODEX_TOOL_ITEMS),
+                )
+                if stamp
+            ]
+            sessions[key] = {
+                "m": updated,
+                "main": is_main,
+                "days": {day: round(value, 1) for day, value in minutes.items() if value >= 0.1},
+                "runs": runs,
+                "tools": count_by_day(tools),
+                "prompts": [],
+            }
+        con.close()
+        return prompts, sessions, replaced
+    except sqlite3.Error as error:
+        log(f"codex database not read ({type(error).__name__})")
+        return None
+
+
+def collect_agent(previous, config, scan_rollouts=True):
     """Return {file id: {m, s, main, days, runs, tools, prompts}}; unchanged files are not re-read.
 
     Entries for log files that were later pruned are kept, which is how the
@@ -302,7 +402,7 @@ def collect_agent(previous, config):
     if claude_root.exists():
         for path in claude_root.rglob("*.jsonl"):
             sources.append((path, "subagents" not in path.parts, claude_session_stamps))
-    for path in codex_rollouts():
+    for path in codex_rollouts() if scan_rollouts else []:
         sources.append((path, None, codex_session_stamps))
 
     for path, is_main, reader in sources:
@@ -371,12 +471,18 @@ def cmd_collect(args):
     config = load_config()
     store_path = LEDGER_DIR / f"events-{args.machine}.json"
     store = read_json(store_path, {})
-    store = {
-        "machine": args.machine,
-        "updatedAt": int(time.time()),
-        "human": collect_human(config, store.get("human") or {}),
-        "agent": collect_agent(store.get("agent") or {}, config),
-    }
+    previous_agent = store.get("agent") or {}
+    codex = read_codex_db(config, previous_agent)
+    human = collect_human(config, store.get("human") or {}, scan_rollouts=codex is None)
+    agent = collect_agent(previous_agent, config, scan_rollouts=codex is None)
+    if codex is not None:
+        prompts, sessions, replaced = codex
+        human.update(prompts)
+        # The database covers these threads in full, so their rollout-file entries would count twice.
+        for key in replaced:
+            agent.pop(key, None)
+        agent.update(sessions)
+    store = {"machine": args.machine, "updatedAt": int(time.time()), "human": human, "agent": agent}
     write_json(store_path, store)
     print(f"{args.machine}: {len(store['human'])} prompts, {len(store['agent'])} sessions")
 
