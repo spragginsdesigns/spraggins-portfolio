@@ -3,7 +3,7 @@ import { FMT, GUNMETAL_ORBIT, STATS } from "./stats";
 export const caseStudySlugs = ["linecrush", "sureword", "game-development", "independent"] as const;
 export type CaseStudySlug = (typeof caseStudySlugs)[number];
 
-type StudyLink = { label: string; href: string };
+type StudyLink = { label: string; href: string; badgeProduct?: string };
 type StudyImage = { src: string; alt: string; caption: string; shape: "portrait" | "landscape" };
 type StudyMetric = { label: string; value: string };
 
@@ -59,9 +59,9 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 		period: "May 2024 to present",
 		published: "2026-11-17",
 		accent: "#80e9dc",
-		cover: "/images/work/linecrush-sunburst.webp",
+		cover: "/images/work/linecrush-sunburst-26.webp",
 		stack: ["Next.js", "TypeScript", "Python", "PostgreSQL", "Redis", "SwiftUI", "Kotlin", "Claude Code", "Codex"],
-		links: [{ ...lineCrushWeb, label: "Web app" }, { ...lineCrushApple, label: "App Store" }, { ...lineCrushPlay, label: "Google Play" }],
+		links: [{ ...lineCrushWeb, label: "Web app" }, { ...lineCrushApple, badgeProduct: "LineCrush" }, { ...lineCrushPlay, badgeProduct: "LineCrush" }],
 		timeline: [
 			{ date: "May 2024", event: "Started the athlete research codebase and built the first search, profiles and summaries." },
 			{ date: "Fall 2024", event: "Launched the research product after building account access, subscriptions and scheduled reports." },
@@ -81,9 +81,22 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				proof: [{ label: "LineCrush founders and launch video", href: "https://www.linecrush.com/about-us" }, { label: "Explore Sonar", href: "https://www.linecrush.com/sonar" }, { label: "Read the daily work log", href: "/#work-log" }]
 			},
 			{
+				id: "product-decisions", label: "Product decisions", title: "Help readers get to the evidence faster",
+				paragraphs: [
+					"In 2025 I changed how LineCrushBot presented research in a stream. The answer could still be arriving when the summary appeared, so I let the answer finish before showing the summary. Jay refined the summary itself. We were working on the same reader experience from two sides.",
+					"I found a different problem using the product myself in 2026. I asked about that night's main event and got research for another day. I built a Today card that explained the key point and the main risk in plain language, with sources the reader could open. I also changed the research experience so an open-ended event question got event context and showed what the assistant was checking."
+				],
+				media: [{ src: "/images/work/linecrush-web-live.webp", alt: "LineCrush's web research deck with a tutorial card between matchup and player statistics", caption: "LineCrush Vibes · Live web app", shape: "landscape" }],
+				proof: [
+					{ label: "Explore Vibes", href: "https://www.linecrush.com/vibes" },
+					{ label: "Try LineCrushBot", href: "https://www.linecrush.com/linecrushbot" }
+				]
+			},
+			{
 				id: "platform", label: "Platform engineering", title: "Make changing sports data usable across clients",
 				paragraphs: [
 					"I worked across the Next.js and TypeScript product, Python services, PostgreSQL, caching and background jobs. That meant building ingestion and search, research reports, live updates and notifications, as well as the screens customers used to make sense of the results.",
+					"Early on, I wired billing updates into the cached account views so a plan change would show up across the site. Later I fixed a case where overlapping jobs could regenerate the same research at the same time. I made replacement atomic, kept the previous history, and bounded how often a failed item could retry.",
 					"One of my hardest infrastructure changes was moving a live product from Auth0 to Clerk. I kept existing account identifiers stable so saved data and subscriptions could still resolve to their owners. I built a compatibility layer for existing endpoints, rehearsed the import, checked the results, and updated the native clients to work with the new sessions.",
 					"I added health monitoring for scheduled jobs, automated backend deployment and worked on browser performance where it mattered most: the dense Picks interface on a phone. I measured rendering and image costs, cut expensive repeated blur effects, sized images to their slots, and moved interaction-only code off the initial load."
 				]
@@ -98,7 +111,8 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 			{
 				id: "native-apps", label: "iOS & Android", title: "Two native apps, from the first screen to the stores",
 				paragraphs: [
-					"I built the SwiftUI app and the Kotlin and Jetpack Compose app from scratch in June 2026. On iOS I started with research cards, search, filters, stats and insights. On Android I built the API client, sign-in and swipeable deck. Both apps use the existing LineCrush backend. I also worked on StoreKit purchases, Android push delivery and the release paths that keep the apps moving.",
+					"Jay and I decided to move from a Capacitor wrapper to platform-native apps so we could build the research experience around how people use each phone. I started both apps from scratch in June 2026. In SwiftUI, I built the swipeable research cards, stats and insights on their reverse faces, and a chart fed by line history. In Kotlin and Jetpack Compose, I built the typed API client, native sign-in and guest entry, and the swipe deck with rewind and cart.",
+					"Both apps use the existing LineCrush backend. I also worked on StoreKit purchases, Android push delivery and the release paths that keep the apps moving.",
 					"App Review hit a case the demo account had missed. A fresh user with no history got an error. I traced the review requests, reproduced the failure with an empty account on an iPad simulator, and fixed the empty state. It made the new-account journey part of what a release had to prove.",
 					"Android went to production in August 2026 and the iOS app reached the App Store in September. I built release automation for signed test builds, store cuts and staged rollout. Jay and I continue to operate the product alongside the fleet, which carries substantial implementation and release work."
 				],
@@ -125,7 +139,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				],
 				steps: ["Investigate", "Implement", "Verify the product", "Review", "Ship", "Check the release"],
 				media: [
-					{ src: "/images/work/c2-sunburst.webp", alt: "Compute modules arranged around a gold light with cyan connections", caption: "Engineering fleet · AI-generated illustration", shape: "landscape" }
+					{ src: "/images/work/c2-sunburst-26.webp", alt: "Compute modules arranged around a gold light with cyan connections", caption: "Engineering fleet · GPT Image 2.6 Sunburst", shape: "landscape" }
 				],
 				metrics: [
 					{ label: "Completed fleet jobs", value: FMT.fleetCompletedJobs },
@@ -134,6 +148,14 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				],
 				metricNote: "Fleet ledger snapshot, November 17, 2026. Jobs include implementation, investigation and documentation. The commit-URL count measures job records with a link.",
 				proof: [{ ...lineCrushApple, label: "iOS 2.9.0 release notes" }, { label: "Published fleet walkthrough", href: "/blog/2026-08-08-no-humans-in-the-merge-loop" }]
+			},
+			{
+				id: "founder-operations", label: "Founder operations", title: "Build tools the business can make decisions with",
+				paragraphs: [
+					"I built our acquisition dashboard from the reporting integrations through the database and API to the founder view. I wanted us to see how signups and paid outcomes tracked by campaign. A signup with ambiguous attribution stayed ambiguous, and missing reporting stayed unknown. That mattered when we used the numbers to make decisions.",
+					"I also worked on Gievs, our website delivery product. The fleet built much of the intake and checkout flow. I fixed a sales notification that reached only one person when multiple callers shared the assignment. The change finds the assigned recipients, removes duplicates, and records delivery failures separately."
+				],
+				proof: [{ label: "Gievs website", href: "https://gievs.com/" }]
 			},
 			{
 				id: "lessons", label: "What I learned", title: "Build it so the next release is easier to run",
@@ -154,9 +176,9 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 		period: "July 2024 to present",
 		published: "2026-11-17",
 		accent: "#f1cb92",
-		cover: "/images/work/sureword-sunburst.webp",
+		cover: "/images/work/sureword-sunburst-26.webp",
 		stack: ["Next.js", "AI SDK", "PostgreSQL", "pgvector", "Expo", "React Native", "SwiftUI"],
-		links: [{ ...sureWordWeb, label: "Web app" }, { ...sureWordApple, label: "App Store" }, { ...sureWordPlay, label: "Google Play" }],
+		links: [{ ...sureWordWeb, label: "Web app" }, { ...sureWordApple, badgeProduct: "SureWord" }, { ...sureWordPlay, badgeProduct: "SureWord" }],
 		timeline: [
 			{ date: "2024 to 2025", event: "Started the web app and prototyped Bible study on mobile." },
 			{ date: "August 2026", event: "Built the Expo Android client and began the SwiftUI client." },
@@ -196,7 +218,8 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				paragraphs: [
 					"I built the Android app with Expo and React Native and the Apple apps in SwiftUI. Web, Android, iPhone and iPad, and Mac share server behavior for chat, Scripture and study context. Each client needed its own navigation, reader, account screens and release work.",
 					"I traced incomplete chat responses through the stream, persisted answer and tool side effects, then checked combinations of account tiers and study modes. I also changed answer-ready notifications to generic notices so a private study question would stay inside the app.",
-					"I built the subscription flow around one application entitlement across Stripe, Apple and Google Play. On Android the same build can move through test tracks into production. On Apple I maintained separate build and signing paths for iPhone, iPad and Mac. I kept release notes with the code so we could check what changed against the actual build."
+					"I built the subscription flow around one application entitlement across Stripe, Apple and Google Play. When Apple reversed a refund, I made SureWord restore access for the latest transaction. An older transaction could arrive late and the current plan still had to stand. On Google Play I made the plan and usage allowance read from the same membership snapshot so they agreed after a renewal.",
+					"On Android the same build can move through test tracks into production. On Apple I maintained separate build and signing paths for iPhone, iPad and Mac. I kept release notes with the code so we could check what changed against the actual build."
 				],
 				proof: [sureWordWeb, sureWordApple, sureWordPlay]
 			}
@@ -212,11 +235,11 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 		period: "July to November 2026",
 		published: "2026-11-18",
 		accent: "#f5c68c",
-		cover: "/images/work/games-sunburst.webp",
+		cover: "/images/work/games-sunburst-26.webp",
 		stack: ["Godot", "GDScript", "Steamworks", "Unreal Engine", "C++", "OpenXR"],
-		links: [steam, cutLoose, { label: "LineCrush Games", href: "/games" }],
+		links: [{ ...steam, badgeProduct: "Gunmetal Orbit" }, { ...cutLoose, badgeProduct: "Cut Loose" }, { label: "LineCrush Games", href: "/games" }],
 		timeline: [
-			{ date: "July 2026", event: "Started the Godot project and built the first playable mining loop." },
+			{ date: "July 2026", event: "Started the Godot project, built the first playable mining loop and launched the studio site." },
 			{ date: "September 2026", event: "Released Gunmetal Orbit commercially on Steam." },
 			{ date: "November 2026", event: "Uploaded the Seven Days Quest competition build and released Cut Loose on itch.io." }
 		],
@@ -231,6 +254,17 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				],
 				media: [{ src: "/images/games/gunmetal-orbit/screenshot-v2-1.jpg", alt: "Gunmetal Orbit boss fight next to the mining station", caption: "Gunmetal Orbit · Released gameplay", shape: "landscape" }],
 				proof: [steam, { label: "Gameplay and screenshots", href: "/games" }]
+			},
+			{
+				id: "studio", label: "Studio launch", title: "Give the game a home outside the storefront",
+				paragraphs: [
+					"I launched the LineCrush Games site in July 2026. I built the product pages, support and press materials, and a place to read the manual. I connected the public patch notes to the game's changelog so players could follow fixes and updates after the Steam release.",
+					"I also published the React Steam Deck frame used to show game and app previews. It draws the device in SVG and takes the live preview as a React child."
+				],
+				proof: [
+					{ label: "LineCrush Games studio", href: "https://games.linecrush.com/" },
+					{ label: "Steam Deck frame package", href: "https://www.npmjs.com/package/react-steam-deck" }
+				]
 			},
 			{
 				id: "cut-loose", label: "Epic AI MegaJam", title: "Ship an Unreal prototype people can play",
@@ -259,7 +293,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 		period: "Late 2023 to November 2026",
 		published: "2026-11-18",
 		accent: "#b8d5ff",
-		cover: "/images/work/independent-sunburst.webp",
+		cover: "/images/work/independent-sunburst-26.webp",
 		stack: ["Next.js", "AWS Lambda", "Cloudflare", "React", "Kotlin", "TypeScript", "Rust", "MCP"],
 		links: [twoCities, github, { label: "React Steam Deck on npm", href: "https://www.npmjs.com/package/react-steam-deck" }],
 		timeline: [
@@ -273,24 +307,28 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				paragraphs: [
 					"I built a site for Two Cities Off Road with a fabrication gallery, parts catalog and inquiry flow. The live site gives customers a way to look through actual builds and contact the business. I also built an editing interface for catalog and gallery content.",
 					"For SaveALife CPR, I rebuilt the booking-to-registration workflow when a portal change broke the previous version. The AWS Lambda integration verifies bookings, finds the right course, updates registration and reports the result. I verified the production login and read-only course lookup, and checked that invalid bookings were rejected.",
-					"I worked on Gelateria Del Centro's Fresno web application and built the Constrong contractor site with Jay. Constrong paired a responsive project gallery with a contact flow and local search metadata."
+					"I worked on Gelateria Del Centro's Fresno web application and built the Constrong contractor site with Jay. Constrong paired a responsive project gallery with a contact flow and local search metadata. For H.O.E INK, I built a studio landing page with service information and a booking inquiry that prepares an email."
 				],
+				media: [{ src: "/images/work/two-cities-live.webp", alt: "Two Cities Off Road homepage showing an off-road buggy and a link to browse fabrication builds", caption: "Two Cities Off Road · Live client site", shape: "landscape" }],
 				proof: [
 					twoCities,
 					{ label: "Gelateria Del Centro source", href: "https://github.com/spragginsdesigns/Gelateria-Del-Centro-WebApp" },
-					{ label: "Constrong source", href: "https://github.com/spragginsdesigns/constrong" }
+					{ label: "Constrong source", href: "https://github.com/spragginsdesigns/constrong" },
+					{ label: "H.O.E INK site", href: "https://hoeink.vercel.app/" }
 				]
 			},
 			{
 				id: "developer-tools", label: "Developer tooling", title: "Publish small tools that someone else can use",
 				paragraphs: [
 					"I contributed a session-exit fix upstream to tty7 and worked on launch and gateway behavior in my fork. I built Perplexity and PostgreSQL MCP servers for tool-based workflows, and published a zero-dependency React component that frames a live app inside a Steam Deck illustration.",
-					"I built AI Docs Digest to combine documentation into one Markdown file for use with AI tools. I also built FileSteward AI, a native Android pre-release. It lets a model propose file changes, gives the user a review step, and sends ambiguous recovery cases back for a decision before it applies more changes."
+					"I built AI Docs Digest and DocMagic to combine documentation into Markdown for use with AI tools. I also built FileSteward AI, a native Android pre-release. It lets a model propose file changes, gives the user a review step, and sends ambiguous recovery cases back for a decision before it applies more changes."
 				],
 				proof: [
 					{ label: "tty7 upstream fix", href: "https://github.com/l0ng-ai/tty7/pull/877" },
 					{ label: "Perplexity MCP source", href: "https://github.com/spragginsdesigns/perplexity-mcp-server" },
+					{ label: "PostgreSQL MCP source", href: "https://github.com/spragginsdesigns/neon-pg-mcp-server" },
 					{ label: "AI Docs Digest source", href: "https://github.com/spragginsdesigns/ai-docs-digest" },
+					{ label: "DocMagic source", href: "https://github.com/spragginsdesigns/doc-magic" },
 					{ label: "FileSteward pre-releases", href: "https://github.com/spragginsdesigns/filesteward-ai-releases" }
 				]
 			},

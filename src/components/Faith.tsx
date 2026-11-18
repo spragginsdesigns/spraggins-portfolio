@@ -2,6 +2,7 @@ import Image from "next/image";
 import { DM_Serif_Display } from "next/font/google";
 import { ArrowRight } from "lucide-react";
 import { FaQuoteLeft } from "react-icons/fa6";
+import { BrandIcon } from "@/components/BrandIcon";
 import styles from "./Faith.module.css";
 
 const testimonySerif = DM_Serif_Display({
@@ -87,6 +88,7 @@ export default function Faith() {
 					</div>
 					<div className={styles.surewordAction}>
 						<a href="https://sureword.app" className={styles.surewordLink}>
+							<BrandIcon href="https://sureword.app" size={28} />
 							Explore SureWord
 							<ArrowRight size={23} strokeWidth={1.6} aria-hidden="true" />
 						</a>

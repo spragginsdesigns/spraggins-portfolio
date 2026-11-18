@@ -3,15 +3,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import {
-	FaGithub,
 	FaStar,
 	FaCodeBranch,
 	FaExclamationCircle,
 	FaUserFriends,
-	FaBook,
-	FaLink
+	FaBook
 } from "react-icons/fa";
 import Image from "next/image";
+import { BrandIcon } from "@/components/BrandIcon";
 
 interface GitHubUser {
 	name: string;
@@ -118,7 +117,7 @@ const GitHubShowcase: React.FC = () => {
 				<div className="container mx-auto px-4 max-w-xl text-center">
 					<h2 className="text-4xl font-bold mb-6">My GitHub Activity</h2>
 					<div className="bg-card/50 backdrop-blur-sm border border-border/50 p-8 rounded-lg">
-						<FaGithub className="mx-auto text-4xl text-muted-foreground mb-4" />
+						<span className="mb-4 flex justify-center"><BrandIcon href="https://github.com" size={36} /></span>
 						<p className="text-muted-foreground mb-4">
 							{error || "GitHub activity is unavailable right now."}
 						</p>
@@ -126,9 +125,9 @@ const GitHubShowcase: React.FC = () => {
 							href="https://github.com/spragginsdesigns"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="inline-flex items-center justify-center text-primary hover:underline"
+							className="inline-flex items-center justify-center gap-2 text-primary hover:underline"
 						>
-							<FaLink className="mr-1" /> View my profile on GitHub instead
+							View my profile on GitHub
 						</a>
 					</div>
 				</div>
@@ -232,7 +231,7 @@ const GitHubShowcase: React.FC = () => {
 								rel="noopener noreferrer"
 								className="inline-flex items-center text-primary hover:underline"
 							>
-								<FaLink className="mr-1" /> View Repository
+								<span className="mr-1"><BrandIcon href={repo.html_url} size={16} /></span> View Repository
 							</a>
 						</motion.div>
 					))}

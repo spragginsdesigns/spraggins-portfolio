@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import {
@@ -225,15 +226,18 @@ const LocalWebsitesShowcase: React.FC = () => {
 								viewport={{ once: true }}
 								className="group block"
 							>
-								<Card className="h-full border-border/50 bg-card/40 p-5 transition-all group-hover:-translate-y-0.5 group-hover:border-primary/50">
-									<div className="mb-2 flex items-center justify-between gap-2">
-										<div className="font-semibold">{site.name}</div>
-										<ExternalLink className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary" />
+								<Card className="h-full overflow-hidden border-border/50 bg-card/40 transition-all group-hover:-translate-y-0.5 group-hover:border-primary/50">
+									<div className="relative aspect-[16/10] border-b border-border/50 bg-background">
+										<Image src={site.preview} alt="" fill className="object-cover object-top" sizes="(max-width: 767px) 94vw, (max-width: 1152px) 32vw, 360px" />
 									</div>
-									<div className="mb-2 break-all text-sm text-primary">
-										{site.label}
+									<div className="p-5">
+										<div className="mb-2 flex items-center justify-between gap-2">
+											<div className="font-semibold">{site.name}</div>
+											<ExternalLink className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary" />
+										</div>
+										<div className="mb-2 break-all text-sm text-primary">{site.label}</div>
+										<div className="text-sm text-muted-foreground">{site.note}</div>
 									</div>
-									<div className="text-sm text-muted-foreground">{site.note}</div>
 								</Card>
 							</motion.a>
 						))}

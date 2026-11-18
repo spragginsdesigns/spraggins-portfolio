@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { BrandIcon, StoreBadge } from "@/components/BrandIcon";
 import { caseStudies, caseStudySlugs, isCaseStudySlug } from "@/lib/case-studies";
 import styles from "./work.module.css";
 
@@ -49,16 +50,18 @@ export function generateMetadata({ params }: PageProps): Metadata {
 
 function StudyLink({ href, label }: { href: string; label: string }) {
 	if (href.startsWith("/")) {
-		return <Link href={href}>{label}<ArrowRight size={14} aria-hidden="true" /></Link>;
+		return <Link href={href}><BrandIcon href={href} size={18} />{label}<ArrowRight size={14} aria-hidden="true" /></Link>;
 	}
 
-	return <a href={href}>{label}<ArrowUpRight size={14} aria-hidden="true" /></a>;
+	return <a href={href}><BrandIcon href={href} size={18} />{label}<ArrowUpRight size={14} aria-hidden="true" /></a>;
 }
 
 export default function CaseStudyPage({ params }: PageProps) {
 	if (!isCaseStudySlug(params.slug)) notFound();
 	const slug = params.slug;
 	const study = caseStudies[slug];
+	const webLinks = study.links.filter((link) => !link.badgeProduct);
+	const storeLinks = study.links.filter((link) => link.badgeProduct);
 	const url = `${BASE_URL}/work/${slug}`;
 	const jsonLd = {
 		"@context": "https://schema.org",
@@ -105,14 +108,21 @@ export default function CaseStudyPage({ params }: PageProps) {
 								<h1>{study.title}</h1>
 								<p className={styles.intro}>{study.intro}</p>
 								<div className={styles.links}>
-									{study.links.map((link) => <StudyLink key={link.href} {...link} />)}
+									{webLinks.map((link) => <StudyLink key={link.href} {...link} />)}
+									{storeLinks.length > 0 && (
+										<div className={styles.storeLinks}>
+											{storeLinks.map((link) => (
+												<StoreBadge key={link.href} href={link.href} product={link.badgeProduct ?? study.name} className={styles.storeBadge} />
+											))}
+										</div>
+									)}
 								</div>
 							</div>
 							<figure className={styles.cover}>
 								<div className={styles.coverFrame}>
 									<Image src={study.cover} alt="" fill priority sizes="(max-width: 800px) calc(100vw - 36px), (max-width: 1250px) 50vw, 620px" />
 								</div>
-								<figcaption>AI-generated illustration</figcaption>
+								<figcaption>Illustration generated with GPT Image 2.6 Sunburst</figcaption>
 							</figure>
 						</header>
 						<dl className={styles.facts}>
@@ -202,7 +212,10 @@ export default function CaseStudyPage({ params }: PageProps) {
 											<span className={styles.thumbnail}>
 												<Image src={other.cover} alt="" fill sizes="(max-width: 500px) 96px, (max-width: 1250px) 30vw, 390px" />
 											</span>
-											<span className={styles.cardTitle}>{other.name}<ArrowRight size={17} aria-hidden="true" /></span>
+											<span className={styles.cardTitle}>
+												<span className="inline-flex items-center gap-2"><BrandIcon href={`/work/${otherSlug}`} size={18} />{other.name}</span>
+												<ArrowRight size={17} aria-hidden="true" />
+											</span>
 										</Link>
 									</li>
 								);

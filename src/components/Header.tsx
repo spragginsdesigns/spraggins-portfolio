@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, Search, X } from "lucide-react";
 import CommandPalette from "@/components/CommandPalette";
@@ -37,11 +38,11 @@ const Header: React.FC = () => {
 			<div className="mx-auto flex h-16 w-full max-w-[79.5rem] items-center justify-between px-4 md:px-7">
 				<Link
 					href="/"
-					className="font-heading font-bold text-lg tracking-tight"
+					className="inline-flex items-center gap-2 font-heading font-bold text-lg tracking-tight"
 					onClick={() => setMenuOpen(false)}
 				>
-					<span className="text-primary">Austin</span>{" "}
-					<span className="text-foreground">Spraggins</span>
+					<Image src="/favicon-32x32.png" alt="" width={26} height={26} unoptimized />
+					<span><span className="text-primary">Austin</span>{" "}<span className="text-foreground">Spraggins</span></span>
 				</Link>
 
 				{/* Desktop nav */}

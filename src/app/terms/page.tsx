@@ -17,7 +17,7 @@ export default function TermsPage() {
 		<LegalPage
 			eyebrow="Legal"
 			title="Terms & Conditions"
-			updated="October 13, 2026"
+			updated="November 18, 2026"
 			intro={
 				<p>
 					These terms cover this website and the Echo SMS program run by SpragginsDesigns (Austin Spraggins, sole
@@ -62,10 +62,11 @@ export default function TermsPage() {
 				{
 					heading: "Website",
 					body: (
-						<p>
-							Content on this site is provided as-is for informational purposes. Project names and trademarks belong
-							to their owners.
-						</p>
+						<>
+							<p>Content on this site is provided as-is for informational purposes. Project names and trademarks belong to their owners.</p>
+							<p>Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc. Google Play and the Google Play logo are trademarks of Google LLC.</p>
+							<p>©2026 Valve Corporation. Steam and the Steam logo are trademarks and/or registered trademarks of Valve Corporation in the U.S. and/or other countries.</p>
+						</>
 					)
 				}
 			]}

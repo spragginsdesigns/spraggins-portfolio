@@ -27,18 +27,21 @@ export const SAMPLE_SITES = [
 	{
 		name: "Sample site",
 		url: "https://gievs.com",
+		preview: "/images/work/gievs-preview.webp",
 		label: "gievs.com",
 		note: "The base sample every demo starts from"
 	},
 	{
 		name: "Walters & Associates",
 		url: "https://gievs.com/walters-associates",
+		preview: "/images/work/walters-associates-preview.webp",
 		label: "gievs.com/walters-associates",
 		note: "Professional services demo"
 	},
 	{
 		name: "Woodward Park Optometric Group",
 		url: "https://gievs.com/woodward-park-optometric-group",
+		preview: "/images/work/woodward-optometric-preview.webp",
 		label: "gievs.com/woodward-park-optometric-group",
 		note: "Medical office demo"
 	}

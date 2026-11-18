@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { BrandIcon } from "@/components/BrandIcon";
 import styles from "./About.module.css";
 
 const chapters = [
@@ -104,6 +105,7 @@ export default function About() {
 										<span>{chapter.footnote}</span>
 										{chapter.href && (
 											<Link href={chapter.href} className={styles.textLink}>
+												<BrandIcon href={chapter.href} size={16} />
 												{chapter.linkLabel} <ArrowUpRight size={15} aria-hidden="true" />
 											</Link>
 										)}

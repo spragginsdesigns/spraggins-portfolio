@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, Download, Mail } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { BrandIcon } from "@/components/BrandIcon";
 import { RESUME_URL } from "@/lib/resume";
 
 const pageUrl = "https://www.spragginsdesigns.xyz/resume";
@@ -93,8 +94,8 @@ export default function ResumePage() {
 				</div>
 
 				<nav aria-label="Selected work" className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-[#72f3df]">
-					<Link className="underline underline-offset-4" href="/work/linecrush">LineCrush case study</Link>
-					<Link className="underline underline-offset-4" href="/work/sureword">SureWord case study</Link>
+					<Link className="inline-flex items-center gap-2 underline underline-offset-4" href="/work/linecrush"><BrandIcon href="/work/linecrush" size={18} /> LineCrush case study</Link>
+					<Link className="inline-flex items-center gap-2 underline underline-offset-4" href="/work/sureword"><BrandIcon href="/work/sureword" size={18} /> SureWord case study</Link>
 				</nav>
 
 				<div className="mt-12 overflow-hidden rounded-2xl border border-border/60 bg-white">

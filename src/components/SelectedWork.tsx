@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Code2, Gamepad2, Store } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Code2, Store } from "lucide-react";
+import { BrandIcon } from "@/components/BrandIcon";
 import { FMT, GUNMETAL_ORBIT, STATS } from "@/lib/stats";
 import styles from "./Portfolio.module.css";
 
@@ -44,6 +45,7 @@ export default function SelectedWork() {
 								<p className={styles.projectText}>{project.description}</p>
 								<p className={styles.projectStack}>{project.stack}</p>
 								<Link className={styles.textAction} href={`/work/${project.slug}`}>
+									<BrandIcon href={`/work/${project.slug}`} />
 									Explore {project.name}
 									<ArrowRight size={17} aria-hidden="true" />
 								</Link>
@@ -61,11 +63,11 @@ export default function SelectedWork() {
 						<p className={styles.projectRole}>Developer tooling</p>
 						<h3 id="fleet-title">C2 and the engineering fleet</h3>
 						<p className={styles.projectText}>
-						I built the engineering agent fleet and our issue tracker, C2. Jay and I operate the fleet together.
+							I built the engineering agent fleet and our issue tracker, C2. Jay and I operate the fleet together.
 							The LineCrush case study follows one change all the way to the App Store release notes.
 						</p>
 						<Link href="/work/linecrush#c2" className={styles.textAction}>
-							See how we ship <ArrowRight size={17} aria-hidden="true" />
+							<BrandIcon href="/work/linecrush" /> See how we ship <ArrowRight size={17} aria-hidden="true" />
 						</Link>
 					</div>
 					<div className={styles.fleetFact}>
@@ -81,7 +83,7 @@ export default function SelectedWork() {
 							fill sizes="(max-width: 760px) 100vw, 48vw" />
 					</div>
 					<div className={styles.gameCopy}>
-						<p className={styles.projectRole}><Gamepad2 size={17} aria-hidden="true" /> Commercial game · Steam</p>
+						<p className={styles.projectRole}><BrandIcon href="/games" /> Commercial game · Steam</p>
 						<h3>{GUNMETAL_ORBIT.name}</h3>
 						<p className={styles.projectText}>
 							I built a space-mining roguelite for Steam Deck and PC. It took {STATS.firstGameToSteamDays} days to get
@@ -89,9 +91,9 @@ export default function SelectedWork() {
 							and wrote a regression test that drives the same UI with controller input.
 						</p>
 						<div className={styles.actions}>
-						<Link href="/work/game-development" className={styles.textAction}>Read the game development case study <ArrowRight size={17} aria-hidden="true" /></Link>
-						<Link href="/games" className={styles.textAction}>Explore the game <ArrowRight size={17} aria-hidden="true" /></Link>
-							<a href={GUNMETAL_ORBIT.steamUrl} className={styles.textAction}>Steam <ArrowUpRight size={17} aria-hidden="true" /></a>
+							<Link href="/work/game-development" className={styles.textAction}>Read the game development case study <ArrowRight size={17} aria-hidden="true" /></Link>
+							<Link href="/games" className={styles.textAction}>Explore the game <ArrowRight size={17} aria-hidden="true" /></Link>
+							<a href={GUNMETAL_ORBIT.steamUrl} className={styles.textAction}><BrandIcon href={GUNMETAL_ORBIT.steamUrl} /> Steam <ArrowUpRight size={17} aria-hidden="true" /></a>
 						</div>
 					</div>
 				</article>
@@ -101,17 +103,17 @@ export default function SelectedWork() {
 						<Store size={23} aria-hidden="true" />
 						<h3>Paid client work</h3>
 						<p>Automated course registration for SaveALife CPR and built a live catalog and inquiry site for Two Cities Off Road.</p>
-					<Link href="/work/independent#client-delivery" className={styles.textAction}>Explore client work <ArrowRight size={16} aria-hidden="true" /></Link>
-						<a href="https://twocitiesoffroad.com/" className={styles.textAction}>Visit Two Cities Off Road <ArrowUpRight size={16} aria-hidden="true" /></a>
+						<Link href="/work/independent#client-delivery" className={styles.textAction}>Explore client work <ArrowRight size={16} aria-hidden="true" /></Link>
+						<a href="https://twocitiesoffroad.com/" className={styles.textAction}><BrandIcon href="https://twocitiesoffroad.com/" /> Visit Two Cities Off Road <ArrowUpRight size={16} aria-hidden="true" /></a>
 						<Link href="/local-websites" className={styles.textAction}>Websites for Fresno businesses <ArrowRight size={16} aria-hidden="true" /></Link>
 					</div>
 					<div>
 						<Code2 size={23} aria-hidden="true" />
 						<h3>Open source</h3>
 						<p>Contributed a session-exit fix to the tty7 terminal and published a React component for showing apps in a Steam Deck frame.</p>
-					<Link href="/work/independent#developer-tools" className={styles.textAction}>Explore public tools <ArrowRight size={16} aria-hidden="true" /></Link>
-						<a href="https://github.com/l0ng-ai/tty7/pull/877" className={styles.textAction}>Read the tty7 pull request <ArrowUpRight size={16} aria-hidden="true" /></a>
-						<a href="https://www.npmjs.com/package/react-steam-deck" className={styles.textAction}>Find react-steam-deck on npm <ArrowUpRight size={16} aria-hidden="true" /></a>
+						<Link href="/work/independent#developer-tools" className={styles.textAction}>Explore public tools <ArrowRight size={16} aria-hidden="true" /></Link>
+						<a href="https://github.com/l0ng-ai/tty7/pull/877" className={styles.textAction}><BrandIcon href="https://github.com" /> Read the tty7 pull request <ArrowUpRight size={16} aria-hidden="true" /></a>
+						<a href="https://www.npmjs.com/package/react-steam-deck" className={styles.textAction}><BrandIcon href="https://www.npmjs.com" size={26} /> Find react-steam-deck on npm <ArrowUpRight size={16} aria-hidden="true" /></a>
 					</div>
 				</div>
 			</div>

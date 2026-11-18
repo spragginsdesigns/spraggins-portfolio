@@ -6,11 +6,10 @@ import {
 	FaPaperPlane,
 	FaCheck,
 	FaEnvelope,
-	FaGithub,
-	FaLinkedin,
 	FaPhone
 } from "react-icons/fa";
 import { LOCAL_SITES } from "@/lib/local-websites";
+import { BrandIcon } from "@/components/BrandIcon";
 
 const Contact: React.FC = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -97,7 +96,7 @@ const Contact: React.FC = () => {
 						rel="noopener noreferrer"
 						className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border/50 text-sm text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
 					>
-						<FaGithub className="w-4 h-4" />
+						<BrandIcon href="https://github.com" size={16} />
 						GitHub
 					</a>
 					<a
@@ -106,7 +105,7 @@ const Contact: React.FC = () => {
 						rel="noopener noreferrer"
 						className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border/50 text-sm text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
 					>
-						<FaLinkedin className="w-4 h-4" />
+						<BrandIcon href="https://www.linkedin.com" size={16} />
 						LinkedIn
 					</a>
 				</div>

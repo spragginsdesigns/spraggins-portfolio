@@ -24,6 +24,7 @@ import {
 	type LucideIcon
 } from "lucide-react";
 import { FormEvent, useEffect, useRef, useState } from "react";
+import { BrandIcon } from "@/components/BrandIcon";
 import AnswerMarkdown, { CopyButton } from "./ask/AnswerMarkdown";
 import { usePortfolioWebMcp } from "./ask/usePortfolioWebMcp";
 
@@ -399,7 +400,7 @@ export default function InteractiveTerminal() {
 														<span className="font-mono text-[10px] uppercase tracking-wider text-slate-500">Sources</span>
 														{answer.sources.map((source) => (
 															<a key={source.href} href={source.href} {...(source.href.startsWith("https://") ? { target: "_blank", rel: "noopener noreferrer" } : {})} className={`inline-flex min-h-8 items-center gap-1 rounded-md border border-[#72f3df]/20 bg-[#72f3df]/[0.035] px-2.5 text-xs text-[#9deee0] hover:border-[#72f3df]/60 hover:bg-[#72f3df]/10 ${focusRing}`}>
-																{source.label}<ArrowUpRight size={12} aria-hidden="true" />{source.href.startsWith("https://") ? <span className="sr-only"> (opens in new tab)</span> : null}
+																<BrandIcon href={source.href} size={14} />{source.label}<ArrowUpRight size={12} aria-hidden="true" />{source.href.startsWith("https://") ? <span className="sr-only"> (opens in new tab)</span> : null}
 															</a>
 														))}
 													</div>

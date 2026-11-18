@@ -9,7 +9,6 @@ import {
 	Bot,
 	Box,
 	Crosshair,
-	Gamepad2,
 	Layers,
 	MonitorCheck,
 	Pickaxe,
@@ -17,7 +16,7 @@ import {
 	Shield,
 	Users
 } from "lucide-react";
-import { FaSteam } from "react-icons/fa";
+import { BrandIcon } from "@/components/BrandIcon";
 import { BackgroundLines } from "@/components/ui/background-lines";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -31,7 +30,7 @@ const SteamButton: React.FC<{ className?: string }> = ({ className = "" }) => (
 		rel="noopener noreferrer"
 		className={`inline-flex min-h-[48px] items-center gap-2 rounded-full bg-primary px-7 py-3 text-base font-semibold text-background transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/25 ${className}`}
 	>
-		<FaSteam className="h-5 w-5" />
+		<BrandIcon href={GUNMETAL_ORBIT.steamUrl} size={22} />
 		Buy on Steam
 	</a>
 );
@@ -115,7 +114,7 @@ const GamesShowcase: React.FC = () => {
 						transition={{ duration: 0.6 }}
 					>
 						<Badge className="mb-6 border-violet-400/30 bg-violet-500/15 px-4 py-1.5 text-sm text-violet-300">
-							<Gamepad2 className="mr-2 h-4 w-4" />
+							<span className="mr-2"><BrandIcon href={STUDIO.url} size={22} /></span>
 							{STUDIO.name} - {STUDIO.location}
 						</Badge>
 						<h1 className="mx-auto mb-5 max-w-3xl font-heading text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
@@ -136,6 +135,7 @@ const GamesShowcase: React.FC = () => {
 								rel="noopener noreferrer"
 								className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-border/60 bg-card/60 px-7 py-3 text-base font-semibold text-foreground transition-all hover:-translate-y-0.5 hover:border-primary/50"
 							>
+								<BrandIcon href={STUDIO.url} size={22} />
 								games.linecrush.com
 								<ArrowRight className="h-4 w-4" />
 							</a>

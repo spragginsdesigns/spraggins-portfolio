@@ -77,7 +77,8 @@
 
 .links,
 .proofLinks { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.links { margin-top: 24px; }
+.links { margin-top: 24px; gap: 12px; }
+.storeLinks { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .proofLinks { margin-top: 24px; }
 
 .links a,
@@ -97,8 +98,10 @@
 .links a svg,
 .proofLinks a svg { flex: none; }
 
-.links a:first-child { background: var(--study-accent); color: #0b1117; border-color: var(--study-accent); }
-.links a:hover,
+.links > a:first-child { background: var(--study-accent); color: #0b1117; border-color: var(--study-accent); }
+.links a.storeBadge { padding: 0; border: 0; }
+.links a.storeBadge:hover { background: #1b252c; }
+.links a:not(.storeBadge):hover,
 .proofLinks a:hover { border-color: var(--study-accent); }
 
 .facts {
