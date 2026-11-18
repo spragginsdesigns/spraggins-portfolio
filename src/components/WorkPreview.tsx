@@ -27,8 +27,8 @@ const products = [
 		id: "gunmetal", name: "Gunmetal Orbit", category: "Game development",
 		platform: "Released on Steam", role: "Game Creator & Engineer",
 		description: "A space-mining roguelite, built and shipped.",
-		image: "/images/games/gunmetal-orbit/screenshot-release-1.jpg", width: 600, height: 338,
-		alt: "Released Gunmetal Orbit gameplay showing the space-mining arena and player interface",
+		image: "/images/games/gunmetal-orbit/screenshot-v2-1.jpg", width: 1280, height: 720,
+		alt: "Gunmetal Orbit gameplay showing a final-wave boss fight around the mining station and the player interface",
 		href: "/games", link: "Explore the game", stack: "Godot / Steam / Steam Deck"
 	}
 ] as const;

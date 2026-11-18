@@ -212,10 +212,11 @@ const GamesShowcase: React.FC = () => {
 										{[1, 2, 3].map((n) => (
 											<Image
 												key={n}
-												src={`/images/games/gunmetal-orbit/screenshot-release-${n}.jpg`}
+												src={`/images/games/gunmetal-orbit/screenshot-v2-${n}.jpg`}
 												alt={`${GUNMETAL_ORBIT.name} gameplay screenshot ${n}`}
-												width={600}
-												height={338}
+												width={1280}
+												height={720}
+												sizes="(max-width: 1024px) 33vw, 220px"
 												className="h-auto w-full rounded-lg border border-border/40"
 											/>
 										))}

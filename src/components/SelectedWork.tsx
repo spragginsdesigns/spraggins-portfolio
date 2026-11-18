@@ -77,7 +77,7 @@ export default function SelectedWork() {
 
 				<article className={styles.game} id="game-spotlight">
 					<div className={styles.gameMedia}>
-						<Image src="/images/games/gunmetal-orbit/screenshot-release-1.jpg" alt="Gunmetal Orbit gameplay"
+						<Image src="/images/games/gunmetal-orbit/screenshot-v2-1.jpg" alt="Gunmetal Orbit gameplay: a final-wave boss fight around the mining station"
 							fill sizes="(max-width: 760px) 100vw, 48vw" />
 					</div>
 					<div className={styles.gameCopy}>
