@@ -1,234 +1,102 @@
-"use client";
-
-import React from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { BackgroundLines } from "@/components/ui/background-lines";
-import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
-import { Badge } from "@/components/ui/badge";
-import { CountUp } from "@/components/ui/count-up";
-import { STATS } from "@/lib/stats";
-import { RESUME_URL } from "@/lib/resume";
-import { ArrowRight, Github, Linkedin, Mail, Twitter, FileDown } from "lucide-react";
+import Link from "next/link";
+import { ArrowDownRight, ArrowRight, FileText, MapPin } from "lucide-react";
+import { FMT, STATS } from "@/lib/stats";
+import styles from "./Portfolio.module.css";
 
-const Hero: React.FC = () => {
-	const tagline =
-		"I started the LineCrush codebase and built the business with my co-founder, Jay. I also built SureWord for web and mobile, shipped Gunmetal Orbit on Steam, and designed the coding-agent fleet we use to deliver software.";
+const evidence = [
+	{
+		value: `${STATS.lineCrushEditorHours.toLocaleString("en-US")}+`,
+		label: "WakaTime editor hours on LineCrush",
+		href: "https://wakatime.com/badge/github/spragginsdesigns/Context-Pro-AI.svg"
+	},
+	{
+		value: FMT.fleetCompletedJobs,
+		label: "Jobs completed by the fleet",
+		href: "/work/linecrush#c2"
+	},
+	{
+		value: `${STATS.firstGameToSteamDays} days`,
+		label: "First playable build to Steam",
+		href: "/#game-spotlight"
+	}
+];
 
-	const highlights = [
-		"Co-Founder & CTO",
-		"AI Systems",
-		"Agent Orchestration",
-		"Full-Stack Product",
-	];
-
+export default function Hero() {
 	return (
-		<BackgroundLines
-			className="flex items-center justify-center w-full min-h-screen relative overflow-hidden"
-			svgOptions={{ duration: 12 }}
-		>
-			<div className="container mx-auto px-4 pt-24 pb-10 md:pt-28 md:pb-12">
-				<div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-12 relative z-20">
-					{/* Left Content */}
-					<motion.div
-						className="flex-1 text-center lg:text-left max-w-2xl"
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.6 }}
-					>
-						{/* Status Badge */}
-						<motion.div
-							initial={{ opacity: 0, y: -20 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.4, delay: 0.2 }}
-							className="mb-4 md:mb-6"
-						>
-							<Badge className="bg-cyan-500/20 text-cyan-400 border-cyan-500/30 px-3 md:px-4 py-1 md:py-1.5 text-xs md:text-sm">
-								<span className="w-2 h-2 bg-cyan-400 rounded-full mr-2 animate-pulse inline-block" />
-								Building Production AI at LineCrush
-							</Badge>
-						</motion.div>
-
-						{/* Name */}
-						<h1 className="text-4xl sm:text-5xl md:text-7xl font-heading font-bold mb-3 md:mb-4 leading-tight">
-							<span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-cyan-400 to-primary">
-								Austin Spraggins
-							</span>
-						</h1>
-
-						<p className="mb-5 text-sm leading-relaxed sm:text-base md:mb-6">
-							<Link
-								href="#faith"
-								className="inline-block rounded-sm text-amber-100/90 underline decoration-amber-300/30 underline-offset-4 transition-colors hover:text-amber-200 hover:decoration-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-							>
-								<span className="font-medium">A born-again Christian,</span>{" "}
-								<span className="block sm:inline">saved by grace through faith in Jesus Christ.</span>
-							</Link>
-						</p>
-
-						{/* Role Badges */}
-						<motion.div
-							className="flex flex-wrap gap-2 justify-center lg:justify-start mb-4 md:mb-6"
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							transition={{ duration: 0.5, delay: 0.3 }}
-						>
-							{highlights.map((role) => (
-								<Badge
-									key={role}
-									variant="secondary"
-									className="bg-card/80 border-primary/30 text-foreground px-2 md:px-3 py-0.5 md:py-1 text-xs md:text-sm"
-								>
-									{role}
-								</Badge>
-							))}
-						</motion.div>
-
-						{/* Animated Tagline */}
-						<div className="mb-6 md:mb-8">
-							<TextGenerateEffect
-								words={tagline}
-								className="text-muted-foreground text-sm md:text-base"
-								duration={0.3}
-							/>
-						</div>
-
-						{/* CTA Buttons */}
-						<motion.div
-							className="flex flex-col sm:flex-row sm:flex-wrap gap-3 md:gap-4 justify-center lg:justify-start mb-6 md:mb-8"
-							initial={{ opacity: 0, y: 20 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.5, delay: 0.8 }}
-						>
-							<Link
-								href="#projects"
-								className="group flex-none whitespace-nowrap bg-primary text-background px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-semibold shadow-lg inline-flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
-							>
-								View My Work
-								<ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
-							</Link>
-						<Link
-								href="#contact"
-								className="flex-none whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/50 text-foreground px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-semibold inline-flex items-center justify-center gap-2 transition-all duration-300 hover:border-primary/50 hover:-translate-y-1"
-							>
-								<Mail className="w-4 h-4 md:w-5 md:h-5" />
-								Contact Me
-						</Link>
-						<a
-							href={RESUME_URL}
-							download
-							className="flex-none whitespace-nowrap bg-card/80 border border-border/50 text-foreground px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-semibold inline-flex items-center justify-center gap-2 transition-all duration-300 hover:border-primary/50 hover:-translate-y-1"
-						>
-							<FileDown className="w-4 h-4 md:w-5 md:h-5" />
-							Download Resume
-						</a>
-						</motion.div>
-
-						{/* Social Links */}
-						<motion.div
-							className="flex gap-3 md:gap-4 justify-center lg:justify-start"
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							transition={{ duration: 0.5, delay: 1 }}
-						>
-							<a
-								href="https://github.com/spragginsdesigns"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="p-2.5 md:p-3 rounded-full bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
-								aria-label="GitHub"
-							>
-								<Github className="w-4 h-4 md:w-5 md:h-5" />
-							</a>
-							<a
-								href="https://www.linkedin.com/in/spragginsdesigns/"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="p-2.5 md:p-3 rounded-full bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
-								aria-label="LinkedIn"
-							>
-								<Linkedin className="w-4 h-4 md:w-5 md:h-5" />
-							</a>
-							<a
-								href="https://twitter.com/spragginsdesign"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="p-2.5 md:p-3 rounded-full bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
-								aria-label="Twitter"
-							>
-								<Twitter className="w-4 h-4 md:w-5 md:h-5" />
-							</a>
-						</motion.div>
-					</motion.div>
-
-					{/* Right Content - Profile Image */}
-					<motion.div
-						className="flex-shrink-0"
-						initial={{ opacity: 0, scale: 0.8 }}
-						animate={{ opacity: 1, scale: 1 }}
-						transition={{ duration: 0.6, delay: 0.3 }}
-					>
-						<div className="relative">
-							{/* Glow Effect */}
-							<div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-cyan-500/20 to-primary/20 rounded-full blur-2xl animate-pulse" />
-
-							{/* Profile Image */}
+		<section className={styles.hero} aria-labelledby="portfolio-title">
+			<div className={styles.wrap}>
+				<div className={styles.heroGrid}>
+					<div className={styles.heroCopy}>
+						<div className={styles.identity}>
 							<Image
-								src="/images/profile_pic_main2_lessthan1MB.png"
-								alt="Austin Spraggins - Co-Founder & CTO"
-								width={400}
-								height={400}
-								className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] rounded-full shadow-2xl border-4 border-primary/50 relative z-10 object-cover object-top"
-								priority
+								src="/images/work/austin-spraggins.webp"
+								alt=""
+								width={52}
+								height={52}
+								className={styles.portrait}
 							/>
+							<span><MapPin size={16} aria-hidden="true" /> Fresno, California</span>
 						</div>
-					</motion.div>
+						<h1 id="portfolio-title">Austin <span>Spraggins</span></h1>
+						<p className={styles.role}>Senior Product Engineer</p>
+						<p className={styles.disciplines}>Full-Stack · Native Mobile · Applied AI</p>
+						<p className={styles.currentRole}>Co-Founder &amp; CTO at LineCrush</p>
+						<p className={styles.intro}>
+							I started LineCrush and built it with my co-founder, Jay. I also built SureWord,
+							shipped a game on Steam, and designed the agent fleet our team uses to deliver software.
+						</p>
+						<div className={styles.actions}>
+							<a href="#projects" className={styles.primaryAction}>
+								See selected work <ArrowDownRight size={19} aria-hidden="true" />
+							</a>
+							<Link href="/resume" className={styles.secondaryAction}>
+								<FileText size={17} aria-hidden="true" /> View résumé
+							</Link>
+						</div>
+						<a href="#faith" className={styles.faithLink}>Saved by grace through faith in Jesus Christ</a>
+					</div>
+					<div className={styles.heroVisual}>
+						<div className={styles.showcase}>
+							<Link className={styles.heroLineCrush} href="/work/linecrush" aria-label="Read the LineCrush case study">
+								<Image
+									src="/images/work/linecrush-native.webp"
+									alt="LineCrush's native sports research app showing a research card and historical chart"
+									width={720}
+									height={1564}
+									sizes="(max-width: 640px) 135px, (max-width: 880px) 200px, 290px"
+									priority
+								/>
+							</Link>
+							<Link className={styles.heroSureWord} href="/work/sureword" aria-label="Read the SureWord case study">
+								<Image
+									src="/images/work/sureword-reader.webp"
+									alt="SureWord's Bible reader showing highlighted Scripture on iPhone"
+									width={600}
+									height={1304}
+									sizes="(max-width: 640px) 110px, (max-width: 880px) 165px, 220px"
+								/>
+							</Link>
+						</div>
+						<div className={styles.visualLinks}>
+							<Link href="/work/linecrush">LineCrush <ArrowRight size={14} aria-hidden="true" /></Link>
+							<Link href="/work/sureword">SureWord <ArrowRight size={14} aria-hidden="true" /></Link>
+						</div>
+					</div>
 				</div>
-
-				{/* Stats Row */}
-				<motion.div
-					className="flex flex-wrap justify-center gap-x-6 gap-y-4 md:gap-x-12 mt-6 md:mt-12"
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.5, delay: 1 }}
-				>
-					<div className="text-center">
-						<div className="text-2xl md:text-4xl font-bold text-primary">
-							<CountUp
-								end={STATS.lineCrushEditorHours}
-								format={(v) => v.toLocaleString()}
-							/>
+				<dl className={styles.evidence}>
+					{evidence.map(({ value, label, href }) => (
+						<div key={label}>
+							<dt className={styles.evidenceLabel}>{label}</dt>
+							<dd>
+								<a href={href} aria-label={`${value} ${label}`}>
+									{value} <ArrowRight size={15} aria-hidden="true" />
+								</a>
+							</dd>
 						</div>
-						<div className="text-xs md:text-sm text-muted-foreground">
-							LineCrush editor hours tracked by WakaTime
-						</div>
-					</div>
-					<div className="w-px bg-border/50 hidden sm:block" />
-					<div className="text-center">
-						<div className="text-2xl md:text-4xl font-bold text-primary">
-							<CountUp
-								end={STATS.fleet.issuesClosed}
-								format={(v) => v.toLocaleString()}
-							/>
-						</div>
-						<div className="text-xs md:text-sm text-muted-foreground">
-							Issues completed by the fleet
-						</div>
-					</div>
-					<div className="w-px bg-border/50 hidden sm:block" />
-					<div className="text-center">
-						<div className="text-2xl md:text-4xl font-bold text-primary">
-							<CountUp end={STATS.firstGameToSteamDays} />
-						</div>
-						<div className="text-xs md:text-sm text-muted-foreground">
-							Days from first Gunmetal Orbit build to Steam
-						</div>
-					</div>
-				</motion.div>
+					))}
+				</dl>
 			</div>
-		</BackgroundLines>
+		</section>
 	);
-};
-
-export default Hero;
+}

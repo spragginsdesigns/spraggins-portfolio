@@ -1,11 +1,8 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import GameSpotlight from "@/components/GameSpotlight";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
-import AISystems from "@/components/AISystems";
-import LocalWebsites from "@/components/LocalWebsites";
 import About from "@/components/About";
-import Projects from "@/components/Projects";
+import SelectedWork from "@/components/SelectedWork";
 import Expertise from "@/components/Expertise";
 import BlogPreview from "@/components/BlogPreview";
 import Contact from "@/components/Contact";
@@ -21,25 +18,22 @@ export default function Home() {
 	const posts = getAllPosts();
 
 	return (
-		<main className="bg-background min-h-screen relative">
-			<div className="relative z-10">
-				<Header />
+		<>
+			<Header />
+			<main id="main-content" className="bg-background min-h-screen">
 				<Hero />
-				<GameSpotlight />
-				<InteractiveTerminal />
-				<AISystems />
-				<LocalWebsites />
-				<Projects />
+				<SelectedWork />
+				<About />
 				<Expertise />
 				<WorkLedger />
-				<About />
 				<BlogPreview posts={posts} />
+				<InteractiveTerminal />
 				<ErrorBoundary>
 					<GitHubShowcase />
 				</ErrorBoundary>
 				<Contact />
-				<Footer />
-			</div>
-		</main>
+			</main>
+			<Footer />
+		</>
 	);
 }

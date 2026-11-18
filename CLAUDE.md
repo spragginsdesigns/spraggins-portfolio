@@ -69,6 +69,7 @@ src/
 ├── app/
 │   ├── layout.tsx      # Root layout with metadata/SEO + MotionProvider
 │   ├── page.tsx        # Main page composing all sections
+│   ├── work/[slug]/page.tsx # LineCrush and SureWord engineering case studies
 │   ├── games/page.tsx  # LineCrush Games studio page (Gunmetal Orbit + VideoGame JSON-LD)
 │   ├── local-websites/page.tsx # Spraggins Designs offer page for Fresno businesses (ProfessionalService + FAQPage JSON-LD)
 │   ├── blog/           # Blog index + [slug] MDX post pages
@@ -80,12 +81,9 @@ src/
 │   ├── ui/             # shadcn/ui + Aceternity UI components (background-lines, count-up, timeline, card, badge, button, ...)
 │   ├── games/GamesShowcase.tsx # /games page sections
 │   ├── local-websites/ # CredibilityStrip, CallTextButtons, IntakeForm, LocalWebsitesShowcase (/local-websites body)
-│   ├── LocalWebsites.tsx # Homepage "Websites for Fresno businesses" section (above Projects)
-│   ├── Hero.tsx        # Full-screen hero with BackgroundLines + stat row
-│   ├── GameSpotlight.tsx # Homepage Gunmetal Orbit spotlight card
+│   ├── Hero.tsx        # Product engineering introduction, real product screenshots, and sourced metrics
 │   ├── InteractiveTerminal.tsx # Fake shell w/ agent-run demo, streaming ask-ai, mobile-aware ASCII
-│   ├── AISystems.tsx   # Agentic AI showcase
-│   ├── Projects.tsx    # Featured projects showcase
+│   ├── SelectedWork.tsx # LineCrush, SureWord, C2, Gunmetal Orbit, client work, and open source
 │   ├── Expertise.tsx   # Bento grid skills + stats + WakaTime
 │   ├── WorkLedger.tsx  # Homepage "Daily Work Log" section (measured hours, heatmap, buckets)
 │   ├── work-ledger/    # WorkLedger sub-components
@@ -124,23 +122,7 @@ This project uses a **hybrid routing approach**:
 
 ### Key Sections
 
-The main page (`src/app/page.tsx`) renders sections in order:
-1. **Header** - Fixed nav + command palette (⌘K)
-2. **Hero** - Full-screen intro with BackgroundLines, profile image, role badges, CountUp stat row
-3. **GameSpotlight** - Gunmetal Orbit card with Steam purchase CTA, funnels to /games
-4. **InteractiveTerminal** - Fake shell with `agent run` demo and streaming `ask` AI
-5. **AISystems** - Agentic engineering showcase (delivery loop + 4 system cards)
-6. **LocalWebsites** - Spraggins Designs offer for Fresno businesses (credibility strip, what you get, $299 + $19/mo price card, call/text CTAs, intake form)
-7. **Projects** - LineCrush flagship + Gunmetal Orbit/games card + featured + additional projects
-8. **Expertise** - Stats row + 6 expertise cards + WakaTime + tech stack
-9. **WorkLedger** - Daily Work Log: measured workday length, hands-on hours, agent hours and contributions per day, with a year heatmap and project buckets. Data and privacy rules: `docs/work-ledger.md` (bucket patterns hold private repo names and live only in `~/.work-ledger/config.json`, never in this public repo)
-10. **About** - Timeline journey from truck driver to CTO
-11. **BlogPreview** - Latest 3 posts
-12. **GitHubShowcase** - Live GitHub profile/repos/contribution graph
-13. **Contact** - Email contact form (phone chip next to the email)
-14. **Footer** - Site links and copyright
-
-There is also a dedicated `/games` route (LineCrush Games studio + Gunmetal Orbit flagship) and the `/blog` routes.
+The homepage leads with the engineering introduction, selected work, and Austin's journey and faith. Expertise, Daily Work Log, writing, the interactive terminal, GitHub, and contact follow. Product case studies live at `/work/linecrush` and `/work/sureword`. The LineCrush case study includes a linkable C2 section at `#c2`. Games, the résumé, and the Fresno website offer have dedicated routes.
 
 ### UI Components
 
@@ -185,7 +167,7 @@ When updating portfolio content:
 - **LineCrush** is the flagship project - emphasize scale and the autonomous agent fleet
 - Highlight CTO leadership and architectural decision-making
 - Emphasize "Open to Contracts & Consulting" (not job seeking)
-- **Stats single source of truth: `src/lib/stats.ts`** (fleet numbers verified 2026-11-16: 14,024 issues closed, 91% of admitted, ~125 a day, 10,667 with shipped commits; the rest 2026-08-08). Canonical set: 30,128 monorepo commits (30,000+ in prose; 12,873 in 2026), 366 API handlers, 64 agent skills, ~1,000 TSX modules, 4 product clients, 120+ database tables, 5 LLM providers, 12 sports, 2+ years production. Fleet ledger since June 23, 2026: 4,426 Linear issues worked, 95% completed, ~90/day, 2,730 jobs shipped commits. Update stats.ts first; llms.txt, README.md, CLAUDE.md, and AGENTS.md must be kept in sync manually.
+- **Stats single source of truth: `src/lib/stats.ts`** (fleet ledger on 2026-11-17: 14,111 completed fleet jobs, 91% of admitted, ~124 admissions a day over the trailing 30 days, 10,745 completed jobs with a recorded commit link; other historical repository counts as of 2026-08-08). Canonical set: 30,128 monorepo commits (30,000+ in prose; 12,873 in 2026), 366 API handlers, 64 agent skills, ~1,000 TSX modules, 4 product clients, 120+ database tables, 5 LLM providers, 12 sports, 2+ years production. Fleet ledger since June 23, 2026: 4,426 Linear issues worked, 95% completed, ~90/day, 2,730 jobs shipped commits. Update stats.ts first; llms.txt, README.md, CLAUDE.md, and AGENTS.md must be kept in sync manually.
 - **Gunmetal Orbit** is the flagship game: space-mining arena roguelite, Steam release September 10, 2026 at $4.99, store URL https://store.steampowered.com/app/4975430, studio site games.linecrush.com
 - **SureWord** is the personal flagship (spotlight card alongside LineCrush and Gunmetal Orbit): sureword.app, Android on Google Play (com.spragginsdesigns.sureword), Apple apps on the App Store (id6820260211); the GitHub repo is private, so never link it (spragginsdesigns/bible-ai-explorer)
 - **Spraggins Designs local-business offer** ($299 build + $19/mo hosting, live in a day, call or text 559-818-0467): single source of truth is `src/lib/local-websites.ts`, rendered on the homepage section and `/local-websites`. The matching Google Business Profile is documented in `docs/google-business-profile.md`. Read that file before touching the profile: posting is currently disabled after a policy strike, and the rules there (no phone numbers or prices in posts, no category churn, one edit at a time) are not optional.

@@ -1,6 +1,6 @@
-# Austin Spraggins | Co-Founder, CTO & Agentic AI Engineer
+# Austin Spraggins | Senior Product Engineer & LineCrush CTO
 
-> Austin builds AI agents that ship production software - and the products, native clients, data systems, and game pipelines those agents support. He is Co-Founder and CTO at LineCrush Inc in Fresno, California.
+> Austin builds full-stack products, native mobile apps, and applied AI systems. He started LineCrush and built it with his co-founder Jay, created SureWord, and designed the engineering fleet LineCrush uses to ship. He is Co-Founder and CTO at LineCrush Inc in Fresno, California.
 
 ## Contact
 
@@ -17,7 +17,10 @@ Austin is a born-again Christian, saved by grace through faith in Jesus Christ. 
 ## Links
 
 - [Portfolio](https://www.spragginsdesigns.xyz): Main portfolio
-- [LineCrush](https://www.linecrush.com): Production sports intelligence platform
+- [Engineering résumé](https://www.spragginsdesigns.xyz/resume): Experience and PDF download
+- [LineCrush case study](https://www.spragginsdesigns.xyz/work/linecrush): Native app foundations, release engineering, and C2
+- [SureWord case study](https://www.spragginsdesigns.xyz/work/sureword): Scripture-grounded AI, study memory, and cross-platform release
+- [LineCrush](https://www.linecrush.com): Production sports research platform
 - [LineCrush Games](https://www.spragginsdesigns.xyz/games): Game studio page - Gunmetal Orbit on Steam
 - [games.linecrush.com](https://games.linecrush.com): Official studio site
 - [Gunmetal Orbit on Steam](https://store.steampowered.com/app/4975430): Available now - released September 10, 2026
@@ -44,11 +47,11 @@ Verified repository-scale indicators as of 2026-08-08 (source of truth: src/lib/
 - ~1,000 tracked TSX modules
 - 366 tracked Next.js API handlers
 - 64 tracked agent-skill definitions
-- Agent fleet ledger since June 23, 2026: 14,024 tracker issues closed (91% of those admitted), roughly 125 new issues a day, 10,667 of them with shipped commits (measured 2026-11-16)
+- Agent fleet ledger since June 23, 2026: 14,111 completed fleet jobs (91% of those admitted), 10,745 completed jobs with a recorded commit link (measured 2026-11-17)
 
 ### Autonomous Engineering Agents
 
-Austin built a provider-neutral software-delivery system around Codex and Claude. It can pick up Linear issues and move through investigation, implementation, real product-path proof, code review, safety gates, and release. Durable sessions recover interrupted work rather than restarting from zero.
+Austin built a provider-neutral software-delivery system around Codex and Claude. It uses C2 to move tracker issues through investigation, implementation, real product-path proof, code review, safety gates, and release. Durable sessions recover interrupted work rather than restarting from zero.
 
 The surrounding agent platform includes:
 

@@ -6,14 +6,12 @@ import { Menu, Search, X } from "lucide-react";
 import CommandPalette from "@/components/CommandPalette";
 
 const navLinks = [
-	{ label: "AI Systems", href: "/#ai-systems" },
-	{ label: "Local Websites", href: "/local-websites" },
-	{ label: "Projects", href: "/#projects" },
+	{ label: "Selected work", href: "/#projects" },
+	{ label: "My story", href: "/#about" },
+	{ label: "Résumé", href: "/resume" },
 	{ label: "Games", href: "/games" },
-	{ label: "Expertise", href: "/#expertise" },
-	{ label: "About", href: "/#about" },
 	{ label: "Blog", href: "/blog" },
-	{ label: "Contact", href: "/#contact" }
+	{ label: "Local websites", href: "/local-websites" }
 ];
 
 const Header: React.FC = () => {
@@ -35,7 +33,7 @@ const Header: React.FC = () => {
 					: "bg-transparent border-b border-transparent"
 			}`}
 		>
-			<div className="container mx-auto px-4 h-14 flex items-center justify-between">
+			<div className="mx-auto flex h-16 w-full max-w-[79.5rem] items-center justify-between px-4 md:px-7">
 				<Link
 					href="/"
 					className="font-heading font-bold text-lg tracking-tight"
@@ -46,7 +44,7 @@ const Header: React.FC = () => {
 				</Link>
 
 				{/* Desktop nav */}
-				<nav className="hidden lg:flex items-center gap-5">
+				<nav aria-label="Main navigation" className="hidden lg:flex items-center gap-5">
 					{navLinks.map((link) => (
 						<Link
 							key={link.label}
@@ -71,7 +69,7 @@ const Header: React.FC = () => {
 						href="/#contact"
 						className="text-sm font-semibold bg-primary text-background px-4 py-1.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
 					>
-						Hire Me
+						Contact
 					</Link>
 				</nav>
 
@@ -99,7 +97,7 @@ const Header: React.FC = () => {
 
 			{/* Mobile nav */}
 			{menuOpen && (
-				<nav className="lg:hidden bg-background/95 backdrop-blur-md border-b border-border/40">
+				<nav aria-label="Main navigation" className="lg:hidden bg-background/95 backdrop-blur-md border-b border-border/40">
 					<div className="container mx-auto px-4 py-3 flex flex-col gap-1">
 						{navLinks.map((link) => (
 							<Link
@@ -111,6 +109,10 @@ const Header: React.FC = () => {
 								{link.label}
 							</Link>
 						))}
+						<Link href="/#contact" className="py-3 text-sm font-semibold text-primary"
+							onClick={() => setMenuOpen(false)}>
+							Contact
+						</Link>
 					</div>
 				</nav>
 			)}

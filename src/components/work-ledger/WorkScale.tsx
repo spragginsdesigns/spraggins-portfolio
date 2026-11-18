@@ -7,8 +7,8 @@ import { FMT, STATS } from "@/lib/stats";
 import { formatLongDate } from "@/lib/work-ledger";
 
 const ITEMS: { value: string; label: string }[] = [
-	{ value: FMT.fleetIssues, label: "issues closed" },
-	{ value: FMT.fleetJobsCommits, label: "jobs with shipped commits" },
+	{ value: FMT.fleetCompletedJobs, label: "completed fleet jobs" },
+	{ value: FMT.fleetJobsWithCommitLinks, label: "completed jobs with a recorded commit link" },
 	{ value: FMT.fleetCompletion, label: "of admitted work closed" }
 ];
 
@@ -41,7 +41,7 @@ const WorkScale: React.FC = () => (
 		</dl>
 		<p className="mt-6 text-xs leading-relaxed text-muted-foreground">
 			Fleet job ledger from {FMT.fleetSince} through {formatLongDate(STATS.verifiedDate)}.{" "}
-			<Link href="/blog/2026-08-08-no-humans-in-the-merge-loop" className="font-medium text-primary underline-offset-4 hover:underline">
+			<Link href="/work/linecrush#c2" className="font-medium text-primary underline-offset-4 hover:underline">
 				How the fleet ships to production
 			</Link>
 		</p>

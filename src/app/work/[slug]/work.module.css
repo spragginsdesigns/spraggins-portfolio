@@ -1,0 +1,80 @@
+.page { --accent: #72f3df; min-height: 100vh; background: #0a1015; color: #edf1f0; }
+.warm { --accent: #e7bf85; }
+.main { padding: 94px 0 0; }
+.container { width: min(1160px, calc(100% - 64px)); margin: 0 auto; }
+.skipLink { position: fixed; left: 24px; top: -80px; z-index: 100; padding: 14px 20px; background: #edf1f0; color: #0a1015; }
+.skipLink:focus { top: 16px; }
+.page a:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 2px; }
+.backLink { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: #a9b6bc; padding: 8px 0; }
+.backLink:hover, .contact:hover { color: var(--accent); }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) 320px; align-items: center; gap: 72px; padding: 34px 0 46px; }
+.eyebrow { color: var(--accent); font-size: 11px; line-height: 1.6; text-transform: uppercase; letter-spacing: .16em; font-weight: 600; }
+.productName { margin-top: 20px; font-size: 16px; font-weight: 650; }
+.hero h1 { font-size: clamp(36px, 4.6vw, 62px); line-height: 1.08; letter-spacing: -.045em; font-weight: 500; margin-top: 14px; max-width: 720px; text-wrap: balance; }
+.intro { margin-top: 28px; color: #b6c2c8; font-size: 17px; line-height: 1.8; max-width: 620px; }
+.links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 32px; }
+.links a { display: inline-flex; align-items: center; gap: 9px; padding: 12px 14px; border: 1px solid #2b373d; border-radius: 4px; font-size: 12px; font-weight: 500; }
+.links a:first-child { background: var(--accent); border-color: var(--accent); color: #0a1015; }
+.links a:hover { border-color: var(--accent); }
+.sectionLink { display: inline-flex; gap: 10px; align-items: center; color: var(--accent); font-size: 13px; line-height: 1.7; margin-top: 24px; }
+.sectionLink:hover { text-decoration: underline; text-underline-offset: 5px; }
+.productFigure { margin: 0; }
+.imageFrame { position: relative; width: min(100%, 240px); aspect-ratio: 9 / 19.5; margin: auto; }
+.productImage { object-fit: contain; }
+.productFigure figcaption { color: #8c9da5; font-size: 11px; line-height: 1.7; margin: 18px auto 0; max-width: 300px; }
+.facts { display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 40px; padding: 30px 0; border-top: 1px solid #2a343b; border-bottom: 1px solid #2a343b; }
+.facts dt { font-size: 11px; color: #93a4ad; margin-bottom: 9px; }
+.facts dd { font-size: 14px; line-height: 1.7; }
+.stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; }
+.stack span { font-size: 10px; color: #a6b5bd; border: 1px solid #26323a; border-radius: 3px; padding: 6px 9px; }
+.story { padding: 30px 0 0; }
+.storySection { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 72px; padding: 70px 0; border-bottom: 1px solid #26323a; scroll-margin-top: 92px; }
+.sectionLabel { color: var(--accent); font-size: 12px; line-height: 1.7; padding-top: 8px; }
+.sectionBody { max-width: 720px; }
+.sectionBody h2 { font-size: clamp(26px, 3vw, 34px); line-height: 1.25; font-weight: 500; letter-spacing: -.035em; text-wrap: balance; }
+.sectionBody > p:not(.eyebrow) { font-size: 15px; line-height: 1.95; color: #b3c0c7; margin-top: 24px; }
+.metrics { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #30413f; border-bottom: 1px solid #30413f; padding: 26px 0; gap: 28px; }
+.metrics > div { display: flex; flex-direction: column-reverse; gap: 12px; }
+.metrics dt { color: #9cadaf; font-size: 11px; line-height: 1.6; max-width: 210px; }
+.metrics dd { font-size: clamp(32px, 4vw, 48px); font-weight: 400; letter-spacing: -.05em; line-height: 1; color: var(--accent); }
+.sectionBody > p.metricNote { color: #8f9fa8; font-size: 11px; line-height: 1.8; margin-top: 16px; }
+.proof { padding: 26px; margin-top: 32px; background: #101c20; border-left: 2px solid var(--accent); }
+.proof h3 { margin: 12px 0; font-size: 20px; line-height: 1.45; letter-spacing: -.025em; font-weight: 500; }
+.proof > p:not(.eyebrow) { color: #b1bfc6; font-size: 13px; line-height: 1.9; }
+.proof > a { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; margin-top: 20px; color: var(--accent); }
+.takeaway { padding: 70px 0; margin-left: 332px; max-width: 720px; }
+.takeaway > p:last-child { font-size: clamp(22px, 2.6vw, 30px); line-height: 1.6; margin-top: 20px; letter-spacing: -.025em; color: #d6dedd; }
+.nextWork { border-top: 1px solid #26323a; padding: 42px 0 60px; display: flex; justify-content: space-between; gap: 28px; align-items: flex-end; }
+.nextWork > a:first-child { display: flex; flex-direction: column; gap: 13px; }
+.nextWork > a:first-child > span:last-child { display: flex; gap: 30px; align-items: center; font-size: 30px; letter-spacing: -.04em; }
+.contact { display: flex; align-items: center; gap: 9px; color: #a9b8c0; font-size: 12px; }
+@media (max-width: 1000px) {
+  .hero { gap: 32px; grid-template-columns: minmax(0, 1fr) 280px; }
+  .imageFrame { max-width: 260px; }
+  .storySection { grid-template-columns: 190px minmax(0, 1fr); gap: 40px; }
+  .takeaway { margin-left: 230px; }
+}
+@media (max-width: 700px) {
+  .main { padding-top: 90px; }
+  .container { width: calc(100% - 40px); }
+  .hero { grid-template-columns: 1fr; gap: 36px; padding: 40px 0; }
+  .productName { margin-top: 26px; }
+  .hero h1 { font-size: clamp(36px, 8.7vw, 56px); }
+  .intro { font-size: 15px; margin-top: 22px; }
+  .productFigure { padding: 16px 0; }
+  .imageFrame { width: 260px; max-width: 100%; }
+  .productFigure figcaption { max-width: 260px; }
+  .facts { gap: 24px; grid-template-columns: 1fr; padding: 26px 0; }
+  .facts > div { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 14px; }
+  .facts dt { margin: 3px 0 0; }
+  .facts dd { font-size: 13px; }
+  .story { padding-top: 8px; }
+  .storySection { grid-template-columns: 1fr; padding: 42px 0; gap: 22px; }
+  .sectionLabel { display: flex; gap: 14px; padding: 0; }
+  .sectionBody > p:not(.eyebrow) { font-size: 14px; line-height: 1.95; margin-top: 20px; }
+  .sectionBody > p.metricNote { font-size: 11px; }
+  .metrics { gap: 20px; }
+  .proof { padding: 22px 18px; }
+  .takeaway { margin-left: 0; padding: 42px 0; }
+  .nextWork { flex-direction: column; align-items: flex-start; gap: 32px; padding: 34px 0 44px; }
+}

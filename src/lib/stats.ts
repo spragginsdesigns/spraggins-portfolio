@@ -1,5 +1,5 @@
 // Canonical LineCrush / portfolio stats - single source of truth.
-// Fleet numbers verified 2026-11-16 against the fleet job ledger; the rest on
+// Fleet numbers measured 2026-11-17 against the fleet job ledger; the rest on
 // 2026-08-08 against the LineCrush monorepo.
 // Update here first; prose files (llms.txt, README.md, CLAUDE.md, AGENTS.md)
 // must be kept in sync manually.
@@ -9,7 +9,7 @@ export const STATS = {
 	lineCrushEditorHours: 2252,
 	// July 5 Godot project and playable build to the September 10 Steam release.
 	firstGameToSteamDays: 67,
-	verifiedDate: "2026-11-16",
+	verifiedDate: "2026-11-17",
 	monorepoCommitsExact: 30128,
 	monorepoCommits2026: 12873,
 	apiHandlers: 366,
@@ -21,10 +21,10 @@ export const STATS = {
 	llmProviders: 5,
 	fleet: {
 		since: "June 23, 2026",
-		issuesClosed: 14024,
+		completedJobs: 14111,
 		completionPct: 91,
-		issuesPerDay: 125,
-		jobsShippedCommits: 10667
+		issuesPerDay: 124,
+		jobsWithCommitLinks: 10745
 	}
 } as const;
 
@@ -43,11 +43,11 @@ export const FMT = {
 	llmProviders: "5",
 	yearsInProduction: "2+",
 	gameBuilds: "3+",
-	fleetIssues: "14,024",
+	fleetCompletedJobs: STATS.fleet.completedJobs.toLocaleString("en-US"),
 	fleetCompletion: "91%",
-	fleetPerDay: "~125",
-	fleetJobsCommits: "10,667",
-	fleetSince: "June 23, 2026"
+	fleetPerDay: `~${STATS.fleet.issuesPerDay}`,
+	fleetJobsWithCommitLinks: STATS.fleet.jobsWithCommitLinks.toLocaleString("en-US"),
+	fleetSince: STATS.fleet.since
 } as const;
 
 export const GUNMETAL_ORBIT = {

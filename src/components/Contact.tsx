@@ -74,8 +74,7 @@ const Contact: React.FC = () => {
 					Get In Touch
 				</h2>
 				<p className="text-muted-foreground text-center max-w-xl mx-auto mb-8">
-					Open to contracts, consulting, and interesting problems. Tell me what
-					you&apos;re building and I&apos;ll get back to you fast.
+					Tell me what you&apos;re building or what you&apos;d like to talk about.
 				</p>
 				<div className="flex flex-wrap justify-center gap-3 mb-12">
 					<a

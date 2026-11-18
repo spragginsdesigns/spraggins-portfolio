@@ -31,7 +31,10 @@ const Footer: React.FC = () => {
 							href="/#projects"
 							className="hover:text-primary transition-colors"
 						>
-							Projects
+							Selected work
+						</Link>
+						<Link href="/resume" className="hover:text-primary transition-colors">
+							Résumé
 						</Link>
 						<Link
 							href="/games"

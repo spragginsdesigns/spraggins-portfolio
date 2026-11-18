@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { FMT } from "@/lib/stats";
 import MotionProvider from "@/components/MotionProvider";
 import "./globals.css";
 
@@ -12,9 +11,18 @@ const poppins = Poppins({
 	variable: "--font-poppins"
 });
 
+const siteTitle = "Austin Spraggins | Senior Product Engineer & LineCrush CTO";
+const siteDescription = "Austin Spraggins builds full-stack products, native mobile apps, and applied AI systems. Explore LineCrush, SureWord, and his path from truck driver to CTO.";
+const socialImage = {
+	url: "/images/work/austin-social.jpg",
+	width: 1200,
+	height: 630,
+	alt: "Austin Spraggins, senior product engineer and LineCrush co-founder"
+};
+
 export const metadata: Metadata = {
-	title: "Austin Spraggins | CTO & Agentic AI Engineer",
-	description: `Co-Founder and CTO building autonomous engineering agents, multi-model product intelligence, native apps, and Gunmetal Orbit on Steam at LineCrush. ${FMT.commits} monorepo commits across Next.js, Python, PostgreSQL, SwiftUI, Kotlin, and Godot.`,
+	title: siteTitle,
+	description: siteDescription,
 	authors: [{ name: "Austin Spraggins", url: "https://www.spragginsdesigns.xyz" }],
 	creator: "Austin Spraggins",
 	keywords:
@@ -24,33 +32,19 @@ export const metadata: Metadata = {
 		canonical: "https://www.spragginsdesigns.xyz"
 	},
 	openGraph: {
-		title: "Austin Spraggins | CTO & Agentic AI Engineer",
-		description:
-			"Building autonomous engineering agents, multi-model product intelligence, native apps, and AI-assisted games at LineCrush.",
+		title: siteTitle,
+		description: siteDescription,
 		url: "https://www.spragginsdesigns.xyz/",
-		siteName: "Austin Spraggins - Senior Software Engineer",
-		images: [
-			{
-				url: "/og-image.png",
-				width: 1200,
-				height: 630,
-				alt: "Austin Spraggins - Co-Founder & CTO Portfolio"
-			}
-		],
+		siteName: "Austin Spraggins",
+		images: [socialImage],
 		locale: "en_US",
 		type: "website"
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Austin Spraggins | CTO & Agentic AI Engineer",
-		description:
-			"Building autonomous engineering agents, multi-model product intelligence, native apps, and AI-assisted games at LineCrush.",
-		images: [
-			{
-				url: "/og-image.png",
-				alt: "Austin Spraggins - Co-Founder & CTO Portfolio"
-			}
-		],
+		title: siteTitle,
+		description: siteDescription,
+		images: [socialImage],
 		creator: "@spragginsdesign",
 		site: "@spragginsdesign"
 	},
@@ -121,7 +115,7 @@ const personJsonLd = {
 const websiteJsonLd = {
 	"@context": "https://schema.org",
 	"@type": "WebSite",
-	name: "Austin Spraggins - Senior Software Engineer",
+	name: "Austin Spraggins",
 	url: "https://www.spragginsdesigns.xyz",
 	author: { "@type": "Person", name: "Austin Spraggins" }
 };

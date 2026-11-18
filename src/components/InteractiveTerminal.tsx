@@ -110,7 +110,7 @@ ${box("ABOUT AUSTIN SPRAGGINS", m)}
   • ${FMT.commits} monorepo commits
   • ${FMT.tsxModules} tracked TSX modules and ${FMT.apiHandlers} API handlers
   • ${FMT.agentSkills} agent skills shared across autonomous workflows
-  • ${FMT.fleetIssues} issues closed by the fleet (${FMT.fleetCompletion} of admitted work)
+  • ${FMT.fleetCompletedJobs} jobs completed by the fleet (${FMT.fleetCompletion} of admitted work)
   • Web, iOS, Android, and browser-extension clients
   • ${GUNMETAL_ORBIT.name} on Steam ${GUNMETAL_ORBIT.releaseDateDisplay}
 
@@ -203,7 +203,7 @@ ${box("WORK EXPERIENCE", m)}
   • Ships AI picks, signal search, vision analysis, and reports
   • Created a ${FMT.agentSkills}-skill agent operating system for delivery
   • ${FMT.commits} commits across web, data, native, and games
-  • Agent fleet: ${FMT.fleetIssues} issues closed since ${FMT.fleetSince}
+  • Agent fleet: ${FMT.fleetCompletedJobs} jobs completed since ${FMT.fleetSince}
 
   ${rule(m)}
 
@@ -257,7 +257,7 @@ ${box("FEATURED PROJECTS", m)}
 	agents: (m = false) => `
 ${box("AUTONOMOUS DELIVERY SYSTEM", m)}
 
-  Linear Issue
+  C2 Issue
       ↓
   Investigate → Build → Prove → Review → Gate → Ship
 
@@ -268,7 +268,7 @@ ${box("AUTONOMOUS DELIVERY SYSTEM", m)}
   • Web, Python, SwiftUI, Kotlin, and infrastructure lanes
 
   Fleet ledger since ${FMT.fleetSince}:
-  ${FMT.fleetIssues} issues closed · ${FMT.fleetCompletion} of admitted · ${FMT.fleetPerDay} new issues/day
+  ${FMT.fleetCompletedJobs} jobs completed · ${FMT.fleetCompletion} of admitted · ${FMT.fleetPerDay} new issues/day
 
   The goal isn't code generation. It's trustworthy delivery.
 
@@ -383,7 +383,7 @@ ${box("RESUME", m)}
   • ${FMT.commitsExact} monorepo commits (${FMT.commits2026} in 2026)
   • ${FMT.tsxModules} TSX modules · ${FMT.apiHandlers} API handlers
   • ${FMT.postgresTables} PostgreSQL tables · ${FMT.llmProviders} LLM providers
-  • ${FMT.fleetIssues} issues closed by the fleet
+  • ${FMT.fleetCompletedJobs} jobs completed by the fleet
   • ${FMT.gameBuilds} shipped game builds incl. Steam
   • 200+ students trained in web development
 
@@ -459,7 +459,7 @@ ${box("SOCIAL LINKS", m)}
   Commits:   ${FMT.commitsCompact} across the monorepo
   APIs:      ${FMT.apiHandlers} tracked handlers
   Agents:    ${FMT.agentSkills} shared skills
-  Fleet:     ${FMT.fleetIssues} issues at ${FMT.fleetCompletion}
+  Fleet:     ${FMT.fleetCompletedJobs} completed jobs at ${FMT.fleetCompletion}
   Clients:   Web + iOS + Android + extensions
   Games:     ${GUNMETAL_ORBIT.name} → Steam
   ${rule(m)}
@@ -854,7 +854,7 @@ const WELCOME_MESSAGE_DESKTOP = `
   ───────────────────────────────────────────────────────────────
   Commits:   ${FMT.commits} across the monorepo
   APIs:      ${FMT.apiHandlers} tracked handlers
-  Agents:    ${FMT.agentSkills} skills · ${FMT.fleetIssues} issues closed
+  Agents:    ${FMT.agentSkills} skills · ${FMT.fleetCompletedJobs} jobs completed
   Clients:   Web + iOS + Android + extensions
   Games:     ${GUNMETAL_ORBIT.name} - Steam ${GUNMETAL_ORBIT.releaseDateDisplay}
   ───────────────────────────────────────────────────────────────
@@ -878,7 +878,7 @@ const WELCOME_MESSAGE_MOBILE = `
   Commits:      ${FMT.commitsCompact}
   APIs:         ${FMT.apiHandlers}
   Agent skills: ${FMT.agentSkills}
-  Fleet issues: ${FMT.fleetIssues}
+  Fleet jobs: ${FMT.fleetCompletedJobs}
   Game builds:  ${FMT.gameBuilds}
 
   ────────────────────────────
@@ -1272,9 +1272,9 @@ const InteractiveTerminal: React.FC = () => {
   Evidence policy:   product-path proof required
   ─────────────────────────────────────────────
   Ledger since ${FMT.fleetSince}:
-  Issues closed:     ${FMT.fleetIssues} (${FMT.fleetCompletion} of admitted)
+  Completed jobs:    ${FMT.fleetCompletedJobs} (${FMT.fleetCompletion} of admitted)
   New issues/day:    ${FMT.fleetPerDay}
-  Jobs shipped:      ${FMT.fleetJobsCommits} commit-bearing runs
+  Commit links:      ${FMT.fleetJobsWithCommitLinks} completed jobs
 
   All quiet. Type 'agent run' to watch a delivery.`);
 					} else {

@@ -2,7 +2,7 @@
 
 Personal portfolio website showcasing my work as **Co-Founder, CTO & Senior Software Engineer** at [LineCrush Inc](https://www.linecrush.com).
 
-![Portfolio Preview](image/README/1722533388811.png)
+![Austin Spraggins portfolio](public/images/work/austin-social.jpg)
 
 ## Live Site
 
@@ -13,7 +13,7 @@ Personal portfolio website showcasing my work as **Co-Founder, CTO & Senior Soft
 I build AI agents that ship production software - and the platforms they run. At LineCrush, that includes:
 
 - **30,000+ monorepo commits** across product, data, native, agent, and game work (source of truth: `src/lib/stats.ts`)
-- **Autonomous agent fleet:** 14,024 tracker issues closed, 10,667 with shipped commits (~125 new issues a day), since June 23, 2026 - no human in the merge loop
+- **Autonomous agent fleet:** 14,111 completed fleet jobs since June 23, 2026, including 10,745 completed jobs with a recorded commit link (ledger snapshot November 17, 2026)
 - **~1,000 tracked TSX modules** and **366 API handlers**
 - **64 tracked agent skills** powering autonomous investigation, implementation, proof, review, and release
 - **Multi-model product intelligence** across OpenAI, Gemini, Claude, Perplexity, and vision/OCR workflows
@@ -42,59 +42,13 @@ Currently open to contracts and consulting opportunities.
 
 ## Features
 
-### Hero Section
-- Full-screen animated background with flowing SVG lines (BackgroundLines)
-- Word-by-word text animation effect (TextGenerateEffect)
-- Responsive profile image with glow effect
-- Role badges and floating stat cards
-- "Open to Contracts & Consulting" status indicator
-
-### AI Systems
-- Autonomous Linear-to-production delivery loop
-- Durable Codex and Claude sessions with recovery
-- Multi-model product intelligence and custom MCP tooling
-- AI-native game production with agent-controlled Godot workflows
-
-### My Journey (Timeline)
-- Scroll-animated timeline showing career progression
-- From truck driver to Co-Founder & CTO
-- Milestones: Early Days → First Career → Tech Transition → LineCrush → Today
-
-### LineCrush Games (/games)
-- Dedicated studio page with Gunmetal Orbit flagship, Steam purchase CTA, and the full roster
-- Homepage GameSpotlight card funnels visitors to it
-- VideoGame + Organization JSON-LD structured data
-
-### Expertise & Impact
-- Stats row: 30K+ Commits, 64 Agent Skills, 366 API Handlers, 4 Product Clients, 3+ Shipped Game Builds, 2+ Years
-- Six expertise cards in bento grid layout:
-  - AI/ML Engineering
-  - Full-Stack Architecture
-  - System Design
-  - DevOps & Infrastructure
-  - Technical Leadership
-  - Data Engineering
-
-### Projects Showcase
-- **LineCrush** (Flagship) - AI sports intelligence plus autonomous delivery agents
-- **Gunmetal Orbit / LineCrush Games** - Flagship Steam title (September 10, 2026) plus Space Miner, RockHunter, and MERIDIAN
-- **SureWord** (Personal Flagship) - AI Bible study companion at sureword.app with native Android, web, and macOS clients on one shared backend
-- **Featured Projects:**
-  - SaveALife CPR - Business automation system
-  - Constrong - Client project for concrete contractor
-  - Two Cities Off Road - Ongoing, private client review website for an off-road fabrication business; launch pending
-  - AI Tutor WebApp - Interactive learning platform
-- **Additional Projects:** 8 more GitHub repos in compact grid
-- Link to view all 50+ repositories
-
-### Contact
-- Email contact form with Gmail SMTP integration
-
-### SEO
-- Optimized meta tags and Open Graph
-- Auto-generated sitemap.xml
-- Auto-generated robots.txt
-- Twitter card support
+- **Selected work:** LineCrush, SureWord, C2, Gunmetal Orbit, paid client work, and open-source contributions.
+- **Engineering case studies:** [LineCrush](https://www.spragginsdesigns.xyz/work/linecrush) and [SureWord](https://www.spragginsdesigns.xyz/work/sureword).
+- **Journey:** Career milestones from trucking through teaching and co-founding LineCrush, with Austin's testimony and a sourced work log.
+- **Résumé:** A mobile-friendly [résumé page](https://www.spragginsdesigns.xyz/resume) with a PDF download.
+- **Dedicated pages:** LineCrush Games, Fresno business websites, and the engineering blog.
+- **SEO:** Route-specific canonical URLs and social cards, static case studies with Article and Breadcrumb structured data, sitemap, and robots.txt.
+- **Product imagery:** Original LineCrush and SureWord app captures from their App Store assets, plus existing Gunmetal Orbit gameplay art.
 
 ## Getting Started
 

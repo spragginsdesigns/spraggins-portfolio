@@ -20,7 +20,6 @@ import {
 	User,
 	Wrench,
 } from "lucide-react";
-import { RESUME_URL } from "@/lib/resume";
 
 interface PaletteItem {
 	id: string;
@@ -59,8 +58,8 @@ const PALETTE_ITEMS: PaletteItem[] = [
 	},
 	{
 		id: "projects",
-		label: "Projects",
-		hint: "LineCrush, games, and more",
+		label: "Selected work",
+		hint: "LineCrush, SureWord, and games",
 		icon: <Briefcase className="h-4 w-4" />,
 		keywords: "projects work linecrush games portfolio space miner",
 		href: "/#projects",
@@ -117,19 +116,18 @@ const PALETTE_ITEMS: PaletteItem[] = [
 	{
 		id: "contact",
 		label: "Contact",
-		hint: "Open to contracts & consulting",
+		hint: "Get in touch",
 		icon: <Mail className="h-4 w-4" />,
 		keywords: "contact hire email message consulting contract",
 		href: "/#contact",
 	},
 	{
 		id: "resume",
-		label: "View Resume PDF",
-		hint: "PDF",
+		label: "Résumé",
+		hint: "Experience, selected work, and PDF",
 		icon: <FileDown className="h-4 w-4" />,
 		keywords: "resume cv download pdf hire",
-		href: RESUME_URL,
-		external: true,
+		href: "/resume",
 	},
 	{
 		id: "github",

@@ -1,212 +1,122 @@
-"use client";
-
-import React from "react";
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import Faith from "@/components/Faith";
-import { Timeline } from "@/components/ui/timeline";
-import { Badge } from "@/components/ui/badge";
-import { FMT } from "@/lib/stats";
-import {
-	Code,
-	Truck,
-	GraduationCap,
-	Rocket,
-	Heart,
-	Brain,
-	Server,
-	Database
-} from "lucide-react";
+import styles from "./About.module.css";
 
-const About: React.FC = () => {
-	const calculateAge = (birthDate: Date) => {
-		const today = new Date();
-		let age = today.getFullYear() - birthDate.getFullYear();
-		const m = today.getMonth() - birthDate.getMonth();
-		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-			age--;
-		}
-		return age;
-	};
+const chapters = [
+	{
+		period: "Before tech",
+		title: "A different kind of daily driver.",
+		text: "My first career was driving trucks. The work was different, but taking responsibility and following through mattered just as much. I brought that with me when I went back to school.",
+		footnote: "From the road to the classroom",
+	},
+	{
+		period: "2021",
+		title: "Learning the foundations.",
+		text: "I earned my A.S. in Information Systems: Web Design at Clovis Community College. I also started doing web development work for Effycient and the college, building client sites and maintaining web pages.",
+		footnote: "Clovis Community College",
+	},
+	{
+		period: "Jan 2022 - Jul 2023",
+		title: "Teaching what I was building.",
+		text: "I taught web development at Bitwise Industries and Geekwise Academy. We worked through HTML, CSS, JavaScript, and React. Helping someone get their first app working was definitely one of the best parts.",
+		footnote: "Web Development Instructor",
+	},
+	{
+		period: "2023 - 2024",
+		title: "Real businesses, real requirements.",
+		text: "As a paid full-stack developer for Gelateria Del Centro, I built and maintained the business website. I owned the implementation, content updates, and search visibility, and learned what it takes to keep a site useful after launch.",
+		footnote: "Client development",
+	},
+	{
+		period: "2024 - today",
+		title: "Starting LineCrush. Building it with Jay.",
+		text: "I started the codebase in 2024 and built LineCrush with my co-founder, Jay. It grew into a paid sports research platform. As CTO, I work across the product, backend, infrastructure, and the things that need fixing once people actually use it.",
+		footnote: "Co-Founder & CTO",
+		href: "/work/linecrush",
+		linkLabel: "The LineCrush story",
+	},
+	{
+		period: "2026",
+		title: "More products. A different way to build.",
+		text: "I built the first native iOS and Android clients for LineCrush and designed the agent fleet our team now uses to keep shipping. I also brought SureWord to web, mobile, and Mac, and released Gunmetal Orbit on Steam.",
+		footnote: "Native apps, applied AI, and games",
+		href: "/work/sureword",
+		linkLabel: "Why I built SureWord",
+	},
+];
 
-	const lillyBirthday = new Date("2017-01-09");
-	const julianBirthday = new Date("2012-11-17");
-	const lillyAge = calculateAge(lillyBirthday);
-	const julianAge = calculateAge(julianBirthday);
-	const myAge = calculateAge(new Date("1990-11-26"));
-
-	const timelineData = [
-		{
-			title: "Early Days",
-			content: (
-				<div>
-					<div className="flex items-center gap-3 mb-4">
-						<div className="p-2 rounded-lg bg-primary/10">
-							<Code className="w-5 h-5 text-primary" />
-						</div>
-						<h4 className="text-lg font-semibold text-foreground">The Beginning</h4>
-					</div>
-					<p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
-						Born and raised in the mountains of O&apos;Neals, California, I developed a
-						fascination with technology from a young age. The serene environment sparked
-						my curiosity about how things work in the digital world.
-					</p>
-					<div className="flex flex-wrap gap-2">
-						<Badge variant="secondary">Curiosity</Badge>
-						<Badge variant="secondary">Self-taught</Badge>
-						<Badge variant="secondary">Problem Solving</Badge>
-					</div>
-				</div>
-			),
-		},
-		{
-			title: "First Career",
-			content: (
-				<div>
-					<div className="flex items-center gap-3 mb-4">
-						<div className="p-2 rounded-lg bg-orange-500/10">
-							<Truck className="w-5 h-5 text-orange-500" />
-						</div>
-						<h4 className="text-lg font-semibold text-foreground">Hitting the Road</h4>
-					</div>
-					<p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
-						My first career was as a truck driver, which taught me valuable lessons about
-						responsibility, time management, and the importance of staying focused on
-						long-term goals. These skills would prove invaluable in tech.
-					</p>
-					<div className="flex flex-wrap gap-2">
-						<Badge variant="secondary">Discipline</Badge>
-						<Badge variant="secondary">Time Management</Badge>
-						<Badge variant="secondary">Long-term Thinking</Badge>
-					</div>
-				</div>
-			),
-		},
-		{
-			title: "Tech Transition",
-			content: (
-				<div>
-					<div className="flex items-center gap-3 mb-4">
-						<div className="p-2 rounded-lg bg-blue-500/10">
-							<GraduationCap className="w-5 h-5 text-blue-500" />
-						</div>
-						<h4 className="text-lg font-semibold text-foreground">Discovering My Passion</h4>
-					</div>
-					<p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
-						I transitioned into tech, following my lifelong passion. I began teaching
-						Web Development at Bitwise Industries and Geekwise Academy, igniting a love
-						for sharing knowledge and inspiring others in the field.
-					</p>
-					<div className="flex flex-wrap gap-2">
-						<Badge variant="secondary">Teaching</Badge>
-						<Badge variant="secondary">Web Development</Badge>
-						<Badge variant="secondary">Mentorship</Badge>
-					</div>
-				</div>
-			),
-		},
-		{
-			title: "2024-Present",
-			content: (
-				<div>
-					<div className="flex items-center gap-3 mb-4">
-						<div className="p-2 rounded-lg bg-green-500/10">
-							<Rocket className="w-5 h-5 text-green-500" />
-						</div>
-						<h4 className="text-lg font-semibold text-foreground">Leading at LineCrush</h4>
-					</div>
-					<p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
-						As Co-Founder & CTO at LineCrush Inc, I own every layer of our stack -
-						{" "}{FMT.commits} monorepo commits across web, Python services, native mobile, and
-						games. I built an agent operating system around that work: durable Codex
-						and Claude sessions, custom MCP tooling, shared skills, proof gates, and
-						autonomous issue-to-production delivery.
-					</p>
-
-					{/* Tech highlights */}
-					<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-						<div className="bg-card/50 rounded-lg p-4 text-center border border-border/50">
-							<Brain className="w-6 h-6 text-primary mx-auto mb-2" />
-							<div className="text-sm font-medium">AI/ML</div>
-							<div className="text-xs text-muted-foreground">Agents + Product AI</div>
-						</div>
-						<div className="bg-card/50 rounded-lg p-4 text-center border border-border/50">
-							<Code className="w-6 h-6 text-primary mx-auto mb-2" />
-							<div className="text-sm font-medium">Frontend</div>
-							<div className="text-xs text-muted-foreground">Next.js 15</div>
-						</div>
-						<div className="bg-card/50 rounded-lg p-4 text-center border border-border/50">
-							<Server className="w-6 h-6 text-primary mx-auto mb-2" />
-							<div className="text-sm font-medium">Backend</div>
-							<div className="text-xs text-muted-foreground">Python</div>
-						</div>
-						<div className="bg-card/50 rounded-lg p-4 text-center border border-border/50">
-							<Database className="w-6 h-6 text-primary mx-auto mb-2" />
-							<div className="text-sm font-medium">Database</div>
-							<div className="text-xs text-muted-foreground">PostgreSQL</div>
-						</div>
-					</div>
-
-					<div className="flex flex-wrap gap-2">
-						<Badge className="bg-primary/20 text-primary border-primary/30">Co-Founder & CTO</Badge>
-						<Badge variant="secondary">Full Stack</Badge>
-						<Badge variant="secondary">System Design</Badge>
-						<Badge variant="secondary">DevOps</Badge>
-						<Badge variant="secondary">Game Systems</Badge>
-					</div>
-				</div>
-			),
-		},
-		{
-			title: "Today",
-			content: (
-				<div>
-					<div className="flex items-center gap-3 mb-4">
-						<div className="p-2 rounded-lg bg-pink-500/10">
-							<Heart className="w-5 h-5 text-pink-500" />
-						</div>
-						<h4 className="text-lg font-semibold text-foreground">Family & Future</h4>
-					</div>
-
-					{/* Personal info card */}
-					<div className="bg-card/50 rounded-xl p-6 border border-border/50 mb-6">
-						<div className="flex flex-col md:flex-row items-center gap-6">
-							<Image
-								src="/images/sd-logo-banner.png"
-								alt="Austin Dillon Spraggins"
-								width={120}
-								height={120}
-								className="rounded-xl"
-							/>
-							<div className="text-center md:text-left">
-								<p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-3">
-									At {myAge}, I&apos;m a proud father of two wonderful children,
-									Lilly ({lillyAge}) and Julian ({julianAge}) Spraggins. Based in
-									Fresno, California, combining my passion for technology with the
-									joys of parenthood.
-								</p>
-								<p className="text-lg font-dancing-script text-primary italic">
-									Austin Dillon Spraggins
-								</p>
-							</div>
-						</div>
-					</div>
-
-					<p className="text-muted-foreground text-sm md:text-base leading-relaxed">
-						I&apos;m excited to create a future where my children can see the positive
-						impact of technology and innovation. Every line of code is building toward
-						something meaningful.
-					</p>
-				</div>
-			),
-		},
-	];
-
+export default function About() {
 	return (
-		<section id="about" className="bg-background text-foreground">
+		<>
+			<section id="about" aria-labelledby="about-heading" className={styles.about}>
+				<div className={styles.container}>
+					<div className={styles.sectionLabel}>
+						<span className={styles.location}>Fresno, California</span>
+					</div>
+					<header className={styles.header}>
+						<h2 id="about-heading">From the road<br />to building <span>products.</span></h2>
+						<p>
+							I didn&apos;t take a straight path into software. I drove trucks,
+							went back to college, taught web development, and started building
+							products of my own. I&apos;m still learning every day.
+						</p>
+					</header>
+					<div className={styles.storyGrid}>
+						<aside className={styles.context} aria-label="What matters to me">
+							<div className={styles.personal}>
+								<span className={styles.smallLabel}>The reason behind it</span>
+								<h3>A father.<br />A believer.<br />A builder.</h3>
+								<p>
+									I&apos;m a father of two, and being there for my children matters
+									more to me than any title. After a difficult period in my life,
+									I found faith in Jesus Christ and a renewed purpose.
+								</p>
+								<p>
+									I want to serve God, provide for my family, and build things
+									that help people. That&apos;s what I&apos;m working toward.
+								</p>
+								<a href="#faith" className={styles.personalLink}>
+									My faith and testimony <ArrowDown size={16} aria-hidden="true" />
+								</a>
+							</div>
+							<div className={styles.consistency}>
+								<span className={styles.smallLabel}>Showing up / 2025</span>
+								<p className={styles.commitDays}>355<span> / 365</span></p>
+								<p>Days with a LineCrush commit under my name.</p>
+								<p>During the build-out I remember some weeks going past 100 hours between engineering and running the business.</p>
+								<p className={styles.measurementNote}>
+									From the commit history, checked November 17, 2026. Commit
+									timestamps show which days I was active.
+								</p>
+								<a href="#work-log" className={styles.textLink}>
+									See the measured work log <ArrowUpRight size={16} aria-hidden="true" />
+								</a>
+							</div>
+						</aside>
+						<ol className={styles.timeline}>
+							{chapters.map((chapter) => (
+								<li key={chapter.period} className={styles.chapter}>
+									<div className={styles.chapterMeta}>
+										<span>{chapter.period}</span>
+									</div>
+									<h3>{chapter.title}</h3>
+									<p>{chapter.text}</p>
+									<div className={styles.chapterFooter}>
+										<span>{chapter.footnote}</span>
+										{chapter.href && (
+											<Link href={chapter.href} className={styles.textLink}>
+												{chapter.linkLabel} <ArrowUpRight size={15} aria-hidden="true" />
+											</Link>
+										)}
+									</div>
+								</li>
+							))}
+						</ol>
+					</div>
+				</div>
+			</section>
 			<Faith />
-			<Timeline data={timelineData} />
-		</section>
+		</>
 	);
-};
-
-export default About;
+}

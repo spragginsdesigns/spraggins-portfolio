@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
+import { caseStudySlugs } from "@/lib/case-studies";
 
 export default function sitemap(): MetadataRoute.Sitemap {
 	const baseUrl = "https://www.spragginsdesigns.xyz";
@@ -27,10 +28,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		},
 		{
 			url: `${baseUrl}/resume`,
-			lastModified: new Date(),
 			changeFrequency: "monthly",
 			priority: 0.9
 		},
+		...caseStudySlugs.map((slug) => ({ url: `${baseUrl}/work/${slug}` })),
 		{
 			url: `${baseUrl}/local-websites`,
 			lastModified: new Date(),

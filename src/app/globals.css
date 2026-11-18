@@ -14,7 +14,8 @@ html {
 }
 
 /* Offset anchor targets so the fixed header doesn't cover section headings */
-section[id] {
+:is(section, article)[id],
+#local-websites {
 	scroll-margin-top: 4.5rem;
 }
 
