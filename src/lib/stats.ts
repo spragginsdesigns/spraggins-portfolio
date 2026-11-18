@@ -5,6 +5,10 @@
 // must be kept in sync manually.
 
 export const STATS = {
+	// Public repository badge on Nov 17, 2026, rounded down to whole hours.
+	lineCrushEditorHours: 2252,
+	// July 5 Godot project and playable build to the September 10 Steam release.
+	firstGameToSteamDays: 67,
 	verifiedDate: "2026-11-16",
 	monorepoCommitsExact: 30128,
 	monorepoCommits2026: 12873,

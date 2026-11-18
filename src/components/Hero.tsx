@@ -14,7 +14,7 @@ import { ArrowRight, Github, Linkedin, Mail, Twitter, FileDown } from "lucide-re
 
 const Hero: React.FC = () => {
 	const tagline =
-		"I build AI agents that ship production software - and the platforms they run. At LineCrush, that means autonomous delivery, multi-model intelligence, native apps, and an AI-native game studio.";
+		"I started the LineCrush codebase and built the business with my co-founder, Jay. I also built SureWord for web and mobile, shipped Gunmetal Orbit on Steam, and designed the coding-agent fleet we use to deliver software.";
 
 	const highlights = [
 		"Co-Founder & CTO",
@@ -196,12 +196,12 @@ const Hero: React.FC = () => {
 					<div className="text-center">
 						<div className="text-2xl md:text-4xl font-bold text-primary">
 							<CountUp
-								end={STATS.monorepoCommitsExact}
+								end={STATS.lineCrushEditorHours}
 								format={(v) => v.toLocaleString()}
 							/>
 						</div>
 						<div className="text-xs md:text-sm text-muted-foreground">
-							Monorepo Commits
+							LineCrush editor hours tracked by WakaTime
 						</div>
 					</div>
 					<div className="w-px bg-border/50 hidden sm:block" />
@@ -213,16 +213,16 @@ const Hero: React.FC = () => {
 							/>
 						</div>
 						<div className="text-xs md:text-sm text-muted-foreground">
-							Agent Issues Shipped
+							Issues completed by the fleet
 						</div>
 					</div>
 					<div className="w-px bg-border/50 hidden sm:block" />
 					<div className="text-center">
 						<div className="text-2xl md:text-4xl font-bold text-primary">
-							<CountUp end={STATS.agentSkills} />
+							<CountUp end={STATS.firstGameToSteamDays} />
 						</div>
 						<div className="text-xs md:text-sm text-muted-foreground">
-							Agent Skills
+							Days from first Gunmetal Orbit build to Steam
 						</div>
 					</div>
 				</motion.div>
