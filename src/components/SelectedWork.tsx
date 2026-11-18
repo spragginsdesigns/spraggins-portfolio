@@ -4,59 +4,82 @@ import { ArrowRight, ArrowUpRight, Code2, Store } from "lucide-react";
 import { BrandIcon } from "@/components/BrandIcon";
 import { FMT, GUNMETAL_ORBIT, STATS } from "@/lib/stats";
 import styles from "./Portfolio.module.css";
+import ReleaseFrame, { lineCrushRelease } from "./ReleaseFrame";
 
-const projects = [
+const evidence = [
 	{
-		slug: "linecrush",
-		name: "LineCrush",
-		role: "Co-Founder & CTO",
-		title: "From an athlete research prototype to a subscription business",
-		description: "I started the codebase and built LineCrush with Jay. As CTO, I led engineering across the web platform, built both native apps and created the delivery system we run together.",
-		stack: "Next.js · Python · SwiftUI · Kotlin",
-		image: "/images/work/linecrush-research.webp",
-		alt: "LineCrush on iPhone with player statistics, a research card, and a historical chart",
-		height: 1564
+		value: `${STATS.lineCrushEditorHours.toLocaleString("en-US")}+`,
+		label: "WakaTime editor hours on LineCrush",
+		href: "https://wakatime.com/badge/github/spragginsdesigns/Context-Pro-AI.svg"
 	},
 	{
-		slug: "sureword",
-		name: "SureWord",
-		role: "Creator & Engineer",
-		title: "One study that continues across devices",
-		description: "I built SureWord for the web, then built the iOS and Android apps myself. To keep verse quotations exact, the server supplies the Scripture text while the AI explains it.",
-		stack: "Next.js · AI SDK · React Native · SwiftUI",
-		image: "/images/work/sureword-study.webp",
-		alt: "SureWord on iPhone answering a study question with Scripture citations",
-		height: 1565
+		value: FMT.fleetCompletedJobs,
+		label: "Jobs completed by the fleet",
+		href: "/work/linecrush#c2"
+	},
+	{
+		value: `${STATS.firstGameToSteamDays} days`,
+		label: "First playable build to Steam",
+		href: "/#game-spotlight"
 	}
-] as const;
+];
 
 export default function SelectedWork() {
 	return (
-		<section id="projects" aria-labelledby="selected-work-title" className={styles.selected}>
+		<section id="projects" aria-labelledby="selected-work-title" className={styles.selected} tabIndex={-1}>
 			<div className={styles.wrap}>
 				<h2 id="selected-work-title" className={styles.sectionTitle}>Selected work</h2>
-				<div className={styles.projectGrid}>
-					{projects.map((project) => (
-						<article className={styles.project} data-project={project.slug} key={project.slug}>
-							<div className={styles.projectCopy}>
-								<p className={styles.projectRole}>{project.role}</p>
-								<h3>{project.name}</h3>
-								<p className={styles.projectTitle}>{project.title}</p>
-								<p className={styles.projectText}>{project.description}</p>
-								<p className={styles.projectStack}>{project.stack}</p>
-								<Link className={styles.textAction} href={`/work/${project.slug}`}>
-									<BrandIcon href={`/work/${project.slug}`} />
-									Explore {project.name}
-									<ArrowRight size={17} aria-hidden="true" />
-								</Link>
-							</div>
-							<div className={styles.projectMedia}>
-								<Image src={project.image} alt={project.alt} width={720} height={project.height}
-									sizes="(max-width: 640px) 145px, (max-width: 1000px) 220px, 250px" />
-							</div>
-						</article>
+				<article className={styles.leadCase} aria-labelledby="linecrush-lead-title">
+					<div className={styles.leadCopy}>
+						<p className={styles.projectRole}>Co-Founder &amp; CTO</p>
+						<h3 id="linecrush-lead-title">LineCrush</h3>
+						<p className={styles.projectTitle}>From a web codebase to two native app stores</p>
+						<p className={styles.projectText}>
+							I started the codebase and built LineCrush with Jay. I built the iOS app in SwiftUI and the Android app
+							in Kotlin and Jetpack Compose myself, then took both through release and store review.
+						</p>
+						<p className={styles.projectStack}>Next.js · Python · SwiftUI · Kotlin</p>
+						<Link className={styles.textAction} href="/work/linecrush">
+							<BrandIcon href="/work/linecrush" /> Read the LineCrush case study <ArrowRight size={17} aria-hidden="true" />
+						</Link>
+					</div>
+					<div className={styles.previewStage} data-linecrush-destination>
+						<ReleaseFrame {...lineCrushRelease} />
+					</div>
+				</article>
+
+				<dl className={styles.evidence}>
+					{evidence.map(({ value, label, href }) => (
+						<div key={label}>
+							<dt className={styles.evidenceLabel}>{label}</dt>
+							<dd>
+								<a href={href} aria-label={`${value} ${label}`}>
+									{value} <ArrowRight size={15} aria-hidden="true" />
+								</a>
+							</dd>
+						</div>
 					))}
-				</div>
+				</dl>
+
+				<article className={styles.project} data-project="sureword">
+					<div className={styles.projectCopy}>
+						<p className={styles.projectRole}>Creator &amp; Engineer</p>
+						<h3>SureWord</h3>
+						<p className={styles.projectTitle}>One study that continues across devices</p>
+						<p className={styles.projectText}>
+							I built SureWord for the web, then built the iOS and Android apps myself. To keep verse quotations exact,
+							the server supplies the Scripture text while the AI explains it.
+						</p>
+						<p className={styles.projectStack}>Next.js · AI SDK · React Native · SwiftUI</p>
+						<Link className={styles.textAction} href="/work/sureword">
+							<BrandIcon href="/work/sureword" /> Explore SureWord <ArrowRight size={17} aria-hidden="true" />
+						</Link>
+					</div>
+					<div className={styles.projectMedia}>
+						<Image src="/images/work/sureword-study.webp" alt="SureWord on iPhone answering a study question with Scripture citations"
+							width={720} height={1565} sizes="(max-width: 640px) 145px, 180px" />
+					</div>
+				</article>
 
 				<section className={styles.fleet} id="ai-systems" aria-labelledby="fleet-title">
 					<div>
@@ -91,8 +114,8 @@ export default function SelectedWork() {
 							and wrote a regression test that drives the same UI with controller input.
 						</p>
 						<div className={styles.actions}>
-							<Link href="/work/game-development" className={styles.textAction}>Read the game development case study <ArrowRight size={17} aria-hidden="true" /></Link>
-							<Link href="/games" className={styles.textAction}>Explore the game <ArrowRight size={17} aria-hidden="true" /></Link>
+						<Link href="/work/game-development" className={styles.textAction}>Read the game development case study <ArrowRight size={17} aria-hidden="true" /></Link>
+						<Link href="/games" className={styles.textAction}>Explore the game <ArrowRight size={17} aria-hidden="true" /></Link>
 							<a href={GUNMETAL_ORBIT.steamUrl} className={styles.textAction}><BrandIcon href={GUNMETAL_ORBIT.steamUrl} /> Steam <ArrowUpRight size={17} aria-hidden="true" /></a>
 						</div>
 					</div>

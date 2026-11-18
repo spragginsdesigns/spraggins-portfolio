@@ -1,18 +1,16 @@
 "use client";
 
 import { useRef, useState, type KeyboardEvent } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import styles from "./Portfolio.module.css";
+import ReleaseFrame, { lineCrushRelease } from "./ReleaseFrame";
 
 const products = [
 	{
-		id: "linecrush", name: "LineCrush", category: "Sports research",
-		platform: "Native iPad app", role: "Co-Founder & CTO",
+		...lineCrushRelease,
+		id: "linecrush", name: "LineCrush", role: "Co-Founder & CTO",
 		description: "One product. Web, iOS, and Android.",
-		image: "/images/work/editorial-linecrush.webp", width: 825, height: 1100,
-		alt: "The shipped LineCrush native iPad app, with a historical player-statistics chart and research navigation",
 		href: "/work/linecrush", link: "Read the case study", stack: "Next.js / SwiftUI / Kotlin / Python"
 	},
 	{
@@ -66,11 +64,8 @@ export default function WorkPreview() {
 			{products.map((item, index) => (
 				<div key={item.id} role="tabpanel" id={`preview-panel-${item.id}`}
 					aria-labelledby={`preview-tab-${item.id}`} hidden={active !== index} tabIndex={0}>
-					<div className={styles.previewStage}>
-						<div className={styles.previewMargin} aria-hidden="true"><span>{item.category}</span><span>{item.platform}</span></div>
-						<Image src={item.image} alt={item.alt} width={item.width} height={item.height}
-							priority={index === 0} sizes="(max-width: 650px) 270px, (max-width: 1000px) 330px, 380px"
-							className={styles.previewImage} />
+					<div className={styles.previewStage} data-linecrush-source={item.id === "linecrush" || undefined}>
+						<ReleaseFrame {...item} priority={index === 0} />
 					</div>
 					<div className={styles.previewCaption}>
 						<div><p>{item.role}</p><h2>{item.description}</h2></div>

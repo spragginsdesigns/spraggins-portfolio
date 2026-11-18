@@ -7,7 +7,7 @@
  background: radial-gradient(ellipse at 89% 18%, #16262455, transparent 48%), #0a1015;
  padding: 7.8rem 0 0;
 }
-.heroGrid {
+.heroGrid, .leadCase {
  display: grid;
  grid-template-columns: 1.03fr 1fr;
  gap: clamp(2rem, 4.6vw, 5rem);
@@ -125,23 +125,27 @@
  background: var(--preview-accent);
 }
 .previewStage {
+ height: clamp(21rem, 32vw, 29rem);
+ margin-top: 1.1rem;
+ min-width: 0;
+}
+.previewFrame {
  position: relative;
  display: flex;
  justify-content: center;
  align-items: center;
- height: clamp(21rem, 32vw, 29rem);
- margin-top: 1.1rem;
+ height: 100%;
  padding: 1.2rem 3.2rem;
  border: 1px solid #31443c;
  background: radial-gradient(ellipse at 50% 80%, #2a4c41, #12251f 70%);
  border-radius: .4rem;
  overflow: hidden;
 }
-.workPreview[data-preview="sureword"] .previewStage {
+.workPreview[data-preview="sureword"] .previewFrame {
  border-color: #504738;
  background: radial-gradient(ellipse at 50% 80%, #5b4630, #251e17 70%);
 }
-.workPreview[data-preview="gunmetal"] .previewStage {
+.workPreview[data-preview="gunmetal"] .previewFrame {
  border-color: #4f3f3b;
  padding-inline: 1.5rem;
  background: radial-gradient(ellipse at 50% 80%, #654439, #271e1c 70%);
@@ -214,7 +218,7 @@
 .projectRole, .textAction { gap: .45rem; }
 .hero a:focus-visible, .workPreview button:focus-visible, .workPreview [role="tabpanel"]:focus-visible { outline: 2px solid #a1edce; outline-offset: 5px; border-radius: .2rem; }
 .selected {
-	padding: 4.4rem 0 5rem;
+	padding: clamp(2.25rem, 4.25vw, 4rem) 0 5rem;
 	color: #f3f6f5;
 	background: #0a1015;
 }
@@ -228,10 +232,43 @@
 	line-height: 1.05;
 }
 
-.projectGrid {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 1rem;
+.leadCase {
+	--project-accent: #a1edce;
+}
+
+.leadCopy {
+	padding-block: .7rem;
+}
+
+.leadCase [data-linecrush-destination] {
+	margin-top: 0;
+	--preview-accent: #a1edce;
+}
+
+.handoff[data-work-handoff="start"] [data-linecrush-destination] .previewFrame,
+.handoff[data-work-handoff="moving"] [data-linecrush-destination] .previewFrame,
+.handoff[data-work-handoff="docked"] [data-linecrush-source] .previewFrame {
+	visibility: hidden;
+}
+
+.handoff[data-work-handoff="moving"] [data-linecrush-source] .previewFrame {
+	z-index: 2;
+	pointer-events: none;
+	transform: translate3d(var(--handoff-x, 0px), var(--handoff-y, 0px), 0);
+}
+
+.handoff[data-work-handoff="moving"] :is(.identity, .role, .heroHeadline, .intro, .previewCaption) {
+	opacity: var(--handoff-intro-opacity, 1);
+}
+
+.previewFoot:has(a:focus-visible) {
+	position: relative;
+	z-index: 3;
+	background: #0a1015;
+}
+
+.leadCopy .textAction {
+	margin-top: .8rem;
 }
 
 .project {
@@ -240,6 +277,7 @@
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, .69fr);
 	align-items: stretch;
+	margin-top: 1.6rem;
 	overflow: hidden;
 	border: 1px solid #384d54;
 	border-radius: 1.2rem;
@@ -269,6 +307,7 @@
 }
 
 .project h3,
+.leadCopy h3,
 .fleet h3,
 .game h3 {
 	margin-top: .35rem;
@@ -277,6 +316,10 @@
 	font-weight: 700;
 	line-height: 1.05;
 	letter-spacing: -.06em;
+}
+
+.leadCopy h3 {
+	font-size: clamp(2.6rem, 5.6vw, 4.8rem);
 }
 
 .projectTitle {
@@ -426,19 +469,20 @@
 
 
 @media (max-width: 1000px) {
- .heroGrid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+ .heroGrid, .leadCase { grid-template-columns: 1fr 1fr; gap: 2rem; }
  .heroHeadline { font-size: clamp(2.3rem, 4.7vw, 3.1rem); }
- .previewStage { height: 23rem; padding-inline: 2.1rem; }
+ .previewStage { height: 23rem; }
+ .previewFrame { padding-inline: 2.1rem; }
  .previewTabs { gap: .8rem; }
  .previewTabs button { font-size: .66rem; }
  .previewFoot { align-items: flex-start; flex-direction: column; gap: .4rem; }
- .projectGrid { grid-template-columns: 1fr; }
  .project { grid-template-columns: 1.5fr 1fr; align-items: center; }
 }
 @media (max-width: 760px) {
  .wrap { width: calc(100% - 2.5rem); }
  .hero { padding-top: 6rem; }
  .heroGrid { grid-template-columns: 1fr; gap: 2.75rem; }
+ .leadCase { grid-template-columns: 1fr; gap: 1rem; }
  .heroCopy { max-width: 38rem; }
  .heroHeadline { font-size: clamp(2.55rem, 8.6vw, 3.7rem); max-width: 15ch; }
  .role { margin-top: 1.65rem; }
@@ -446,7 +490,8 @@
  .intro { max-width: 46ch; font-size: .88rem; margin-top: 1.1rem; line-height: 1.65; }
  .actions { margin-top: 1.25rem; }
  .faithLink { font-size: .65rem; margin-top: .95rem; }
- .previewStage { height: 24rem; padding: 1rem 3rem; }
+ .previewStage { height: 24rem; }
+ .previewFrame { padding: 1rem 3rem; }
  .previewTabs { gap: 1.4rem; }
  .previewTabs button { font-size: .74rem; }
  .previewFoot { flex-direction: row; }
@@ -468,8 +513,14 @@
  .previewTabs { gap: 1rem; }
  .previewTabs button { font-size: .7rem; }
  .previewFoot { align-items: flex-start; flex-direction: column; gap: .5rem; }
- .previewStage { height: 22rem; padding-inline: 2.5rem; }
+ .previewStage { height: 22rem; }
+ .previewFrame { padding-inline: 2.5rem; }
  .previewCaption h2 { font-size: .81rem; }
+}
+
+@media (max-width: 760px), (prefers-reduced-motion: reduce) {
+ .handoff:has([data-preview="linecrush"]) .leadCase { grid-template-columns: minmax(0, 1fr); }
+ .handoff:has([data-preview="linecrush"]) [data-linecrush-destination] { display: none; }
 }
 @media (max-width: 360px) {
  .heroHeadline { font-size: 2.35rem; }

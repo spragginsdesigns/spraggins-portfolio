@@ -1,27 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDownRight, ArrowRight, FileText, MapPin } from "lucide-react";
-import { FMT, STATS } from "@/lib/stats";
+import { ArrowDownRight, FileText, MapPin } from "lucide-react";
 import styles from "./Portfolio.module.css";
 import WorkPreview from "./WorkPreview";
-
-const evidence = [
-	{
-		value: `${STATS.lineCrushEditorHours.toLocaleString("en-US")}+`,
-		label: "WakaTime editor hours on LineCrush",
-		href: "https://wakatime.com/badge/github/spragginsdesigns/Context-Pro-AI.svg"
-	},
-	{
-		value: FMT.fleetCompletedJobs,
-		label: "Jobs completed by the fleet",
-		href: "/work/linecrush#c2"
-	},
-	{
-		value: `${STATS.firstGameToSteamDays} days`,
-		label: "First playable build to Steam",
-		href: "/#game-spotlight"
-	}
-];
 
 export default function Hero() {
 	return (
@@ -60,18 +41,6 @@ export default function Hero() {
 					</div>
 					<WorkPreview />
 				</div>
-				<dl className={styles.evidence}>
-					{evidence.map(({ value, label, href }) => (
-						<div key={label}>
-							<dt className={styles.evidenceLabel}>{label}</dt>
-							<dd>
-								<a href={href} aria-label={`${value} ${label}`}>
-									{value} <ArrowRight size={15} aria-hidden="true" />
-								</a>
-							</dd>
-						</div>
-					))}
-				</dl>
 			</div>
 		</section>
 	);

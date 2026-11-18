@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import FaithHashRedirect from "@/components/FaithHashRedirect";
 import GitHubShowcase from "@/components/GitHubShowcase";
 import WorkLedger from "@/components/WorkLedger";
+import WorkHandoff from "@/components/WorkHandoff";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
 import { getAllPosts } from "@/lib/blog";
 
@@ -26,8 +27,10 @@ export default function Home() {
 			<FaithHashRedirect />
 			<Header />
 			<main id="main-content" tabIndex={-1} className="bg-background min-h-screen">
-				<Hero />
-				<SelectedWork />
+				<WorkHandoff>
+					<Hero />
+					<SelectedWork />
+				</WorkHandoff>
 				<About />
 				<InteractiveTerminal />
 				<BlogPreview posts={posts} />
