@@ -47,7 +47,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 function toolDetail(args: unknown): string {
 	if (!isRecord(args)) return "";
 	if (typeof args.days === "number") return `last ${args.days} days`;
-	for (const key of ["query", "slug", "name", "sort"]) {
+	for (const key of ["query", "topic", "skill", "subject", "area", "slug", "name", "sort"]) {
 		if (typeof args[key] === "string") return args[key].slice(0, 80);
 	}
 	return "";

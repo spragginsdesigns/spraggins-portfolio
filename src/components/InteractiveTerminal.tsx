@@ -40,7 +40,7 @@ const HISTORY_TURNS = 6;
 const SUGGESTED_QUESTIONS = [
 	{ label: "The engineering", question: "What did Austin personally build?" },
 	{ label: "Live work log", question: "What has Austin been working on over the last two weeks?" },
-	{ label: "The delivery system", question: "How does C2 help LineCrush ship?" },
+	{ label: "A hard bug", question: "Tell me about the hardest bug Austin has tracked down." },
 	{ label: "Public code", question: "What's in his public GitHub right now?" },
 	{ label: "The journey", question: "How did Austin go from trucking to CTO?" },
 	{ label: "The Bible companion", question: "How does SureWord keep its answers grounded?" },
@@ -53,6 +53,7 @@ const CAPABILITIES: { icon: LucideIcon; label: string }[] = [
 	{ icon: Activity, label: "Live work ledger" },
 	{ icon: FolderGit2, label: "Public GitHub" },
 	{ icon: BarChart3, label: "Verified stats" },
+	{ icon: BookOpen, label: "Stories & decisions" },
 	{ icon: Newspaper, label: "Blog posts" },
 	{ icon: Gamepad2, label: "Steam listing" },
 ];
@@ -67,6 +68,11 @@ const TOOL_ICONS: Record<string, LucideIcon> = {
 	list_github_repos: FolderGit2,
 	get_github_repo: FolderGit2,
 	get_steam_listing: Gamepad2,
+	find_engineering_stories: BookOpen,
+	get_decisions_and_lessons: FileText,
+	get_career_timeline: Activity,
+	get_skill_evidence: Search,
+	get_project_facts: BarChart3,
 };
 
 type AnswerStatus = "waiting" | "writing" | "complete" | "stopped" | "error";

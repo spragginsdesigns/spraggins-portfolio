@@ -7,6 +7,7 @@
 // agent (/api/ask-ai) and the browser-facing tool endpoint
 // (/api/portfolio-tools) that the page's WebMCP tools call.
 
+import recordJson from "@/data/engineering-record.json";
 import snapshotJson from "@/data/work-ledger.json";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { caseStudies, caseStudySlugs, isCaseStudySlug } from "@/lib/case-studies";
@@ -75,6 +76,167 @@ async function fetchJson(url: string, signal: AbortSignal): Promise<unknown> {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
 	return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+// ---------------------------------------------------------------------------
+// Engineering record (bundled, dated; see docs/ask-agent.md before editing)
+// ---------------------------------------------------------------------------
+
+interface RecordStory { id: string; title: string; area: string; themes: string[]; when: string; situation: string; action: string; result: string; lesson: string; attribution: string; }
+interface RecordDecision { id: string; title: string; when: string; decision: string; why: string; outcome: string; attribution: string; }
+interface RecordLesson { id: string; lesson: string; from: string; }
+interface RecordMilestone { date: string; event: string; area: string; }
+interface RecordSkill { skill: string; category: string; evidence: string; where: string[]; }
+interface RecordFact { subject: string; fact: string; as_of: string; }
+interface EngineeringRecord { asOf: string; note: string; stories: RecordStory[]; decisions: RecordDecision[]; lessons: RecordLesson[]; milestones: RecordMilestone[]; skills: RecordSkill[]; facts: RecordFact[]; }
+
+const RECORD: EngineeringRecord = recordJson;
+
+const ATTRIBUTION: Record<string, string> = {
+	austin: "Austin's own work.",
+	"austin-and-jay": "Shared work with his co-founder Jay.",
+	"austin-directing-agents": "Austin directed this work. AI coding agents wrote much of the code under his direction."
+};
+
+const AREA_SOURCES: Record<string, PortfolioSource> = {
+	"agent-fleet": { label: "C2 and the engineering fleet", href: "/work/linecrush#c2" },
+	c2: { label: "C2 and the engineering fleet", href: "/work/linecrush#c2" },
+	"native-apps": { label: "LineCrush: iOS and Android", href: "/work/linecrush#native-apps" },
+	release: { label: "LineCrush: iOS and Android", href: "/work/linecrush#native-apps" },
+	sureword: { label: "SureWord case study", href: "/work/sureword" },
+	games: { label: "Game development case study", href: "/work/game-development" },
+	"client-work": { label: "Client work and public tools", href: "/work/independent" }
+};
+const DEFAULT_AREA_SOURCE: PortfolioSource = { label: "LineCrush case study", href: "/work/linecrush" };
+
+function areaSource(area: string): PortfolioSource {
+	return AREA_SOURCES[area] ?? DEFAULT_AREA_SOURCE;
+}
+
+function uniqueSources(sources: PortfolioSource[]): PortfolioSource[] {
+	return sources.filter((source, index) => sources.findIndex((other) => other.href === source.href) === index).slice(0, 3);
+}
+
+function storyText(story: RecordStory): string {
+	return [story.situation, story.action, story.result, story.lesson, `Themes: ${story.themes.join(", ")}.`, story.when ? `When: ${story.when}.` : ""].filter(Boolean).join(" ");
+}
+
+function presentStory(story: RecordStory) {
+	return {
+		title: story.title,
+		when: story.when || undefined,
+		themes: story.themes,
+		situation: story.situation,
+		whatHeDid: story.action,
+		result: story.result,
+		lesson: story.lesson || undefined,
+		whoDidIt: ATTRIBUTION[story.attribution] ?? ATTRIBUTION.austin,
+		href: areaSource(story.area).href
+	};
+}
+
+const STORY_THEMES = ["any", ...Array.from(new Set(RECORD.stories.flatMap((story) => story.themes))).sort()];
+
+function findStories(args: Args): ToolOutcome {
+	const topic = text(args, "topic", 200);
+	const theme = text(args, "theme", 40);
+	if (!STORY_THEMES.includes(theme)) throw new ToolInputError(`"theme" must be one of: ${STORY_THEMES.join(", ")}.`);
+	const pool = theme === "any" ? RECORD.stories : RECORD.stories.filter((story) => story.themes.includes(theme));
+	const ranked = rankByQuery(pool, (story) => ({ title: `${story.title} ${story.area}`, text: storyText(story) }), topic, 4);
+	// A theme with no wording match still has stories worth telling.
+	const stories = ranked.length || theme === "any" ? ranked : pool.slice(0, 4);
+	return {
+		data: stories.length
+			? { recordAsOf: RECORD.asOf, stories: stories.map(presentStory) }
+			: { stories: [], note: "No recorded story matches. Try another wording or theme, or say the record has none.", themes: STORY_THEMES },
+		summary: stories.length ? `${stories.length} stor${stories.length === 1 ? "y" : "ies"}` : "No match",
+		sources: uniqueSources(stories.map((story) => areaSource(story.area)))
+	};
+}
+
+function findDecisionsAndLessons(args: Args): ToolOutcome {
+	const topic = text(args, "topic", 200);
+	const decisions = rankByQuery(RECORD.decisions, (decision) => ({ title: decision.title, text: `${decision.decision} ${decision.why} ${decision.outcome}` }), topic, 4);
+	const lessons = rankByQuery(RECORD.lessons, (lesson) => ({ title: lesson.id.replace(/-/g, " "), text: `${lesson.lesson} ${lesson.from}` }), topic, 5);
+	const found = decisions.length + lessons.length;
+	return {
+		data: found
+			? {
+				recordAsOf: RECORD.asOf,
+				decisions: decisions.map((decision) => ({ title: decision.title, when: decision.when, decision: decision.decision, why: decision.why, outcome: decision.outcome, whoDecided: ATTRIBUTION[decision.attribution] ?? ATTRIBUTION.austin })),
+				lessonsInHisWords: lessons.map((lesson) => ({ lesson: lesson.lesson, cameFrom: lesson.from }))
+			}
+			: { decisions: [], lessonsInHisWords: [], note: "Nothing recorded matches that topic. Try broader wording such as testing, releases, agents, migrations, CI cost or app review." },
+		summary: found ? `${decisions.length} decisions, ${lessons.length} lessons` : "No match",
+		sources: found ? [{ label: "LineCrush: what I learned", href: "/work/linecrush#lessons" }, { label: "Engineering blog", href: "/blog" }] : []
+	};
+}
+
+const TIMELINE_AREAS: Record<string, readonly string[] | null> = {
+	all: null,
+	career: ["leadership", "client-work"],
+	linecrush: ["linecrush-platform", "native-apps", "release", "agent-fleet", "c2"],
+	"fleet-and-c2": ["agent-fleet", "c2"],
+	"native-apps": ["native-apps", "release"],
+	sureword: ["sureword"],
+	games: ["games"]
+};
+
+function careerTimeline(args: Args): ToolOutcome {
+	const area = text(args, "area", 40);
+	if (!(area in TIMELINE_AREAS)) throw new ToolInputError(`"area" must be one of: ${Object.keys(TIMELINE_AREAS).join(", ")}.`);
+	const areas = TIMELINE_AREAS[area];
+	const milestones = RECORD.milestones.filter((milestone) => !areas || areas.includes(milestone.area));
+	return {
+		data: {
+			recordAsOf: RECORD.asOf,
+			education: "A.S. in Information Systems: Web Design, Clovis Community College (2021), and a Certificate of Achievement (2020). He does not hold a bachelor's degree.",
+			milestones: milestones.map(({ date, event }) => ({ date, event }))
+		},
+		summary: `${milestones.length} dated milestones`,
+		sources: [{ label: "Résumé", href: "/resume" }, { label: "Journey", href: "/#about" }]
+	};
+}
+
+function skillEvidence(args: Args): ToolOutcome {
+	const skill = text(args, "skill", 120);
+	const skills = rankByQuery(RECORD.skills, (entry) => ({ title: `${entry.skill} ${entry.category}`, text: `${entry.evidence} ${entry.where.join(" ")}` }), skill, 6);
+	const facts = rankByQuery(RECORD.facts, (fact) => ({ title: fact.subject, text: fact.fact }), skill, 4);
+	return {
+		data: skills.length || facts.length
+			? {
+				recordAsOf: RECORD.asOf,
+				skills: skills.map((entry) => ({ skill: entry.skill, evidence: entry.evidence, usedIn: entry.where })),
+				relatedFacts: facts.map((fact) => ({ subject: fact.subject, fact: fact.fact, asOf: fact.as_of }))
+			}
+			: { skills: [], note: "The record has no evidence for that skill. Say so plainly; do not infer experience from related skills.", skillsOnRecord: RECORD.skills.map((entry) => entry.skill) },
+		summary: skills.length ? `${skills.length} skill${skills.length === 1 ? "" : "s"} with evidence` : facts.length ? `${facts.length} related facts` : "No evidence on record",
+		sources: skills.length || facts.length ? [{ label: "Résumé", href: "/resume" }, { label: "Selected work", href: "/#work" }] : []
+	};
+}
+
+const FACT_SUBJECTS: Record<string, { match: RegExp; source: PortfolioSource }> = {
+	"agent-fleet": { match: /^LineCrush agent fleet/, source: AREA_SOURCES["agent-fleet"] },
+	c2: { match: /^C2/, source: AREA_SOURCES.c2 },
+	"linecrush-ios": { match: /^LineCrush (iOS|native)/, source: AREA_SOURCES["native-apps"] },
+	"linecrush-android": { match: /^LineCrush (Android|native)/, source: AREA_SOURCES["native-apps"] },
+	"linecrush-platform": { match: /^(LineCrush (product|CI|ChatGPT|web)|Auth0)/, source: DEFAULT_AREA_SOURCE },
+	sureword: { match: /^SureWord/, source: AREA_SOURCES.sureword },
+	"gunmetal-orbit": { match: /^Gunmetal Orbit/, source: AREA_SOURCES.games },
+	"other-projects": { match: /^(Cut Loose|tty7|react-steam-deck|FileSteward|Two Cities|Constrong|FormUp)/, source: AREA_SOURCES["client-work"] },
+	"work-pattern": { match: /^Austin's work pattern/, source: { label: "Daily work log", href: "/#work-log" } }
+};
+
+function projectFacts(args: Args): ToolOutcome {
+	const subject = text(args, "subject", 40);
+	const group = FACT_SUBJECTS[subject];
+	if (!group) throw new ToolInputError(`"subject" must be one of: ${Object.keys(FACT_SUBJECTS).join(", ")}.`);
+	const facts = RECORD.facts.filter((fact) => group.match.test(fact.subject));
+	return {
+		data: { note: RECORD.note, facts: facts.map((fact) => ({ subject: fact.subject, fact: fact.fact, asOf: fact.as_of })) },
+		summary: `${facts.length} dated facts`,
+		sources: [group.source]
+	};
 }
 
 // ---------------------------------------------------------------------------
@@ -186,34 +348,43 @@ function passages(): Passage[] {
 		source: { label: "Fresno business websites", href: "/local-websites" }
 	});
 
+	for (const story of RECORD.stories) {
+		list.push({ id: `story:${story.id}`, title: `Engineering story: ${story.title}`, text: storyText(story), source: areaSource(story.area) });
+	}
+
 	passageCache = list;
 	return list;
 }
 
-function searchPortfolio(query: string): ToolOutcome {
-	const curated = selectPortfolioEvidence(query);
+/** Ranks items against a plain-language query. Returns the best matches, best first, and nothing when no term matches. */
+function rankByQuery<T>(items: readonly T[], describe: (item: T) => { title: string; text: string }, query: string, limit: number): T[] {
 	const queryTokens = Array.from(new Set(tokens(query)));
-	const corpus = passages();
 	// Rarer terms count for more, so a product name outweighs a common verb.
 	const documentFrequency = new Map<string, number>();
-	const tokenized = corpus.map((passage) => {
-		const title = new Set(tokens(passage.title));
-		const body = tokens(passage.text);
+	const tokenized = items.map((item) => {
+		const described = describe(item);
+		const title = new Set(tokens(described.title));
+		const body = tokens(described.text);
 		const counts = new Map<string, number>();
 		body.forEach((token) => counts.set(token, (counts.get(token) ?? 0) + 1));
 		new Set([...Array.from(title), ...body]).forEach((token) => documentFrequency.set(token, (documentFrequency.get(token) ?? 0) + 1));
-		return { passage, title, counts, length: body.length };
+		return { item, title, counts, length: body.length };
 	});
-	const ranked = tokenized.map(({ passage, title, counts, length }) => {
+	return tokenized.map(({ item, title, counts, length }) => {
 		let score = 0;
 		for (const token of queryTokens) {
 			const frequency = counts.get(token) ?? 0;
 			if (!frequency && !title.has(token)) continue;
-			const idf = Math.log(1 + corpus.length / (documentFrequency.get(token) ?? 1));
+			const idf = Math.log(1 + items.length / (documentFrequency.get(token) ?? 1));
 			score += idf * ((frequency * 2.2) / (frequency + 1.2 * (0.25 + 0.75 * (length / 180))) + (title.has(token) ? 1.5 : 0));
 		}
-		return { passage, score };
-	}).filter(({ score }) => score > 0).sort((a, b) => b.score - a.score).slice(0, 4);
+		return { item, score };
+	}).filter(({ score }) => score > 0).sort((a, b) => b.score - a.score).slice(0, limit).map(({ item }) => item);
+}
+
+function searchPortfolio(query: string): ToolOutcome {
+	const curated = selectPortfolioEvidence(query);
+	const ranked = rankByQuery(passages(), (passage) => passage, query, 4).map((passage) => ({ passage }));
 
 	const results = [
 		...curated.map((item) => ({ id: `fact:${item.id}`, title: "Curated portfolio fact", text: item.answer, sources: item.sources })),
@@ -581,6 +752,41 @@ export const PORTFOLIO_TOOLS: readonly PortfolioTool[] = [
 			summary: `Fleet ledger as of ${STATS.verifiedDate}`,
 			sources: [{ label: "C2 and the engineering fleet", href: "/work/linecrush#c2" }, { label: "LineCrush case study", href: "/work/linecrush" }]
 		})
+	},
+	{
+		name: "find_engineering_stories",
+		label: "Looked up engineering stories",
+		description: `Dated stories from Austin's engineering record, each with the situation, what he did, the measured result and who did the work: hard bugs, migrations, performance work, release engineering, store review, incidents, his own mistakes, working with AI agents, and product decisions across LineCrush, the agent fleet and C2, the native apps, SureWord, the games and client work. Use it for "tell me about a time", "hardest bug", "a mistake he made", "how does he handle X" and similar questions. Themes: ${STORY_THEMES.join(", ")}.`,
+		parameters: { type: "object", properties: { topic: { type: "string", description: "What the story should be about, in plain words. Include product names when the question does." }, theme: { type: "string", enum: STORY_THEMES, description: "Narrow to one theme, or any." } }, required: ["topic", "theme"], additionalProperties: false },
+		execute: async (args) => findStories(args)
+	},
+	{
+		name: "get_decisions_and_lessons",
+		label: "Looked up decisions and lessons",
+		description: "Technical decisions Austin made (what, why, outcome, date) and lessons in his own first-person words, each tied to the dated event it came from. Use for questions about his judgment, engineering philosophy, trade-offs, why something was built a certain way, or what he learned.",
+		parameters: { type: "object", properties: { topic: { type: "string", description: "Topic in plain words, for example: testing, CI cost, migrations, native apps, agents, release process, model choice." } }, required: ["topic"], additionalProperties: false },
+		execute: async (args) => findDecisionsAndLessons(args)
+	},
+	{
+		name: "get_career_timeline",
+		label: "Read the timeline",
+		description: "Dated milestones: education, roles, product launches, store approvals and major engineering events, oldest first. Use for when something happened, how long something took, the order of events, or his career history.",
+		parameters: { type: "object", properties: { area: { type: "string", enum: Object.keys(TIMELINE_AREAS), description: "career = education and roles. all = everything." } }, required: ["area"], additionalProperties: false },
+		execute: async (args) => careerTimeline(args)
+	},
+	{
+		name: "get_skill_evidence",
+		label: "Checked the skills record",
+		description: "What Austin has actually shipped with a given technology or skill, with dated evidence and the products it was used in. Use for any question of the form: does he know X, how much experience with X, has he worked with X. If nothing comes back, the record has no evidence for it.",
+		parameters: { type: "object", properties: { skill: { type: "string", description: "A technology or skill, for example: SwiftUI, Postgres, MCP, CI/CD, Godot, Stripe billing, performance." } }, required: ["skill"], additionalProperties: false },
+		execute: async (args) => skillEvidence(args)
+	},
+	{
+		name: "get_project_facts",
+		label: "Read the project facts",
+		description: "Measured, dated facts about one project: size, test counts, release counts, review timelines and delivery figures. More detailed than get_engineering_stats, which stays the source for LineCrush repository scale. Every fact carries the date it was measured.",
+		parameters: { type: "object", properties: { subject: { type: "string", enum: Object.keys(FACT_SUBJECTS) } }, required: ["subject"], additionalProperties: false },
+		execute: async (args) => projectFacts(args)
 	},
 	{
 		name: "get_work_log",

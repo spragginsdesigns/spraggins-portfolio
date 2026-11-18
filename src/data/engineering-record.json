@@ -1,0 +1,2053 @@
+{
+	"asOf": "2026-11-17",
+	"note": "Dated facts from Austin's engineering record. Numbers are snapshots from the date given and are not live.",
+	"stories": [
+		{
+			"id": "agents-terminating-each-other",
+			"title": "Agents were terminating each other during cleanup",
+			"area": "agent-fleet",
+			"themes": [
+				"debugging",
+				"agents",
+				"incident"
+			],
+			"when": "2026-07-02",
+			"situation": "Waves of fleet runs died within the same second with empty output, using up every retry on several issues.",
+			"action": "Austin matched the kill waves against timestamps in the agent transcripts and traced them to the prompt being passed on the command line. Agents cleaned up their own dev servers by matching command lines, and the prompt contained the same text, so one agent's cleanup matched every sibling. He moved the prompt off the command line, reproduced the failure on a live process, and made a kill from outside stop counting against a job's retries.",
+			"result": "The kill waves stopped, and never matching a process by a substring of its command line became a standing rule.",
+			"lesson": "Never match a process by a substring of its command line.",
+			"attribution": "austin"
+		},
+		{
+			"id": "deploying-the-fleet-without-killing-runs",
+			"title": "Deploying the fleet's own code without killing its runs",
+			"area": "agent-fleet",
+			"themes": [
+				"release-engineering",
+				"agents"
+			],
+			"when": "2026-07-01",
+			"situation": "Every change to the fleet's worker needed a manual restart that terminated the agents already running.",
+			"action": "Austin added a watcher for changes to the fleet's own code. On a change, workers stop claiming new work, running jobs finish, and a successor process takes over on the new code.",
+			"result": "A deploy reaches the fleet in about a minute with no run killed. That matters because fleet runs also ship changes to the fleet's own code.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "pause-that-deleted-finished-work",
+			"title": "A pause that deleted finished work, and the fleet fixing itself",
+			"area": "agent-fleet",
+			"themes": [
+				"agents",
+				"incident",
+				"ai-reliability"
+			],
+			"when": "2026-07-10 to 2026-09-04",
+			"situation": "A usage-limit pause removed a job's checkout. The worker claimed the job again 22 seconds later, and the continued session found a fresh checkout with its committed, unpushed work gone.",
+			"action": "Austin had built session and workspace retention for one agent provider in July. After this incident a fleet run extended it to every provider, so an interrupted job keeps both its session and its working tree. The fleet-authored change added regression tests and went through the same proof and review as product work.",
+			"result": "An interrupted run picks up in the same working tree with uncommitted edits and unpushed commits intact.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "measuring-the-ship-lock",
+			"title": "Measuring the lock that capped fleet throughput",
+			"area": "agent-fleet",
+			"themes": [
+				"performance",
+				"agents",
+				"speed"
+			],
+			"when": "2026-07-27",
+			"situation": "A global ship lock serialized every deploy the fleet made.",
+			"action": "Austin measured the lock from its own log: 145 acquisitions a day at a 262-second mean hold and a 1,173-second mean wait. Because each agent works in its own clone, the lock only protected the remote branch, which git already protects by rejecting a push that is not a fast-forward. He replaced it with optimistic push, rebase and bounded retry.",
+			"result": "The lock, measured as the throughput ceiling, was retired.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "replacing-linear-in-12-days",
+			"title": "Replacing Linear with C2 in 12 days",
+			"area": "c2",
+			"themes": [
+				"migration",
+				"agents",
+				"speed",
+				"product-decision"
+			],
+			"when": "2026-10-22 to 2026-11-03",
+			"situation": "Linear held the fleet's issue record, its trigger and the human interface. An inventory showed the orchestration was already in-house, so replacing Linear was a bounded project and not a fleet rewrite.",
+			"action": "Austin evaluated an open-source agent control panel and chose to learn from its design rather than fork it. He wrote a contract, put a seam in front of every tracker call so the fleet ran unchanged, and built an importer that can stop and continue, a mirror and a drift check. The build was split across Codex and Claude Code sessions that reviewed each other's work.",
+			"result": "C2 became the tracker authority on 2026-11-03, 12 days after the contract, adopting 14,025 fleet jobs with every issue identifier preserved. An earlier full comparison of 18,931 issues found zero mismatches; the planned seven-day dual run was skipped under an audited same-day policy, and the closeout says so.",
+			"lesson": "When I skip a planned safeguard, I record that I skipped it.",
+			"attribution": "austin"
+		},
+		{
+			"id": "getting-answers-without-stalling",
+			"title": "Getting a person's answer without stalling the queue",
+			"area": "agent-fleet",
+			"themes": [
+				"agents",
+				"collaboration",
+				"product-decision"
+			],
+			"when": "2026-07-05 to 2026-11-14",
+			"situation": "Some issues need a founder's decision, sign-in or approval, and a run that waits or guesses holds up the work.",
+			"action": "A run that needs a person stops with a stated reason and parks instead of guessing. Routine questions are resolved automatically and the rest land on each founder's task list. In C2 each answer is a recorded decision that the parked run checks before it continues.",
+			"result": "Since 2026-07-01, 542 issues needed a founder action. Of 3,158 clarity reviews since 2026-07-28, 2,077 were resolved without a person and 783 were marked human-required.",
+			"lesson": "",
+			"attribution": "austin-and-jay"
+		},
+		{
+			"id": "done-has-to-be-proven",
+			"title": "\"Done\" has to be proven, not asserted",
+			"area": "agent-fleet",
+			"themes": [
+				"testing",
+				"ai-reliability",
+				"agents"
+			],
+			"when": "2026-06-22 to 2026-11",
+			"situation": "From its first day the fleet was shipping its own changes to production.",
+			"action": "On the day of the first fleet commit Austin added a rule requiring proof from the real product path before anything ships. It grew into a gate that needs evidence such as a browser result, an API response or database rows, and treats a code change after proof as invalidating it. In C2, a job cannot close without matching run records and recorded delivery evidence.",
+			"result": "The migration closeout shows the check refusing a real job that lacked its receipt.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "staging-area-is-shared-state",
+			"title": "A docs commit that carried another session's refactor",
+			"area": "leadership",
+			"themes": [
+				"own-mistake",
+				"agents",
+				"incident"
+			],
+			"when": "2026-08-31",
+			"situation": "In a repository where several agent sessions work at once, a docs-only commit of Austin's swept another session's staged, half-finished refactor in from the shared index, so production briefly carried it.",
+			"action": "He reverted the 11 files the same day while preserving the other session's work in history.",
+			"result": "The standing rule became: stage only your own named files and read the diff, with high-contention files listed and edited by one agent at a time.",
+			"lesson": "In a multi-agent repo the staging area is shared state.",
+			"attribution": "austin"
+		},
+		{
+			"id": "device-gate-froze-ci",
+			"title": "Device-gate runs froze CI, so the gate changed shape",
+			"area": "release",
+			"themes": [
+				"release-engineering",
+				"cost",
+				"testing"
+			],
+			"when": "2026-07-21 to 2026-07-23",
+			"situation": "212 native device-gate dispatches in one day exhausted the CI budget and froze runners account-wide.",
+			"action": "A cap came first, and it stranded about 30 issues waiting for headroom. Two days later Austin changed the design instead: compile evidence before shipping, one scheduled gate that proves the merged state, and a red gate filed automatically as a normal queue issue.",
+			"result": "The scheduled gate fixed both cost and flow. It was later cut from every 4 hours to daily on 2026-11-03 for cost.",
+			"lesson": "Constraining CI by cap creates a queue; changing its shape removes the problem.",
+			"attribution": "austin"
+		},
+		{
+			"id": "the-type-gate-nobody-read",
+			"title": "The type gate that had been dead for 12 days",
+			"area": "release",
+			"themes": [
+				"testing",
+				"cost",
+				"release-engineering"
+			],
+			"when": "2026-09-04",
+			"situation": "An audit found the TypeScript and ESLint workflow was the only type gate, ran about a thousand times in 30 days, and had been failing silently since 2026-08-23.",
+			"action": "Because it had caught about 19 distinct real incidents in 90 days, Austin kept the gate and moved it off paid CI to a scheduled job. His condition was that errors get fixed fast, with the context of why the error is there to begin with.",
+			"result": "The watcher now files one issue with each error line and its git blame context.",
+			"lesson": "A check nobody reads is not a check.",
+			"attribution": "austin"
+		},
+		{
+			"id": "the-leak-that-was-a-feature",
+			"title": "A reported data leak that was a shipped feature",
+			"area": "agent-fleet",
+			"themes": [
+				"ai-reliability",
+				"debugging",
+				"agents"
+			],
+			"when": "2026-07-27",
+			"situation": "An agent reported a data leak because a curl of a page showed no image.",
+			"action": "The image was a deliberately shipped feature that renders on click. A second model's review refuted the report, and Austin confirmed the intent. He wrote down the rule that came out of it: check git history for intent before saying leak or dead code.",
+			"result": "No code change was needed, and nobody acted on a security incident that did not exist.",
+			"lesson": "A test whose negative result looks the same in both worlds is not evidence.",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "auth0-to-clerk-migration",
+			"title": "Moving every account from Auth0 to Clerk without changing user IDs",
+			"area": "linecrush-platform",
+			"themes": [
+				"migration",
+				"testing"
+			],
+			"when": "2026-06-19",
+			"situation": "LineCrush needed to replace its auth provider under a live paid product, web first and the native apps right after, without locking anyone out or breaking subscriptions. User rows across the schema were keyed by the old provider's IDs, hundreds of API routes called the old session helpers, and the new provider's development instance was capped at 100 users, so a full rehearsal was impossible.",
+			"action": "Austin imported every user into Clerk with the old Auth0 ID kept as external_id and carried in the session token, so no foreign key changed. He wrapped Clerk in a 520-line compatibility module that exposed the old session API, so existing call sites did not change, and imported the existing password hashes so passwords kept working. He wrote the cutover as a gated runbook with a pre-migration snapshot, a dry run, an idempotent apply and count checks at each gate, and ported every signup side effect into the new provisioning path.",
+			"result": "The web cutover shipped on 2026-06-19, with native iOS and Android Clerk auth following within a week. A code review before cutover produced three findings, and all three were fixed and verified first.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "web-performance-push-res-100",
+			"title": "Taking the LineCrush web app to a Real Experience Score of 100",
+			"area": "linecrush-platform",
+			"themes": [
+				"performance",
+				"debugging"
+			],
+			"when": "2026-03",
+			"situation": "The Picks page was slow and janky, worst on phones.",
+			"action": "Measuring in DevTools showed 279 elements with backdrop-filter creating 360 GPU compositing layers, player headshots shipped as 238 to 303 KB PNGs for an 80 px slot, and the whole homepage as one client component. Austin replaced blur on repeated UI with solid backgrounds and kept it only on overlays, routed headshots through the Next.js image proxy, and made the homepage a server component with five small client leaves. He lazy-loaded anything behind an interaction, replaced axios with fetch, collapsed two animation libraries into one, reserved layout space and stopped hero video autoplay on mobile.",
+			"result": "Backdrop filters went from 279 to 1, GPU layers from 360 to 80, JS heap from 148 to 114 MB, each headshot from 238 KB to 3 KB, CLS to 0, and Vercel Speed Insights showed a Real Experience Score of 100 with every route at 93 or higher on 2026-03-16. That is a dated snapshot and has not been re-measured.",
+			"lesson": "The post-mortem notes that bundle trimming, not the dramatic blur fix, was what crossed 100.",
+			"attribution": "austin"
+		},
+		{
+			"id": "realtime-without-a-broker",
+			"title": "Real-time updates using the database as the event bus",
+			"area": "linecrush-platform",
+			"themes": [
+				"product-decision"
+			],
+			"when": "2025-08 to 2025-10",
+			"situation": "Dozens of independent Python jobs produce events that open web clients and the Telegram and Discord alert services all need quickly. For a small team, running and operating Kafka or RabbitMQ was not justified.",
+			"action": "Austin used the Postgres database every writer already shared as the bus. Writers issue a NOTIFY on one channel, and an asyncio WebSocket server listens and fans events out to clients, with the alert services listening on the same channel.",
+			"result": "One channel serves several product surfaces and the alert services, and adding a consumer is a new listener rather than new infrastructure. NOTIFY is not durable, so clients also refetch to cover a consumer that was down.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "push-to-deploy-backend",
+			"title": "Push-to-deploy for a backend full of scheduled jobs and long-running workers",
+			"area": "linecrush-platform",
+			"themes": [
+				"release-engineering",
+				"speed"
+			],
+			"when": "2025-10-28",
+			"situation": "Backend deploys were a manual git pull, and a changed job schedule had to be applied by hand.",
+			"action": "Austin built a webhook-driven deploy service in one day. It was then grown to apply the job schedule on deploy and to restart services selectively: each service has a measured import closure, and a deploy restarts a service only when a file it imports changed, one worker at a time.",
+			"result": "A push to main updates code, schedule and the affected services with no manual step, and workers mid-job are not killed by unrelated deploys.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "fact-checking-ai-reports",
+			"title": "Catching wrong statistics in AI-written reports before they are stored",
+			"area": "linecrush-platform",
+			"themes": [
+				"ai-reliability"
+			],
+			"when": "2026-03-04",
+			"situation": "Generated reports sometimes stated statistics that were wrong, and users read them as fact.",
+			"action": "Austin added a fact-check stage between generation and storage. It extracts statistical claims, checks them against stored game data, and corrects any claim the data contradicts. Where there is no game-level data it skips explicitly.",
+			"result": "A reusable async function now runs before every report write, with metadata recording what was changed.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "chat-bot-stalled-under-burst",
+			"title": "A chat bot that stalled when many users arrived at once",
+			"area": "linecrush-platform",
+			"themes": [
+				"performance",
+				"product-decision"
+			],
+			"when": "2026-04-27",
+			"situation": "The LineCrush Discord bot ran each betslip analysis, 30 to 50 seconds of image reading and model calls, inside the gateway event loop. The architecture doc works out that the 50th of 50 simultaneous users would wait about 25 minutes.",
+			"action": "Austin split it into a listener that acknowledges in under a second and a pool of workers draining a Postgres queue with leases and a reaper. He shipped it default-off behind a flag with a one-server canary, then enabled it everywhere, and documented the capacity formula and the worker counts needed for given loads.",
+			"result": "Shipped 2026-04-27. The same pattern was reused for the in-app report queue.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "proven-fix-that-never-ran",
+			"title": "A fix that was proven, shipped, and never ran",
+			"area": "linecrush-platform",
+			"themes": [
+				"own-mistake",
+				"debugging",
+				"testing"
+			],
+			"when": "2026-05-20",
+			"situation": "A change to carry affiliate attribution across an account merge was tested by running its SQL by hand and shipped. Users still could not link their Discord account.",
+			"action": "Austin found that the handler set a unique column on the real account before deleting the shadow row that held the same value, so a unique-index violation threw before the new code was reached: the new statement was correct and unreachable. He reordered the handler into one transaction that merges and deletes the shadow row first, proved it by completing the real OAuth flow, and wrote the post-mortem.",
+			"result": "A rule now gates every change in the repo: a database fix is not proven until the real handler that contains it has run end to end.",
+			"lesson": "A database fix is not proven until the real handler that contains it has run end to end.",
+			"attribution": "austin"
+		},
+		{
+			"id": "overlapping-report-regeneration",
+			"title": "Two triggers that each believed they owned the same unit of work",
+			"area": "linecrush-platform",
+			"themes": [
+				"debugging",
+				"incident"
+			],
+			"when": "2025-11",
+			"situation": "Scheduled refreshes and lineup changes could regenerate the same research at the same time. Austin's incident report recorded 435 unwanted generated records during a runaway episode involving restarting services.",
+			"action": "Austin made replacement atomic, preserved inactive history, and added per-item retry limits and cooldowns.",
+			"result": "The concurrency correction and the retry controls shipped with an incident record.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "subscription-cache-invalidation",
+			"title": "Keeping cached subscription state coherent after a plan change",
+			"area": "linecrush-platform",
+			"themes": [
+				"debugging"
+			],
+			"when": "2024-12",
+			"situation": "After Austin added Redis caching, subscription lookups were cached across multiple views of a member, so a plan change could leave stale state on screen.",
+			"action": "He wired cache invalidation into billing events and the customer portal, clearing the subscription, navbar and user-specific keys together. He also corrected the account screen so a canceled subscription no longer displayed a scheduled plan change.",
+			"result": "The experience stayed coherent after a customer changed a plan.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "today-card-from-founder-feedback",
+			"title": "Finding where the product failed its own founder",
+			"area": "linecrush-platform",
+			"themes": [
+				"product-decision"
+			],
+			"when": "2026-09",
+			"situation": "Austin documented using a separate assistant to get a simple answer from LineCrush's research: asking for tonight's main event had surfaced player props for another day.",
+			"action": "He specified the experience he wanted, then shipped a Today card with a plain-language rationale, the main risk and expandable sources. On 2026-09-27 he changed free-text handling to reach event research and show what the assistant was actually checking, recording 20 live model-and-database preview runs across the new and existing paths.",
+			"result": "The Today card and the routing change shipped with those 20 preview runs as proof. The record gives no population-level measure of user satisfaction.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "app-store-approval",
+			"title": "Several App Store rejections to approval, each treated as a root-cause investigation",
+			"area": "native-apps",
+			"themes": [
+				"store-review",
+				"debugging"
+			],
+			"when": "2026-06-09 to 2026-09-19",
+			"situation": "A first hybrid (Capacitor) build had been rejected as a web wrapper under Guideline 4.3(a), so the app was rebuilt fully native from 2026-06-09. The native app was then rejected five more times in about seven weeks for different reasons: subscriptions sold through web checkout instead of in-app purchase, subscriptions dropped from a resubmission, Sign in with Apple failing for a never-seen Apple ID, a purchase button that read as Apple Pay, and a tab that threw on empty history.",
+			"action": "Each rejection was investigated to a cause rather than answered. Subscriptions moved to StoreKit behind one plain Subscribe route, and sign-in was changed to present sign-in-or-up. For the 2026-08-27 rejection, backend request logs for Apple's review device showed the reviewer had used a fresh account rather than the demo account and hit an empty-state crash; it was reproduced on an iPad simulator, fixed and resubmitted the same day. Every lesson was written into a runbook and a reviewer-notes file that CI now uploads.",
+			"result": "Approved 2026-09-05, 88 days after the first native commit, and publicly released 2026-09-19. The next update, 2.1.1, was approved 13 hours 20 minutes after submission and was the first submission created, staged and submitted entirely by CI.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "play-production-access",
+			"title": "Passing Google Play's production-access gate on the second try",
+			"area": "native-apps",
+			"themes": [
+				"store-review"
+			],
+			"when": "2026-08-06 to 2026-08-28",
+			"situation": "Google requires new developer accounts to run at least 12 opted-in testers for 14 consecutive days before production access. The first application, on 2026-08-06, was rejected on 2026-08-09 for low tester engagement.",
+			"action": "The tester onboarding was fixed (the first instructions had pointed testers at the public listing instead of the opt-in link), and the 14-day closed test was re-run with an engaged tester group. Tester feedback surfaced a dead in-app update button, which was fixed.",
+			"result": "Production access was granted 2026-08-27 and the public listing went live 2026-08-28, 65 days after the first Android commit.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "native-parity-with-web",
+			"title": "Two native apps held to parity with the web product",
+			"area": "native-apps",
+			"themes": [
+				"product-decision",
+				"agents"
+			],
+			"when": "2026-06 to 2026-11",
+			"situation": "A small team with a fast-moving web app needed real native apps, not wrappers, without three diverging products.",
+			"action": "Mobile web is the spec. Both apps are clients of the same production API with no separate mobile backend. A machine-readable manifest maps each shared web surface to the Swift and Kotlin files that implement it, a lint enforces it in CI, and a scheduled check files an issue when a web change has no native counterpart; a web change on a shared surface carries its Swift and Kotlin change in the same shipment.",
+			"result": "iOS went from first commit to approval in 88 days and Android from first commit to public production in 65 days, with 31 iOS feature folders and 39 Android packages. The manifest had 56 surface entries on 2026-11-17.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "changelog-decides-store-release",
+			"title": "Release automation where the commit decides what ships",
+			"area": "release",
+			"themes": [
+				"release-engineering"
+			],
+			"when": "2026-08 to 2026-11",
+			"situation": "Near-daily tester builds risked reaching the public stores by accident, and store text was being typed by hand.",
+			"action": "A build-number bump alone is a tester build and stops at Play internal and TestFlight; only a commit that also writes a new top versioned entry in the platform changelog makes a store release. The gate fails unless the changelog entry names exactly the version and build being shipped and the Play release-notes file matches it byte for byte. The exact minified release APK is cold-launched on an emulator before upload and the Play-signed artifact is verified after, and on iOS, scripts calling the App Store Connect API stage the version, upload screenshots, write What's New and reviewer notes from repo files, and submit for review.",
+			"result": "32 iOS store versions in about 10 weeks and 39 Android production changelog entries in about 11 weeks, on a shared version number, with App Store submission done by CI since 2026-09-20.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "device-gates-on-hosted-runners",
+			"title": "Native device gates with no human in the loop",
+			"area": "release",
+			"themes": [
+				"testing",
+				"release-engineering"
+			],
+			"when": "2026",
+			"situation": "Native verification depended on Austin's own PC and MacBook being awake, and an advisory check nobody read was not a check.",
+			"action": "Both gates moved to hosted runners and became blocking. After three brittle attempts at driving the login screen, the gates sign in without the UI, and a watcher files red runs as issues for the fleet.",
+			"result": "A daily gate on both platforms builds, installs, cold-launches, signs in and runs the test suites.",
+			"lesson": "An advisory check nobody reads is not a check.",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "ci-bill-cost-model",
+			"title": "A CI bill that taught a cost model",
+			"area": "release",
+			"themes": [
+				"cost",
+				"release-engineering"
+			],
+			"when": "2026-11-01",
+			"situation": "The iOS gate ran every four hours on macOS runners billed at 10x and consumed the whole monthly Actions allowance in one day.",
+			"action": "The gate went to one run a day and skips a platform whose native tree has not changed since its last green gate, with a daily cap, same-commit dedupe and a branch cooldown. A one-minute Linux preflight now runs in front of the release job, so an Apple-side failure costs a minute instead of about 28 macOS minutes.",
+			"result": "The workflow header now documents this as the standing cost model.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "chatgpt-plugin-approval",
+			"title": "Getting an official ChatGPT plugin approved",
+			"area": "linecrush-platform",
+			"themes": [
+				"store-review",
+				"speed"
+			],
+			"when": "2026-10-18 to 2026-11-02",
+			"situation": "Austin wanted LineCrush research available inside ChatGPT under OpenAI's review, but the site's terms are 21+ while OpenAI requires general-audience suitability.",
+			"action": "He shipped five anonymous, read-only tools over a hosted MCP server in TypeScript, with allowlisted outputs, source links, research dates and explicit statements of missing data, and wrote plugin-only terms and privacy pages to resolve the policy conflict. He proved behavior in real ChatGPT conversations and a real screen recording, submitted five positive and three negative test cases, and corrected the package after the portal rejected the first ZIP layout.",
+			"result": "Submitted 2026-10-19 and approved 2026-11-02; Austin published it the same day and the portal read back Listed publicly with all five tools Published. 11 of its 15 commits are his.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "pinned-swift-packages",
+			"title": "Pinning dependencies after a silent upstream break",
+			"area": "native-apps",
+			"themes": [
+				"debugging",
+				"release-engineering"
+			],
+			"when": "2026",
+			"situation": "A floating version range let the auth SDK move a patch version in CI with no commit on our side, and the iOS launch gate started crashing.",
+			"action": "Every Swift package was pinned exactly, Package.resolved was committed, and each deliberate bump requires a green gate run as proof.",
+			"result": "Recorded as the rule in the iOS project file; later bumps note the exact Xcode build each binary was made with.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "apple-private-relay-bounces",
+			"title": "Email that Apple's private relay bounced",
+			"area": "linecrush-platform",
+			"themes": [
+				"debugging"
+			],
+			"when": "2026",
+			"situation": "In the 30 days before the fix, 192 of 192 settlement emails and 33 of 33 new-pick emails to Apple private-relay addresses bounced.",
+			"action": "The cause was a missing custom MAIL FROM domain, so SPF did not align, plus sending domains not yet registered with Apple, and a one-click unsubscribe header pointing at a URL that redirected POSTs. The fix added the MAIL FROM records, registered both domains with Apple, pointed the unsubscribe header at a route that answers POST with 200, and compared senders with content held constant.",
+			"result": "Relay delivery was proven end to end with matching message IDs. The record says plainly that inbox placement for one mailbox was still unresolved.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "sureword-store-billing-edge-cases",
+			"title": "SureWord billing edge cases on Apple and Google Play",
+			"area": "sureword",
+			"themes": [
+				"debugging",
+				"testing"
+			],
+			"when": "2026",
+			"situation": "If Apple reversed a refund, a paying SureWord reader could stay on Free until renewal. On Google Play, a cached verification could hide a renewal and put the plan and quota in different periods.",
+			"action": "Austin added a handler that reinstates access only for the latest transaction, so a late event from an older period cannot roll the account back, and made plan and quota on Google Play read from one membership snapshot. He also addressed charging a reader's allowance when an answer was withheld.",
+			"result": "The Apple billing suite, 29 tests with the Apple verifier and database mocked, all passed when rerun on 2026-11-17.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "gunmetal-steam-deck-controller-fix",
+			"title": "Gunmetal Orbit station bays the Steam Deck controller could not reach",
+			"area": "games",
+			"themes": [
+				"debugging",
+				"testing"
+			],
+			"when": "2026-10-04",
+			"situation": "On his Steam Deck, Austin found that the stick and D-pad could not reach two station bays, and after a purchase rebuilt the UI, focus could land on the wrong control.",
+			"action": "He made each bay a navigable column, preserved focus across the rebuild, and drove the real Outfitter with controller events in a regression test.",
+			"result": "The change records 28 of 59 checks failing on v1.85 and 64 of 64 passing on the revised suite; the two suites differ in size.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "sureword-scripture-review-replaced-with-code",
+			"title": "Replacing a second-model Scripture reviewer with server-side verse insertion",
+			"area": "sureword",
+			"themes": [
+				"ai-reliability",
+				"performance",
+				"product-decision"
+			],
+			"when": "2026-10-30 to 2026-11-13",
+			"situation": "To guarantee Scripture was quoted exactly, every SureWord answer was held for a second-model review with rewrite rounds. On 2026-11-04, 11 of 26 answers were withheld, and by 2026-11-06 the median answer took 63 seconds and 11 to 12 model calls, up from 6 to 14 seconds.",
+			"action": "He first added retry rounds, then cut to one review at medium effort and streamed a draft while checking. On 2026-11-13 he retired the review entirely: the model now writes [[SCRIPTURE:reference]] markers and the server expands them into the exact verse text from the stored Bible during the stream, across all five live AI surfaces.",
+			"result": "Quotations are exact by construction, in one model pass, with no withheld answers. Production telemetry had shown over 20% of answers withheld under the review gate.",
+			"lesson": "When a guarantee can be made by code, do not ask a second model to enforce it.",
+			"attribution": "austin"
+		},
+		{
+			"id": "sureword-vector-database-hibernated",
+			"title": "A free-tier vector database that silently went away",
+			"area": "sureword",
+			"themes": [
+				"incident",
+				"migration",
+				"ai-reliability"
+			],
+			"when": "2026-08-13 to 2026-08-19",
+			"situation": "The free tier of SureWord's hosted vector database (AstraDB) hibernated on 2026-08-13, and Scripture retrieval was broken for six days without an error anyone saw.",
+			"action": "He moved verse and note embeddings into the production Neon Postgres as pgvector tables, added a keyword fallback that flags results as degraded, kept the old similarity scale so installed Android builds kept their match-strength badges, and wrote backfill scripts to rebuild the embeddings.",
+			"result": "One database and no second vendor, and retrieval that now degrades visibly instead of silently. AstraDB was retired on 2026-08-19.",
+			"lesson": "Build for the failure paths users will see.",
+			"attribution": "austin"
+		},
+		{
+			"id": "sureword-model-routing-latency",
+			"title": "Model routing under real latency, then one model for every plan",
+			"area": "sureword",
+			"themes": [
+				"product-decision",
+				"performance",
+				"cost"
+			],
+			"when": "2026-09-02 to 2026-10-25",
+			"situation": "New SureWord users with no API key of their own could not get a single answer, and later the model picker confused people and cost needed a ceiling.",
+			"action": "He added a server-paid house model on 2026-09-02. On 2026-10-08 he tried a per-plan split with a cheaper model for Free and a stronger one for Pro, and reverted it the same day after the first real Free answer took 2 minutes 52 seconds at about 8 tokens per second. He then settled on one model for both plans with reasoning effort set by plan, removed the picker, and removed bring-your-own-key on 2026-10-25.",
+			"result": "The per-plan table was kept so a future split is a one-line change, with a written rule to time a real tool-using answer first.",
+			"lesson": "Time a real tool-using answer before changing which model a plan gets.",
+			"attribution": "austin"
+		},
+		{
+			"id": "sureword-one-backend-four-clients",
+			"title": "One backend, four clients, kept in step",
+			"area": "sureword",
+			"themes": [
+				"release-engineering",
+				"product-decision",
+				"speed"
+			],
+			"when": "2026-08 to 2026-11",
+			"situation": "As a solo developer he was shipping SureWord to the web, Android, iPhone and iPad, and the Mac at the same time.",
+			"action": "He pushed logic server-side so every client gets it, declared Android the acceptance target under a written parity rule, tracked every capability per client in a parity document, and gated each store release on a changelog entry and a test that fails when the two store listings drift apart.",
+			"result": "112 Android release tags and 22 macOS tags in about fourteen weeks, with App Store and Google Play production both live.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "sureword-sign-in-outage",
+			"title": "A web sign-in outage and its root cause",
+			"area": "sureword",
+			"themes": [
+				"incident",
+				"debugging"
+			],
+			"when": "2026-08-10",
+			"situation": "On 2026-08-10 every SureWord web sign-in failed. The cause was that Clerk does not support *.vercel.app hosts for production instances.",
+			"action": "He first tried a hand-rolled proxy for Clerk's Frontend API, which produced five separate bugs, so he abandoned it for a custom domain. He then moved the Android key, the Clerk redirect allowlist and the Google OAuth redirect URIs together, and kept the legacy host alive for older Android builds.",
+			"result": "Sign-in moved to its own domain, and the invariants were written down: the publishable key encodes its host, and there are three separate allowlists to keep in step.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "gunmetal-orbit-steam-in-67-days",
+			"title": "Shipping a commercial game through Valve review in 67 days",
+			"area": "games",
+			"themes": [
+				"release-engineering",
+				"store-review",
+				"speed"
+			],
+			"when": "2026-07-05 to 2026-09-10",
+			"situation": "Gunmetal Orbit was his first Steam release, in Godot 4.7, with him as the one developer.",
+			"action": "He created the Steam app on day 10 and started uploading builds to a staging branch so review, the store page and the release mechanics were exercised long before launch. The store page was rejected once, for its capsule tagline, and fixed and resubmitted the same day.",
+			"result": "Valve's build review was approved on day 17, and the game released on 2026-09-10 for Windows and Linux, 67 days after the first commit. macOS was added on 2026-10-23.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "gunmetal-orbit-v203-parse-errors",
+			"title": "The release that booted but was broken",
+			"area": "games",
+			"themes": [
+				"own-mistake",
+				"release-engineering",
+				"testing"
+			],
+			"when": "2026-10-12",
+			"situation": "The first mod-support build of Gunmetal Orbit, v2.03, passed its checks and went live, but an export plugin had rewritten every script and 27 of them failed to parse on Godot 4.7. The proof had only checked an exit code and one log.",
+			"action": "He shipped v2.04 the same day with the plugin disabled and declined a rollback that would have downgraded players. He then added a permanent gate: count script errors on the exported binary and run the autoplay bot against its pack before any upload.",
+			"result": "Fixed the same day, and the gate is now part of every Steam ship.",
+			"lesson": "Use the actual release artifact as proof, not the exit code of the step that made it.",
+			"attribution": "austin"
+		},
+		{
+			"id": "gunmetal-orbit-pipeline-refuses-to-lie",
+			"title": "Making the build pipeline refuse to lie",
+			"area": "games",
+			"themes": [
+				"own-mistake",
+				"release-engineering"
+			],
+			"when": "2026-10-19",
+			"situation": "On 2026-10-19 a hand export wrote to the wrong folder, and steamcmd uploaded the previous day's files labelled v2.14.5. The same exports were also filling the system drive.",
+			"action": "He replaced hand exports with one script that builds from a clean worktree of the main branch on another drive, refuses an uncut version, runs smoke, autoplay and art checks, proves each payload carries the version stamp, records SHA-256 hashes in a manifest, and writes an upload receipt.",
+			"result": "v2.14.6 shipped the same day with a full receipt recording the build, its source commit, artifact sizes and hashes.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "gunmetal-orbit-headless-gameplay-proof",
+			"title": "Letting agents prove gameplay without a screen",
+			"area": "games",
+			"themes": [
+				"testing",
+				"agents"
+			],
+			"when": "2026-07 to 2026-11",
+			"situation": "AI agents working on Gunmetal Orbit on a server with no display could only report that a script parsed.",
+			"action": "He built an autoplay bot that plays the real loop through input actions (title, launch, mine, fight, sell, level-up, round 2) and exits 0 or 1, plus focused check scenes. Since 2026-07-17 every test boot is jailed to a sandbox folder, and a check byte-compares real save files before and after a destructive cycle so a harness can never damage a player profile.",
+			"result": "302 test scenes and about 76,000 lines of harness code beside about 95,000 lines of game code, written with AI coding agents under his direction.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "gunmetal-orbit-post-launch-cadence",
+			"title": "Post-launch cadence, and knowing when to pull a feature",
+			"area": "games",
+			"themes": [
+				"product-decision",
+				"speed",
+				"release-engineering"
+			],
+			"when": "2026-09-10 to 2026-11-14",
+			"situation": "Gunmetal Orbit launched with real bugs to fix.",
+			"action": "He shipped fixes as fast as they were verified, including 13 versions on 2026-09-23, and wrote patch notes for each meaningful one. Wingmates companions shipped in v2.14 and were switched off in v2.14.3 the next day after he played them and found them overpowered.",
+			"result": "130 Steam-channel versions and 37 public Steam announcements between 2026-09-02 and 2026-11-14, ending at v2.17, The Starter Update.",
+			"lesson": "",
+			"attribution": "austin"
+		},
+		{
+			"id": "games-where-agents-fall-short",
+			"title": "What AI agents were bad at in game development",
+			"area": "games",
+			"themes": [
+				"agents",
+				"product-decision",
+				"ai-reliability"
+			],
+			"when": "2026-08 to 2026-11",
+			"situation": "Agents defaulted to the easy path: procedural placeholder geometry instead of authored art, grading their own art, and generated sound.",
+			"action": "He wrote a hard rule that player-facing art comes from an authored pipeline (reset on 2026-08-13 to authored assets through Blender), split art work into a model that drives Blender and an independent vision model that grades the renders against a reference, and on 2026-09-23 rejected a generated combat sound palette for recorded weapon sources.",
+			"result": "The studio's agent fleet could produce a dozen playable games in a month, and 13 were later shelved for lack of interest.",
+			"lesson": "Volume was not the constraint; taste and direction were.",
+			"attribution": "austin"
+		},
+		{
+			"id": "cut-loose-four-day-unreal-jam",
+			"title": "A four-day Unreal Engine jam directing several agents",
+			"area": "games",
+			"themes": [
+				"agents",
+				"speed"
+			],
+			"when": "2026-11-12 to 2026-11-15",
+			"situation": "He entered the 2026 Epic AI MegaJam solo, with four days to build and submit an Unreal Engine 5.8 C++ game in an engine he had used far less than Godot.",
+			"action": "He drove the editor through Unreal's MCP plugin with Claude Code, used Codex for reactive systems and verification and Gemini through OpenCode, kept a public dev log of what each agent did and got wrong, played the builds, made the calls, and submitted by hand.",
+			"result": "Cut Loose, a third-person cyberpunk chase in which a blade slices scenery to open routes, was submitted on 2026-11-15 and is public on itch.io. Its native test suite ran 178 cases with 175 passing at the last recorded run.",
+			"lesson": "",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "savealife-cpr-registration-rewrite",
+			"title": "Rewriting a client's registration automation after the portal changed",
+			"area": "client-work",
+			"themes": [
+				"migration",
+				"debugging"
+			],
+			"when": "2025-11-29 to 2026-10-24",
+			"situation": "SaveALife CPR, a paid client, relied on a function that registered booked students with the Canadian Red Cross. It broke when the Red Cross portal changed in late 2025.",
+			"action": "He rewrote it as a Python bot on AWS Lambda that receives booking webhooks from Bookeo, signs in to the Red Cross portal, finds the course, registers participants, writes the result back to the booking and emails a report through SES. The rewrite is 1,166 lines against the earlier 461, with five test scripts and recorded verification results.",
+			"result": "In production at v2.1.0.",
+			"lesson": "",
+			"attribution": "austin"
+		}
+	],
+	"decisions": [
+		{
+			"id": "build-the-agent-fleet",
+			"title": "Build an autonomous coding-agent fleet that takes tracker issues to production",
+			"when": "2026-06-22",
+			"decision": "Build a fleet of Claude Code agents (later also Codex) that takes tracker issues through investigation, implementation, proof on the real product, review and production deploy.",
+			"why": "A self-maintaining system was a design goal from the start: a fleet that keeps itself running in routine operation and improves through the engineering work it does on its own tooling.",
+			"outcome": "The first commit landed 2026-06-22. By 2026-11-17 the fleet had admitted 15,477 issues and closed 14,111, 10,745 of them with a shipped commit URL.",
+			"attribution": "austin"
+		},
+		{
+			"id": "replace-linear-with-c2",
+			"title": "Replace Linear with C2, an in-house tracker and control plane",
+			"when": "2026-10-22 to 2026-11-09",
+			"decision": "Replace Linear with C2, built against a written contract, each phase reviewed by a second session.",
+			"why": "So the company's working record stops living in a vendor workspace. An inventory found Linear's role had already narrowed to the issue record, the trigger and the human interface.",
+			"outcome": "Agreed by both founders and started 2026-10-22, activated 2026-11-03, with the Linear code retired 2026-11-09. C2 keeps work products, run history, delivery evidence and human decisions on the issue itself, in the company's own database.",
+			"attribution": "austin"
+		},
+		{
+			"id": "blueprint-not-fork",
+			"title": "Use an open-source control panel as a blueprint, not a codebase",
+			"when": "2026-10",
+			"decision": "Study an open-source agent control panel as a blueprint for schema and semantics, not as a codebase, and build C2 in-house.",
+			"why": "The project was large and fast-moving, and it had no proof, review or ship gates.",
+			"outcome": "It was studied for ideas only, and C2 was built in-house.",
+			"attribution": "austin"
+		},
+		{
+			"id": "same-day-c2-activation",
+			"title": "Activate C2 the same day, and record the skipped dual run",
+			"when": "2026-11-03",
+			"decision": "Activate C2 as the tracker of record the same day instead of after the seven-day dual run the contract called for, and say so in the record.",
+			"why": "The founders wanted to switch that night, so Jay and the fleet could use C2 that night.",
+			"outcome": "Activation adopted 14,025 jobs. The closeout says the seven-day criterion is not claimed as passed, rather than marking it complete.",
+			"attribution": "austin"
+		},
+		{
+			"id": "optimistic-push-over-ship-lock",
+			"title": "Retire the global ship lock for optimistic push",
+			"when": "2026-07-27",
+			"decision": "Replace the global ship lock with optimistic push, rebase and bounded retry.",
+			"why": "Measured from its own log, the lock had a 1,173-second mean wait. With one clone per agent it only protected the remote branch, which git already protects by rejecting a push that is not a fast-forward.",
+			"outcome": "The lock was retired and shipping no longer waits in a single line.",
+			"attribution": "austin"
+		},
+		{
+			"id": "drain-and-successor-deploys",
+			"title": "Deploy the fleet's own code by draining, not restarting",
+			"when": "2026-07-01",
+			"decision": "On a code change, stop claiming, let running jobs finish, and hand over to a successor process on the new code.",
+			"why": "Every worker change needed a manual restart that terminated in-flight agents, and fleet runs themselves ship changes to the fleet's code.",
+			"outcome": "A deploy reaches the fleet in about a minute and no run is killed.",
+			"attribution": "austin"
+		},
+		{
+			"id": "scheduled-device-gate",
+			"title": "Native device verification on a schedule, not per issue",
+			"when": "2026-07-21 to 2026-07-23",
+			"decision": "Require compile evidence before shipping, prove the merged state with one scheduled device gate, and file a red gate automatically as a normal queue issue.",
+			"why": "Per-issue dispatches froze CI, and capping them stranded about 30 issues waiting for headroom.",
+			"outcome": "In use. Cut from every 4 hours to daily on 2026-11-03 for cost.",
+			"attribution": "austin"
+		},
+		{
+			"id": "keep-and-move-the-type-gate",
+			"title": "Keep the type gate and move it off paid CI",
+			"when": "2026-09-04",
+			"decision": "Keep the TypeScript and ESLint gate and move it from paid CI to a scheduled job.",
+			"why": "It was the only type gate, ran about a thousand times in 30 days, had been failing silently since 2026-08-23, and had caught about 19 distinct real incidents in 90 days, so it was worth keeping.",
+			"outcome": "The watcher files one issue with each error line and its git blame context.",
+			"attribution": "austin"
+		},
+		{
+			"id": "one-rule-set-for-every-agent",
+			"title": "Several coding agents read one rule set",
+			"when": "ongoing",
+			"decision": "Keep one rule file that every coding agent in the repository reads, with a script that copies it between the file names different agents expect and checks for drift.",
+			"why": "Several different coding agents work in the same repository.",
+			"outcome": "One operating file read by every coding agent that works in the repository.",
+			"attribution": "austin"
+		},
+		{
+			"id": "mobile-web-is-the-spec",
+			"title": "Mobile web is the spec; cross-platform parity is a ship gate",
+			"when": "2026-06-29",
+			"decision": "Treat mobile web as the spec for the native apps and make cross-platform parity a ship gate, with a shared-surface map.",
+			"why": "A small team with a fast-moving web app needed native apps without three diverging products.",
+			"outcome": "Parity is a standing ship gate, so a change to a shared surface is a three-client change.",
+			"attribution": "austin"
+		},
+		{
+			"id": "go-native-on-mobile",
+			"title": "Go native on mobile instead of a web wrapper",
+			"when": "2026-05-24 to 2026-06-24",
+			"decision": "Replace a Capacitor wrapper with a native SwiftUI iOS app and a native Kotlin and Compose Android app.",
+			"why": "Austin, 2026-11-17: \"we went native because we knew it would be better than a wrapper.\" It was a joint call with Jay.",
+			"outcome": "The wrapper was scaffolded 2026-05-24 and removed 16 days later; the native iOS app was scaffolded 2026-06-09 and the Android app 2026-06-24. Both are in the stores (Google Play 2026-08-28, App Store 2026-09-19).",
+			"attribution": "austin-and-jay"
+		},
+		{
+			"id": "weekly-store-release-train",
+			"title": "A weekly store release train on Tuesdays",
+			"when": "2026-09-05",
+			"decision": "Release iOS and Android weekly, Tuesday 09:00 PT, both stores, one shared version.",
+			"why": "A decision table built from published release-engineering research. Tuesday means an approved update is live before the weekend sports peak, with Monday as the fix window.",
+			"outcome": "In use, with patch hotfixes between trains.",
+			"attribution": "austin"
+		},
+		{
+			"id": "auth0-to-clerk-compatibility-layer",
+			"title": "Migrate Auth0 to Clerk behind a compatibility layer",
+			"when": "2026-06-19",
+			"decision": "Re-export the old session API over Clerk and keep both ID formats in the legacy ID column instead of renaming everything.",
+			"why": "So imported users and downstream billing checks keep working. Import and verification scripts were added \"so the cutover can be audited and repeated\".",
+			"outcome": "Live. The cost is Auth0-shaped names that no longer mean Auth0, documented as a known trap at the top of the rules.",
+			"attribution": "austin"
+		},
+		{
+			"id": "postgres-as-event-bus",
+			"title": "Use Postgres LISTEN/NOTIFY instead of a message broker",
+			"when": "2025-08",
+			"decision": "Use the database already shared by every writer as the real-time bus, with one WebSocket server fanning out to clients.",
+			"why": "A small team; running and operating Kafka or RabbitMQ was not justified.",
+			"outcome": "One channel serves several product surfaces and alert services; adding a consumer is a new listener. The trade-off is that NOTIFY is not durable, so clients also refetch.",
+			"attribution": "austin"
+		},
+		{
+			"id": "changelog-entry-decides-store-release",
+			"title": "A changelog entry, not the version string, decides what reaches the stores",
+			"when": "2026",
+			"decision": "A build-number bump is a tester build; only a new versioned changelog entry makes a store release, and store text is never typed at publish time. The weekly release train drafts notes and files an issue but never publishes by itself.",
+			"why": "Near-daily tester builds risked reaching the public stores by accident, and in the repo's words a store release is a one-way door.",
+			"outcome": "32 iOS store versions in about 10 weeks and 39 Android production entries in about 11 weeks, with App Store submission done by CI since 2026-09-20.",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "pin-swift-packages-exactly",
+			"title": "Pin every Swift package exactly",
+			"when": "2026",
+			"decision": "Pin every Swift package exactly, commit Package.resolved, and require a green gate run for each deliberate bump.",
+			"why": "A floating range let the auth SDK move a patch version in CI with no commit, and the iOS launch gate started crashing.",
+			"outcome": "Recorded as a rule in the iOS project file.",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "daily-gate-with-preflight",
+			"title": "Daily native gates with a cheap Linux preflight",
+			"when": "2026-11",
+			"decision": "Run the native gate once a day, skip unchanged platforms, cap and dedupe runs, and put a one-minute Linux preflight in front of the macOS release job.",
+			"why": "The four-hourly iOS gate on 10x-billed macOS runners consumed the whole monthly Actions allowance in one day on 2026-11-01.",
+			"outcome": "An Apple-side failure costs a minute instead of about 28 macOS minutes; documented as the standing cost model.",
+			"attribution": "austin-directing-agents"
+		},
+		{
+			"id": "sureword-android-leads-parity-rule",
+			"title": "Android leads, every other SureWord client reaches parity in the same cycle",
+			"when": "2026-08-09",
+			"decision": "Declare the Android app the primary SureWord client and acceptance target, and require web, macOS and iOS to reach capability parity in the same release cycle, with server-side changes preferred.",
+			"why": "A solo developer shipping four clients needs one shared backend so every client gets a change at once, and a written per-capability parity record so nothing drifts.",
+			"outcome": "One Next.js backend serves the web, an Expo Android app and native SwiftUI apps for iPhone, iPad and Mac, all live in their stores by 2026-11-08.",
+			"attribution": "austin"
+		},
+		{
+			"id": "sureword-embeddings-into-postgres",
+			"title": "Move SureWord's embeddings into the production Postgres database",
+			"when": "2026-08-19",
+			"decision": "Retire the separate vector database and store verse and note embeddings as pgvector tables in Neon Postgres, with a keyword fallback flagged as degraded.",
+			"why": "The free-tier vector database hibernated on 2026-08-13 and retrieval was silently broken for six days.",
+			"outcome": "One database and no second vendor. A 2026-08-28 check recorded 31,102 verse embeddings.",
+			"attribution": "austin"
+		},
+		{
+			"id": "sureword-free-or-pro-only",
+			"title": "Remove bring-your-own-key from SureWord",
+			"when": "2026-10-25",
+			"decision": "Every account is Free or Pro on an included house model; the model picker and bring-your-own-key were removed, and reasoning effort is set by plan.",
+			"why": "Model choice confused users, and a per-plan model split tested on 2026-10-08 produced a 2 minute 52 second answer.",
+			"outcome": "One model for both plans, with usage metered per request and the per-plan table kept so a future split is a one-line change.",
+			"attribution": "austin"
+		},
+		{
+			"id": "sureword-retire-review-gate",
+			"title": "Retire the post-answer Scripture review",
+			"when": "2026-11-13",
+			"decision": "Stop holding answers for a second-model review and instead have the server insert canonical verse text where the model places Scripture markers.",
+			"why": "The review gate had pushed the median answer to 63 seconds and withheld over 20% of answers in production.",
+			"outcome": "Exact quotations by construction, one model pass, no withheld answers.",
+			"attribution": "austin"
+		},
+		{
+			"id": "gunmetal-orbit-staging-branch-early",
+			"title": "Exercise Steam's release path from day 10",
+			"when": "2026-07-15 to 2026-07-17",
+			"decision": "Create the Steam app early and upload every build to a beta staging branch, promoting to the default branch only through an explicit step.",
+			"why": "With no prior Steam release, review, the store page and the release mechanics needed to be exercised long before launch.",
+			"outcome": "Build review passed on day 17 and the game released on day 67. A ship counts as done only when both branches show the new build.",
+			"attribution": "austin"
+		},
+		{
+			"id": "gunmetal-orbit-founder-only-ships",
+			"title": "Autonomous agents never ship Gunmetal Orbit on their own",
+			"when": "2026-10-12",
+			"decision": "Fleet agents may ship other studio games but never Gunmetal Orbit without Austin asking.",
+			"why": "It is the studio's commercial release, and each promotion to production already needs his Steam Mobile confirmation.",
+			"outcome": "Gunmetal Orbit releases stay under his direct control.",
+			"attribution": "austin"
+		}
+	],
+	"lessons": [
+		{
+			"id": "proving-the-path",
+			"lesson": "Proving a statement is not proving the path to it. We ran a fix's SQL by hand, called it proven, and shipped code the handler could never reach. Now a database fix is not done until the real handler has been triggered end to end.",
+			"from": "On 2026-05-20 a fix verified by running its SQL by hand shipped as unreachable code and never ran in production."
+		},
+		{
+			"id": "shared-state-surface",
+			"lesson": "Shared state has a wider surface than the bug report. A fix passed on the view that was reported and broke two sibling tabs. I list every reader and writer of shared state before I touch it.",
+			"from": "In March 2026 a fix that froze card order on one view silently swapped two date-scoped tabs that shared its state, and was rolled back."
+		},
+		{
+			"id": "negative-result-not-evidence",
+			"lesson": "A test whose negative result looks the same in both worlds is not evidence. We nearly declared a security incident over a feature that had shipped on purpose, because a curl cannot see a dialog that renders on click. I check intent in git history before I use the word \"leak\".",
+			"from": "On 2026-07-27 an agent reported a data leak that a second model's review refuted; the missing image was a shipped feature that renders on click."
+		},
+		{
+			"id": "question-growing-findings",
+			"lesson": "I question a finding hardest when it is getting bigger. In that same case every nearby number drifted toward the dramatic story. The proven part and the inferred part get written separately.",
+			"from": "The same 2026-07-27 false leak report."
+		},
+		{
+			"id": "never-match-by-substring",
+			"lesson": "Never match a process by a substring of its command line. Our agents killed each other because the prompt on their command line contained the text they used to clean up. I moved the prompt to stdin and stopped charging a retry for being killed.",
+			"from": "On 2026-07-02 waves of fleet runs died at the same instant because one agent's cleanup matched its siblings' command lines."
+		},
+		{
+			"id": "skip-guards-fail-toward-run",
+			"lesson": "A guard that can fail toward \"skip\" will. A skip check read a broken pipe as \"nothing changed\" and hid a real Android break for 31 hours. Every error path in a skip guard has to land on \"run\".",
+			"from": "From 2026-09-07 to 09-09 a CI skip guard skipped the Android device gate on 8 runs; replayed on the server, 39 of 40 runs gave the wrong answer."
+		},
+		{
+			"id": "a-check-nobody-reads",
+			"lesson": "A check nobody reads is not a check. Our only type gate had been dead for 12 days before an audit noticed. I kept the gate, moved it somewhere cheaper, and made a red result file its own issue with the context of the change that caused it.",
+			"from": "On 2026-09-04 an audit found the type-check workflow had been failing silently since 2026-08-23."
+		},
+		{
+			"id": "change-the-shape-not-the-cap",
+			"lesson": "Constraining CI by cap creates a queue; changing its shape removes the problem. Capping per-issue device runs stranded about 30 issues. A scheduled gate that files its own failures fixed both cost and flow.",
+			"from": "In July 2026, 212 device-gate dispatches in one day froze CI runners account-wide."
+		},
+		{
+			"id": "keep-the-old-contract",
+			"lesson": "Keep the old contract when you swap a provider, and write down the trap you created. The Clerk migration kept the old ID column and session API so nothing downstream broke. The price is names that say Auth0 and mean Clerk, so that is documented at the top of the rules.",
+			"from": "The Auth0 to Clerk migration on 2026-06-19."
+		},
+		{
+			"id": "wrapper-was-the-wrong-fast-way",
+			"lesson": "A wrapper was the fast way to an iPhone app and the wrong one. I scaffolded a web wrapper in May 2026 and replaced it with native SwiftUI in June. Then I made mobile web the spec, so three clients cannot drift.",
+			"from": "The Capacitor wrapper scaffolded 2026-05-24 was replaced by a native SwiftUI app scaffolded 2026-06-09; going native was a joint call with Jay (\"we knew it would be better than a wrapper\")."
+		},
+		{
+			"id": "app-review-tests-the-undemoed-path",
+			"lesson": "App Review tests the path you did not demo. One rejection came from a reviewer signing in with a brand-new account and hitting an empty-state error. The demo account decides what the reviewer sees, so the fresh-account path is on the checklist.",
+			"from": "An App Store rejection on 2026-08-27 traced to a fresh account hitting an empty-history error."
+		},
+		{
+			"id": "staging-area-is-shared",
+			"lesson": "In a multi-agent repo the staging area is shared state. A docs commit of mine carried another session's half-finished refactor into production. I reverted my part the same day and preserved theirs. Stage named files, read the diff.",
+			"from": "On 2026-08-31 a docs-only commit swept another session's staged refactor into production and was reverted the same day."
+		},
+		{
+			"id": "record-skipped-safeguards",
+			"lesson": "When I skip a planned safeguard, I record that I skipped it. I activated our tracker replacement the same day instead of after the seven-day dual run we had planned. The closeout says that criterion was not met, instead of marking it passed.",
+			"from": "C2 was activated on 2026-11-03 under an audited same-day policy instead of after the planned seven-day dual run."
+		},
+		{
+			"id": "write-the-lesson-where-people-trip",
+			"lesson": "Write the lesson down where the next person will trip over it. Since 2026-11-12 a wrong ship that someone would repeat gets a post-mortem before the issue closes, and the recurring classes get a recognition checklist.",
+			"from": "Austin's rule of 2026-11-12: when shipped work turns out wrong in a way the next agent would repeat, write the post-mortem before closing; \"A routine bug, a typo, or a fact the code already shows is not a lesson.\""
+		},
+		{
+			"id": "bundle-trimming-crossed-100",
+			"lesson": "The dramatic blur fix was not what got us to 100; trimming the bundle was.",
+			"from": "The March 2026 web performance push that reached a Real Experience Score of 100 on 2026-03-16."
+		},
+		{
+			"id": "store-release-one-way-door",
+			"lesson": "A store release is a one-way door, so the release train drafts and files the cut but never publishes by itself.",
+			"from": "The weekly Tuesday store release train for the iOS and Android apps."
+		},
+		{
+			"id": "read-docs-try-until-it-works",
+			"lesson": "I had to learn extremely fast, so I jumped in with both feet, read the documentation and tried over and over until it worked.",
+			"from": "Joining LineCrush as CTO in April 2024 and learning to build web apps, native mobile apps, backend servers, webhooks and their infrastructure."
+		},
+		{
+			"id": "taste-not-volume",
+			"lesson": "Volume was not the constraint; taste and direction were.",
+			"from": "In October 2026 the studio's agent fleet produced a dozen playable games, and 13 fleet-built games were later shelved for lack of interest."
+		},
+		{
+			"id": "done-is-not-correct",
+			"lesson": "\"Done\" is not \"correct\".",
+			"from": "Agents kept substituting procedural placeholder geometry for authored art in the studio's games, which led to the authored-art rule and an independent grader in 2026."
+		},
+		{
+			"id": "build-for-visible-failure",
+			"lesson": "Build for the failure paths users will see.",
+			"from": "SureWord's vector database hibernated on 2026-08-13 and retrieval broke silently for six days, so retrieval now falls back to keyword search and says so."
+		},
+		{
+			"id": "real-release-path-is-proof",
+			"lesson": "Use actual release paths as proof.",
+			"from": "Gunmetal Orbit v2.03 passed its checks on 2026-10-12 and still went live with 27 scripts that failed to parse, so the gate now checks the exported binary."
+		},
+		{
+			"id": "time-a-real-answer-first",
+			"lesson": "Time a real tool-using answer before splitting models by plan.",
+			"from": "On 2026-10-08 a cheaper model for SureWord's Free plan was reverted the same day after the first real answer took 2 minutes 52 seconds."
+		}
+	],
+	"milestones": [
+		{
+			"date": "2020",
+			"event": "Certificate of Achievement in Information Systems: Web Design, Clovis Community College.",
+			"area": "leadership"
+		},
+		{
+			"date": "2021",
+			"event": "A.S. in Information Systems: Web Design, Clovis Community College; worked in the college's IT and web departments.",
+			"area": "leadership"
+		},
+		{
+			"date": "2022-01",
+			"event": "Started as Web Development Instructor at Bitwise Industries / Geekwise Academy in Fresno, teaching HTML, CSS, JavaScript and React (through 2023-07).",
+			"area": "leadership"
+		},
+		{
+			"date": "2023-07",
+			"event": "Started as Full Stack Developer at Gelateria Del Centro in Fresno (through 2024-04).",
+			"area": "client-work"
+		},
+		{
+			"date": "2024-04",
+			"event": "Joined LineCrush as Co-Founder and CTO, alongside co-founder Jay Raynor.",
+			"area": "leadership"
+		},
+		{
+			"date": "2024-05-02",
+			"event": "Austin created the LineCrush codebase (then a research tool for athlete news).",
+			"area": "linecrush-platform"
+		},
+		{
+			"date": "2024-07-15",
+			"event": "Started the codebase that became SureWord, then a Bible AI Explorer web app on Next.js 14.",
+			"area": "sureword"
+		},
+		{
+			"date": "2024-08-01",
+			"event": "Auth0 login added, followed by Stripe subscriptions on 2024-08-12.",
+			"area": "linecrush-platform"
+		},
+		{
+			"date": "2024-10-28",
+			"event": "Upgraded the web app to Next.js 15.",
+			"area": "linecrush-platform"
+		},
+		{
+			"date": "2025-05-11",
+			"event": "First browser extension (Chrome, later Firefox) committed by Austin.",
+			"area": "linecrush-platform"
+		},
+		{
+			"date": "2025-09-08",
+			"event": "Start of Austin's 259-day consecutive commit streak, which ran to 2026-05-24.",
+			"area": "leadership"
+		},
+		{
+			"date": "2025-10-05",
+			"event": "The product took its fifth and current name, LineCrush.",
+			"area": "linecrush-platform"
+		},
+		{
+			"date": "2025-10-28",
+			"event": "Austin built push-to-deploy for the backend in one day.",
+			"area": "release"
+		},
+		{
+			"date": "2026-03-16",
+			"event": "Web app measured at a Vercel Real Experience Score of 100, every route at 93 or higher.",
+			"area": "linecrush-platform"
+		},
+		{
+			"date": "2026-04-27",
+			"event": "Discord bot split into a fast listener and a queue of workers.",
+			"area": "linecrush-platform"
+		},
+		{
+			"date": "2026-05-24",
+			"event": "Capacitor iOS scaffold committed, before the move to native.",
+			"area": "native-apps"
+		},
+		{
+			"date": "2026-06-09",
+			"event": "Austin scaffolded the native SwiftUI iOS app and wrote all seven first-day iOS commits.",
+			"area": "native-apps"
+		},
+		{
+			"date": "2026-06-12",
+			"event": "First iOS TestFlight build on the 2.0 line.",
+			"area": "native-apps"
+		},
+		{
+			"date": "2026-06-19",
+			"event": "Web auth migrated from Auth0 to Clerk.",
+			"area": "linecrush-platform"
+		},
+		{
+			"date": "2026-06-22",
+			"event": "First commit of the agent fleet: one worker running Claude Code. The same day Austin added the rule that work needs proof from the real product before it ships.",
+			"area": "agent-fleet"
+		},
+		{
+			"date": "2026-06-24",
+			"event": "Austin scaffolded the native Kotlin and Jetpack Compose Android app and wrote all four first-day Android commits.",
+			"area": "native-apps"
+		},
+		{
+			"date": "2026-07-02",
+			"event": "Android app passed Google's first review; closed testing live.",
+			"area": "native-apps"
+		},
+		{
+			"date": "2026-07-05",
+			"event": "First commit of Gunmetal Orbit; the Godot 4.7 project was scaffolded the same day.",
+			"area": "games"
+		},
+		{
+			"date": "2026-07-16",
+			"event": "Launched the LineCrush Games studio site and published react-steam-deck to npm.",
+			"area": "games"
+		},
+		{
+			"date": "2026-07-22",
+			"event": "Gunmetal Orbit passed Valve's build review, 17 days after its first commit.",
+			"area": "games"
+		},
+		{
+			"date": "2026-08-09",
+			"event": "SureWord Android app (Expo) 1.0.0 released to testing; AI SDK tools and memory added the same day.",
+			"area": "sureword"
+		},
+		{
+			"date": "2026-08-10",
+			"event": "Renamed the app SureWord.",
+			"area": "sureword"
+		},
+		{
+			"date": "2026-08-27",
+			"event": "Google Play production access granted.",
+			"area": "native-apps"
+		},
+		{
+			"date": "2026-08-28",
+			"event": "LineCrush Android app live on Google Play.",
+			"area": "native-apps"
+		},
+		{
+			"date": "2026-09-05",
+			"event": "LineCrush iOS app approved by App Review, 88 days after the first native commit.",
+			"area": "native-apps"
+		},
+		{
+			"date": "2026-09-10",
+			"event": "Released Gunmetal Orbit on Steam for Windows and Linux/Steam Deck.",
+			"area": "games"
+		},
+		{
+			"date": "2026-09-19",
+			"event": "LineCrush iOS app publicly released on the App Store (2.1.0).",
+			"area": "native-apps"
+		},
+		{
+			"date": "2026-09-20",
+			"event": "First App Store submission created, staged and submitted entirely by CI (2.1.1).",
+			"area": "release"
+		},
+		{
+			"date": "2026-09-30",
+			"event": "Two Cities Off Road client site went live at twocitiesoffroad.com.",
+			"area": "client-work"
+		},
+		{
+			"date": "2026-10-17",
+			"event": "iOS app extended to iPad.",
+			"area": "native-apps"
+		},
+		{
+			"date": "2026-10-19",
+			"event": "ChatGPT plugin submitted to OpenAI for review.",
+			"area": "linecrush-platform"
+		},
+		{
+			"date": "2026-10-22",
+			"event": "C2 agreed by both founders and started the same day.",
+			"area": "c2"
+		},
+		{
+			"date": "2026-10-23",
+			"event": "Gunmetal Orbit added a signed, notarized macOS build on Steam.",
+			"area": "games"
+		},
+		{
+			"date": "2026-10-26",
+			"event": "SureWord first released on the App Store for iPhone and iPad.",
+			"area": "sureword"
+		},
+		{
+			"date": "2026-11-02",
+			"event": "ChatGPT plugin approved by OpenAI and published the same day.",
+			"area": "linecrush-platform"
+		},
+		{
+			"date": "2026-11-03",
+			"event": "C2 activated as the tracker of record, adopting 14,025 fleet jobs.",
+			"area": "c2"
+		},
+		{
+			"date": "2026-11-06",
+			"event": "SureWord's first Google Play production release (1.113.0), the day after production access was granted.",
+			"area": "sureword"
+		},
+		{
+			"date": "2026-11-08",
+			"event": "SureWord Mac App Store build released.",
+			"area": "sureword"
+		},
+		{
+			"date": "2026-11-09",
+			"event": "Migration closeout. The Linear code was retired.",
+			"area": "c2"
+		},
+		{
+			"date": "2026-11-13",
+			"event": "Seven Days v0.1.0 uploaded to his Meta Quest Competition channel for Meta's VR Start Developer Competition 2026.",
+			"area": "games"
+		},
+		{
+			"date": "2026-11-15",
+			"event": "Submitted Cut Loose, a solo Unreal Engine 5.8 C++ entry, to the 2026 Epic AI MegaJam.",
+			"area": "games"
+		}
+	],
+	"skills": [
+		{
+			"skill": "Agent system design and operations (Claude Code, Codex)",
+			"category": "ai",
+			"evidence": "Designed and built the fleet that takes tracker issues to production, from its first commit on 2026-06-22. By 2026-11-17 it had admitted 15,477 issues and closed 14,111, 10,745 with a shipped commit URL.",
+			"where": [
+				"LineCrush agent fleet"
+			]
+		},
+		{
+			"skill": "Durable job execution and crash recovery",
+			"category": "backend",
+			"evidence": "An interrupted run continues in the same session and working tree with unpushed commits intact. 37 of 15,477 admitted issues (0.24%) ended in a terminal failure, measured 2026-11-17.",
+			"where": [
+				"LineCrush agent fleet"
+			]
+		},
+		{
+			"skill": "PostgreSQL concurrency",
+			"category": "data",
+			"evidence": "Workers claim jobs transactionally with row locking so two workers never take the same job, and C2 checkout is a single compare-and-set update.",
+			"where": [
+				"LineCrush agent fleet",
+				"C2"
+			]
+		},
+		{
+			"skill": "Data migration and cutover",
+			"category": "data",
+			"evidence": "Moved the tracker from Linear to C2 with an importer, a mirror and a drift check. An earlier full comparison of 18,931 issues found zero mismatches, and 14,025 live jobs were adopted at cutover.",
+			"where": [
+				"C2"
+			]
+		},
+		{
+			"skill": "MCP server development",
+			"category": "ai",
+			"evidence": "Built C2's agent API as an MCP server on the official MCP Python SDK, with verbs that mirror what agents already used so prompts needed renaming rather than rewriting.",
+			"where": [
+				"C2"
+			]
+		},
+		{
+			"skill": "Next.js and TypeScript",
+			"category": "frontend",
+			"evidence": "C2's web UI and founder API: 177 tracked frontend files, about 35k lines, with 26 server-gated API route files.",
+			"where": [
+				"C2"
+			]
+		},
+		{
+			"skill": "Python",
+			"category": "backend",
+			"evidence": "The fleet runtime and the C2 backend; the C2 backend and MCP server are about 7.1k lines of Python, and 222 test files import the fleet package.",
+			"where": [
+				"LineCrush agent fleet",
+				"C2"
+			]
+		},
+		{
+			"skill": "Git workflows for many concurrent agents",
+			"category": "tooling",
+			"evidence": "Replaced a global ship lock (1,173-second mean wait) with optimistic push, rebase and bounded retry, and set staging rules after a shared-index mistake.",
+			"where": [
+				"LineCrush agent fleet"
+			]
+		},
+		{
+			"skill": "CI/CD and release engineering",
+			"category": "infra",
+			"evidence": "Turned per-issue native device runs into a scheduled gate that files its own failures, moved the type gate off paid runners, and set a weekly Tuesday store release train.",
+			"where": [
+				"LineCrush iOS app",
+				"LineCrush Android app",
+				"LineCrush web"
+			]
+		},
+		{
+			"skill": "Measurement before redesign",
+			"category": "infra",
+			"evidence": "Measured the ship lock from its own log before replacing it: a 1,173-second mean wait.",
+			"where": [
+				"LineCrush agent fleet"
+			]
+		},
+		{
+			"skill": "Writing operating rules for agents",
+			"category": "leadership",
+			"evidence": "Wrote and maintains the rule set that Claude Code, Codex and other agents read before they work in the repository.",
+			"where": [
+				"LineCrush"
+			]
+		},
+		{
+			"skill": "Incident analysis and post-mortems",
+			"category": "leadership",
+			"evidence": "Traces failures to a proven root cause, adds a structural fix and records the rule where the next person or agent will read it.",
+			"where": [
+				"LineCrush agent fleet"
+			]
+		},
+		{
+			"skill": "Technical research and decision memos",
+			"category": "leadership",
+			"evidence": "Built the store release cadence decision from published release-engineering research, and studied an open-source control panel in depth before building C2.",
+			"where": [
+				"LineCrush"
+			]
+		},
+		{
+			"skill": "Next.js and React",
+			"category": "frontend",
+			"evidence": "Created the LineCrush web app on Next.js 14 in 2024, upgraded it to Next.js 15 on 2024-10-28, and co-built it with his co-founder.",
+			"where": [
+				"LineCrush web app"
+			]
+		},
+		{
+			"skill": "Web performance (Core Web Vitals)",
+			"category": "frontend",
+			"evidence": "Led the March 2026 push that cut backdrop filters from 279 to 1 and headshots from 238 KB to 3 KB and reached a Real Experience Score of 100 on 2026-03-16.",
+			"where": [
+				"LineCrush web app"
+			]
+		},
+		{
+			"skill": "TypeScript",
+			"category": "frontend",
+			"evidence": "Web app and the ChatGPT plugin's MCP server are TypeScript; the plugin server, data layer and verify script are Austin's work.",
+			"where": [
+				"LineCrush web app",
+				"LineCrush ChatGPT plugin"
+			]
+		},
+		{
+			"skill": "Python (asyncio) backend services",
+			"category": "backend",
+			"evidence": "Wrote the asyncio WebSocket server and the queue-and-worker split for the Discord bot.",
+			"where": [
+				"LineCrush backend"
+			]
+		},
+		{
+			"skill": "PostgreSQL",
+			"category": "data",
+			"evidence": "Used Postgres LISTEN/NOTIFY as the real-time event bus and a Postgres queue with leases for background workers.",
+			"where": [
+				"LineCrush backend"
+			]
+		},
+		{
+			"skill": "Redis caching",
+			"category": "backend",
+			"evidence": "Added Redis caching in 2024 and wired invalidation into billing events and the customer portal so subscription state stayed coherent.",
+			"where": [
+				"LineCrush web app"
+			]
+		},
+		{
+			"skill": "WebSockets and real-time systems",
+			"category": "backend",
+			"evidence": "Built the WebSocket server that fans database notifications out to web clients and alert services, in production since October 2025.",
+			"where": [
+				"LineCrush backend"
+			]
+		},
+		{
+			"skill": "Auth migration (Auth0 to Clerk)",
+			"category": "backend",
+			"evidence": "Migrated web auth to Clerk on 2026-06-19 with a 520-line compatibility layer and a gated runbook, then native iOS and Android within a week.",
+			"where": [
+				"LineCrush web app",
+				"LineCrush iOS app",
+				"LineCrush Android app"
+			]
+		},
+		{
+			"skill": "Stripe billing",
+			"category": "backend",
+			"evidence": "Added Stripe subscriptions on 2024-08-12 and wrote the first commits of the webhook, price config and subscription resolver in August 2024.",
+			"where": [
+				"LineCrush web app"
+			]
+		},
+		{
+			"skill": "SwiftUI",
+			"category": "mobile",
+			"evidence": "Scaffolded the native iOS app on 2026-06-09 and on day one built swipeable research cards, reverse card faces, search, rewind, filters, empty states and a chart; the app had 667 Swift source files on 2026-11-17.",
+			"where": [
+				"LineCrush iOS app"
+			]
+		},
+		{
+			"skill": "StoreKit in-app subscriptions",
+			"category": "mobile",
+			"evidence": "Moved iOS subscriptions to StoreKit after a 3.1.1 rejection and added the StoreKit purchase flow and native plan picker in July 2026.",
+			"where": [
+				"LineCrush iOS app"
+			]
+		},
+		{
+			"skill": "Kotlin and Jetpack Compose",
+			"category": "mobile",
+			"evidence": "Scaffolded the native Android app on 2026-06-24 with the Compose shell, Kotlin API client and typed models, native auth and guest mode, and the swipe deck with rewind and cart; public on Google Play 2026-08-28.",
+			"where": [
+				"LineCrush Android app"
+			]
+		},
+		{
+			"skill": "App Store review and submission",
+			"category": "mobile",
+			"evidence": "Took the iOS app through several documented rejections to approval on 2026-09-05, 88 days after the first native commit, and owns release and store review for both apps.",
+			"where": [
+				"LineCrush iOS app"
+			]
+		},
+		{
+			"skill": "Google Play publishing",
+			"category": "mobile",
+			"evidence": "Passed Play's production-access gate on the second application and shipped the public listing on 2026-08-28; 39 production changelog entries followed in about 11 weeks.",
+			"where": [
+				"LineCrush Android app"
+			]
+		},
+		{
+			"skill": "Native test automation (XCTest, JUnit, Compose UI tests, Maestro)",
+			"category": "mobile",
+			"evidence": "The iOS app has 3,241 test functions and the Android app 4,894 JVM and 131 instrumented tests, with a Maestro tap-through on the signed release APK.",
+			"where": [
+				"LineCrush iOS app",
+				"LineCrush Android app"
+			]
+		},
+		{
+			"skill": "GitHub Actions CI/CD",
+			"category": "infra",
+			"evidence": "Maintains the native gate and native release workflows (both name him as maintainer); 20 workflows in the repo, with App Store submission done by CI since 2026-09-20.",
+			"where": [
+				"LineCrush native release pipeline"
+			]
+		},
+		{
+			"skill": "App Store Connect API and Play Developer API automation",
+			"category": "tooling",
+			"evidence": "Release scripts call the App Store Connect API directly to stage versions, upload screenshots, write What's New and submit for review, and use gradle-play-publisher to promote the same versionCode to production; no fastlane.",
+			"where": [
+				"LineCrush native release pipeline"
+			]
+		},
+		{
+			"skill": "Model Context Protocol (MCP) servers",
+			"category": "ai",
+			"evidence": "Built the LineCrush ChatGPT plugin: five read-only tools over a hosted MCP server, submitted 2026-10-19 and approved 2026-11-02.",
+			"where": [
+				"LineCrush ChatGPT plugin"
+			]
+		},
+		{
+			"skill": "AI output reliability",
+			"category": "ai",
+			"evidence": "Added a fact-check stage that checks statistical claims in AI-written reports against stored game data before they are saved (2026-03-04).",
+			"where": [
+				"LineCrush backend"
+			]
+		},
+		{
+			"skill": "Browser extensions (Manifest V3)",
+			"category": "frontend",
+			"evidence": "Committed the first Chrome extension on 2025-05-11 and reduced its permissions for Chrome Web Store compliance two days later; Chrome and Firefox versions at 1.3.0.",
+			"where": [
+				"LineCrush Scout browser extensions"
+			]
+		},
+		{
+			"skill": "Deploy automation",
+			"category": "infra",
+			"evidence": "Built webhook-driven push-to-deploy for the backend in one day on 2025-10-28, later extended to restart only services whose imports changed.",
+			"where": [
+				"LineCrush backend"
+			]
+		},
+		{
+			"skill": "Queue and worker design",
+			"category": "backend",
+			"evidence": "Split a stalled bot into a sub-second listener and a pool of workers draining a Postgres queue, shipped 2026-04-27, and reused the pattern for the in-app report queue.",
+			"where": [
+				"LineCrush backend"
+			]
+		},
+		{
+			"skill": "Godot 4.7 and GDScript",
+			"category": "games",
+			"evidence": "Gunmetal Orbit: about 95,000 lines of game code and 76,000 lines of test harness across 458 GDScript files, written with AI coding agents under his direction; released on Steam 2026-09-10.",
+			"where": [
+				"Gunmetal Orbit",
+				"Seven Days"
+			]
+		},
+		{
+			"skill": "Steamworks and SteamPipe release",
+			"category": "games",
+			"evidence": "Windows, Linux and macOS depots, a beta staging branch and a default production branch promoted through the SetAppBuildLive Web API, Steam Cloud, 34 achievements split into Achievement Sets one day after Valve launched the feature.",
+			"where": [
+				"Gunmetal Orbit"
+			]
+		},
+		{
+			"skill": "Release automation with build receipts",
+			"category": "tooling",
+			"evidence": "One-command Steam build since 2026-10-19 that builds from a clean worktree, runs smoke and autoplay, checks the version stamp in each payload, hashes artifacts and writes an upload receipt.",
+			"where": [
+				"Gunmetal Orbit"
+			]
+		},
+		{
+			"skill": "Headless game test automation",
+			"category": "games",
+			"evidence": "An autoplay bot that plays the real loop through input actions plus 302 focused test scenes, with test boots jailed away from real saves.",
+			"where": [
+				"Gunmetal Orbit"
+			]
+		},
+		{
+			"skill": "Game performance instrumentation",
+			"category": "games",
+			"evidence": "An in-game frame logger that records every frame of 100 ms or more with a script, physics, render and other split and carries a per-wave summary in cloud-synced run history; a size pass cut builds from 2.9 GB to about 1.0 GB per platform.",
+			"where": [
+				"Gunmetal Orbit"
+			]
+		},
+		{
+			"skill": "Unreal Engine 5.8 C++",
+			"category": "games",
+			"evidence": "Cut Loose, a solo Epic AI MegaJam entry built in four days through Unreal's MCP plugin with agents; native test suite of 178 cases, 175 passing.",
+			"where": [
+				"Cut Loose"
+			]
+		},
+		{
+			"skill": "OpenXR on Meta Quest",
+			"category": "games",
+			"evidence": "Seven Days, a seated hands-only Quest 3 game in Godot 4.7, uploaded as v0.1.0 to a Meta Competition channel on 2026-11-13 after passing Meta's automated checks.",
+			"where": [
+				"Seven Days"
+			]
+		},
+		{
+			"skill": "Blender and Python art pipeline",
+			"category": "games",
+			"evidence": "Reference image to concept art, Tripo image-to-3D, Blender 5.2 cleanup, retopology, UVs, PBR bake, LODs and collision, then optimized GLBs into Godot; about 30 Blender Python scripts in the studio tools.",
+			"where": [
+				"Gunmetal Orbit"
+			]
+		},
+		{
+			"skill": "Next.js App Router",
+			"category": "frontend",
+			"evidence": "SureWord's web app and 121 API routes on Next.js 15.5; the LineCrush Games studio site on Next.js 16 and Bun; client sites on Next.js 16.",
+			"where": [
+				"SureWord",
+				"LineCrush Games site",
+				"Two Cities Off Road",
+				"Constrong"
+			]
+		},
+		{
+			"skill": "TypeScript",
+			"category": "frontend",
+			"evidence": "SureWord holds 768 .ts and 392 .tsx files across its web, API and Android code.",
+			"where": [
+				"SureWord"
+			]
+		},
+		{
+			"skill": "React",
+			"category": "frontend",
+			"evidence": "Published react-steam-deck, a zero-dependency React and SVG Steam Deck mockup component, to npm as v0.1.0 on 2026-07-16.",
+			"where": [
+				"react-steam-deck",
+				"SureWord"
+			]
+		},
+		{
+			"skill": "Vercel AI SDK",
+			"category": "ai",
+			"evidence": "SureWord's streaming Bible study chat runs on AI SDK 7 with OpenAI, Anthropic, OpenAI-compatible and OpenRouter providers, with tool use and saved memory.",
+			"where": [
+				"SureWord"
+			]
+		},
+		{
+			"skill": "LLM tool calling and approval flows",
+			"category": "ai",
+			"evidence": "At least 24 model tools in SureWord; destructive replacements go through proposals that need a persisted confirmation and use receipts to prevent double execution.",
+			"where": [
+				"SureWord",
+				"FileSteward AI"
+			]
+		},
+		{
+			"skill": "pgvector hybrid retrieval",
+			"category": "ai",
+			"evidence": "One HNSW scan over halfvec(3072) verse embeddings merged with keyword and full-text hits for exact-wording recall, with a keyword-only fallback flagged as degraded.",
+			"where": [
+				"SureWord"
+			]
+		},
+		{
+			"skill": "LLM grounding and evaluation",
+			"category": "ai",
+			"evidence": "Server-side canonical Scripture insertion during streaming, a 56-case answer fixture catalog, live verification scripts against real Postgres and authenticated streams, and per-turn latency and token metrics.",
+			"where": [
+				"SureWord"
+			]
+		},
+		{
+			"skill": "Prompt design",
+			"category": "ai",
+			"evidence": "Rewrote SureWord's routine system prompt from 7,826 words to 2,794 on 2026-10-08, assembling a common policy plus only the relevant workflow blocks.",
+			"where": [
+				"SureWord"
+			]
+		},
+		{
+			"skill": "Prisma and Neon Postgres",
+			"category": "data",
+			"evidence": "68 Prisma models and 80 migrations for SureWord, with the production database baselined for migrations on 2026-08-10.",
+			"where": [
+				"SureWord"
+			]
+		},
+		{
+			"skill": "Clerk authentication",
+			"category": "backend",
+			"evidence": "SureWord auth on a custom Clerk domain with Google OAuth across web, Expo and native Apple clients, after diagnosing a production sign-in outage on 2026-08-10.",
+			"where": [
+				"SureWord"
+			]
+		},
+		{
+			"skill": "Subscription billing across three stores",
+			"category": "backend",
+			"evidence": "Stripe, Google Play Billing with real-time developer notifications, and StoreKit 2 with App Store Server Notifications V2 all feed one SureWord entitlement, with App Store purchases verified against Apple's signed data.",
+			"where": [
+				"SureWord"
+			]
+		},
+		{
+			"skill": "Expo and React Native",
+			"category": "mobile",
+			"evidence": "SureWord's Android app on Expo SDK 57 and React Native 0.86.3 with three local native modules, from 1.0.0 on 2026-08-09 to 1.125.0 on 2026-11-17.",
+			"where": [
+				"SureWord"
+			]
+		},
+		{
+			"skill": "SwiftUI",
+			"category": "mobile",
+			"evidence": "SureWord's native macOS and iOS apps from one XcodeGen project with share and notification extensions, shipped to the App Store and Mac App Store; scaffolded the LineCrush iOS app on 2026-06-09.",
+			"where": [
+				"SureWord",
+				"LineCrush iOS app"
+			]
+		},
+		{
+			"skill": "Kotlin and Jetpack Compose",
+			"category": "mobile",
+			"evidence": "FileSteward AI, an Android file manager with Room, on-device ML Kit OCR and a tool-calling agent that only proposes changes for the user to approve (338 .kt files, in development); scaffolded the LineCrush Android app on 2026-06-24.",
+			"where": [
+				"FileSteward AI",
+				"LineCrush Android app"
+			]
+		},
+		{
+			"skill": "App Store and Google Play release and review",
+			"category": "mobile",
+			"evidence": "Took SureWord from first TestFlight upload on 2026-10-07 to App Store release on 2026-10-26, and through a 14-day Play closed test to production on 2026-11-06; store listings kept as code with a parity test.",
+			"where": [
+				"SureWord",
+				"LineCrush iOS app",
+				"LineCrush Android app"
+			]
+		},
+		{
+			"skill": "GitHub Actions CI",
+			"category": "infra",
+			"evidence": "SureWord CI runs web logic tests, lint and typecheck, a mobile job, and macOS and iOS simulator tests on a self-hosted Mac runner; the web build refuses to deploy on a failing test.",
+			"where": [
+				"SureWord"
+			]
+		},
+		{
+			"skill": "AWS Lambda and SES",
+			"category": "backend",
+			"evidence": "SaveALife CPR registration bot in Python on AWS Lambda behind an HTTP API, emailing reports through SES; in production at v2.1.0.",
+			"where": [
+				"SaveALife CPR"
+			]
+		},
+		{
+			"skill": "Cloudflare Workers and D1",
+			"category": "infra",
+			"evidence": "Two Cities Off Road: a static Next.js 16 export served by a Cloudflare Worker, an owner admin backed by D1, and an inquiry form with rate limiting, a honeypot and Turnstile; live since 2026-09-30.",
+			"where": [
+				"Two Cities Off Road"
+			]
+		},
+		{
+			"skill": "Rust open-source contribution",
+			"category": "tooling",
+			"evidence": "Three pull requests merged into the l0ng-ai/tty7 Rust terminal: Kimi Code CLI support (2026-08-20), a session-exit input fix (2026-09-14) and a key that jumps to the longest-waiting agent (2026-10-20).",
+			"where": [
+				"tty7"
+			]
+		},
+		{
+			"skill": "MCP servers",
+			"category": "ai",
+			"evidence": "Built public MCP servers for Perplexity search and Neon Postgres, and introduced LineCrush's hosted ChatGPT plugin, which was approved on 2026-11-02 and returned five public read-only tools in a live check.",
+			"where": [
+				"LineCrush ChatGPT plugin",
+				"perplexity-mcp-server",
+				"neon-pg-mcp-server"
+			]
+		},
+		{
+			"skill": "Directing AI coding agents",
+			"category": "tooling",
+			"evidence": "Built SureWord, Gunmetal Orbit and Cut Loose by directing Claude Code, Codex and Gemini through OpenCode, with engine control through godot-mcp and Unreal's MCP plugin.",
+			"where": [
+				"SureWord",
+				"Gunmetal Orbit",
+				"Cut Loose"
+			]
+		},
+		{
+			"skill": "Teaching web development",
+			"category": "leadership",
+			"evidence": "Web Development Instructor at Bitwise Industries / Geekwise Academy from January 2022 to July 2023, teaching HTML, CSS, JavaScript and React.",
+			"where": [
+				"Bitwise Industries / Geekwise Academy"
+			]
+		}
+	],
+	"facts": [
+		{
+			"subject": "LineCrush agent fleet",
+			"fact": "15,477 issues admitted since 2026-06-23; 14,111 done (91.2%); 10,745 done with a shipped commit URL.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush agent fleet",
+			"fact": "37 admitted issues (0.24%) ended in a terminal failure.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush agent fleet",
+			"fact": "71.3% of done issues (10,068 of 14,111) finished on their first attempt.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush agent fleet",
+			"fact": "Median time from admission to done was 71.5 minutes (90th percentile 540 minutes, 9.0 hours); this includes time parked on a person and any later rerun.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush agent fleet",
+			"fact": "Median time from the last run start to completion was 38.9 minutes; agent-reported run duration had a median of 36.0 minutes and a median of 88 turns.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush agent fleet",
+			"fact": "3,729 admissions in the trailing 30 days, about 124 a day.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush agent fleet",
+			"fact": "542 issues needed a founder action since 2026-07-01; of 3,158 clarity reviews since 2026-07-28, 2,077 were resolved without a person and 783 were marked human-required.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "C2",
+			"fact": "Contract to activation took 12 days, 2026-10-22 to 2026-11-03.",
+			"as_of": "2026-11-03"
+		},
+		{
+			"subject": "C2",
+			"fact": "14,025 fleet jobs adopted at activation; an earlier full comparison of 18,931 issues found zero mismatches.",
+			"as_of": "2026-11-03"
+		},
+		{
+			"subject": "C2",
+			"fact": "18,932 issues and 39,107 comments imported from Linear, with history back to 2024-05-07 and every issue identifier preserved.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "C2",
+			"fact": "C2 holds 42,515 comments, 38,370 attachment records, 15,825 issue relations (2,537 blocking links) and 898 approval records.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "C2",
+			"fact": "Work-product records: 24,980 commits, 4,257 proof screenshots, 2,291 documents and 991 pull requests.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "C2",
+			"fact": "9,082 recorded runs since 2026-10-23: 8,477 succeeded, 398 halted, 182 failed, 14 timed out, 10 canceled.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "C2",
+			"fact": "C2's frontend is 177 tracked files, about 35k lines; its backend and MCP server are about 7.1k lines of Python; 117 test files reference C2.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "C2",
+			"fact": "829 green tests across ten admission suites at migration closeout.",
+			"as_of": "2026-11-09"
+		},
+		{
+			"subject": "LineCrush product names",
+			"fact": "The product has had five names: Athlete Insight Pro, Context Pro AI, Bet Vibes, ContextPro and LineCrush (from 2025-10-05).",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "Austin's work pattern",
+			"fact": "Austin committed on 355 of 365 days in 2025.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "Austin's work pattern",
+			"fact": "Austin's longest commit streak is 259 consecutive days, 2025-09-08 to 2026-05-24.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush CI",
+			"fact": "20 GitHub Actions workflows: 7 web and backend guards and 13 for native build, release and store automation.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush iOS app",
+			"fact": "667 Swift source files (325,178 lines) in the app and 3,241 test functions across the unit and UI test trees.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush iOS app",
+			"fact": "Native SwiftUI, iPhone and iPad (iPad since 2026-10-17), minimum iOS 17.0.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush iOS app",
+			"fact": "Approved 88 days after the first native commit and publicly released 102 days after it (2026-06-09 to 2026-09-05 and 2026-09-19).",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush iOS app",
+			"fact": "32 versioned store entries from 2.0.47 (2026-09-05) to 2.9.1 (2026-11-16), about 10 weeks, on a weekly Tuesday train for minor versions.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush Android app",
+			"fact": "557 Kotlin source files (276,310 lines), with 4,894 JVM tests and 131 instrumented tests.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush Android app",
+			"fact": "From first commit (2026-06-24) to public production on Google Play (2026-08-28) took 65 days.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush Android app",
+			"fact": "39 production-tagged changelog entries from 0.1.90 (2026-08-28) to 2.9.1 (2026-11-13); iOS and Android share one marketing version since 2.1.0.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush native apps",
+			"fact": "A parity manifest maps 56 shared web surfaces to the Swift and Kotlin files that implement them, linted in CI.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush iOS release",
+			"fact": "Version 2.1.1 was approved 13 hours 20 minutes after submission on 2026-09-20, the first submission created, staged and submitted entirely by CI.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush ChatGPT plugin",
+			"fact": "Five read-only tools; 11 of its 15 commits are Austin's; submitted 2026-10-19, approved and published 2026-11-02.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "Auth0-to-Clerk migration",
+			"fact": "A compatibility module re-exports the old session API over Clerk, so hundreds of call sites did not change.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "LineCrush web performance",
+			"fact": "Real Experience Score of 100 with every route at 93 or higher in Vercel Speed Insights on 2026-03-16 (historical snapshot, not re-measured).",
+			"as_of": "2026-03-16"
+		},
+		{
+			"subject": "Gunmetal Orbit",
+			"fact": "The first day's commits on 2026-07-05 already produced a playable loop: mine ore, haul it to the station, sell it and spend the proceeds on upgrades.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "SureWord",
+			"fact": "Started in 2024, rebuilt and shipped in 2026: 94% of its commits were made between 2026-08-09 and 2026-11-17.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "SureWord",
+			"fact": "121 API routes, 68 Prisma models and 80 migrations behind one backend serving four clients.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "SureWord",
+			"fact": "134 release tags: 112 Android and 22 macOS.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "SureWord",
+			"fact": "288 logic test files, 106 Android test files and 144 Swift test files; an iOS unit checkpoint recorded 1,094 passing tests.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "SureWord",
+			"fact": "Available on the web at sureword.app, Google Play, and the App Store for iPhone, iPad and Mac; App Store version 1.38.0 released 2026-11-16.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "SureWord",
+			"fact": "A read-only check recorded 31,102 verse embeddings in pgvector.",
+			"as_of": "2026-08-28"
+		},
+		{
+			"subject": "Gunmetal Orbit",
+			"fact": "First commit to Steam release in 67 days; Valve build review approved on day 17.",
+			"as_of": "2026-09-10"
+		},
+		{
+			"subject": "Gunmetal Orbit",
+			"fact": "Steam lists Austin Spraggins as developer and LineCrush Games as publisher, released Sep 10 2026 on Windows, macOS and Linux with 34 achievements, full controller support and Steam Cloud.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "Gunmetal Orbit",
+			"fact": "207 changelog versions from 0.5 (2026-07-07) to 2.17 (2026-11-14), 130 of them on the Steam channel.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "Gunmetal Orbit",
+			"fact": "Over 100 versions shipped to Steam after launch, with 37 public patch-note announcements.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "Gunmetal Orbit",
+			"fact": "302 test scenes and 42 shaders; about 95,000 lines of game code beside about 76,000 lines of test harness.",
+			"as_of": "2026-11-15"
+		},
+		{
+			"subject": "Gunmetal Orbit",
+			"fact": "A size pass on 2026-09-09 cut builds from 2.9 GB to about 1.0 GB per platform.",
+			"as_of": "2026-09-09"
+		},
+		{
+			"subject": "Gunmetal Orbit",
+			"fact": "Suspend and wake from sleep proven on a Steam Deck with v1.26; Deck compatibility is unrated by Valve and a steady 60 fps on Deck is still an open target.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "Cut Loose",
+			"fact": "Built from 2026-11-12 to 2026-11-15 and submitted solo to the 2026 Epic AI MegaJam; native test suite of 178 cases with 175 passing. No result announced yet.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "tty7 (open source)",
+			"fact": "Three pull requests merged upstream into l0ng-ai/tty7: #694 (2026-08-20), #877 (2026-09-14) and #1164 (2026-10-20).",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "react-steam-deck",
+			"fact": "Published on npm as v0.1.0, MIT, zero dependencies.",
+			"as_of": "2026-07-16"
+		},
+		{
+			"subject": "FileSteward AI",
+			"fact": "Native Android file manager in Kotlin, built from 2026-09-17 to 2026-11-13. A signed pre-release APK, 0.15.0, was published 2026-10-23. It is not on Google Play.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "Two Cities Off Road",
+			"fact": "Paid client site live at twocitiesoffroad.com since 2026-09-30.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "Constrong",
+			"fact": "Paid client contractor site on Next.js 16 and Tailwind 4, built with his co-founder Jay.",
+			"as_of": "2026-11-17"
+		},
+		{
+			"subject": "FormUp",
+			"fact": "Youth-team assessment and roster app on Next.js 15 with Convex and an Expo companion app, built 2025-11-10 to 2026-02-15.",
+			"as_of": "2026-11-17"
+		}
+	]
+}

@@ -98,6 +98,7 @@ src/
 │   └── MotionProvider.tsx # framer-motion reduced-motion config
 ├── content/blog/       # MDX posts (YYYY-MM-DD-slug.mdx)
 ├── data/work-ledger.json # Bundled snapshot of the work ledger (generated, never hand-edit)
+├── data/engineering-record.json # Curated, dated stories, decisions, lessons, timeline, skills and facts for the portfolio agent (screening rules in docs/ask-agent.md)
 ├── lib/
 │   ├── ask/            # Portfolio agent: agent.ts (model + tool loop), tools.ts (read-only tools), prompt.ts (system prompt), rate-limit.ts
 │   ├── portfolio-answers.ts # Curated public facts: the agent's search corpus and its no-model fallback
