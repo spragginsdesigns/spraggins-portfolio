@@ -18,8 +18,10 @@ Austin is a born-again Christian, saved by grace through faith in Jesus Christ. 
 
 - [Portfolio](https://www.spragginsdesigns.xyz): Main portfolio
 - [Engineering résumé](https://www.spragginsdesigns.xyz/resume): Experience and PDF download
-- [LineCrush case study](https://www.spragginsdesigns.xyz/work/linecrush): Native app foundations, release engineering, and C2
+- [LineCrush case study](https://www.spragginsdesigns.xyz/work/linecrush): Co-founding and engineering leadership, the web platform, native apps, integrations, and C2
 - [SureWord case study](https://www.spragginsdesigns.xyz/work/sureword): Scripture-grounded AI, study memory, and cross-platform release
+- [Game development case study](https://www.spragginsdesigns.xyz/work/game-development): Gunmetal Orbit on Steam, Cut Loose, and the Seven Days Quest competition build
+- [Client work and public tools](https://www.spragginsdesigns.xyz/work/independent): Client sites, booking automation, open-source contributions, developer tools, and prototypes
 - [LineCrush](https://www.linecrush.com): Production sports research platform
 - [LineCrush Games](https://www.spragginsdesigns.xyz/games): Game studio page - Gunmetal Orbit on Steam
 - [games.linecrush.com](https://games.linecrush.com): Official studio site

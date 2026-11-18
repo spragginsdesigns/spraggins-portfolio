@@ -9,8 +9,8 @@ const projects = [
 		slug: "linecrush",
 		name: "LineCrush",
 		role: "Co-Founder & CTO",
-		title: "From a web codebase to two native app stores",
-		description: "I started the codebase and built LineCrush with Jay. I built the iOS app in SwiftUI and the Android app in Kotlin and Jetpack Compose myself, then took both through release and store review.",
+		title: "From an athlete research prototype to a subscription business",
+		description: "I started the codebase and built LineCrush with Jay. As CTO, I led engineering across the web platform, built both native apps and created the delivery system we run together.",
 		stack: "Next.js · Python · SwiftUI · Kotlin",
 		image: "/images/work/linecrush-research.webp",
 		alt: "LineCrush on iPhone with player statistics, a research card, and a historical chart",
@@ -61,7 +61,7 @@ export default function SelectedWork() {
 						<p className={styles.projectRole}>Developer tooling</p>
 						<h3 id="fleet-title">C2 and the engineering fleet</h3>
 						<p className={styles.projectText}>
-							I designed the agent fleet we use at LineCrush and led the move from Linear to our own issue tracker, C2.
+						I built the engineering agent fleet and our issue tracker, C2. Jay and I operate the fleet together.
 							The LineCrush case study follows one change all the way to the App Store release notes.
 						</p>
 						<Link href="/work/linecrush#c2" className={styles.textAction}>
@@ -89,7 +89,8 @@ export default function SelectedWork() {
 							and wrote a regression test that drives the same UI with controller input.
 						</p>
 						<div className={styles.actions}>
-							<Link href="/games" className={styles.textAction}>Explore the game <ArrowRight size={17} aria-hidden="true" /></Link>
+						<Link href="/work/game-development" className={styles.textAction}>Read the game development case study <ArrowRight size={17} aria-hidden="true" /></Link>
+						<Link href="/games" className={styles.textAction}>Explore the game <ArrowRight size={17} aria-hidden="true" /></Link>
 							<a href={GUNMETAL_ORBIT.steamUrl} className={styles.textAction}>Steam <ArrowUpRight size={17} aria-hidden="true" /></a>
 						</div>
 					</div>
@@ -100,6 +101,7 @@ export default function SelectedWork() {
 						<Store size={23} aria-hidden="true" />
 						<h3>Paid client work</h3>
 						<p>Automated course registration for SaveALife CPR and built a live catalog and inquiry site for Two Cities Off Road.</p>
+					<Link href="/work/independent#client-delivery" className={styles.textAction}>Explore client work <ArrowRight size={16} aria-hidden="true" /></Link>
 						<a href="https://twocitiesoffroad.com/" className={styles.textAction}>Visit Two Cities Off Road <ArrowUpRight size={16} aria-hidden="true" /></a>
 						<Link href="/local-websites" className={styles.textAction}>Websites for Fresno businesses <ArrowRight size={16} aria-hidden="true" /></Link>
 					</div>
@@ -107,6 +109,7 @@ export default function SelectedWork() {
 						<Code2 size={23} aria-hidden="true" />
 						<h3>Open source</h3>
 						<p>Contributed a session-exit fix to the tty7 terminal and published a React component for showing apps in a Steam Deck frame.</p>
+					<Link href="/work/independent#developer-tools" className={styles.textAction}>Explore public tools <ArrowRight size={16} aria-hidden="true" /></Link>
 						<a href="https://github.com/l0ng-ai/tty7/pull/877" className={styles.textAction}>Read the tty7 pull request <ArrowUpRight size={16} aria-hidden="true" /></a>
 						<a href="https://www.npmjs.com/package/react-steam-deck" className={styles.textAction}>Find react-steam-deck on npm <ArrowUpRight size={16} aria-hidden="true" /></a>
 					</div>

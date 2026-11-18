@@ -69,7 +69,7 @@ src/
 ├── app/
 │   ├── layout.tsx      # Root layout with metadata/SEO + MotionProvider
 │   ├── page.tsx        # Main page composing all sections
-│   ├── work/[slug]/page.tsx # LineCrush and SureWord engineering case studies
+│   ├── work/[slug]/page.tsx # Engineering case studies with timelines and release evidence
 │   ├── games/page.tsx  # LineCrush Games studio page (Gunmetal Orbit + VideoGame JSON-LD)
 │   ├── faith/page.tsx  # Austin's testimony (Faith.tsx); the landing page for SureWord's creator link
 │   ├── local-websites/page.tsx # Spraggins Designs offer page for Fresno businesses (ProfessionalService + FAQPage JSON-LD)
@@ -123,7 +123,7 @@ This project uses a **hybrid routing approach**:
 
 ### Key Sections
 
-The homepage leads with the engineering introduction, selected work, and Austin's journey. Expertise, Daily Work Log, writing, the interactive terminal, GitHub, and contact follow. Product case studies live at `/work/linecrush` and `/work/sureword`. The LineCrush case study includes a linkable C2 section at `#c2`. Games, the résumé, and the Fresno website offer have dedicated routes. Austin's testimony lives on its own page, `/faith`, and stays off the homepage (Austin, 2026-11-18): it is there for people who follow SureWord's "Created by Austin Spraggins" link, and it has nothing to do with hiring. The shipped SureWord apps link to `/#faith`, so `FaithHashRedirect` on the homepage must keep forwarding that hash.
+The homepage leads with the engineering introduction, selected work, and Austin's journey. Expertise, Daily Work Log, writing, the interactive terminal, GitHub, and contact follow. Case studies live at `/work/linecrush`, `/work/sureword`, `/work/game-development`, and `/work/independent`. The LineCrush case study includes a linkable C2 section at `#c2`. Games, the résumé, and the Fresno website offer have dedicated routes. Austin's testimony lives on its own page, `/faith`, and stays off the homepage (Austin, 2026-11-18): it is there for people who follow SureWord's "Created by Austin Spraggins" link, and it has nothing to do with hiring. The shipped SureWord apps link to `/#faith`, so `FaithHashRedirect` on the homepage must keep forwarding that hash.
 
 ### UI Components
 

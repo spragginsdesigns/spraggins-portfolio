@@ -1,139 +1,333 @@
-export const caseStudySlugs = ["linecrush", "sureword"] as const;
+import { FMT, GUNMETAL_ORBIT, STATS } from "./stats";
 
+export const caseStudySlugs = ["linecrush", "sureword", "game-development", "independent"] as const;
 export type CaseStudySlug = (typeof caseStudySlugs)[number];
+
+type StudyLink = { label: string; href: string };
+type StudyImage = { src: string; alt: string; caption: string; shape: "portrait" | "landscape" };
+type StudyMetric = { label: string; value: string };
 
 type CaseStudySection = {
 	id: string;
 	label: string;
 	title: string;
-	paragraphs: readonly string[];
+	paragraphs: string[];
+	media?: StudyImage[];
+	steps?: string[];
+	metrics?: StudyMetric[];
+	metricNote?: string;
+	proof?: StudyLink[];
 };
 
 type CaseStudy = {
 	name: string;
-	eyebrow: string;
 	title: string;
 	intro: string;
 	description: string;
 	role: string;
 	result: string;
 	period: string;
-	stack: readonly string[];
-	image: string;
-	imageAlt: string;
-	imageCaption: string;
-	links: readonly { label: string; href: string }[];
-	sections: readonly CaseStudySection[];
-	takeaway: string;
+	published: string;
+	accent: string;
+	cover: string;
+	stack: string[];
+	links: StudyLink[];
+	timeline: { date: string; event: string }[];
+	sections: CaseStudySection[];
 };
 
-export const caseStudies = {
+const lineCrushWeb = { label: "LineCrush web app", href: "https://www.linecrush.com" };
+const lineCrushApple = { label: "LineCrush on the App Store", href: "https://apps.apple.com/us/app/linecrush-sports-research/id6774968606" };
+const lineCrushPlay = { label: "LineCrush on Google Play", href: "https://play.google.com/store/apps/details?id=com.linecrush.android" };
+const lineCrushChangelog = { label: "Mobile release history", href: "https://www.linecrush.com/changelog" };
+const sureWordWeb = { label: "SureWord web app", href: "https://sureword.app" };
+const sureWordApple = { label: "SureWord on the App Store", href: "https://apps.apple.com/us/app/sureword-ai-bible-study-guide/id6820260211" };
+const sureWordPlay = { label: "SureWord on Google Play", href: "https://play.google.com/store/apps/details?id=com.spragginsdesigns.sureword" };
+const steam = { label: "Gunmetal Orbit on Steam", href: GUNMETAL_ORBIT.steamUrl };
+const cutLoose = { label: "Cut Loose on itch.io", href: "https://spragginsdesigns.itch.io/cut-loose" };
+const twoCities = { label: "Two Cities Off Road", href: "https://twocitiesoffroad.com/" };
+const github = { label: "Austin's GitHub", href: "https://github.com/spragginsdesigns" };
+
+export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 	linecrush: {
 		name: "LineCrush",
-		eyebrow: "Product engineering & developer tooling",
-		title: "From the first commit to daily operation.",
-		intro:
-			"I started the LineCrush codebase in 2024 and built the sports research platform with Jay. I built both native apps myself and designed the engineering system that helps us keep shipping.",
-		description:
-			"How Austin Spraggins co-built LineCrush, launched native SwiftUI and Kotlin apps, and designed C2 and an engineering agent fleet for ongoing delivery.",
+		title: "Building and running LineCrush.",
+		intro: "I started the codebase in May 2024 and co-founded LineCrush Inc. with Jay Raynor. As CTO, I led engineering as we grew a sports research prototype into a subscription business with live web and mobile products. I built both native apps, the engineering agent fleet, and C2, our internal issue tracker.",
+		description: "Austin Spraggins's CTO case study on co-founding LineCrush, building both native apps, and creating C2 and the production engineering fleet.",
 		role: "Co-founder & CTO",
-		result: "Live on web, App Store & Google Play",
-		period: "2024 to present",
-		stack: ["Next.js", "TypeScript", "Python", "PostgreSQL", "SwiftUI", "Kotlin"],
-		image: "/images/work/linecrush-research.webp",
-		imageAlt: "LineCrush sports research app shown in its official store screenshot",
-		imageCaption: "The released LineCrush app. Official App Store screenshot.",
-		links: [
-			{ label: "Visit LineCrush", href: "https://www.linecrush.com" },
-			{
-				label: "App Store",
-				href: "https://apps.apple.com/us/app/linecrush-sports-research/id6774968606"
-			},
-			{
-				label: "Google Play",
-				href: "https://play.google.com/store/apps/details?id=com.linecrush.android"
-			}
+		result: "Operating subscription business · Web, iOS and Android",
+		period: "May 2024 to present",
+		published: "2026-11-17",
+		accent: "#80e9dc",
+		cover: "/images/work/linecrush-sunburst.webp",
+		stack: ["Next.js", "TypeScript", "Python", "PostgreSQL", "Redis", "SwiftUI", "Kotlin", "Claude Code", "Codex"],
+		links: [{ ...lineCrushWeb, label: "Web app" }, { ...lineCrushApple, label: "App Store" }, { ...lineCrushPlay, label: "Google Play" }],
+		timeline: [
+			{ date: "May 2024", event: "Started the athlete research codebase and built the first search, profiles and summaries." },
+			{ date: "Fall 2024", event: "Launched the research product after building account access, subscriptions and scheduled reports." },
+			{ date: "2025", event: "Built out reports, live research and integrations with Jay. We adopted the LineCrush name in October." },
+			{ date: "June 2026", event: "Built the SwiftUI and Kotlin apps and started the engineering agent fleet." },
+			{ date: "Fall 2026", event: "Shipped both apps, published a ChatGPT integration and moved engineering work into C2." }
 		],
 		sections: [
 			{
-				id: "ownership",
-				label: "The responsibility",
-				title: "Build the product, then stay responsible for it.",
+				id: "ownership", label: "Founding & ownership", title: "From athlete search to a paid research product",
 				paragraphs: [
-					"The first implementation was mine. As the company grew, Jay and I developed the product together, from the web experience to the services behind it. My work spans application code, data, infrastructure, native clients and release engineering.",
-					"That ownership continues after a feature lands. Account state, loading behavior, release failures and the first experience for a new user are part of the product too. The work is making those pieces hold together in production."
+					"I took the Gelateria Del Centro job because I wanted to build software full time. After I built their site, an introduction through that work led to the project that became LineCrush and to meeting Jay. He brought deep sports research expertise. I started the original Next.js, TypeScript and Python codebase.",
+					"The first player search, profiles and AI summaries answered a practical question: what's changed about an athlete since the last time you looked? I added source-linked quotes and reports, then built account access, Stripe subscriptions and scheduled processing so people could use it every day.",
+					"Jay and I built out the product together. My work included the swipeable Picks experience, matchup and player research, LineCrushBot, and Sonar search and alerts. We connected those surfaces to the data and services behind them so readers could move from a current story to the quote, the matchup and the numbers in context.",
+					"In 2025 the LineCrush repository recorded a non-merge commit under my Git identity on 355 of 365 days. That was before the fleet launched. The count measures days with recorded Git activity."
+				],
+				proof: [{ label: "LineCrush founders and launch video", href: "https://www.linecrush.com/about-us" }, { label: "Explore Sonar", href: "https://www.linecrush.com/sonar" }, { label: "Read the daily work log", href: "/#work-log" }]
+			},
+			{
+				id: "platform", label: "Platform engineering", title: "Make changing sports data usable across clients",
+				paragraphs: [
+					"I worked across the Next.js and TypeScript product, Python services, PostgreSQL, caching and background jobs. That meant building ingestion and search, research reports, live updates and notifications, as well as the screens customers used to make sense of the results.",
+					"One of my hardest infrastructure changes was moving a live product from Auth0 to Clerk. I kept existing account identifiers stable so saved data and subscriptions could still resolve to their owners. I built a compatibility layer for existing endpoints, rehearsed the import, checked the results, and updated the native clients to work with the new sessions.",
+					"I added health monitoring for scheduled jobs, automated backend deployment and worked on browser performance where it mattered most: the dense Picks interface on a phone. I measured rendering and image costs, cut expensive repeated blur effects, sized images to their slots, and moved interaction-only code off the initial load."
 				]
 			},
 			{
-				id: "native-apps",
-				label: "From scratch to the stores",
-				title: "I built both native apps from scratch.",
+				id: "production", label: "Production operations", title: "Measure the problem on the running service",
 				paragraphs: [
-					"I built the iOS app in SwiftUI, starting with its research cards, search, filters, stats and insights in June 2026. I built the Android app in Kotlin and Jetpack Compose that same month, starting with its API client, authentication and swipeable research deck. Both use the existing product backend.",
-					"App Review exposed a case our demo account had missed. A fresh account with no history hit an error. I traced the review requests, reproduced the failure on an iPad simulator, and fixed the empty state. That experience made the new-account journey part of what a release has to prove.",
-					"The Android app reached Google Play in August 2026 and iOS reached the App Store in September. The fleet now carries substantial implementation and release work across the apps I built."
+					"When an outbound traffic alert fired in November 2026, I directed a production audit to find what was driving it and keep sports data current. We traced the traffic to individual workloads, then tested a change to the database writer against the existing one. On a bounded replay of 12 players, it sent about 36% fewer bytes to PostgreSQL with matching stored results. After deploy, we watched a scheduled production refresh complete.",
+					"The same audit found a backup that could produce snapshots without passing verification. We reproduced the failure, fixed the job's recovery behavior and verified a new encrypted snapshot. We restored a sample of configuration and database schema files and compared them with the originals. That gave us a tested recovery path for the selected files."
+				]
+			},
+			{
+				id: "native-apps", label: "iOS & Android", title: "Two native apps, from the first screen to the stores",
+				paragraphs: [
+					"I built the SwiftUI app and the Kotlin and Jetpack Compose app from scratch in June 2026. On iOS I started with research cards, search, filters, stats and insights. On Android I built the API client, sign-in and swipeable deck. Both apps use the existing LineCrush backend. I also worked on StoreKit purchases, Android push delivery and the release paths that keep the apps moving.",
+					"App Review hit a case the demo account had missed. A fresh user with no history got an error. I traced the review requests, reproduced the failure with an empty account on an iPad simulator, and fixed the empty state. It made the new-account journey part of what a release had to prove.",
+					"Android went to production in August 2026 and the iOS app reached the App Store in September. I built release automation for signed test builds, store cuts and staged rollout. Jay and I continue to operate the product alongside the fleet, which carries substantial implementation and release work."
+				],
+				media: [
+					{ src: "/images/work/linecrush-research.webp", alt: "LineCrush iPhone research card with player data and a chart", caption: "Player research · App Store screenshot", shape: "portrait" },
+					{ src: "/images/work/linecrush-native.webp", alt: "A second screen from the released LineCrush mobile app", caption: "LineCrush mobile · App Store screenshot", shape: "portrait" }
+				],
+				proof: [lineCrushChangelog, lineCrushApple, lineCrushPlay]
+			},
+			{
+				id: "integrations", label: "Integrations", title: "Put research where people already work",
+				paragraphs: [
+					"I built a Chrome extension and worked on betslip image analysis, research chat and voice, and notifications outside the site. The common product problem was preserving useful context when users moved between a research session, a browser and a phone.",
+					"In October 2026 I built the hosted ChatGPT MCP integration. It exposes a bounded set of read-only public research tools that return structured results with source context. I also built WebMCP tools for the browser. With Jay and the fleet, we delivered a real-time sports news API for a business customer."
+				],
+				proof: [{ label: "LineCrush in ChatGPT", href: "https://chatgpt.com/plugins/plugin_asdk_app_6ad6200f5d308191826093af74536aa2" }]
+			},
+			{
+				id: "c2", label: "C2 & the agent fleet", title: "Build a delivery system that can show its work",
+				paragraphs: [
+					"Before I built the fleet, I already had a repeatable way to take an issue from investigation through release. As coding models got better at following that process, I saw a way for a small team to handle more work. I built the fleet in June 2026 to put that process into practice. I use Claude Code and Codex in my daily engineering, and Jay and I operate the fleet together.",
+					"I built C2 because issue tracking had become part of how the agents worked. I wanted an issue to hold the brief, the run history and the evidence in one place. A run can stop and the next one can pick up what was learned. I led the move from Linear in the fall and brought roughly 19,000 historical issues into the new system.",
+					"One trail ends in LineCrush iOS 2.9.0. The team and fleet delivered first-quarter passing, rushing and receiving leaders in Signals. The App Store release notes give a customer-visible place to check where that work landed."
+				],
+				steps: ["Investigate", "Implement", "Verify the product", "Review", "Ship", "Check the release"],
+				media: [
+					{ src: "/images/work/c2-sunburst.webp", alt: "Compute modules arranged around a gold light with cyan connections", caption: "Engineering fleet · AI-generated illustration", shape: "landscape" }
+				],
+				metrics: [
+					{ label: "Completed fleet jobs", value: FMT.fleetCompletedJobs },
+					{ label: "Completed jobs with a recorded commit URL", value: FMT.fleetJobsWithCommitLinks },
+					{ label: "Admitted jobs completed", value: FMT.fleetCompletion }
+				],
+				metricNote: "Fleet ledger snapshot, November 17, 2026. Jobs include implementation, investigation and documentation. The commit-URL count measures job records with a link.",
+				proof: [{ ...lineCrushApple, label: "iOS 2.9.0 release notes" }, { label: "Published fleet walkthrough", href: "/blog/2026-08-08-no-humans-in-the-merge-loop" }]
+			},
+			{
+				id: "lessons", label: "What I learned", title: "Build it so the next release is easier to run",
+				paragraphs: [
+					"LineCrush taught me how to own everything from the first web app to a production service with paying customers. I learned native app development, server operations and release engineering as the company needed them, then turned the repeated parts into checks and tools Jay and I could use again.",
+					"I'm proud of the company and products we built together. Today a release can move through a process the team can follow and inspect. I still like getting into the code, tracing a failure and putting the fix in people's hands. Building a company gave me more ways to do that."
 				]
 			}
-		],
-		takeaway:
-			"Starting a product is one kind of work. Keeping its accounts, clients, releases and engineering process coherent is the work I want to keep owning."
+		]
 	},
 	sureword: {
 		name: "SureWord",
-		eyebrow: "Applied AI & cross-platform product",
-		title: "A Bible study companion that can pick up where you left off.",
-		intro:
-			"I built SureWord to support a person's relationship with God through Scripture. I built the web, iOS and Android apps myself so Bible reading, questions, notes and saved study context could carry across devices.",
-		description:
-			"Austin Spraggins's SureWord case study: meaning-based Scripture search, canonical quotations, optional study memory, and released web and mobile apps.",
-		role: "Founder & product engineer",
-		result: "Web, Android, iPhone, iPad & Mac",
-		period: "Started 2024, expanded 2026",
-		stack: ["Next.js", "AI SDK", "PostgreSQL", "pgvector", "Expo", "SwiftUI"],
-		image: "/images/work/sureword-study.webp",
-		imageAlt: "SureWord Bible study app shown in its official store screenshot",
-		imageCaption: "The released SureWord app. Official App Store screenshot.",
-		links: [
-			{ label: "Visit SureWord", href: "https://sureword.app" },
-			{ label: "App Store", href: "https://apps.apple.com/app/id6820260211" },
-			{
-				label: "Google Play",
-				href: "https://play.google.com/store/apps/details?id=com.spragginsdesigns.sureword"
-			}
+		title: "A Bible study that picks up where you left off.",
+		intro: "I built SureWord to support a person's relationship with God through Scripture. I built the web, iOS and Android apps myself so reading, questions and notes can carry across devices. With memory enabled, what a reader shares about their life and faith can shape the next study.",
+		description: "How Austin Spraggins built SureWord across web, Android, iPhone, iPad and Mac with Scripture retrieval, exact quotations and user-controlled study memory.",
+		role: "Creator & product engineer",
+		result: "Web, Android, iPhone, iPad and Mac",
+		period: "July 2024 to present",
+		published: "2026-11-17",
+		accent: "#f1cb92",
+		cover: "/images/work/sureword-sunburst.webp",
+		stack: ["Next.js", "AI SDK", "PostgreSQL", "pgvector", "Expo", "React Native", "SwiftUI"],
+		links: [{ ...sureWordWeb, label: "Web app" }, { ...sureWordApple, label: "App Store" }, { ...sureWordPlay, label: "Google Play" }],
+		timeline: [
+			{ date: "2024 to 2025", event: "Started the web app and prototyped Bible study on mobile." },
+			{ date: "August 2026", event: "Built the Expo Android client and began the SwiftUI client." },
+			{ date: "Fall 2026", event: "Shipped mobile and desktop experiences, then iterated on streaming and study tools." }
 		],
 		sections: [
 			{
-				id: "product",
-				label: "The product",
-				title: "Study has continuity beyond one conversation.",
+				id: "product", label: "Study experience", title: "Give a reader a place to return to",
 				paragraphs: [
-					"SureWord began as a small Bible study web app in July 2024. In 2026, I built the Android app with Expo and React Native, and built the iPhone, iPad and Mac apps in SwiftUI. I own the product and engineering, using Claude Code and Codex throughout the build.",
-					"A reader can ask a question, return to a passage, write notes and continue studying across devices. With memory enabled, saved context can carry their study and stated preferences into later conversations. They can view, correct, delete or turn that memory off."
-				]
+					"The first version was a small Bible question-and-answer app. I tried an early Kotlin prototype and a separate Expo experiment before building the store clients. I expanded the product into a place to read a passage, follow a cross-reference, ask about a verse and save what you learned. It now includes an offline KJV reader, highlights, notes, reading plans, word study and audio.",
+					"I built the reader and the conversational experience to work together. A citation can open the actual passage in context. A reader can return to their notes or reading plan when they come back, and choose whether their saved context shapes study suggestions and devotionals."
+				],
+				media: [
+					{ src: "/images/work/sureword-study.webp", alt: "SureWord study conversation with Scripture citations", caption: "Study conversation · App Store screenshot", shape: "portrait" },
+					{ src: "/images/work/sureword-reader.webp", alt: "SureWord's Bible reading experience on iPhone", caption: "Bible reader · App Store screenshot", shape: "portrait" }
+				],
+				proof: [sureWordApple]
 			},
 			{
-				id: "grounding",
-				label: "The engineering decision",
-				title: "Let the model explain. Let the server supply the Scripture.",
+				id: "grounding", label: "Scripture retrieval", title: "The server supplies the verse text",
 				paragraphs: [
-					"Meaning-based search helps when someone knows what they want to study but doesn't know the exact words. SureWord combines semantic retrieval with keyword search, and keeps a keyword fallback when vector retrieval is unavailable.",
-					"For quotations, the server resolves the referenced passage from the stored Bible and inserts its canonical text into the stream. The model can explain the passage without being responsible for reproducing its wording from memory. Exact quotation and the quality of an interpretation are separate concerns."
-				]
+					"People often remember the meaning of a passage more clearly than its words. I built Bible search to combine semantic matches and keyword hits. If the vector search fails, the keyword path can still return useful passages.",
+					"I built the quotation path to resolve the referenced verse from the stored Bible and insert its canonical wording into the streamed answer. The model explains the passage. The reader gets the source text and can open the surrounding chapter."
+				],
+				steps: ["Find passages by meaning or words", "Resolve the reference", "Stream the stored verse", "Open it in context"]
 			},
 			{
-				id: "delivery",
-				label: "From implementation to release",
-				title: "One backend, several real ways to use it.",
+				id: "memory", label: "Personalization", title: "Carry forward what a reader chooses to share",
 				paragraphs: [
-					"Shared server behavior keeps Scripture handling and saved study context consistent across clients. Each app still needs its own reader, navigation, offline behavior and store release. Android uses Expo and React Native. iPhone, iPad and Mac use SwiftUI.",
-					"SureWord is available on the web, Google Play and the App Store. Getting there also meant carrying account access, subscriptions, streaming responses and release maintenance through the actual product. The public apps are the result people can try."
+					"I added tools for saved context and a server-side preference that controls whether it participates in future study. The server scopes memory reads and changes to the signed-in owner. A reader can see, add, correct or delete memories and turn the feature off.",
+					"Study context can include what someone is reading, questions they have been exploring and what they choose to share about their beliefs or circumstances. That lets a devotional or suggested question begin where the reader is in their study."
+				],
+				proof: [sureWordApple, sureWordPlay]
+			},
+			{
+				id: "delivery", label: "Release & reliability", title: "One study backend across four experiences",
+				paragraphs: [
+					"I built the Android app with Expo and React Native and the Apple apps in SwiftUI. Web, Android, iPhone and iPad, and Mac share server behavior for chat, Scripture and study context. Each client needed its own navigation, reader, account screens and release work.",
+					"I traced incomplete chat responses through the stream, persisted answer and tool side effects, then checked combinations of account tiers and study modes. I also changed answer-ready notifications to generic notices so a private study question would stay inside the app.",
+					"I built the subscription flow around one application entitlement across Stripe, Apple and Google Play. On Android the same build can move through test tracks into production. On Apple I maintained separate build and signing paths for iPhone, iPad and Mac. I kept release notes with the code so we could check what changed against the actual build."
+				],
+				proof: [sureWordWeb, sureWordApple, sureWordPlay]
+			}
+		]
+	},
+	"game-development": {
+		name: "Game development",
+		title: "From first playable to Steam.",
+		intro: "I led the design, engineering and release of Gunmetal Orbit at LineCrush Games. I used that same build, playtest and release loop to take an Unreal jam game and a Godot mixed-reality experience to packaged builds.",
+		description: "Austin Spraggins's game development work across Gunmetal Orbit, Cut Loose and the Seven Days mixed reality competition build.",
+		role: "Game developer & release owner",
+		result: "Steam release, Windows jam build and Quest competition build",
+		period: "July to November 2026",
+		published: "2026-11-18",
+		accent: "#f5c68c",
+		cover: "/images/work/games-sunburst.webp",
+		stack: ["Godot", "GDScript", "Steamworks", "Unreal Engine", "C++", "OpenXR"],
+		links: [steam, cutLoose, { label: "LineCrush Games", href: "/games" }],
+		timeline: [
+			{ date: "July 2026", event: "Started the Godot project and built the first playable mining loop." },
+			{ date: "September 2026", event: "Released Gunmetal Orbit commercially on Steam." },
+			{ date: "November 2026", event: "Uploaded the Seven Days Quest competition build and released Cut Loose on itch.io." }
+		],
+		sections: [
+			{
+				id: "gunmetal-orbit", label: "Commercial release", title: "Make mining part of the combat decision",
+				paragraphs: [
+					"Gunmetal Orbit started with a loop I could play on a Steam Deck: crack asteroids, carry ore, dodge enemies and decide when to bank the haul. I grew that loop into a commercial space roguelite with weapon builds, wave bosses, a station that fights alongside you and controller-first menus.",
+					"I owned gameplay direction, the Godot project, playtesting and Steam release work, with AI-assisted implementation. It took " + STATS.firstGameToSteamDays + " days from the first playable Godot build to the Steam release on September 10. Steam credits me as developer and LineCrush Games as publisher.",
+					"After launch I hit a controller navigation bug in the shop on my Steam Deck. I added a regression test that drives the same menu with controller input. The release checks also exercise the exported game through the core sequence of launching a run, mining, fighting, selling ore and starting the next round.",
+					"I maintained the Steam builds for Windows, Linux and Mac, plus achievements and cloud saves. The release process stages a build on beta, verifies the payload and records the Steam build ID before and after promotion."
+				],
+				media: [{ src: "/images/games/gunmetal-orbit/screenshot-v2-1.jpg", alt: "Gunmetal Orbit boss fight next to the mining station", caption: "Gunmetal Orbit · Released gameplay", shape: "landscape" }],
+				proof: [steam, { label: "Gameplay and screenshots", href: "/games" }]
+			},
+			{
+				id: "cut-loose", label: "Epic AI MegaJam", title: "Ship an Unreal prototype people can play",
+				paragraphs: [
+					"I entered Cut Loose solo and led its build with AI assistance. The design centers on one move: aim a cut through an object while time slows, then use the result to change your route. I worked on the Unreal C++ slicing, chase and movement systems and brought them together in a short Windows game.",
+					"I iterated over four calendar days from scaffold to final jam build. Packaged smoke checks exercised the executable, and I captured footage from the build for the submission."
+				],
+				proof: [cutLoose]
+			},
+			{
+				id: "seven-days", label: "Mixed reality", title: "Design a garden you can tend with your hands",
+				paragraphs: [
+					"I designed and led the Godot mixed-reality build for Seven Days. The experience pairs tracked-hand interactions with a guided creation garden, sound, and saved progression.",
+					"I exercised the interaction flow in the XR simulator, checked replay and export, and uploaded a signed build to the private Quest Competition channel."
 				]
 			}
+		]
+	},
+	independent: {
+		name: "Client work & public tools",
+		title: "Build for the workflow people already have.",
+		intro: "Outside the flagship products, I built customer sites, booking automation, developer tools and prototypes. The projects range from live business workflows to public experiments with a repo or demo you can inspect.",
+		description: "Austin Spraggins's client engineering, public code, applied AI prototypes and open-source projects from 2023 to 2026.",
+		role: "Full-stack engineer & contributor",
+		result: "Live client work, published tooling and prototypes",
+		period: "Late 2023 to November 2026",
+		published: "2026-11-18",
+		accent: "#b8d5ff",
+		cover: "/images/work/independent-sunburst.webp",
+		stack: ["Next.js", "AWS Lambda", "Cloudflare", "React", "Kotlin", "TypeScript", "Rust", "MCP"],
+		links: [twoCities, github, { label: "React Steam Deck on npm", href: "https://www.npmjs.com/package/react-steam-deck" }],
+		timeline: [
+			{ date: "2023 to 2024", event: "Built and maintained web work for Gelateria Del Centro in Fresno." },
+			{ date: "2025", event: "Built client sites and booking automation alongside tutor, team-management and MCP projects." },
+			{ date: "2026", event: "Shipped Two Cities Off Road, published a React package, contributed to tty7 and built hackathon demos." }
 		],
-		takeaway:
-			"The useful part of AI is how it serves the person using it. For SureWord, that means helping someone stay grounded in Scripture and continue a study that matters to them."
+		sections: [
+			{
+				id: "client-delivery", label: "Client engineering", title: "Work that had to fit a real business",
+				paragraphs: [
+					"I built a site for Two Cities Off Road with a fabrication gallery, parts catalog and inquiry flow. The live site gives customers a way to look through actual builds and contact the business. I also built an editing interface for catalog and gallery content.",
+					"For SaveALife CPR, I rebuilt the booking-to-registration workflow when a portal change broke the previous version. The AWS Lambda integration verifies bookings, finds the right course, updates registration and reports the result. I verified the production login and read-only course lookup, and checked that invalid bookings were rejected.",
+					"I worked on Gelateria Del Centro's Fresno web application and built the Constrong contractor site with Jay. Constrong paired a responsive project gallery with a contact flow and local search metadata."
+				],
+				proof: [
+					twoCities,
+					{ label: "Gelateria Del Centro source", href: "https://github.com/spragginsdesigns/Gelateria-Del-Centro-WebApp" },
+					{ label: "Constrong source", href: "https://github.com/spragginsdesigns/constrong" }
+				]
+			},
+			{
+				id: "developer-tools", label: "Developer tooling", title: "Publish small tools that someone else can use",
+				paragraphs: [
+					"I contributed a session-exit fix upstream to tty7 and worked on launch and gateway behavior in my fork. I built Perplexity and PostgreSQL MCP servers for tool-based workflows, and published a zero-dependency React component that frames a live app inside a Steam Deck illustration.",
+					"I built AI Docs Digest to combine documentation into one Markdown file for use with AI tools. I also built FileSteward AI, a native Android pre-release. It lets a model propose file changes, gives the user a review step, and sends ambiguous recovery cases back for a decision before it applies more changes."
+				],
+				proof: [
+					{ label: "tty7 upstream fix", href: "https://github.com/l0ng-ai/tty7/pull/877" },
+					{ label: "Perplexity MCP source", href: "https://github.com/spragginsdesigns/perplexity-mcp-server" },
+					{ label: "AI Docs Digest source", href: "https://github.com/spragginsdesigns/ai-docs-digest" },
+					{ label: "FileSteward pre-releases", href: "https://github.com/spragginsdesigns/filesteward-ai-releases" }
+				]
+			},
+			{
+				id: "experiments", label: "Evaluation & prototypes", title: "Make the result inspectable",
+				paragraphs: [
+					"I built Ghostcount as a retrospective ledger-backing replay with a Rust attestation component and a public dashboard. The committed replay shows a gap almost 40 hours before the identification timestamp in the incident record. That timing comes from a historical replay.",
+					"For Jury Swarm, I built a testnet demo that compares AI reviewers and records how they rank hackathon entries. The public demo includes a replay of recorded outputs. I also directed an agent-assisted PayPal sandbox prototype for team treasurers, with recorded receipts and a read-only assistant.",
+					"My other builds include FormUp for youth-team rosters and coach workflows, an AI tutor that guides students through a problem, and Clearline, a public-health dashboard demo built with generated sample data."
+				],
+				proof: [
+					{ label: "Ghostcount replay", href: "https://spragginsdesigns.github.io/ghostcount/" },
+					{ label: "Jury Swarm demo", href: "https://spragginsdesigns.github.io/jury-swarm/" },
+					{ label: "Sideline source", href: "https://github.com/spragginsdesigns/sideline" },
+					{ label: "FormUp source", href: "https://github.com/spragginsdesigns/soccer-team-management" },
+					{ label: "AI Tutor source", href: "https://github.com/spragginsdesigns/ai-tutor-webapp" },
+					{ label: "Clearline source", href: "https://github.com/spragginsdesigns/clearline" }
+				]
+			},
+			{
+				id: "earlier-builds", label: "Earlier builds", title: "Small projects from 2024",
+				paragraphs: [
+					"I built the Woodward Bluffs community site for residents and the activities committee. I also published TreeMapMD, a Rust desktop tool that exports directory trees as Markdown, and a Windows log viewer that searches large text files with PowerShell.",
+					"I experimented with AI as a practical interface in a few smaller apps: SmartShell for Windows command suggestions, Prompt Perfector for prompt editing, and AI Favicon Creator for generating site icons."
+				],
+				proof: [
+					{ label: "Woodward Bluffs source", href: "https://github.com/spragginsdesigns/bluffstuff" },
+					{ label: "TreeMapMD source", href: "https://github.com/spragginsdesigns/treemap_md" },
+					{ label: "Windows Log Search source", href: "https://github.com/spragginsdesigns/Log-Search-Tool-Windows" },
+					{ label: "SmartShell source", href: "https://github.com/spragginsdesigns/SmartShell" },
+					{ label: "Prompt Perfector source", href: "https://github.com/spragginsdesigns/AI-Prompt-Perfector" },
+					{ label: "AI Favicon Creator source", href: "https://github.com/spragginsdesigns/AI-Favicon-Creator" }
+				]
+			}
+		]
 	}
-} as const satisfies Record<CaseStudySlug, CaseStudy>;
+};
 
 export function isCaseStudySlug(slug: string): slug is CaseStudySlug {
 	return caseStudySlugs.some((value) => value === slug);

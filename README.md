@@ -43,7 +43,7 @@ Currently open to contracts and consulting opportunities.
 ## Features
 
 - **Selected work:** LineCrush, SureWord, C2, Gunmetal Orbit, paid client work, and open-source contributions.
-- **Engineering case studies:** [LineCrush](https://www.spragginsdesigns.xyz/work/linecrush) and [SureWord](https://www.spragginsdesigns.xyz/work/sureword).
+- **Engineering case studies:** [LineCrush](https://www.spragginsdesigns.xyz/work/linecrush), [SureWord](https://www.spragginsdesigns.xyz/work/sureword), [game development](https://www.spragginsdesigns.xyz/work/game-development), and [client work and public tools](https://www.spragginsdesigns.xyz/work/independent).
 - **Journey:** Career milestones from trucking through teaching and co-founding LineCrush, with a sourced work log.
 - **Faith:** Austin's testimony and why he built SureWord, on its own [page](https://www.spragginsdesigns.xyz/faith).
 - **Résumé:** A mobile-friendly [résumé page](https://www.spragginsdesigns.xyz/resume) with a PDF download.
