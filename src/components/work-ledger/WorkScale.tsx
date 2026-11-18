@@ -27,8 +27,8 @@ const WorkScale: React.FC = () => (
 				C2 and the LineCrush agent fleet
 			</h3>
 			<p className="mt-1 text-sm text-muted-foreground">
-				I built C2 to run the LineCrush agent fleet. The fleet investigates issues, builds and verifies fixes,
-				and ships changes to production.
+				I built the LineCrush agent fleet and C2, the system I use to run it. The fleet investigates issues,
+				builds and verifies changes, and ships them to production.
 			</p>
 		</div>
 		<dl className="grid grid-cols-1 gap-5 sm:grid-cols-3">
