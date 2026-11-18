@@ -27,7 +27,7 @@ export default function Hero() {
 						<p className={styles.heroHeadline}>I build products.<br /><span>From the interface<br className={styles.desktopBreak} /> to the infrastructure.</span></p>
 						<p className={styles.intro}>
 							Co-Founder &amp; CTO at LineCrush. I started the codebase, built the business with Jay,
-							and built the iOS and Android apps for both LineCrush and SureWord myself.
+							and took native iOS and Android apps to both stores for LineCrush and SureWord.
 						</p>
 						<div className={styles.actions}>
 							<a href="#projects" className={styles.primaryAction}>

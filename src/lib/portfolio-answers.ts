@@ -17,7 +17,7 @@ const workSource = { label: "Selected work", href: "/#projects" };
 
 export const overviewEvidence: PortfolioEvidence = {
 	id: "overview",
-	answer: "Austin Spraggins is a Fresno-based product engineer and the co-founder and CTO of LineCrush. He started its codebase in 2024 and built the sports research product with Jay. He personally built the iOS and Android apps for both LineCrush and SureWord. He also designed the C2 engineering delivery system and released Gunmetal Orbit on Steam. Before founding products, he drove trucks, returned to college, and taught web development.",
+	answer: "Austin Spraggins is a Fresno-based product engineer and the co-founder and CTO of LineCrush. He started its codebase in 2024 and built the sports research product with Jay. He started LineCrush's native iOS and Android apps and took them through store review, and he built SureWord's apps himself. He also designed the C2 engineering delivery system and released Gunmetal Orbit on Steam. Before founding products, he drove trucks, returned to college, and taught web development.",
 	sources: [resumeSource, workSource, aboutSource]
 };
 
@@ -34,13 +34,13 @@ const entries: readonly Entry[] = [
 	{
 		id: "personal-ownership", topic: "ownership",
 		patterns: [/\b(personally|himself|hands[ -]on|own hands|actually (build|built|code|coded))\b/, /\bwhat (did|does|has) (austin|he) (build|built|make|made|ship|shipped|own|create|created)\b/, /\b(ownership|individual contribution|his contribution)\b/, /\b(?:only|just) (?:use |using )?(?:ai|agents?)\b/, /\b(?:ai|agents?).{0,30}\b(?:write|wrote|code|coded|coding)\b/],
-		answer: "Austin started LineCrush's codebase and built the business with Jay. He personally built both LineCrush mobile apps, using SwiftUI for iOS and Kotlin with Jetpack Compose for Android. He also built SureWord's web, iOS and Android apps himself. At LineCrush, examples of his mobile work include the first iOS research cards, the Kotlin API client, Android authentication and the swipeable research deck. He designed C2 and the engineering fleet, which contributes to ongoing implementation and releases.",
+		answer: "Austin started LineCrush's codebase and built the business with Jay. He started both LineCrush mobile apps from scratch, in SwiftUI for iOS and Kotlin with Jetpack Compose for Android, and wrote their first month himself. Since then most of their feature code has come from the engineering fleet he designed and directs, and he owns their releases and store review. He also built SureWord's web, iOS and Android apps himself. At LineCrush, examples of his mobile work include the first iOS research cards, the Kotlin API client, Android authentication and the swipeable research deck. He designed C2 and the engineering fleet, which contributes to ongoing implementation and releases.",
 		sources: [linecrushSource, surewordSource, c2Source]
 	},
 	{
 		id: "native-apps", topic: "native",
 		patterns: [/\b(native|swiftui|swift|kotlin|jetpack|android|ios|iphone|ipad|mobile|app stores?)\b/],
-		answer: "Austin personally built the iOS and Android apps for LineCrush and SureWord. He built LineCrush's iOS app in SwiftUI and its Android app in Kotlin with Jetpack Compose. His early work included the iOS research cards and search, and the Android API client, authentication and research deck. For SureWord, he built the Android app with Expo and React Native and the iPhone, iPad and Mac apps with SwiftUI. Both products reached the App Store and Google Play.",
+		answer: "Austin started LineCrush's iOS app in SwiftUI and its Android app in Kotlin with Jetpack Compose, and wrote the first month of both himself. He then kept building them with the engineering fleet he designed, which now writes most of their feature code, while he owns releases and store review. His early work included the iOS research cards and search, and the Android API client, authentication and research deck. For SureWord, he built the Android app with Expo and React Native and the iPhone, iPad and Mac apps with SwiftUI. Both products reached the App Store and Google Play.",
 		sources: [{ label: "Native app ownership", href: "/work/linecrush#native-apps" }, surewordSource, resumeSource]
 	},
 	{

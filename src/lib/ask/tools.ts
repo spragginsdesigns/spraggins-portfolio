@@ -723,7 +723,7 @@ export const PORTFOLIO_TOOLS: readonly PortfolioTool[] = [
 		execute: async () => ({
 			data: {
 				lineCrushMonorepo: {
-					measuredOn: "2026-08-08",
+					measuredOn: STATS.repoMeasuredDate,
 					commits: STATS.monorepoCommitsExact,
 					commitsIn2026: STATS.monorepoCommits2026,
 					apiHandlers: STATS.apiHandlers,

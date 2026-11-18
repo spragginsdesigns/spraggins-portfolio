@@ -548,7 +548,7 @@ export default async function BlogPostPage({ params }: Props) {
 										Have a project in mind?
 									</h3>
 									<p className="text-sm text-muted-foreground">
-										I&apos;m open to contracts &amp; consulting - AI systems,
+										I&apos;m open to full-time roles, contracts &amp; consulting - AI systems,
 										full-stack products, and agentic engineering.
 									</p>
 								</div>

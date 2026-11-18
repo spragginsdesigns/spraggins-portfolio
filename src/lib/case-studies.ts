@@ -52,7 +52,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 	linecrush: {
 		name: "LineCrush",
 		title: "The AI fleet, C2, and two native apps.",
-		intro: "I built LineCrush's self-sustaining, self-improving AI engineering fleet and C2, our replacement for Linear. I also built both native apps from scratch and shipped them to the App Store and Google Play.",
+		intro: "I built LineCrush's self-sustaining, self-improving AI engineering fleet and C2, our replacement for Linear. I also started both native apps from scratch and shipped them to the App Store and Google Play.",
 		description: "How Austin Spraggins built LineCrush's self-sustaining, self-improving AI fleet, replaced Linear with C2, and shipped native iOS and Android apps.",
 		role: "Co-founder & CTO",
 		result: "Operating subscription business · Web, iOS and Android",
@@ -66,7 +66,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 			{ date: "May 2024", event: "Started the athlete research codebase and built the first search, profiles and summaries." },
 			{ date: "Fall 2024", event: "Launched the research product after building account access, subscriptions and scheduled reports." },
 			{ date: "2025", event: "Built out reports, live research and integrations with Jay. We adopted the LineCrush name in October." },
-			{ date: "June 2026", event: "Built the SwiftUI and Kotlin apps and started the engineering agent fleet." },
+			{ date: "June 2026", event: "Started the SwiftUI and Kotlin apps and the engineering agent fleet." },
 			{ date: "Fall 2026", event: "Shipped both apps, published a ChatGPT integration and moved engineering work into C2." }
 		],
 		sections: [
@@ -90,12 +90,12 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				proof: [{ ...lineCrushApple, label: "iOS 2.9.0 release notes" }, { label: "Published fleet walkthrough", href: "/blog/2026-08-08-no-humans-in-the-merge-loop" }]
 			},
 			{
-				id: "native-apps", label: "iOS & Android", title: "I built and shipped both native apps",
+				id: "native-apps", label: "iOS & Android", title: "I started and shipped both native apps",
 				paragraphs: [
-					"Jay and I decided to move from a Capacitor wrapper to platform-native apps so we could build the research experience around how people use each phone. I started both apps from scratch in June 2026. In SwiftUI, I built the swipeable research cards, stats and insights on their reverse faces, and a chart fed by line history. In Kotlin and Jetpack Compose, I built the typed API client, native sign-in and guest entry, and the swipe deck with rewind and cart.",
+					"Jay and I decided to move from a Capacitor wrapper to platform-native apps so we could build the research experience around how people use each phone. I started both apps from scratch in June 2026 and wrote their first month myself. In SwiftUI, I built the swipeable research cards, stats and insights on their reverse faces, and a chart fed by line history. In Kotlin and Jetpack Compose, I built the typed API client, native sign-in and guest entry, and the swipe deck with rewind and cart.",
 					"Both apps use the existing LineCrush backend. I also worked on StoreKit purchases, Android push delivery and the release paths that keep the apps moving.",
 					"App Review hit a case the demo account had missed. A fresh user with no history got an error. I traced the review requests, reproduced the failure with an empty account on an iPad simulator, and fixed the empty state. It made the new-account journey part of what a release had to prove.",
-					"I shipped Android to Google Play in August 2026 and iOS to the App Store in September. I built release automation for signed test builds, store cuts and staged rollout. Jay and I continue to operate the product alongside the fleet, which carries substantial implementation and release work."
+					"I shipped Android to Google Play in August 2026 and iOS to the App Store in September. I built release automation for signed test builds, store cuts and staged rollout. Since that first month, the fleet I designed has written most of the apps' feature code under checks I set, and Jay and I continue to operate the product alongside it."
 				],
 				media: [
 					{ src: "/images/work/linecrush-research.webp", alt: "LineCrush iPhone research card with player data and a chart", caption: "Player research · App Store screenshot", shape: "portrait" },

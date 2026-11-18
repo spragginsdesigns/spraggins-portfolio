@@ -23,7 +23,7 @@ Personal portfolio website for **Austin Spraggins** - Co-Founder, CTO & Senior S
   - Data: Web scrapers, real-time pipelines, NLP, cron jobs
 - **Education:** AA in Web Development (5+ years in college, consistently high grades)
 - **Teaching:** Former Web Development instructor at Bitwise Industries and Geekwise Academy
-- **Status:** Open to contracts & consulting
+- **Status:** Open to full-time roles, contracts & consulting
 
 ### Personal
 
@@ -177,8 +177,9 @@ GITHUB_TOKEN=           # Optional, raises the GitHub rate limit for the agent's
 When updating portfolio content:
 - **LineCrush** is the flagship project - emphasize scale and the autonomous agent fleet
 - Highlight CTO leadership and architectural decision-making
-- Emphasize "Open to Contracts & Consulting" (not job seeking)
-- **Stats single source of truth: `src/lib/stats.ts`** (fleet ledger on 2026-11-17: 14,111 completed fleet jobs, 91% of admitted, ~124 admissions a day over the trailing 30 days, 10,745 completed jobs with a recorded commit link; other historical repository counts as of 2026-08-08). Canonical set: 30,128 monorepo commits (30,000+ in prose; 12,873 in 2026), 366 API handlers, 64 agent skills, ~1,000 TSX modules, 4 product clients, 120+ database tables, 5 LLM providers, 12 sports, 2+ years production. Fleet ledger since June 23, 2026: 4,426 Linear issues worked, 95% completed, ~90/day, 2,730 jobs shipped commits. Update stats.ts first; llms.txt, README.md, CLAUDE.md, and AGENTS.md must be kept in sync manually.
+- Status is "Open to full-time roles, contracts & consulting" (Austin, 2026-11-18: the job search no longer needs hiding; Jay supports it). Pay, equity, employers applied to and reasons for leaving stay private.
+- **LineCrush native apps wording:** Austin started both apps from scratch and wrote their first month himself; since then the fleet he designed has written most of their feature code, and he owns releases and store review. Never "personally built" or "built myself" for the LineCrush apps. SureWord's apps are his own build.
+- **Stats single source of truth: `src/lib/stats.ts`** (fleet ledger on 2026-11-17: 14,111 completed fleet jobs, 91% of admitted, ~124 admissions a day over the trailing 30 days, 10,745 completed jobs with a recorded commit link; repository counts measured 2026-11-18 on the monorepo's main branch). Canonical set: 43,649 monorepo commits (43,000+ in prose; 26,369 in 2026), 725 API handlers, 70 agent skills, ~2,300 TSX modules, 4 product clients, 450+ database tables (tables created by migrations, a floor), 5 LLM providers, 14+ sports, 2+ years production. These are platform numbers that include Jay's and the fleet's work, never Austin's personal output. Older published figures (August 8, 2026 blog post): Fleet ledger since June 23, 2026: 4,426 Linear issues worked, 95% completed, ~90/day, 2,730 jobs shipped commits. Update stats.ts first; llms.txt, README.md, CLAUDE.md, and AGENTS.md must be kept in sync manually.
 - **Gunmetal Orbit** is the flagship game: space-mining arena roguelite, Steam release September 10, 2026 at $4.99, store URL https://store.steampowered.com/app/4975430, studio site games.linecrush.com
 - **SureWord** is the personal flagship (spotlight card alongside LineCrush and Gunmetal Orbit): sureword.app, Android on Google Play (com.spragginsdesigns.sureword), Apple apps on the App Store (id6820260211); the GitHub repo is private, so never link it (spragginsdesigns/bible-ai-explorer)
 - **Spraggins Designs local-business offer** ($299 build + $19/mo hosting, live in a day, call or text 559-818-0467): single source of truth is `src/lib/local-websites.ts`, rendered on the homepage section and `/local-websites`. The matching Google Business Profile is documented in `docs/google-business-profile.md`. Read that file before touching the profile: posting is currently disabled after a policy strike, and the rules there (no phone numbers or prices in posts, no category churn, one edit at a time) are not optional.

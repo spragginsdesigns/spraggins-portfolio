@@ -1,13 +1,13 @@
 # Austin Spraggins | Senior Product Engineer & LineCrush CTO
 
-> Austin builds full-stack products, native mobile apps, and applied AI systems. He started LineCrush and built it with his co-founder Jay. He personally built the iOS and Android apps for both LineCrush and SureWord, and designed the engineering fleet LineCrush uses to ship. He is Co-Founder and CTO at LineCrush Inc in Fresno, California.
+> Austin builds full-stack products, native mobile apps, and applied AI systems. He started LineCrush and built it with his co-founder Jay. He started LineCrush's native iOS and Android apps and took them through store review, built SureWord's apps himself, and designed the engineering fleet LineCrush uses to ship. He is Co-Founder and CTO at LineCrush Inc in Fresno, California.
 
 ## Contact
 
 - Email: spragginsdesigns@gmail.com
 - Phone: 559-818-0467 (call or text)
 - Location: Fresno, California, USA
-- Status: Open to contracts and consulting
+- Status: Open to full-time roles, contracts and consulting
 - Spraggins Designs: websites for Fresno local businesses, $299 to build plus $19 a month hosting, live in a day. Details at https://www.spragginsdesigns.xyz/local-websites
 
 ## Faith
@@ -43,12 +43,12 @@ Austin architects a production sports research and analytics platform spanning:
 - A Next.js web application, native SwiftUI iOS app, native Kotlin/Compose Android app, and browser extensions
 - PostgreSQL, Redis, WebSockets, Python services, AWS, Vercel, and Ubuntu infrastructure
 
-Verified repository-scale indicators as of 2026-08-08 (source of truth: src/lib/stats.ts):
+Verified repository-scale indicators as of 2026-11-18 (source of truth: src/lib/stats.ts). These describe the platform, including work by Jay and the engineering fleet:
 
-- 30,128 commits across the production monorepo (12,873 in 2026)
-- ~1,000 tracked TSX modules
-- 366 tracked Next.js API handlers
-- 64 tracked agent-skill definitions
+- 43,649 commits across the production monorepo (26,369 in 2026)
+- ~2,300 tracked TSX modules
+- 725 tracked Next.js API handlers
+- 70 tracked agent-skill definitions
 - Agent fleet ledger since June 23, 2026: 14,111 completed fleet jobs (91% of those admitted), 10,745 completed jobs with a recorded commit link (measured 2026-11-17)
 
 ### Autonomous Engineering Agents

@@ -12,15 +12,15 @@ Personal portfolio website showcasing my work as **Co-Founder, CTO & Senior Soft
 
 I build AI agents that ship production software - and the platforms they run. At LineCrush, that includes:
 
-- **30,000+ monorepo commits** across product, data, native, agent, and game work (source of truth: `src/lib/stats.ts`)
+- **43,000+ monorepo commits** across product, data, native, agent, and game work (source of truth: `src/lib/stats.ts`)
 - **Autonomous agent fleet:** 14,111 completed fleet jobs since June 23, 2026, including 10,745 completed jobs with a recorded commit link (ledger snapshot November 17, 2026)
-- **~1,000 tracked TSX modules** and **366 API handlers**
-- **64 tracked agent skills** powering autonomous investigation, implementation, proof, review, and release
+- **~2,300 tracked TSX modules** and **725 API handlers**
+- **70 tracked agent skills** powering autonomous investigation, implementation, proof, review, and release
 - **Multi-model product intelligence** across OpenAI, Gemini, Claude, Perplexity, and vision/OCR workflows
 - **Four client surfaces:** web, native iOS, native Android, and browser extensions
 - **LineCrush Games:** Gunmetal Orbit, a space-mining arena roguelite [available on Steam September 10, 2026](https://store.steampowered.com/app/4975430)
 
-Currently open to contracts and consulting opportunities.
+Currently open to full-time roles, contracts and consulting.
 
 ## Tech Stack
 
