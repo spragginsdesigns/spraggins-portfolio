@@ -36,9 +36,9 @@ Austin is a born-again Christian, saved by grace through faith in Jesus Christ. 
 
 Austin architects a production sports research and analytics platform spanning:
 
-- AI-generated picks and product explanations
+- AI-written research reports and product explanations
 - Real-time signal search across sports interviews, podcasts, news, and social context
-- Vision/OCR-powered betslip analysis and shareable reports
+- Vision/OCR analysis of uploaded screenshots and shareable reports
 - Automated grading, reporting, notifications, and data-production pipelines
 - A Next.js web application, native SwiftUI iOS app, native Kotlin/Compose Android app, and browser extensions
 - PostgreSQL, Redis, WebSockets, Python services, AWS, Vercel, and Ubuntu infrastructure
@@ -101,7 +101,7 @@ Austin moved from truck driving into software, became a web-development instruct
 - [Neon Postgres MCP Server](https://github.com/spragginsdesigns/neon-pg-mcp-server): Open-source Model Context Protocol server
 - [AI Tutor WebApp](https://github.com/spragginsdesigns/ai-tutor-webapp): Socratic learning assistant
 - [Perplexity MCP Server](https://github.com/spragginsdesigns/perplexity-mcp-server): Model Context Protocol integration
-- [SaveALife CPR](https://github.com/spragginsdesigns/savealife-cpr): Business workflow automation
+- SaveALife CPR: paid course-registration automation for a client (private source)
 
 ## Hiring Fit
 

@@ -128,9 +128,15 @@ const entries: readonly Entry[] = [
 		sources: [{ label: "tty7 pull requests and statuses", href: "/work/independent#tty7" }, { label: "react-steam-deck on npm", href: "https://www.npmjs.com/package/react-steam-deck" }, workSource]
 	},
 	{
+		id: "why-looking", topic: "contact",
+		patterns: [/\b(why (?:is|did|would|does) (?:he|austin) .{0,40}(?:leav\w*|look\w*|step\w*|mov\w*|quit\w*)|leav\w* line\s?crush|stepp\w* (?:back|away|down)|job (?:search|hunt)|look\w* for (?:a|his next|another|new) (?:job|role|position)|still (?:at|with) line\s?crush|next (?:job|role))\b/, /\b(leav\w*|stepp\w*|quit\w*|looking|job search|co-?founder still|what happened)\b/, /\bwhy\b.{0,50}\b(leav\w*|looking|stepp\w*|quit\w*)|\b(leav\w*|quit\w*) .{0,20}line\s?crush\b/, /\b(leav\w*|stepp\w* (?:back|away|down)|quit\w*)\b/],
+		answer: "Austin is looking for his next full-time, hands-on engineering job. LineCrush is stable, with live products and paying customers, and the platform and agent fleet he built now run day to day without needing him full time. He and co-founder Jay worked well together throughout and Austin remains a co-founder. What he loves is building and learning new things, and he wants to do that full time on a team again. He wrote about the decision in his November 19, 2026 post.",
+		sources: [{ label: "LineCrush Doesn't Need Me Full Time Anymore", href: "/blog/2026-11-19-linecrush-doesnt-need-me-full-time-anymore" }, resumeSource, { label: "Contact Austin", href: "/#contact" }]
+	},
+	{
 		id: "contact", topic: "contact",
 		patterns: [/\b(contact|reach|email|e-mail|hire|hiring|available|availability|schedule|interview|remote|location|based|timezone|time zone|fresno)\b/],
-		answer: "Austin is based in Fresno, California, in Pacific Time. His public résumé and portfolio contact form are the best starting points for discussing a role, a contract or a project. The résumé page also lists spragginsdesigns@gmail.com. A conversation with Austin is needed to establish current availability, scope and timing. For an engineering evaluation, the LineCrush and SureWord case studies provide specific product responsibilities and released work to discuss.",
+		answer: "Austin is looking for his next full-time, hands-on engineering job, remote in the US or in the Fresno area, and is also open to contracts and consulting. He is based in Fresno, California, in Pacific Time. His public résumé and portfolio contact form are the best starting points for discussing a role, a contract or a project. The résumé page also lists spragginsdesigns@gmail.com. Start date, scope and terms are for a conversation with Austin. For an engineering evaluation, the LineCrush and SureWord case studies provide specific product responsibilities and released work to discuss.",
 		sources: [{ label: "Contact Austin", href: "/#contact" }, resumeSource, linecrushSource]
 	},
 	{
