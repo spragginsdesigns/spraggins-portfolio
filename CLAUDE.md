@@ -12,18 +12,18 @@ Personal portfolio website for **Austin Spraggins** - Co-Founder, CTO & Senior S
 
 ### Professional
 
-- **Current Role:** Co-Founder, CTO & Senior Software Engineer at LineCrush Inc
-- **Company:** [LineCrush](https://www.linecrush.com) - Sports analytics platform
-- **Experience:** End-to-end ownership across the entire stack:
-  - Frontend: Next.js 15, React (353+ components), TypeScript, Tailwind CSS
-  - Backend: Python (45+ microservices), Node.js
-  - Database: PostgreSQL/Neon (100+ tables), Redis caching
-  - AI/ML: OpenAI, Anthropic, Perplexity, Google Vision (4+ LLM integrations)
-  - Infrastructure: AWS (S3, SES, CloudFront), Ubuntu VPS, Vercel, Docker
-  - Data: Web scrapers, real-time pipelines, NLP, cron jobs
-- **Education:** AA in Web Development (5+ years in college, consistently high grades)
-- **Teaching:** Former Web Development instructor at Bitwise Industries and Geekwise Academy
-- **Status:** Open to full-time roles, contracts & consulting
+- **Current Role:** Co-Founder & CTO at LineCrush Inc. Jay Raynor is his co-founder; never write "sole technical founder"
+- **Company:** [LineCrush](https://www.linecrush.com) - Sports research platform
+- **Experience:** The current record is the public resume at `public/resume/Austin_Spraggins_Resume_2026.pdf`. In short:
+  - Web: Next.js 15, React, TypeScript, Tailwind CSS
+  - Backend: Python data services running about 700 scheduled jobs, Node.js
+  - Database: Neon Postgres (477 tables), Redis
+  - Native: SwiftUI iOS app and Kotlin/Compose Android app, both in the stores
+  - AI: the Claude Code and Codex agent fleet and C2, the tracker that replaced Linear
+  - Own products: SureWord (web, Google Play, App Store) and Gunmetal Orbit (Steam)
+- **Education:** A.S., Information Systems: Web Design, Clovis Community College (2021). He has no bachelor's degree; never state or imply one
+- **Teaching:** Former Web Development Instructor at Bitwise Industries / Geekwise Academy (January 2022 - July 2023)
+- **Status:** Looking for his next full-time, hands-on engineering job (see the 2026-11-19 blog post)
 
 ### Personal
 
