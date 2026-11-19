@@ -111,9 +111,9 @@ export default function SelectedWork() {
 						<p className={styles.projectRole}><BrandIcon href="/games" /> Commercial game · Steam</p>
 						<h3>{GUNMETAL_ORBIT.name}</h3>
 						<p className={styles.projectText}>
-							I built a space-mining roguelite for Steam Deck and PC. It took {STATS.firstGameToSteamDays} days to get
-							from the first playable build to Steam. After launch, I caught a shop navigation bug on my own Steam Deck
-							and wrote a regression test that drives the same UI with controller input.
+							I designed and developed Gunmetal Orbit in Godot for Steam Deck first and took it from the first
+							playable build to a paid Steam release in {STATS.firstGameToSteamDays} days. I built the release
+							pipeline and kept testing on Deck, where I fixed a shop navigation bug and added a controller regression test.
 						</p>
 						<div className={styles.actions}>
 						<Link href="/work/game-development" className={styles.textAction}>Read the game development case study <ArrowRight size={17} aria-hidden="true" /></Link>

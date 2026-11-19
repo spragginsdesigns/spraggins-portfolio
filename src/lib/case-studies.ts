@@ -229,8 +229,8 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 	"game-development": {
 		name: "Game development",
 		title: "From first playable to Steam.",
-		intro: "I led the design, engineering and release of Gunmetal Orbit at LineCrush Games. I used that same build, playtest and release loop to take an Unreal jam game and a Godot mixed-reality experience to packaged builds.",
-		description: "Austin Spraggins's game development work across Gunmetal Orbit, Cut Loose and the Seven Days mixed reality competition build.",
+		intro: `I designed and developed Gunmetal Orbit in Godot for Steam Deck first. I took it from the first playable build to a paid Steam release in ${STATS.firstGameToSteamDays} days, then added macOS support and kept shipping updates. I used the same build and playtest loop for Cut Loose and Seven Days.`,
+		description: `How Austin Spraggins designed and developed Gunmetal Orbit, took it from first playable to a paid Steam launch in ${STATS.firstGameToSteamDays} days, and built its testing and release pipeline.`,
 		role: "Game developer & release owner",
 		result: "Steam release, Windows jam build and Quest competition build",
 		period: "July to November 2026",
@@ -241,7 +241,8 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 		links: [{ ...steam, badgeProduct: "Gunmetal Orbit" }, { ...cutLoose, badgeProduct: "Cut Loose" }, { label: "LineCrush Games", href: "/games" }],
 		timeline: [
 			{ date: "July 2026", event: "Started the Godot project, built the first playable mining loop and launched the studio site." },
-			{ date: "September 2026", event: "Released Gunmetal Orbit commercially on Steam." },
+			{ date: GUNMETAL_ORBIT.releaseDateDisplay, event: "Launched Gunmetal Orbit on Steam for Windows and Linux, including Steam Deck." },
+			{ date: "October 2026", event: "Released a signed and notarized macOS build on Steam." },
 			{ date: "November 2026", event: "Uploaded the Seven Days Quest competition build and released Cut Loose on itch.io." }
 		],
 		sections: [
@@ -249,12 +250,13 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				id: "gunmetal-orbit", label: "Commercial release", title: "Make mining part of the combat decision",
 				paragraphs: [
 					"Gunmetal Orbit started with a loop I could play on a Steam Deck: crack asteroids, carry ore, dodge enemies and decide when to bank the haul. I grew that loop into a commercial space roguelite with weapon builds, wave bosses, a station that fights alongside you and controller-first menus.",
-					"I owned gameplay direction, the Godot project, playtesting and Steam release work, with AI-assisted implementation. It took " + STATS.firstGameToSteamDays + " days from the first playable Godot build to the Steam release on September 10. Steam credits me as developer and LineCrush Games as publisher.",
-					"After launch I hit a controller navigation bug in the shop on my Steam Deck. I added a regression test that drives the same menu with controller input. The release checks also exercise the exported game through the core sequence of launching a run, mining, fighting, selling ore and starting the next round.",
-					"I maintained the Steam builds for Windows, Linux and Mac, plus achievements and cloud saves. The release process stages a build on beta, verifies the payload and records the Steam build ID before and after promotion."
+					"I owned gameplay direction, the Godot project, playtesting and the Steam release, using AI tools during development. I took the game through Valve's store and build reviews and launched it on September 10, 2026. Steam credits me as developer and LineCrush Games as publisher.",
+					"After launch I found a shop bug on my Steam Deck that made two slots unreachable with a controller. I fixed the focus navigation and added a regression test that drives the shop with controller input. I built release checks that run the exported game through mining, combat, banking ore and starting the next round.",
+					`I set up Steam Cloud and ${GUNMETAL_ORBIT.steamAchievements} achievements, and built a release pipeline that stages and checks builds before they go live. The changelog records over 100 post-launch Steam-channel version entries.`,
+					`Steamworks recorded paid Steam sales and ${GUNMETAL_ORBIT.lifetimeWishlistAdds} lifetime wishlist additions as of ${GUNMETAL_ORBIT.wishlistSnapshotDisplay}, up from 75 wishlist additions on September 17.`
 				],
 				media: [{ src: "/images/games/gunmetal-orbit/screenshot-v2-1.jpg", alt: "Gunmetal Orbit boss fight next to the mining station", caption: "Gunmetal Orbit · Released gameplay", shape: "landscape" }],
-				proof: [steam, { label: "Gameplay and screenshots", href: "/games" }]
+				proof: [steam, { label: "Public changelog", href: "https://games.linecrush.com/gunmetal-orbit/changelog" }, { label: "Gameplay and screenshots", href: "/games" }]
 			},
 			{
 				id: "studio", label: "Studio launch", title: "Give the game a home outside the storefront",

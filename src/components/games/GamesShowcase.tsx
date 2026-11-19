@@ -38,12 +38,12 @@ const SteamButton: React.FC<{ className?: string }> = ({ className = "" }) => (
 const gameNumbers = [
 	{ value: GUNMETAL_ORBIT.weapons, label: "Weapons in the arsenal" },
 	{ value: GUNMETAL_ORBIT.weaponSlots, label: "Auto-firing slots" },
-	{ value: GUNMETAL_ORBIT.waves, label: "Campaign waves" }
+	{ value: GUNMETAL_ORBIT.steamAchievements, label: "Steam achievements" }
 ];
 
 const staticNumbers = [
-	{ value: GUNMETAL_ORBIT.hazardLevels, label: "Hazard levels" },
-	{ value: String(GUNMETAL_ORBIT.characters.length), label: "Playable pilots" }
+	{ value: GUNMETAL_ORBIT.campaignWaveRange, label: "Campaign waves by difficulty" },
+	{ value: String(GUNMETAL_ORBIT.playablePilots), label: "Playable pilots" }
 ];
 
 const rosterTitles = [
@@ -183,10 +183,8 @@ const GamesShowcase: React.FC = () => {
 										Pilot an exosuit with {GUNMETAL_ORBIT.weaponSlots} auto-firing
 										weapon mounts drawn from a {GUNMETAL_ORBIT.weapons}-weapon
 										arsenal. Mine ore between enemy waves, bank it at the dock,
-										snowball your build, and push higher hazards through
-										procedurally shifting sectors - with outpost base-building
-										between runs and two pilots,{" "}
-										{GUNMETAL_ORBIT.characters.join(" and ")}, to master.
+										and use it to improve your station and loadout. Choose from{" "}
+										{GUNMETAL_ORBIT.playablePilots} pilots and take on a boss every five waves.
 									</p>
 									<blockquote className="mb-6 border-l-2 border-primary/50 pl-4 text-lg font-medium italic text-foreground/90">
 										&ldquo;{GUNMETAL_ORBIT.tagline}&rdquo;
@@ -276,10 +274,9 @@ const GamesShowcase: React.FC = () => {
 							Built on Deck. <span className="text-primary">Literally.</span>
 						</h2>
 						<p className="mx-auto max-w-2xl text-muted-foreground md:text-lg">
-							Steam Deck is the lead platform, not a port target.{" "}
-							{GUNMETAL_ORBIT.name} runs natively at{" "}
-							{GUNMETAL_ORBIT.deckResolution} in {GUNMETAL_ORBIT.engine},
-							gamepad-first, then scales up to desktop PCs.
+							{GUNMETAL_ORBIT.name} was built in {GUNMETAL_ORBIT.engine} for the Steam Deck&apos;s{" "}
+							{GUNMETAL_ORBIT.deckResolution} screen, with controller-first controls and native builds for
+							Linux, Windows, and Apple silicon Macs.
 						</p>
 					</motion.div>
 

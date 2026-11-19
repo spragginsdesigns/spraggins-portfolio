@@ -66,10 +66,12 @@ export const GUNMETAL_ORBIT = {
 	engine: "Godot 4.7",
 	weapons: 28,
 	weaponSlots: 6,
-	waves: 22,
-	hazardLevels: "0–5",
-	characters: ["Gunner", "Bulkhead"],
-	deckResolution: "1280×800 @ 60fps"
+	campaignWaveRange: "10 to 30",
+	playablePilots: 12,
+	steamAchievements: 34,
+	deckResolution: "1280×800",
+	lifetimeWishlistAdds: 152,
+	wishlistSnapshotDisplay: "November 19, 2026"
 } as const;
 
 export const STUDIO = {

@@ -72,7 +72,7 @@ Austin runs an AI-native game studio (games.linecrush.com - "Small crew. Massive
 
 - **Gunmetal Orbit** is the flagship: a space-mining arena roguelite where you pilot exosuits with 6 auto-firing weapon slots from a 28-weapon arsenal, mine ore between enemy waves, bank it at the dock, and snowball your build
 - Gunmetal Orbit released on Steam September 10, 2026 at $4.99 - buy at https://store.steampowered.com/app/4975430
-- Built in Godot 4.7 with Steam Deck as the lead platform ("Built on Deck. Unleashed on PC."), native 1280×800 @ 60fps
+- Austin designed and developed Gunmetal Orbit in Godot 4.7 for the Steam Deck's 1280×800 screen and shipped it to Steam 67 days after the first playable build. The paid release supports Windows, Linux, and Apple silicon Macs, with 34 Steam achievements and Steam Cloud.
 - Other original titles in development: Space Miner (the predecessor), RockHunter, MERIDIAN, and Last Crew, plus browser party games
 - Agents can operate Godot workflows, create and wire scenes, run headless tests, capture playtest evidence, and produce repeatable exports
 - Asset pipelines cover generated concepts, rigged 3D models, UI art, and authored AI-assisted audio
