@@ -38,6 +38,7 @@ const MAX_QUESTION_LENGTH = 500;
 const HISTORY_TURNS = 6;
 
 const SUGGESTED_QUESTIONS = [
+	{ label: "The level", question: "Is Austin a junior or senior engineer?" },
 	{ label: "The engineering", question: "What did Austin personally build?" },
 	{ label: "Live work log", question: "What has Austin been working on over the last two weeks?" },
 	{ label: "A hard bug", question: "Tell me about the hardest bug Austin has tracked down." },
@@ -265,6 +266,11 @@ export default function InteractiveTerminal() {
 					text += record.text;
 					update({ text, status: "writing" });
 				}
+				// The server withdrew what it had streamed and sent this in its place.
+				if (record.type === "replace" && typeof record.text === "string") {
+					text = record.text;
+					update({ text, status: "writing" });
+				}
 				if (record.type === "sources") update({ sources: readSources(record.sources) });
 				if (record.type === "error") throw new Error(typeof record.error === "string" ? record.error : "The connection ended early. Please try again.");
 				if (record.type === "done") completed = true;
@@ -369,7 +375,7 @@ export default function InteractiveTerminal() {
 									</ul>
 									<div className="mt-6 grid gap-2 sm:grid-cols-2">
 										{SUGGESTED_QUESTIONS.map((suggestion) => (
-											<button key={suggestion.question} type="button" disabled={isBusy} onClick={() => { void ask(suggestion.question); }} className={`group flex min-h-11 items-start justify-between gap-3 rounded-lg border border-white/[0.08] bg-white/[0.015] p-3 text-left transition-colors hover:border-[#72f3df]/40 hover:bg-[#72f3df]/5 disabled:cursor-wait disabled:opacity-40 ${focusRing}`}>
+											<button key={suggestion.question} type="button" disabled={isBusy} onClick={() => { void ask(suggestion.question); }} className={`group flex min-h-11 items-start justify-between gap-3 rounded-lg border border-white/[0.08] bg-white/[0.015] p-3 text-left transition-colors hover:border-[#72f3df]/40 hover:bg-[#72f3df]/5 disabled:cursor-wait disabled:opacity-40 sm:[&:last-child:nth-child(odd)]:col-span-2 ${focusRing}`}>
 												<span><span className="mb-1 block font-mono text-[10px] uppercase tracking-wider text-slate-500">{suggestion.label}</span><span className="block text-sm leading-5 text-slate-300 group-hover:text-slate-100">{suggestion.question}</span></span>
 												<CornerDownLeft size={14} aria-hidden="true" className="mt-1 shrink-0 text-slate-600 transition-colors group-hover:text-[#72f3df]" />
 											</button>

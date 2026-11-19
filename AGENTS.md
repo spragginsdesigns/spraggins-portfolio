@@ -100,7 +100,7 @@ src/
 ├── data/work-ledger.json # Bundled snapshot of the work ledger (generated, never hand-edit)
 ├── data/engineering-record.json # Curated, dated stories, decisions, lessons, timeline, skills and facts for the portfolio agent (screening rules in docs/ask-agent.md)
 ├── lib/
-│   ├── ask/            # Portfolio agent: agent.ts (model + tool loop), tools.ts (read-only tools), prompt.ts (system prompt), rate-limit.ts
+│   ├── ask/            # Portfolio agent: agent.ts (model + tool loop), tools.ts (read-only tools), prompt.ts (system prompt), rate-limit.ts (per-minute bursts), budget.ts (daily answer budget in Runtime Cache), output-guard.ts (deny-list check on every streamed answer)
 │   ├── portfolio-answers.ts # Curated public facts: the agent's search corpus and its no-model fallback
 │   ├── work-ledger.ts  # Work ledger types, type guard, summary helpers
 │   ├── stats.ts        # SINGLE SOURCE OF TRUTH for all LineCrush/game stats
@@ -118,6 +118,7 @@ docs/
 ├── google-business-profile.md # Spraggins Designs GBP: fields, rules, how to edit, current restrictions
 └── work-ledger.md      # Daily Work Log: what is measured, privacy rules, how the hourly collector runs
 scripts/
+├── ask-evals.mjs     # Regression checks for the portfolio agent (`pnpm ask:eval` against a local server started with ASK_EVAL=1)
 └── work-ledger/collect.py # Collector run hourly on the PC (pulls the MacBook over SSH), publishes daily totals
 ```
 
@@ -156,6 +157,8 @@ GMAIL_APP_PASSWORD=     # Gmail app password for contact form
 YOUTUBE_API_KEY=        # YouTube Data API key
 OPENAI_API_KEY=         # Portfolio agent (needs gpt-6.2-sol access); without it answers fall back to curated facts
 GITHUB_TOKEN=           # Optional, raises the GitHub rate limit for the agent's public-repo tools
+ASK_DAILY_ANSWER_CEILING= # Optional, site-wide model answers per day before the agent serves curated facts (default 300)
+ASK_DENY_TERMS=         # Optional, extra comma-separated terms the agent may never write (added to the built-in list)
 ```
 
 ### Styling

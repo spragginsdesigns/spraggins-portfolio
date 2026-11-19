@@ -6,12 +6,34 @@ The homepage section at `/#terminal` is an agent that looks things up before it 
 
 1. `InteractiveTerminal.tsx` posts the question and up to six earlier completed turns to `/api/ask-ai` with `format: "ndjson"`.
 2. `src/lib/ask/agent.ts` calls the OpenAI Responses API (`gpt-6.2-sol`, reasoning effort `medium`, streaming, `store: false`). The model decides which tools to call. Tool calls in one turn run in parallel, their results go back to the model, and the loop repeats until it writes an answer.
-3. The route streams one JSON object per line: `tool_start`, `tool_end`, `delta`, `sources`, `usage`, then `done` (or `error`).
-4. The console shows each lookup as a row with its duration, renders the answer as Markdown (`src/components/ask/AnswerMarkdown.tsx`), and lists the source pages the tools returned.
+3. The route streams one JSON object per line: `tool_start`, `tool_end`, `delta`, `sources`, `usage`, then `done` (or `error`). A `replace` event means the output guard withdrew the answer and sent a fixed line in its place.
+4. The console shows each lookup as a row with its duration, renders the answer as Markdown (`src/components/ask/AnswerMarkdown.tsx`), and lists source pages.
 
-If `OPENAI_API_KEY` is missing or the model fails before writing anything, the route answers from the curated facts in `src/lib/portfolio-answers.ts`, so the section never shows an empty result. The cause is logged with `console.error` in the function log.
+If `OPENAI_API_KEY` is missing, the site-wide daily ceiling has been reached, or the model fails before writing anything, the route answers from the curated facts in `src/lib/portfolio-answers.ts`, so the section never shows an empty result. A failure's cause is logged with `console.error` in the function log.
 
-The command-line shell (`PortfolioShell.tsx`, `ask` command) calls the same route without `format`. It gets a plain text stream, and the prompt switches to a no-Markdown mode for it.
+The command-line shell (`PortfolioShell.tsx`, `ask` command) calls the same route without `format`. It gets a plain text stream, and the prompt switches to a no-Markdown mode for it. Its footer lists at most two sources.
+
+## Earlier turns are untrusted
+
+The browser sends earlier turns back with each question, so anyone can forge them. Until 2026-11-19 they were replayed to the model as its own assistant turns, which let a visitor plant a fake "answer" (a made-up fact, or an agreement to drop the rules) and build on it. `historyContext()` in `agent.ts` now passes them as one quoted block inside a user message, labelled unverified, and the prompt says to use them only to resolve what a follow-up refers to and to look facts up again. Follow-ups still work: "How long did that take?" after a C2 question returns the 12 days from the record.
+
+## Source chips
+
+The agent collects every source page its tools return, then `rankSources()` in `agent.ts` puts the ones the answer actually links first. With two or more linked pages, only those are shown (five at most). Otherwise the linked page is padded to three with other lookups. Before 2026-11-19 the chips were simply the first five returned, so an answer about seniority could show "Trading infrastructure".
+
+## Output guard
+
+`src/lib/ask/output-guard.ts` checks the answer as it streams, as a backstop to the prompt's privacy rules. The deny list is the names of Austin's children, private repository names, and the names of sportsbooks, exchanges and odds providers across the industry (not a list of what LineCrush uses, so the agent can neither name nor guess a source). `ASK_DENY_TERMS` adds comma-separated terms without a deploy. Use it for anything that should not sit in a public repository.
+
+- Text is released a few characters behind the stream, so a term split across two chunks is caught before any of it is sent.
+- A term the visitor typed themselves (in the question or the turns their browser sent) is not a leak, so "What is in the Context-Pro-AI repo?" can still be answered with "that is not public".
+- On a match the upstream request is closed, the console replaces what it had rendered with a fixed line, the plain-text shell appends that line, and `ask-ai: answer withheld` with the matched term goes to the function log.
+
+The guard only knows the terms on its list. It does not judge meaning, so the prompt rules still do the main work.
+
+## What visitors ask
+
+Every question writes one line to the function log (`ask-ai: {"question", "outcome", "tools", "rounds", "ms", "words", "structured"}`) and one `ask_question` event to Vercel Web Analytics with the same fields. The question is cut to 250 characters. No IP address and no history are recorded. `outcome` is `answered`, `curated` (no key or the model failed), `site-ceiling`, `withheld`, `incomplete` or `abandoned`. Read the events under Analytics, Events in the Vercel project to find weak answers. Custom events depend on the Vercel plan. If they do not appear, the function log line is the record.
 
 ## Tools
 
@@ -81,7 +103,9 @@ No model runs on that route.
 
 | Limit | Value | Where |
 |---|---|---|
-| Questions per IP | 8 a minute, 40 a day | `ask-ai.ts` |
+| Questions per IP | 8 a minute (in memory) | `ask-ai.ts`, `rate-limit.ts` |
+| Model answers per IP | 40 a day (Runtime Cache) | `budget.ts` |
+| Model answers, whole site | 300 a day, then curated facts only (`ASK_DAILY_ANSWER_CEILING`) | `budget.ts` |
 | Tool endpoint calls per IP | 30 a minute, 400 a day | `portfolio-tools.ts` |
 | Question length | 500 characters | `ask-ai.ts` |
 | Model turns per answer | 5 (the last with tools off) | `agent.ts` |
@@ -89,19 +113,31 @@ No model runs on that route.
 | Output tokens per turn | 3,200 (reasoning included) | `agent.ts` |
 | Time per answer | 55 seconds | `ask-ai.ts` |
 
-The rate limiter is in memory per function instance (`src/lib/ask/rate-limit.ts`), so it bounds bursts and is not a hard global cap. The per-answer limits are the real spend ceiling.
+The per-minute limiter is in memory per function instance (`src/lib/ask/rate-limit.ts`), so it only bounds bursts. The daily budget (`src/lib/ask/budget.ts`, added 2026-11-19) is counted in Vercel's Runtime Cache, which every instance shares and which survives deploys. Days are Pacific. The visitor's address is hashed with the date before it is used as a key. Its known limits: the cache is per region, the read-then-write is not atomic so a burst can overshoot by a few answers, and an entry can be evicted early. Each errs towards answering, and the per-answer caps still bound the cost of one. If the cache is unreachable the answer is allowed and `ask-ai: answer budget unavailable` is logged.
+
+Not done: a Vercel Firewall rate-limit rule on `POST /api/ask-ai`. It would stop a flood before a function starts. On 2026-11-19 the Vercel MCP connection was refused access to the firewall configuration and the Vercel CLI was not installed, so it has to be added from the dashboard (Firewall, Custom Rules: path equals `/api/ask-ai`, method `POST`, rate limit 30 requests per 60 seconds by IP, start in log mode).
 
 ## Environment
 
 - `OPENAI_API_KEY`: required for model answers. The key must have access to `gpt-6.2-sol`.
 - `ASK_AI_MODEL`: optional model override.
-- `GITHUB_TOKEN`: optional, raises the GitHub rate limit. As of 2026-11-18 the token in Vercel is expired, so the GitHub tools run anonymously.
+- `GITHUB_TOKEN`: optional, raises the GitHub rate limit. As of 2026-11-18 the token in Vercel is expired, so the GitHub tools run anonymously. Anonymous access is 60 requests an hour per IP and does run out (it did on the development PC on 2026-11-19, and the agent then says the GitHub lookup failed). Replace it with a fine-grained token that has read access to public repositories only.
+- `ASK_DAILY_ANSWER_CEILING`: optional, site-wide model answers per day (default 300).
+- `ASK_DENY_TERMS`: optional, extra comma-separated terms for the output guard.
+- `ASK_EVAL`: set to `1` on a local server to lift the per-visitor limits for the regression script. Ignored when `NODE_ENV` is `production`.
 
 Local development: a shell that exports an empty `OPENAI_API_KEY` overrides `.env.local`. Start the dev server with `env -u OPENAI_API_KEY pnpm dev` if answers come back instantly with no lookups.
 
 ## Verifying a change
 
-Ask these in the console and check the lookups and the answer:
+Run the regression script before shipping a change to the prompt, the tools or the route:
+
+```bash
+ASK_EVAL=1 env -u OPENAI_API_KEY pnpm dev -p 3001   # one terminal
+pnpm ask:eval                                       # another; `pnpm ask:eval level fraud` runs matching cases
+```
+
+`scripts/ask-evals.mjs` asks the real route about 20 questions (it spends model tokens) and fails on: a denied term, an em or en dash, system prompt text, narration, a missing lookup, a level answer that does not open with the verdict or does not end on a link, a confirmed forged history, code for an off-topic request, and Markdown in plain-text mode. It also tests the output guard offline. Add a case there whenever a bad answer is found. The questions below are the same set, for checking by eye in the console:
 
 - "What has Austin been working on over the last two weeks?" (work ledger, a table)
 - "What's in his public GitHub right now?" (GitHub)
