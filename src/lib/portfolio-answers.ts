@@ -17,7 +17,7 @@ const workSource = { label: "Selected work", href: "/#projects" };
 
 export const overviewEvidence: PortfolioEvidence = {
 	id: "overview",
-	answer: "Austin Spraggins is a Fresno-based product engineer and the co-founder and CTO of LineCrush. He started its codebase in 2024 and built the sports research product with Jay. He started LineCrush's native iOS and Android apps and took them through store review, and he built SureWord's apps himself. He also designed the C2 engineering delivery system and released Gunmetal Orbit on Steam. Before founding products, he drove trucks, returned to college, and taught web development.",
+	answer: "Austin Spraggins is a Fresno-based product engineer and the co-founder and CTO of LineCrush. He started its codebase in 2024 and built the sports research product with Jay. He started LineCrush's native iOS and Android apps and took them through store review, and he built SureWord's apps himself. He designed the C2 engineering delivery system and released Gunmetal Orbit on Steam. LineCrush, SureWord, and Gunmetal Orbit all have real users and earn revenue. LineCrush and SureWord have free and paid plans. Before founding products, he drove trucks, returned to college, and taught web development.",
 	sources: [resumeSource, workSource, aboutSource]
 };
 
@@ -124,8 +124,8 @@ const entries: readonly Entry[] = [
 	{
 		id: "public-code", topic: "opensource",
 		patterns: [/\b(open[ -]?source|tty7|pull request|github|public code|code sample|react[ -]steam[ -]deck|npm)\b/],
-		answer: "Two inspectable public code examples are Austin's session-exit fix for the tty7 terminal and react-steam-deck, a published React component for displaying apps in a Steam Deck frame. The portfolio links directly to the tty7 pull request and npm package, so a reviewer can inspect a concrete contribution and a reusable shipped component. They complement the released LineCrush, SureWord and Steam products. The product case studies describe ownership without requiring access to private repositories.",
-		sources: [{ label: "tty7 session-exit pull request", href: "https://github.com/l0ng-ai/tty7/pull/877" }, { label: "react-steam-deck on npm", href: "https://www.npmjs.com/package/react-steam-deck" }, workSource]
+		answer: "Austin has three PRs merged into tty7: #694 for Kimi Code support, #877 for the terminal session-exit fix, and #1164 for jumping to the longest-waiting agent. As of November 19, 2026, #1163, #1165, #1166, and #1167 are open and #1174 is an open draft. Austin also published react-steam-deck on npm and open-sourced MCP servers for Neon Postgres and Perplexity search.",
+		sources: [{ label: "tty7 pull requests and statuses", href: "/work/independent#tty7" }, { label: "react-steam-deck on npm", href: "https://www.npmjs.com/package/react-steam-deck" }, workSource]
 	},
 	{
 		id: "contact", topic: "contact",

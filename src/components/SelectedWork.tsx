@@ -135,9 +135,9 @@ export default function SelectedWork() {
 					<div>
 						<Code2 size={23} aria-hidden="true" />
 						<h3>Open source</h3>
-						<p>Contributed a session-exit fix to the tty7 terminal and published a React component for showing apps in a Steam Deck frame.</p>
+						<p>I have three PRs merged into tty7 and five still open, one in draft. I published react-steam-deck on npm and open-sourced MCP servers for Neon Postgres and Perplexity.</p>
 						<Link href="/work/independent#developer-tools" className={styles.textAction}>Explore public tools <ArrowRight size={16} aria-hidden="true" /></Link>
-						<a href="https://github.com/l0ng-ai/tty7/pull/877" className={styles.textAction}><BrandIcon href="https://github.com" /> Read the tty7 pull request <ArrowUpRight size={16} aria-hidden="true" /></a>
+						<Link href="/work/independent#tty7" className={styles.textAction}>See the tty7 pull requests <ArrowRight size={16} aria-hidden="true" /></Link>
 						<a href="https://www.npmjs.com/package/react-steam-deck" className={styles.textAction}><BrandIcon href="https://www.npmjs.com" size={26} /> Find react-steam-deck on npm <ArrowUpRight size={16} aria-hidden="true" /></a>
 					</div>
 				</div>

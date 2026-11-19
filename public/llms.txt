@@ -94,7 +94,11 @@ Austin moved from truck driving into software, became a web-development instruct
 
 ## Independent Public Projects
 
+- LineCrush, SureWord, and Gunmetal Orbit are live products with real users and revenue. LineCrush and SureWord have free and paid plans.
 - [SureWord](https://sureword.app): Austin created and shipped this personal Bible study companion across the web, Android (Expo/React Native), and iPhone, iPad and Mac (SwiftUI). It shares one Next.js backend for exact Scripture quotations, offline KJV reading, synchronized study, and user-controlled memory, with a free plan and optional paid Pro.
+- [tty7 pull requests](https://www.spragginsdesigns.xyz/work/independent#tty7): Austin has three merged PRs (#694, #877, #1164), four open PRs (#1163, #1165, #1166, #1167), and one open draft (#1174), checked November 19, 2026.
+- [react-steam-deck on npm](https://www.npmjs.com/package/react-steam-deck): Published React component
+- [Neon Postgres MCP Server](https://github.com/spragginsdesigns/neon-pg-mcp-server): Open-source Model Context Protocol server
 - [AI Tutor WebApp](https://github.com/spragginsdesigns/ai-tutor-webapp): Socratic learning assistant
 - [Perplexity MCP Server](https://github.com/spragginsdesigns/perplexity-mcp-server): Model Context Protocol integration
 - [SaveALife CPR](https://github.com/spragginsdesigns/savealife-cpr): Business workflow automation

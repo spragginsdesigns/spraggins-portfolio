@@ -341,17 +341,31 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 			{
 				id: "developer-tools", label: "Developer tooling", title: "Publish small tools that someone else can use",
 				paragraphs: [
-					"I contributed three changes that tty7's maintainer merged. I added Kimi Code detection and session resume without wiping existing user settings, built a shortcut that jumps to the agent that's been waiting longest across windows, and fixed input still being sent after a terminal session exited.",
-					"I built Perplexity and PostgreSQL MCP servers and published a zero-dependency React component that frames a live app inside a Steam Deck illustration. I built AI Docs Digest and DocMagic to combine documentation into Markdown for use with AI tools."
+					"I open-sourced MCP servers for Perplexity search and Neon Postgres. I also published react-steam-deck on npm, a zero-dependency React component that frames a live app inside a Steam Deck illustration. I built AI Docs Digest and DocMagic to combine documentation into Markdown for use with AI tools."
 				],
 				proof: [
-					{ label: "tty7 upstream fix", href: "https://github.com/l0ng-ai/tty7/pull/877" },
-					{ label: "tty7 Kimi Code integration", href: "https://github.com/l0ng-ai/tty7/pull/694" },
-					{ label: "tty7 agent navigation", href: "https://github.com/l0ng-ai/tty7/pull/1164" },
 					{ label: "Perplexity MCP source", href: "https://github.com/spragginsdesigns/perplexity-mcp-server" },
-					{ label: "PostgreSQL MCP source", href: "https://github.com/spragginsdesigns/neon-pg-mcp-server" },
+					{ label: "Neon Postgres MCP source", href: "https://github.com/spragginsdesigns/neon-pg-mcp-server" },
+					{ label: "react-steam-deck on npm", href: "https://www.npmjs.com/package/react-steam-deck" },
 					{ label: "AI Docs Digest source", href: "https://github.com/spragginsdesigns/ai-docs-digest" },
 					{ label: "DocMagic source", href: "https://github.com/spragginsdesigns/doc-magic" }
+				]
+			},
+			{
+				id: "tty7", label: "Open source", title: "My tty7 pull requests",
+				paragraphs: [
+					"I have three PRs merged into tty7. I added Kimi Code detection and session resume without wiping existing settings, fixed input still being sent after a terminal session exited, and built a shortcut that jumps to the agent that's been waiting longest.",
+					"As of November 19, 2026, I have five more PRs open. Four cover themes, agent settings, pane titles, and replying to an agent from mobile. The fifth is a draft for launching agents from a mobile Projects screen."
+				],
+				proof: [
+					{ label: "Merged #694 · Kimi Code support", href: "https://github.com/l0ng-ai/tty7/pull/694" },
+					{ label: "Merged #877 · Terminal session-exit fix", href: "https://github.com/l0ng-ai/tty7/pull/877" },
+					{ label: "Merged #1164 · Jump to the agent waiting longest", href: "https://github.com/l0ng-ai/tty7/pull/1164" },
+					{ label: "Open #1163 · Theme catalog", href: "https://github.com/l0ng-ai/tty7/pull/1163" },
+					{ label: "Open #1165 · Agent settings", href: "https://github.com/l0ng-ai/tty7/pull/1165" },
+					{ label: "Open #1166 · Pane names and title strips", href: "https://github.com/l0ng-ai/tty7/pull/1166" },
+					{ label: "Open #1167 · Reply to a waiting agent on mobile", href: "https://github.com/l0ng-ai/tty7/pull/1167" },
+					{ label: "Open draft #1174 · Mobile Projects launcher", href: "https://github.com/l0ng-ai/tty7/pull/1174" }
 				]
 			},
 			{
