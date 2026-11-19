@@ -52,8 +52,8 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 	linecrush: {
 		name: "LineCrush",
 		title: "The AI fleet, C2, and two native apps.",
-		intro: "I built LineCrush's self-sustaining, self-improving AI engineering fleet and C2, our replacement for Linear. I started both native apps from scratch, wrote their first month of code, and own releases and store review. The fleet I built has written most of the feature code since.",
-		description: "Austin Spraggins built the LineCrush AI fleet and C2, wrote the first month of both native apps, and owns their releases and store review.",
+		intro: "I built LineCrush's self-sustaining, self-improving AI engineering fleet and C2, our replacement for Linear. I started the web codebase and grew LineCrush into a paid sports research product with Jay. I started both native apps from scratch and took them through store review and release.",
+		description: "Austin Spraggins started the LineCrush codebase, built its AI fleet and C2, and took both native apps from their first commits to the stores.",
 		role: "Co-founder & CTO",
 		result: "Operating subscription business · Web, iOS and Android",
 		period: "May 2024 to present",
@@ -93,7 +93,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				id: "native-apps", label: "iOS & Android", title: "I started and shipped both native apps",
 				paragraphs: [
 					"Jay and I decided to move from a Capacitor wrapper to platform-native apps so we could build the research experience around how people use each phone. I started both apps from scratch in June 2026 and wrote their first month myself. In SwiftUI, I built the swipeable research cards, stats and insights on their reverse faces, and a chart fed by line history. In Kotlin and Jetpack Compose, I built the typed API client, native sign-in and guest entry, and the swipe deck with rewind and cart.",
-					"Both apps use the existing LineCrush backend. I also worked on StoreKit purchases, Android push delivery and the release paths that keep the apps moving.",
+					"I kept writing native code after launch. I updated the research cards across web, iOS, and Android so the player's name and matchup stayed visible when a card flipped to its stats. I also moved answer narration on-device in the iOS app.",
 					"App Review hit a case the demo account had missed. A fresh user with no history got an error. I traced the review requests, reproduced the failure with an empty account on an iPad simulator, and fixed the empty state. It made the new-account journey part of what a release had to prove.",
 					"I shipped Android to Google Play in August 2026 and iOS to the App Store in September. I built release automation for signed test builds, store submissions, and staged rollouts. The fleet I designed has written most of the apps' feature code since the first month. I own releases and store review for both."
 				],
@@ -128,7 +128,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 			{
 				id: "platform", label: "Platform engineering", title: "Make changing sports data usable across clients",
 				paragraphs: [
-					"I worked across the Next.js and TypeScript product, Python services, PostgreSQL, caching and background jobs. That meant building ingestion and search, research reports, live updates and notifications, as well as the screens customers used to make sense of the results.",
+					"I started the Next.js and TypeScript web app and the Python backend. I built the real-time delivery that brought research updates to the web app and notifications. My work also covered data ingestion, search, reports, PostgreSQL, caching, and background jobs.",
 					"Early on, I wired billing updates into the cached account views so a plan change would show up across the site. Later I fixed a case where overlapping jobs could regenerate the same research at the same time. I made replacement atomic, kept the previous history, and bounded how often a failed item could retry.",
 					"One of my hardest infrastructure changes was moving a live product from Auth0 to Clerk. I kept existing account identifiers stable so saved data and subscriptions could still resolve to their owners. I built a compatibility layer for existing endpoints, rehearsed the import, checked the results, and updated the native clients to work with the new sessions.",
 					"I added health monitoring for scheduled jobs, automated backend deployment and worked on browser performance where it mattered most: the dense Picks interface on a phone. I measured rendering and image costs, cut expensive repeated blur effects, sized images to their slots, and moved interaction-only code off the initial load."

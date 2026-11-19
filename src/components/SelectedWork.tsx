@@ -33,11 +33,11 @@ export default function SelectedWork() {
 					<div className={styles.leadCopy}>
 						<p className={styles.projectRole}>Co-Founder &amp; CTO</p>
 						<h3 id="linecrush-lead-title">LineCrush</h3>
-						<p className={styles.projectTitle}>From a web codebase to two native app stores</p>
+						<p className={styles.projectTitle}>From the first codebase to a live research platform</p>
 						<p className={styles.projectText}>
-							I started the codebase and built LineCrush with Jay. I started the iOS app in SwiftUI and the Android app
-							in Kotlin and Jetpack Compose and wrote their first month myself. The fleet I designed built most
-							of the features since then. I own releases and store review for both apps.
+							I started the Next.js and Python codebase and built LineCrush with Jay. I built real-time updates
+							and automated backend releases. I started both native apps, kept writing SwiftUI and Kotlin
+							after launch, and own both store releases. The fleet I built delivers most new app features.
 						</p>
 						<p className={styles.projectStack}>Next.js · Python · SwiftUI · Kotlin</p>
 						<Link className={styles.textAction} href="/work/linecrush">
