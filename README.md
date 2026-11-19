@@ -20,7 +20,7 @@ I build AI agents that ship production software - and the platforms they run. At
 - **Four client surfaces:** web, native iOS, native Android, and browser extensions
 - **LineCrush Games:** Gunmetal Orbit, a space-mining arena roguelite [available on Steam September 10, 2026](https://store.steampowered.com/app/4975430)
 
-Currently open to full-time roles, contracts and consulting.
+LineCrush is stable and [doesn't need me full time anymore](https://www.spragginsdesigns.xyz/blog/2026-11-19-linecrush-doesnt-need-me-full-time-anymore), so I'm looking for my next full-time, hands-on engineering job. Also open to contracts and consulting.
 
 ## Tech Stack
 
