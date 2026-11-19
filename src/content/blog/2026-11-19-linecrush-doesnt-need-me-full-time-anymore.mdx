@@ -1,0 +1,98 @@
+---
+title: "LineCrush Doesn't Need Me Full Time Anymore"
+description: "After two and a half years as co-founder and CTO, the products are live, the company has revenue, and the agent fleet I built keeps itself running. So I'm stepping back from the day-to-day and looking for my next engineering job."
+date: "2026-11-19"
+tags: ["Career", "AI", "Agents", "Startups", "Engineering"]
+readTime: "9 min"
+featured: true
+---
+
+I'm stepping back from my day-to-day duties at LineCrush and I'm looking for my next engineering job.
+
+I want to say that plainly at the top because this is a good news post. Nothing broke. Jay and I didn't fall out. The company is stable, the products are live, it has paying customers and revenue, and the system I built to do the engineering work now does most of it without me. That was the goal the whole time. I just didn't think about what it would mean for me when we actually got there.
+
+So this is the story of how that happened, what I built, and what I want to do next.
+
+## How I got here
+
+I went into this field because I love it. It's my favorite hobby and it's the one thing in the world I want to do for a living.
+
+I got my A.S. in Information Systems: Web Design at Clovis Community College and worked in the college's IT and web departments while I was there. Then I taught web development at Bitwise Industries until the company collapsed in 2023 after its founders' fraud and we all got laid off. I was planning to go to Fresno State for my bachelor's after that. But I got offered a full-stack developer job at Gelateria Del Centro, and I took it, because building is what I really wanted to be doing.
+
+That job is how I met Jay Raynor. Through it I got introduced to an engineering project he was part of, and in April 2024 I joined as CTO. I coded most of the first version by hand in Next.js, TypeScript, Tailwind and Python, because that was my specialty. Our first paying customer came in late November 2024. The product went through a few names before it became LineCrush in October 2025.
+
+## What it took
+
+It started as 40 hours a week with weekends off. Eventually it turned into seven days a week, because that's what it took to make the company work and ship on time. In 2025 I committed code on 355 of 365 days.
+
+I had to learn extremely fast. Like everything else, I just jumped in with both feet, read the documentation and tried over and over until it worked. That's how I learned to build and run pretty much everything we have: web apps, native mobile apps, backend servers, webhooks and the infrastructure under all of it. I didn't know how to do most of that in April 2024. It was something we needed done, so I put all my effort into it every day.
+
+And honestly I'm thankful for it. I was given the chance to learn how to do just about everything in tech, and that's exactly what I wanted.
+
+## The fleet
+
+In 2026 I designed and built our agent fleet.
+
+I already had a workflow that worked for my own engineering: investigate, plan, build, prove it, review it, ship it. And the models had gotten good enough that if they followed that workflow step by step, most issues got done properly. So instead of hiring more engineers, we put Claude Code and Codex agents on a server and let them run 24/7.
+
+I wrote about the early version of this in [No Humans in the Merge Loop](/blog/2026-08-08-no-humans-in-the-merge-loop) back in August. A lot has changed since then, so here's where it stood when I measured it on November 17:
+
+- 14,111 completed jobs since June 23, 2026, and 10,745 of them have a commit link stored on the job.
+- 91% of everything the fleet admitted got completed, at about 124 admissions a day over the last 30 days.
+- 71% of closed issues finished on the first attempt.
+- About 0.24% of admitted issues ended in a terminal failure.
+
+I built it to keep itself running and to keep getting better, and I think that's the part people miss when they hear "AI agents." If a worker gets interrupted in the middle of a job, the fleet picks that job back up where it left off, in the same session with the same working files. When one of its own scheduled checks goes red, it files the fix into its own queue. And when there's a problem in the fleet's own tooling, the fleet can take that issue, fix it, and put the fix through the same proof and review that product work goes through. One of those fleet-written fixes is the reason interrupted jobs resume cleanly for both Claude Code and Codex today.
+
+It doesn't decide everything. Anything that needs a founder, like spending money or a product direction call, stops and waits for one of us. That was on purpose.
+
+## C2
+
+By the fall the fleet was doing more work than our issue tracker was built for. We were on Linear, and Linear is a good product, but it was designed around people clicking through tickets. I needed a tracker that could keep up with agents. Something that knows who owns a piece of work right now, what was actually proved, and what's waiting on a decision from one of us.
+
+So I built one. It's called C2, and it replaced Linear in production on November 3, 2026. From the written contract to the cutover took 12 days, and we kept the whole history. C2 holds 20,504 issue records today, 18,932 of them carried over from Linear.
+
+I'm not going to go deep on the internals of either system here. The pattern is easy to describe. The details that make it safe are LineCrush's, and they took a long time to earn.
+
+## Shipping everywhere
+
+2026 was also the year I finally got to ship on every platform I ever wanted to.
+
+LineCrush went native on Google Play in August and on the App Store in September. I started both of those apps from scratch and wrote their first month myself, and since then the fleet has written most of the feature code while I own the releases and store review. Then in November LineCrush was approved as an official ChatGPT plugin.
+
+On my own I released [Gunmetal Orbit](https://store.steampowered.com/app/4975430) on Steam on September 10. It went from the first commit to a Steam release on Windows, macOS and Linux in 67 days, and it's still getting updates. And I built [SureWord](https://sureword.app), an AI Bible study app, for the web, Android, iPhone, iPad and Mac. I wanted to see if I could make an AI-native Bible study tool that doesn't lead people astray, and I'm really proud of how it turned out.
+
+I always wanted to build natively and I always wanted to make video games, since I was a little kid. So I loved every minute of that.
+
+## So why leave the day-to-day?
+
+Because the thing I built did what I built it to do.
+
+LineCrush is a stable company with live products and revenue. The platform, the apps, the fleet and C2 all run without needing me there full time. Jay is the expert on the product side, and with the fleet and C2 he has what he needs to keep it moving. Jay and I worked really well together the entire time, and we built a company and products I'm really proud of. I'm still a co-founder. That part doesn't change.
+
+But I want to keep learning. I want to stay on the cutting edge of AI and become the best engineer I can possibly be, and I think the way to do that now is to go build hard things with other great engineers. I've spent two and a half years being the person who had to figure everything out. I'd love to be on a team where I can learn from people who are better than me at things, and bring what I know to them.
+
+## What I do all day
+
+This is what my daily life looks like, and it has for awhile now. I've built with AI every day since 2024. Since the fleet went live in June 2026 my day is controlling AI agents from my desktop, my laptop and my phone, jumping from task to task and checking what they ship. I keep them up to date with the latest capabilities, and when a tool I need doesn't exist yet I just build it myself.
+
+I'm an expert at directing AI agents. I know how to brief them properly, how to review their work, and when to stop one that's headed the wrong way. That last one matters more than people think. Anybody can prompt an agent. Knowing when it's wrong, and catching it before it ships, is the actual job.
+
+And I still love writing code by hand. The first version of LineCrush was typed out line by line and I'd do it again.
+
+## What I'm looking for
+
+A full-time, hands-on engineering job. Remote in the US, or in the Fresno area where I live. I work Pacific Time.
+
+The work I'd be best at is applied AI product engineering, coding agents and developer tools, or senior full-stack product work in TypeScript and Python. I can also do native iOS and Android, backend and infrastructure, and I'd definitely be interested in games. I like small teams with a real product and real users, where owning the whole thing from the database to the app store is an asset.
+
+Everything I've mentioned here is live and you can check it yourself:
+
+- [LineCrush](https://www.linecrush.com) on the web, the [App Store](https://apps.apple.com/us/app/linecrush-sports-research/id6774968606) and [Google Play](https://play.google.com/store/apps/details?id=com.linecrush.android)
+- [SureWord](https://sureword.app) on the web, the [App Store](https://apps.apple.com/app/id6820260211) and [Google Play](https://play.google.com/store/apps/details?id=com.spragginsdesigns.sureword)
+- [Gunmetal Orbit](https://store.steampowered.com/app/4975430) on Steam
+- [My resume](/resume/Austin_Spraggins_Resume_2026.pdf) and [my GitHub](https://github.com/spragginsdesigns)
+
+If you're hiring, or you know somebody who is, email me at spragginsdesigns@gmail.com. I'd love to talk.
+
+Thank you for reading this, and thank you to Jay for the last two and a half years.
