@@ -28,6 +28,8 @@ export default function Hero() {
 						<p className={styles.intro}>
 							Co-Founder &amp; CTO at LineCrush. I started the codebase, built the business with Jay,
 							and took native iOS and Android apps to both stores for LineCrush and SureWord.
+							Directing AI agents is my daily work: I brief them, review what they ship,
+							and stop the ones headed the wrong way.
 						</p>
 						<div className={styles.actions}>
 							<a href="#projects" className={styles.primaryAction}>
