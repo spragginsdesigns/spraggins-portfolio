@@ -131,20 +131,22 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 					"I started the Next.js and TypeScript web app and the Python backend. I built the real-time delivery that brought research updates to the web app and notifications. My work also covered data ingestion, search, reports, PostgreSQL, caching, and background jobs.",
 					"Early on, I wired billing updates into the cached account views so a plan change would show up across the site. Later I fixed a case where overlapping jobs could regenerate the same research at the same time. I made replacement atomic, kept the previous history, and bounded how often a failed item could retry.",
 					"One of my hardest infrastructure changes was moving a live product from Auth0 to Clerk. I kept existing account identifiers stable so saved data and subscriptions could still resolve to their owners. I built a compatibility layer for existing endpoints, rehearsed the import, checked the results, and updated the native clients to work with the new sessions.",
-					"I added health monitoring for scheduled jobs, automated backend deployment and worked on browser performance where it mattered most: the dense Picks interface on a phone. I measured rendering and image costs, cut expensive repeated blur effects, sized images to their slots, and moved interaction-only code off the initial load."
+					"I added health monitoring for scheduled jobs and automated backend deploys. When Picks felt sluggish, I profiled it in DevTools and found hundreds of elements paying for the same blur effect. I cut GPU compositing layers from 360 to 80, got an example player headshot from about 238 KB down to 3 KB, and moved code people only needed after interacting off the initial load. On March 16, 2026, Vercel recorded a desktop production Real Experience Score of 100."
 				]
 			},
 			{
 				id: "production", label: "Production operations", title: "Measure the problem on the running service",
 				paragraphs: [
 					"When an outbound traffic alert fired in November 2026, I directed a production audit to find what was driving it and keep sports data current. We traced the traffic to individual workloads, then tested a change to the database writer against the existing one. On a bounded replay of 12 players, it sent about 36% fewer bytes to PostgreSQL with matching stored results. After deploy, we watched a scheduled production refresh complete.",
-					"The same audit found a backup that could produce snapshots without passing verification. We reproduced the failure, fixed the job's recovery behavior and verified a new encrypted snapshot. We restored a sample of configuration and database schema files and compared them with the originals. That gave us a tested recovery path for the selected files."
+					"I built off-host backups and tested what I could actually get back. In October 2026 the restore recovered six selected production artifacts that matched byte for byte. A restored Git checkout also passed its integrity check and kept six commits that had never been pushed.",
+					"The November audit found that a backup run could produce a snapshot without passing verification. We fixed its recovery behavior, verified a new encrypted snapshot, and restored a sample of configuration and schema files to check against the originals."
 				]
 			},
 			{
 				id: "integrations", label: "Integrations", title: "Put research where people already work",
 				paragraphs: [
 					"I built a Chrome extension and worked on betslip image analysis, research chat and voice, and notifications outside the site. The common product problem was preserving useful context when users moved between a research session, a browser and a phone.",
+					"I moved long-running Discord bot requests to background workers so the bot could keep accepting messages. After rollout I found a difference in how replies were delivered. I fixed it, and the follow-up passed all 39 database assertions across seven scenarios.",
 					"In October 2026 I built the hosted ChatGPT MCP integration. It exposes a bounded set of read-only public research tools that return structured results with source context. I also built WebMCP tools for the browser. With Jay and the fleet, we delivered a real-time sports news API for a business customer."
 				],
 				proof: [{ label: "LineCrush in ChatGPT", href: "https://chatgpt.com/plugins/plugin_asdk_app_6ad6200f5d308191826093af74536aa2" }]
@@ -214,6 +216,14 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				proof: [sureWordApple, sureWordPlay]
 			},
 			{
+				id: "notes-accessibility", label: "Notes & accessibility", title: "Keep the work a reader already did",
+				paragraphs: [
+					"I wanted people to be able to write their own notes while the AI was working. I changed the editor so a late AI response couldn't overwrite a newer edit, and made line breaks and formatting survive across editors. The Android release check recovered a saved AI edit after the note was closed and reopened right away.",
+					"I also built text scaling across web and native clients. The release checks covered a 320-pixel-wide web layout with doubled text and Android at twice the system text size. They checked draft text and keyboard focus on web, and selection and formatting in the Apple editors."
+				],
+				proof: [sureWordApple, sureWordPlay]
+			},
+			{
 				id: "delivery", label: "Release & reliability", title: "One study backend across four experiences",
 				paragraphs: [
 					"I built the web app and backend in Next.js, the Android app in Expo and React Native, and the iPhone, iPad, and Mac apps in SwiftUI. I took the mobile and Mac apps through store review and release. They share the backend for Scripture, chat, notes, and study context, with navigation and reader controls built for each device.",
@@ -272,8 +282,8 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 			{
 				id: "cut-loose", label: "Epic AI MegaJam", title: "Ship an Unreal prototype people can play",
 				paragraphs: [
-					"I entered Cut Loose solo and led its build with AI assistance. The design centers on one move: aim a cut through an object while time slows, then use the result to change your route. I worked on the Unreal C++ slicing, chase and movement systems and brought them together in a short Windows game.",
-					"I iterated over four calendar days from scaffold to final jam build. Packaged smoke checks exercised the executable, and I captured footage from the build for the submission."
+					"I entered Cut Loose solo and directed the agents that built the Unreal C++ gameplay and stages. I picked one move to build the game around. Aim a cut while time slows, then use what falls or opens up to change your route.",
+					"I went from scaffold to a Windows jam release in four days. After 85 tests passed, my first full playthrough found four problems the tests missed. I kept playing the packaged builds and used what I found to decide what needed fixing before submission."
 				],
 				proof: [cutLoose]
 			},
@@ -308,13 +318,14 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 			{
 				id: "client-delivery", label: "Client engineering", title: "Work that had to fit a real business",
 				paragraphs: [
-					"I built a site for Two Cities Off Road with a fabrication gallery, parts catalog and inquiry flow. The live site gives customers a way to look through actual builds and contact the business. I also built an editing interface for catalog and gallery content.",
+					"I built the catalog, fabrication gallery and inquiry flow for Two Cities Off Road. I also built an editor the owner can use to update products, photos and the homepage. Saving changes and publishing are separate steps, and the editor checks the deployed content version so the owner can tell when the site is actually updated.",
 					"For SaveALife CPR, I rebuilt the booking-to-registration workflow when a portal change broke the previous version. The AWS Lambda integration verifies bookings, finds the right course, updates registration and reports the result. I verified the production login and read-only course lookup, and checked that invalid bookings were rejected.",
 					"I worked on Gelateria Del Centro's Fresno web application and built the Constrong contractor site with Jay. Constrong paired a responsive project gallery with a contact flow and local search metadata. For H.O.E INK, I built a studio landing page with service information and a booking inquiry that prepares an email."
 				],
 				media: [{ src: "/images/work/two-cities-live.webp", alt: "Two Cities Off Road homepage showing an off-road buggy and a link to browse fabrication builds", caption: "Two Cities Off Road · Live client site", shape: "landscape" }],
 				proof: [
 					twoCities,
+					{ label: "Live content version", href: "https://twocitiesoffroad.com/build.json" },
 					{ label: "Gelateria Del Centro source", href: "https://github.com/spragginsdesigns/Gelateria-Del-Centro-WebApp" },
 					{ label: "Constrong source", href: "https://github.com/spragginsdesigns/constrong" },
 					{ label: "H.O.E INK site", href: "https://hoeink.vercel.app/" }
@@ -323,30 +334,41 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 			{
 				id: "developer-tools", label: "Developer tooling", title: "Publish small tools that someone else can use",
 				paragraphs: [
-					"I contributed a session-exit fix upstream to tty7 and worked on launch and gateway behavior in my fork. I built Perplexity and PostgreSQL MCP servers for tool-based workflows, and published a zero-dependency React component that frames a live app inside a Steam Deck illustration.",
-					"I built AI Docs Digest and DocMagic to combine documentation into Markdown for use with AI tools. I also built FileSteward AI, a native Android pre-release. It lets a model propose file changes, gives the user a review step, and sends ambiguous recovery cases back for a decision before it applies more changes."
+					"I contributed three changes that tty7's maintainer merged. I added Kimi Code detection and session resume without wiping existing user settings, built a shortcut that jumps to the agent that's been waiting longest across windows, and fixed input still being sent after a terminal session exited.",
+					"I built Perplexity and PostgreSQL MCP servers and published a zero-dependency React component that frames a live app inside a Steam Deck illustration. I built AI Docs Digest and DocMagic to combine documentation into Markdown for use with AI tools."
 				],
 				proof: [
 					{ label: "tty7 upstream fix", href: "https://github.com/l0ng-ai/tty7/pull/877" },
+					{ label: "tty7 Kimi Code integration", href: "https://github.com/l0ng-ai/tty7/pull/694" },
+					{ label: "tty7 agent navigation", href: "https://github.com/l0ng-ai/tty7/pull/1164" },
 					{ label: "Perplexity MCP source", href: "https://github.com/spragginsdesigns/perplexity-mcp-server" },
 					{ label: "PostgreSQL MCP source", href: "https://github.com/spragginsdesigns/neon-pg-mcp-server" },
 					{ label: "AI Docs Digest source", href: "https://github.com/spragginsdesigns/ai-docs-digest" },
-					{ label: "DocMagic source", href: "https://github.com/spragginsdesigns/doc-magic" },
-					{ label: "FileSteward pre-releases", href: "https://github.com/spragginsdesigns/filesteward-ai-releases" }
+					{ label: "DocMagic source", href: "https://github.com/spragginsdesigns/doc-magic" }
 				]
+			},
+			{
+				id: "filesteward", label: "Android pre-release", title: "Resume the work without repeating a file change",
+				paragraphs: [
+					"I built FileSteward AI in Kotlin so an assistant can organize files on Android with the person's approval. I saved tool progress and pending proposals so a restart can pick up where the assistant left off.",
+					"If Android closed the app halfway through moving a file, I couldn't assume the move had failed. I made the app check the file before retrying and flag uncertain changes for review. The source for the public v0.15.0 pre-release includes tests for both cases."
+				],
+				proof: [{ label: "FileSteward v0.15.0 pre-release", href: "https://github.com/spragginsdesigns/filesteward-ai-releases/releases/tag/v0.15.0" }]
 			},
 			{
 				id: "experiments", label: "Evaluation & prototypes", title: "Make the result inspectable",
 				paragraphs: [
 					"I built Ghostcount as a retrospective ledger-backing replay with a Rust attestation component and a public dashboard. The committed replay shows a gap almost 40 hours before the identification timestamp in the incident record. That timing comes from a historical replay.",
 					"For Jury Swarm, I built a testnet demo that compares AI reviewers and records how they rank hackathon entries. The public demo includes a replay of recorded outputs. I also directed an agent-assisted PayPal sandbox prototype for team treasurers, with recorded receipts and a read-only assistant.",
-					"My other builds include FormUp for youth-team rosters and coach workflows, an AI tutor that guides students through a problem, and Clearline, a public-health dashboard demo built with generated sample data."
+					"I built FormUp for youth coaches to track player assessments, rosters, schedules, and messages. Coaches approve team roles, and players and parents have read-only portals. The Next.js and Convex web app is live, and the repo includes an Expo companion app in development.",
+					"I also built an AI tutor that guides students through a problem and Clearline, a public-health dashboard demo built with generated sample data."
 				],
 				proof: [
 					{ label: "Ghostcount replay", href: "https://spragginsdesigns.github.io/ghostcount/" },
 					{ label: "Jury Swarm demo", href: "https://spragginsdesigns.github.io/jury-swarm/" },
 					{ label: "Sideline source", href: "https://github.com/spragginsdesigns/sideline" },
 					{ label: "FormUp source", href: "https://github.com/spragginsdesigns/soccer-team-management" },
+					{ label: "FormUp web app", href: "https://soccer-team-management-umber.vercel.app/" },
 					{ label: "AI Tutor source", href: "https://github.com/spragginsdesigns/ai-tutor-webapp" },
 					{ label: "Clearline source", href: "https://github.com/spragginsdesigns/clearline" }
 				]
