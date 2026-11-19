@@ -58,7 +58,7 @@ const entries: readonly Entry[] = [
 	{
 		id: "sureword-product", topic: "sureword",
 		patterns: [/\bsure\s?word\b/, /\b(bible (study|app)|scripture|study (memory|context)|rag|retrieval|pgvector)\b/],
-		answer: "Austin created SureWord to support a person's relationship with God through Scripture. He built the original web app in July 2024, then personally built the Android app with Expo and React Native and its iPhone, iPad and Mac apps in SwiftUI. He owns the product and engineering, using Claude Code and Codex throughout development. Readers can study passages, ask questions and keep notes across devices. Optional saved memory carries study context into later conversations.",
+		answer: "Austin created SureWord to support a person's relationship with God through Scripture. He built and shipped the Next.js web app, the Expo and React Native Android app, and the SwiftUI apps for iPhone, iPad, and Mac. He owns the product and engineering, using Claude Code and Codex throughout development. The server supplies exact Bible quotations, and readers can carry questions, reading, and notes across devices. Optional saved memory carries study context into later conversations. SureWord has a free plan and optional paid Pro.",
 		sources: [surewordSource, { label: "Try SureWord", href: "https://sureword.app" }, { label: "SureWord on the App Store", href: "https://apps.apple.com/app/id6820260211" }]
 	},
 	{

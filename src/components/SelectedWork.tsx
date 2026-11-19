@@ -66,10 +66,11 @@ export default function SelectedWork() {
 					<div className={styles.projectCopy}>
 						<p className={styles.projectRole}>Creator &amp; Engineer</p>
 						<h3>SureWord</h3>
-						<p className={styles.projectTitle}>One study that continues across devices</p>
+						<p className={styles.projectTitle}>Personal Bible study that continues across devices</p>
 						<p className={styles.projectText}>
-							I built SureWord for the web, then built the iOS and Android apps myself. To keep verse quotations exact,
-							the server supplies the Scripture text while the AI explains it.
+							I created SureWord and shipped the web, Android, iPhone, iPad, and Mac apps myself. Your reading,
+							notes, and questions carry across devices, and Bible quotations come from the stored Scripture text.
+							SureWord has a free plan and optional Pro.
 						</p>
 						<p className={styles.projectStack}>Next.js · AI SDK · React Native · SwiftUI</p>
 						<Link className={styles.textAction} href="/work/sureword">

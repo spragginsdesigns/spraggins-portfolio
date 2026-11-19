@@ -41,7 +41,7 @@ const capabilities = [
 	},
 	{
 		title: "Cross-platform delivery",
-		copy: "Started and shipped both native LineCrush apps, kept coding after launch, and own releases and store review. Built SureWord across web and mobile and shipped Gunmetal Orbit on Steam."
+		copy: "Started and shipped both native LineCrush apps, kept coding after launch, and own releases and store review. Created and shipped SureWord on web, Android, iPhone, iPad, and Mac with a free plan and optional Pro. Shipped Gunmetal Orbit on Steam."
 	}
 ];
 

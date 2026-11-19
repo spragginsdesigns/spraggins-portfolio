@@ -169,10 +169,10 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 	sureword: {
 		name: "SureWord",
 		title: "A Bible study that picks up where you left off.",
-		intro: "I built SureWord to support a person's relationship with God through Scripture. I built the web, iOS and Android apps myself so reading, questions and notes can carry across devices. With memory enabled, what a reader shares about their life and faith can shape the next study.",
-		description: "How Austin Spraggins built SureWord across web, Android, iPhone, iPad and Mac with Scripture retrieval, exact quotations and user-controlled study memory.",
+		intro: "I created SureWord and shipped its web, Android, iPhone, iPad, and Mac apps myself. I built it to help people study Scripture and grow in their relationship with God. Reading, questions, and notes carry across devices. With memory enabled, what you choose to share can shape your next study. There's a free plan and optional Pro.",
+		description: "Austin Spraggins created and shipped SureWord across web, Android, iPhone, iPad, and Mac with exact Scripture quotations, user-controlled memory, and free and Pro plans.",
 		role: "Creator & product engineer",
-		result: "Web, Android, iPhone, iPad and Mac",
+		result: "Web, Android, iPhone, iPad and Mac · Free plan and optional Pro",
 		period: "July 2024 to present",
 		published: "2026-11-17",
 		accent: "#f1cb92",
@@ -182,7 +182,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 		timeline: [
 			{ date: "2024 to 2025", event: "Started the web app and prototyped Bible study on mobile." },
 			{ date: "August 2026", event: "Built the Expo Android client and began the SwiftUI client." },
-			{ date: "Fall 2026", event: "Shipped mobile and desktop experiences, then iterated on streaming and study tools." }
+			{ date: "October to November 2026", event: "Took the iPhone, iPad, and Mac apps through App Store release and shipped Android on Google Play." }
 		],
 		sections: [
 			{
@@ -201,7 +201,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				id: "grounding", label: "Scripture retrieval", title: "The server supplies the verse text",
 				paragraphs: [
 					"People often remember the meaning of a passage more clearly than its words. I built Bible search to combine semantic matches and keyword hits. If the vector search fails, the keyword path can still return useful passages.",
-					"I built the quotation path to resolve the referenced verse from the stored Bible and insert its canonical wording into the streamed answer. The model explains the passage. The reader gets the source text and can open the surrounding chapter."
+					"I replaced a separate model review with Scripture lookup inside the streamed answer. When the model cites a verse, the server inserts the stored Bible text. The model explains the passage, and the reader can open the verse in its chapter."
 				],
 				steps: ["Find passages by meaning or words", "Resolve the reference", "Stream the stored verse", "Open it in context"]
 			},
@@ -216,10 +216,11 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 			{
 				id: "delivery", label: "Release & reliability", title: "One study backend across four experiences",
 				paragraphs: [
-					"I built the Android app with Expo and React Native and the Apple apps in SwiftUI. Web, Android, iPhone and iPad, and Mac share server behavior for chat, Scripture and study context. Each client needed its own navigation, reader, account screens and release work.",
+					"I built the web app and backend in Next.js, the Android app in Expo and React Native, and the iPhone, iPad, and Mac apps in SwiftUI. I took the mobile and Mac apps through store review and release. They share the backend for Scripture, chat, notes, and study context, with navigation and reader controls built for each device.",
 					"I traced incomplete chat responses through the stream, persisted answer and tool side effects, then checked combinations of account tiers and study modes. I also changed answer-ready notifications to generic notices so a private study question would stay inside the app.",
 					"I built the subscription flow around one application entitlement across Stripe, Apple and Google Play. When Apple reversed a refund, I made SureWord restore access for the latest transaction. An older transaction could arrive late and the current plan still had to stand. On Google Play I made the plan and usage allowance read from the same membership snapshot so they agreed after a renewal.",
-					"On Android the same build can move through test tracks into production. On Apple I maintained separate build and signing paths for iPhone, iPad and Mac. I kept release notes with the code so we could check what changed against the actual build."
+					"On Android the same build can move through test tracks into production. On Apple I maintained separate build and signing paths for iPhone, iPad and Mac. I kept release notes with the code so we could check what changed against the actual build.",
+					"SureWord has a free plan and optional paid Pro. More new accounts started using SureWord in the first 18 days of November 2026 than in the same period in October."
 				],
 				proof: [sureWordWeb, sureWordApple, sureWordPlay]
 			}
