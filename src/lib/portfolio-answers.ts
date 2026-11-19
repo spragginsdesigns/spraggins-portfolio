@@ -134,6 +134,12 @@ const entries: readonly Entry[] = [
 		sources: [{ label: "Contact Austin", href: "/#contact" }, resumeSource, linecrushSource]
 	},
 	{
+		id: "engineering-level", topic: "fit",
+		patterns: [/\b(junior|senior|seniority|mid[ -]?level|entry[ -]?level|staff|principal|expert\w*|skilled|talented|beginner|novice)\b/, /\b(?:how|what) (?:good|strong|experienced|senior|skilled|level)\b/, /\b(?:any|actually|really) good\b/],
+		answer: "Austin's public record is senior-level engineering. He has been co-founder and CTO of LineCrush since April 2024, started its codebase, and owns architecture, releases and production problems across web, backend, data and two native apps, working with co-founder Jay. Dated examples of the judgment involved: he moved every account from Auth0 to Clerk without changing a user ID (June 19, 2026), took the web app to a Vercel Real Experience Score of 100 (March 16, 2026), and designed C2, which replaced Linear in 12 days after a full comparison of 18,931 issues found zero mismatches. Outside reviewers have passed his releases at Apple, Google Play, Valve and OpenAI. The limit is team scale: LineCrush is a two-founder company, so the record shows no management of a large engineering team.",
+		sources: [resumeSource, linecrushSource, c2Source]
+	},
+	{
 		id: "engineering-fit", topic: "fit",
 		patterns: [/\b(why (?:should|would)|good fit|strengths?|qualif\w*|experience|resume|résumé|senior|product engineer|role|candidate|evaluate|proof|evidence|portfolio|projects|products|accomplishments?|achievements?|shipped work)\b/],
 		answer: "Austin's strongest public evidence is end-to-end product ownership: starting LineCrush's codebase, co-building it with Jay, implementing native app foundations, handling release failures, and designing C2 and the engineering fleet. SureWord shows independent applied AI and cross-platform product work. Gunmetal Orbit adds a commercial Steam release, while client sites and the tty7 contribution provide other inspectable examples. That supports a discussion about full-stack product, mobile and applied AI roles. The résumé and case studies provide concrete starting points rather than a guarantee of fit for every team.",
