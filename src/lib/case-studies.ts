@@ -90,6 +90,13 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				proof: [{ ...lineCrushApple, label: "iOS 2.9.0 release notes" }, { label: "Published fleet walkthrough", href: "/blog/2026-08-08-no-humans-in-the-merge-loop" }]
 			},
 			{
+				id: "trading-infrastructure", label: "Trading infrastructure", title: "From paper trading to live execution",
+				paragraphs: [
+					"I built the first paper-trading engine so we could test order handling against live prices without moving money. I extended it to live execution across multiple venues. A partial fill is still a position, and a lost response can mean an order already went through. I built order tracking and reconciliation around those cases to protect against duplicate orders.",
+					"I also built a way to type an order in plain English. The model proposes the order, and a person reviews and approves it before the system submits it."
+				]
+			},
+			{
 				id: "native-apps", label: "iOS & Android", title: "I started and shipped both native apps",
 				paragraphs: [
 					"Jay and I decided to move from a Capacitor wrapper to platform-native apps so we could build the research experience around how people use each phone. I started both apps from scratch in June 2026 and wrote their first month myself. In SwiftUI, I built the swipeable research cards, stats and insights on their reverse faces, and a chart fed by line history. In Kotlin and Jetpack Compose, I built the typed API client, native sign-in and guest entry, and the swipe deck with rewind and cart.",

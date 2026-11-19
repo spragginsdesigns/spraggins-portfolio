@@ -50,6 +50,12 @@ const entries: readonly Entry[] = [
 		sources: [linecrushSource, { label: "LineCrush product", href: "https://www.linecrush.com" }, { label: "LineCrush on the App Store", href: "https://apps.apple.com/us/app/linecrush-sports-research/id6774968606" }]
 	},
 	{
+		id: "trading-infrastructure", topic: "linecrush",
+		patterns: [/\btrad(?:e|er|ing)\b/, /\b(?:partial fills?|duplicate orders?|order reconciliation|paper[ -]trading|live execution)\b/],
+		answer: "Austin built LineCrush's first paper-trading engine and extended it to live execution across multiple venues. He built order tracking and reconciliation around partial fills and uncertain responses to protect against duplicate orders. In his AI-assisted order workflow, the model proposes an order from plain English and a person reviews and approves it before submission.",
+		sources: [{ label: "Trading infrastructure case study", href: "/work/linecrush#trading-infrastructure" }]
+	},
+	{
 		id: "c2-delivery", topic: "fleet",
 		patterns: [/\bc2\b/, /\b(fleet|agents?|autonomous|automation|delivery system|issue track(?:er|ing)|ship(?:ping)? process)\b/],
 		answer: `Austin designed C2 and LineCrush's engineering agent fleet, which he and Jay operate together. C2 connects an issue, its run and its delivery evidence, and brought roughly 19,000 historical issue records into the same system as new work. The public delivery pattern is investigate, implement, verify the product, review, ship and check the result. As of November 17, 2026, the fleet ledger recorded ${FMT.fleetCompletedJobs} completed jobs and ${FMT.fleetJobsWithCommitLinks} completed jobs containing a commit URL. Jobs include investigations and documentation, so those figures aren't unique features or Austin's personal commits.`,
