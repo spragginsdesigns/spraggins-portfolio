@@ -12,7 +12,7 @@ const poppins = Poppins({
 });
 
 const siteTitle = "Austin Spraggins | Senior Product Engineer & LineCrush CTO";
-const siteDescription = "Austin Spraggins built the iOS and Android apps for LineCrush and SureWord. Explore his full-stack, native mobile, and applied AI engineering work.";
+const siteDescription = "Austin Spraggins started LineCrush's native apps and leads their releases. Explore his work in applied AI, full-stack engineering, and native mobile.";
 const socialImage = {
 	url: "/images/work/austin-social.jpg",
 	width: 1200,

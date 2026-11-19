@@ -39,7 +39,7 @@ const chapters = [
 	{
 		period: "2026",
 		title: "More products. A different way to build.",
-		text: "I built the iOS and Android apps for both LineCrush and SureWord myself. I also brought SureWord to Mac, released Gunmetal Orbit on Steam, and designed the agent fleet our team uses to keep shipping. I run those agents all day from my desktop, laptop, and phone. I know how to brief them properly, how to review their work, and when to stop one that's headed the wrong way.",
+		text: "I started both native LineCrush apps from scratch and wrote their first month of code. The fleet I designed has built most of their features since, and I own releases and store review. I built SureWord's apps and brought it to Mac, and I released Gunmetal Orbit on Steam. I run agents from my desktop, laptop, and phone. I know how to brief them, review their work, and when to stop one that's headed the wrong way.",
 		footnote: "Native apps, applied AI, and games",
 		href: "/work/sureword",
 		linkLabel: "Why I built SureWord",

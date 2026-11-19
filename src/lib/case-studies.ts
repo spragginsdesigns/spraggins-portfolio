@@ -52,8 +52,8 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 	linecrush: {
 		name: "LineCrush",
 		title: "The AI fleet, C2, and two native apps.",
-		intro: "I built LineCrush's self-sustaining, self-improving AI engineering fleet and C2, our replacement for Linear. I also started both native apps from scratch and shipped them to the App Store and Google Play.",
-		description: "How Austin Spraggins built LineCrush's self-sustaining, self-improving AI fleet, replaced Linear with C2, and shipped native iOS and Android apps.",
+		intro: "I built LineCrush's self-sustaining, self-improving AI engineering fleet and C2, our replacement for Linear. I started both native apps from scratch, wrote their first month of code, and own releases and store review. The fleet I built has written most of the feature code since.",
+		description: "Austin Spraggins built the LineCrush AI fleet and C2, wrote the first month of both native apps, and owns their releases and store review.",
 		role: "Co-founder & CTO",
 		result: "Operating subscription business · Web, iOS and Android",
 		period: "May 2024 to present",
@@ -95,7 +95,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 					"Jay and I decided to move from a Capacitor wrapper to platform-native apps so we could build the research experience around how people use each phone. I started both apps from scratch in June 2026 and wrote their first month myself. In SwiftUI, I built the swipeable research cards, stats and insights on their reverse faces, and a chart fed by line history. In Kotlin and Jetpack Compose, I built the typed API client, native sign-in and guest entry, and the swipe deck with rewind and cart.",
 					"Both apps use the existing LineCrush backend. I also worked on StoreKit purchases, Android push delivery and the release paths that keep the apps moving.",
 					"App Review hit a case the demo account had missed. A fresh user with no history got an error. I traced the review requests, reproduced the failure with an empty account on an iPad simulator, and fixed the empty state. It made the new-account journey part of what a release had to prove.",
-					"I shipped Android to Google Play in August 2026 and iOS to the App Store in September. I built release automation for signed test builds, store cuts and staged rollout. Since that first month, the fleet I designed has written most of the apps' feature code under checks I set, and Jay and I continue to operate the product alongside it."
+					"I shipped Android to Google Play in August 2026 and iOS to the App Store in September. I built release automation for signed test builds, store submissions, and staged rollouts. The fleet I designed has written most of the apps' feature code since the first month. I own releases and store review for both."
 				],
 				media: [
 					{ src: "/images/work/linecrush-research.webp", alt: "LineCrush iPhone research card with player data and a chart", caption: "Player research · App Store screenshot", shape: "portrait" },

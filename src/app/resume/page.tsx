@@ -41,7 +41,7 @@ const capabilities = [
 	},
 	{
 		title: "Cross-platform delivery",
-		copy: "Built the iOS and Android apps for LineCrush and SureWord. Shipped both products across web and mobile, plus a commercial Godot game on Steam."
+		copy: "Started both native LineCrush apps, wrote their first month of code, and own releases and store review. Built SureWord across web and mobile and shipped Gunmetal Orbit on Steam."
 	}
 ];
 

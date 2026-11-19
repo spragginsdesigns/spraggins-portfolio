@@ -36,8 +36,8 @@ export default function SelectedWork() {
 						<p className={styles.projectTitle}>From a web codebase to two native app stores</p>
 						<p className={styles.projectText}>
 							I started the codebase and built LineCrush with Jay. I started the iOS app in SwiftUI and the Android app
-							in Kotlin and Jetpack Compose and wrote their first month myself. I kept building them with the agent
-							fleet I designed, and took both through release and store review.
+							in Kotlin and Jetpack Compose and wrote their first month myself. The fleet I designed built most
+							of the features since then. I own releases and store review for both apps.
 						</p>
 						<p className={styles.projectStack}>Next.js · Python · SwiftUI · Kotlin</p>
 						<Link className={styles.textAction} href="/work/linecrush">
