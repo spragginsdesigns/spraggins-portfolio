@@ -122,7 +122,6 @@ export default function CaseStudyPage({ params }: PageProps) {
 								<div className={styles.coverFrame}>
 									<Image src={study.cover} alt="" fill priority sizes="(max-width: 800px) calc(100vw - 36px), (max-width: 1250px) 50vw, 620px" />
 								</div>
-								<figcaption>Illustration generated with GPT Image 2.6 Sunburst</figcaption>
 							</figure>
 						</header>
 						<dl className={styles.facts}>

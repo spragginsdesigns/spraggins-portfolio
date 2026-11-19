@@ -79,7 +79,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 				],
 				steps: ["Investigate", "Implement", "Verify the product", "Review", "Ship", "Check the release"],
 				media: [
-					{ src: "/images/work/c2-sunburst-26.webp", alt: "Compute modules arranged around a gold light with cyan connections", caption: "Engineering fleet · GPT Image 2.6 Sunburst", shape: "landscape" }
+					{ src: "/images/work/c2-sunburst-26.webp", alt: "Compute modules arranged around a gold light with cyan connections", caption: "Engineering fleet", shape: "landscape" }
 				],
 				metrics: [
 					{ label: "Completed fleet jobs", value: FMT.fleetCompletedJobs },
