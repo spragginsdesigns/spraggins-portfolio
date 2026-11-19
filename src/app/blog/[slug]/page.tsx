@@ -150,6 +150,13 @@ function nodeToText(node: ReactNode): string {
 	return "";
 }
 
+interface PostFigureProps {
+	src: string;
+	alt: string;
+	caption?: string;
+	priority?: boolean;
+}
+
 // h2/h3 get stable ids (matching the TOC) and scroll offset for the sticky bar
 const mdxComponents = {
 	h2: (props: ComponentPropsWithoutRef<"h2">) => (
@@ -165,6 +172,26 @@ const mdxComponents = {
 			className="scroll-mt-28"
 			{...props}
 		/>
+	),
+	// Block illustration for posts: <Figure src alt caption />. Written as JSX
+	// in the MDX because a Markdown image would nest the figure inside a <p>.
+	Figure: ({ src, alt, caption, priority = false }: PostFigureProps) => (
+		<figure className="not-prose my-10">
+			<Image
+				src={src}
+				alt={alt}
+				width={1536}
+				height={1024}
+				priority={priority}
+				sizes="(min-width: 768px) 720px, 100vw"
+				className="w-full h-auto rounded-xl border border-border/50"
+			/>
+			{caption ? (
+				<figcaption className="mt-3 text-center text-sm text-muted-foreground">
+					{caption}
+				</figcaption>
+			) : null}
+		</figure>
 	)
 };
 
