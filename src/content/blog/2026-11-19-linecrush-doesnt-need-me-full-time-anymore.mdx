@@ -3,7 +3,7 @@ title: "LineCrush Doesn't Need Me Full Time Anymore"
 description: "After two and a half years as co-founder and CTO, the products are live, the company has revenue, and the agent fleet I built keeps itself running. So I'm stepping back from the day-to-day and looking for my next engineering job."
 date: "2026-11-19"
 tags: ["Career", "AI", "Agents", "Startups", "Engineering"]
-readTime: "9 min"
+readTime: "13 min"
 featured: true
 ---
 
@@ -29,6 +29,20 @@ I had to learn extremely fast. Like everything else, I just jumped in with both 
 
 And honestly I'm thankful for it. I was given the chance to learn how to do just about everything in tech, and that's exactly what I wanted.
 
+## The platform under everything
+
+Before I get to the agents, I want to talk about the product itself, because that's where most of those two and a half years went.
+
+I started the codebase by myself on May 2, 2024, and Jay and I built the product side by side from there. Today the LineCrush repository has 43,000+ commits, 725 API handlers and 450+ database tables behind four product clients covering 14+ sports. Those are platform numbers. They include Jay's work and the fleet's work, not just mine.
+
+Here are a few of the things I'm proudest of from that side of it:
+
+- I moved every account from Auth0 to Clerk in June 2026 on a live paid product. No user ID changed, passwords kept working and subscriptions still resolved to their owners.
+- I built the real-time delivery that pushes research updates to the web app and our alert services, using the Postgres database we already had so we didn't have to run a separate message broker.
+- I built push-to-deploy for the backend in one day in October 2025. A push to main updates the code, the job schedule and only the services that change touched, so a worker in the middle of a job doesn't get killed by an unrelated deploy.
+- I added a fact-check step to our AI-written reports that checks the statistics against stored game data and corrects them before the report is saved.
+- In March 2026 I did a performance push on the web app, and on March 16 Vercel measured a Real Experience Score of 100 with every route at 93 or higher.
+
 ## The fleet
 
 In 2026 I designed and built our agent fleet.
@@ -41,10 +55,11 @@ I wrote about the early version of this in [No Humans in the Merge Loop](/blog/2
 - 91% of everything the fleet admitted got completed, at about 124 admissions a day over the last 30 days.
 - 71% of closed issues finished on the first attempt.
 - About 0.24% of admitted issues ended in a terminal failure.
+- The median time from an issue being admitted to it being done was 71.5 minutes.
 
 I built it to keep itself running and to keep getting better, and I think that's the part people miss when they hear "AI agents." If a worker gets interrupted in the middle of a job, the fleet picks that job back up where it left off, in the same session with the same working files. When one of its own scheduled checks goes red, it files the fix into its own queue. And when there's a problem in the fleet's own tooling, the fleet can take that issue, fix it, and put the fix through the same proof and review that product work goes through. One of those fleet-written fixes is the reason interrupted jobs resume cleanly for both Claude Code and Codex today.
 
-It doesn't decide everything. Anything that needs a founder, like spending money or a product direction call, stops and waits for one of us. That was on purpose.
+It doesn't decide everything. Anything that needs a founder, like spending money or a product direction call, stops and waits for one of us. 542 issues have stopped for a founder that way since July. That was on purpose.
 
 ## C2
 
@@ -54,21 +69,43 @@ So I built one. It's called C2, and it replaced Linear in production on November
 
 I'm not going to go deep on the internals of either system here. The pattern is easy to describe. The details that make it safe are LineCrush's, and they took a long time to earn.
 
+## The trading system
+
+There's one more system at LineCrush that I haven't written about before, and it's a big part of why the company is stable.
+
+LineCrush runs an automated trading system. In August 2026 I built the first version of it, a paper-trading engine that ran on live prices, so we could see how it would do before any real money was involved. Six days later I extended it to live execution across more than one venue, running unattended. Then in October I built an order-entry flow for Jay and me where an AI finds the market and fills out the trade, and a person approves it before anything gets placed.
+
+A lot of the real work in a system like that is the unglamorous part. It has to reconcile orders that only partly fill, and it has to make sure the same order can never go out twice.
+
+Since then most of the work on it has gone through the fleet, and the trading side is Jay's expertise, not mine. It runs on its own now and it brings in revenue for the company. How it decides what to trade, and where, stays with LineCrush.
+
 ## Shipping everywhere
 
 2026 was also the year I finally got to ship on every platform I ever wanted to.
 
-LineCrush went native on Google Play in August and on the App Store in September. I started both of those apps from scratch and wrote their first month myself, and since then the fleet has written most of the feature code while I own the releases and store review. Then in November LineCrush was approved as an official ChatGPT plugin.
+LineCrush went native on Google Play in August and on the App Store in September. I started both of those apps from scratch and wrote their first month myself, and since then the fleet has written most of the feature code while I own the releases and store review. Android went from its first commit to production on Google Play in 65 days. The iOS app was approved 88 days after its first native commit, after several rejections that I worked through one at a time. Both apps now go out on a weekly release train, and the iOS app has had 32 versions in about 10 weeks. In October it came to iPad too.
 
-On my own I released [Gunmetal Orbit](https://store.steampowered.com/app/4975430) on Steam on September 10. It went from the first commit to a Steam release on Windows, macOS and Linux in 67 days, and it's still getting updates. And I built [SureWord](https://sureword.app), an AI Bible study app, for the web, Android, iPhone, iPad and Mac. I wanted to see if I could make an AI-native Bible study tool that doesn't lead people astray, and I'm really proud of how it turned out.
+Then in November LineCrush was approved as an official ChatGPT plugin. I built that as five read-only research tools on a hosted MCP server, submitted it on October 19 and it was approved on November 2. I also built WebMCP tools for the browser and our Chrome extension, and with Jay and the fleet we shipped a real-time sports news API for a business customer. I really wanted to learn how ChatGPT plugins, MCP servers and WebMCP worked, so I built one of each.
+
+On my own I released [Gunmetal Orbit](https://store.steampowered.com/app/4975430) on Steam on September 10. It went from the first commit to a Steam release in 67 days, it runs on Windows, macOS and Linux, and it earns revenue. I've shipped over 100 versions to Steam since launch. In November I also entered two competitions. [Cut Loose](https://spragginsdesigns.itch.io/cut-loose) is an Unreal Engine 5.8 game I entered solo in the Epic AI MegaJam and built in four days by directing AI agents, and Seven Days is a mixed-reality prototype for Meta Quest that I submitted to Meta's developer competition.
+
+And I built [SureWord](https://sureword.app), an AI Bible study app, for the web, Android, iPhone, iPad and Mac, all on one backend. I wanted to see if I could make an AI-native Bible study tool that doesn't lead people astray. One example of what that took: the app doesn't trust the model to quote Scripture from memory. The server puts the verse text in word for word. I'm really proud of how it turned out.
 
 I always wanted to build natively and I always wanted to make video games, since I was a little kid. So I loved every minute of that.
+
+## The side work
+
+I kept building outside of LineCrush the whole time too.
+
+I did paid client work: the [Two Cities Off Road](https://twocitiesoffroad.com/) site with its catalog, build gallery and an editor the owner can use to update it, a rewrite of SaveALife CPR's course registration automation after the portal it depended on changed, and the Constrong contractor site, which Jay and I built together.
+
+I also got three pull requests merged into the open source [tty7](https://github.com/l0ng-ai/tty7/pull/1164) project, published [react-steam-deck](https://www.npmjs.com/package/react-steam-deck) on npm, and built MCP servers for Perplexity and PostgreSQL. And I have FileSteward AI in pre-release, a native Android file manager where an AI proposes the file changes and you approve them.
 
 ## So why leave the day-to-day?
 
 Because the thing I built did what I built it to do.
 
-LineCrush is a stable company with live products and revenue. The platform, the apps, the fleet and C2 all run without needing me there full time. Jay is the expert on the product side, and with the fleet and C2 he has what he needs to keep it moving. Jay and I worked really well together the entire time, and we built a company and products I'm really proud of. I'm still a co-founder. That part doesn't change.
+LineCrush is a stable company with live products and revenue. The platform, the apps, the trading system, the fleet and C2 all run without needing me there full time. Jay is the expert on the product side, and with the fleet and C2 he has what he needs to keep it moving. Jay and I worked really well together the entire time, and we built a company and products I'm really proud of. I'm still a co-founder. That part doesn't change.
 
 But I want to keep learning. I want to stay on the cutting edge of AI and become the best engineer I can possibly be, and I think the way to do that now is to go build hard things with other great engineers. I've spent two and a half years being the person who had to figure everything out. I'd love to be on a team where I can learn from people who are better than me at things, and bring what I know to them.
 
