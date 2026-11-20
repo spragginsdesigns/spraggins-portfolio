@@ -56,6 +56,17 @@ const entries: readonly Entry[] = [
 		sources: [{ label: "Trading infrastructure case study", href: "/work/linecrush#trading-infrastructure" }]
 	},
 	{
+		id: "agent-direction", topic: "fleet",
+		patterns: [
+			/\b(steer\w*|direct(?:s|ing|ed)? (?:ai |the |coding |his )?agents?|orchestrat\w*|supervis\w*|babysit\w*|vibe[ -]?cod\w*|agentic|prompt(?:ing)? (?:skills?|engineer\w*))\b/,
+			/\b(?:agents?|ai|models?|claude|codex)\b.{0,50}\b(?:wrong|mistakes?|errors?|slop|bad code|overconfiden\w*|trust\w*|review\w*|check\w*|verif\w*|correct\w*)\b/,
+			/\b(?:catch\w*|review\w*|trust\w*|verif\w*|check\w*|correct\w*|slop)\b.{0,50}\b(?:agents?|ai|generated)\b/,
+			/\b(?:master\w*|expert|good|skilled|proficien\w*) (?:of|at|with|in) (?:directing |using |managing |running )?(?:the )?(?:ai|agents?)\b/
+		],
+		answer: "Austin directs AI agents as his daily work and has since LineCrush's fleet went live in June 2026, from his desktop, laptop and phone. He typed the first version of LineCrush by hand and has run its web app, backend services, deploys, databases and store releases, which is what lets him tell when an agent's work is wrong. Dated examples: on March 4, 2026 he added a step that checks the statistics in AI-written reports against stored game data and corrects them before they are saved. In his games, agents kept substituting placeholder geometry for authored art and grading their own output, so he separated the model that makes the art from an independent model that grades it. On October 12, 2026 a Gunmetal Orbit build passed its checks while 27 scripts failed to load; he shipped the fix the same day and made every release prove itself on the exported game. In November 2026, after 85 tests passed on his Unreal jam entry, his own first full playthrough found four problems the tests missed. These are examples from the public record, not a claim that agent-written work ships without mistakes.",
+		sources: [c2Source, { label: "Game development case study", href: "/work/game-development" }, { label: "LineCrush Doesn't Need Me Full Time Anymore", href: "/blog/2026-11-19-linecrush-doesnt-need-me-full-time-anymore" }]
+	},
+	{
 		id: "c2-delivery", topic: "fleet",
 		patterns: [/\bc2\b/, /\b(fleet|agents?|autonomous|automation|delivery system|issue track(?:er|ing)|ship(?:ping)? process)\b/],
 		answer: `Austin designed C2 and LineCrush's engineering agent fleet, which he and Jay operate together. C2 connects an issue, its run and its delivery evidence, and brought roughly 19,000 historical issue records into the same system as new work. The public delivery pattern is investigate, implement, verify the product, review, ship and check the result. As of November 17, 2026, the fleet ledger recorded ${FMT.fleetCompletedJobs} completed jobs and ${FMT.fleetJobsWithCommitLinks} completed jobs containing a commit URL. Jobs include investigations and documentation, so those figures aren't unique features or Austin's personal commits.`,
