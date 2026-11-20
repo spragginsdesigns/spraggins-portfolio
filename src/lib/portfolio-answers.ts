@@ -135,8 +135,8 @@ const entries: readonly Entry[] = [
 	},
 	{
 		id: "contact", topic: "contact",
-		patterns: [/\b(contact|reach|email|e-mail|hire|hiring|available|availability|schedule|interview|remote|location|based|timezone|time zone|fresno)\b/],
-		answer: "Austin is looking for his next full-time, hands-on engineering job, remote in the US or in the Fresno area, and is also open to contracts and consulting. He is based in Fresno, California, in Pacific Time. His public résumé and portfolio contact form are the best starting points for discussing a role, a contract or a project. The résumé page also lists spragginsdesigns@gmail.com. Start date, scope and terms are for a conversation with Austin. For an engineering evaluation, the LineCrush and SureWord case studies provide specific product responsibilities and released work to discuss.",
+		patterns: [/\b(contact|reach|email|e-mail|hire|hiring|available|availability|schedule|interview|remote|hybrid|on-?site|in[ -]person|office|relocat\w*|location|based|timezone|time zone|fresno)\b/],
+		answer: "Austin is looking for his next full-time, hands-on engineering job, and is also open to contracts and consulting. He is open to remote, hybrid or in-office work and would relocate for the right job. He is based in Fresno, California, in Pacific Time. His public résumé and portfolio contact form are the best starting points for discussing a role, a contract or a project. The résumé page also lists spragginsdesigns@gmail.com. Start date, scope and terms are for a conversation with Austin. For an engineering evaluation, the LineCrush and SureWord case studies provide specific product responsibilities and released work to discuss.",
 		sources: [{ label: "Contact Austin", href: "/#contact" }, resumeSource, linecrushSource]
 	},
 	{
