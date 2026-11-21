@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
 	FaPaperPlane,
@@ -73,7 +74,15 @@ const Contact: React.FC = () => {
 					Get In Touch
 				</h2>
 				<p className="text-muted-foreground text-center max-w-xl mx-auto mb-8">
-					Tell me what you&apos;re building or what you&apos;d like to talk about.
+					LineCrush is stable and{" "}
+					<Link
+						href="/blog/2026-11-19-linecrush-doesnt-need-me-full-time-anymore"
+						className="text-primary underline underline-offset-4"
+					>
+						doesn&apos;t need me full time anymore
+					</Link>
+					, so I&apos;m looking for my next full-time, hands-on engineering job. I&apos;m also open to
+					contracts and consulting. Tell me what you&apos;re building or what you&apos;d like to talk about.
 				</p>
 				<div className="flex flex-wrap justify-center gap-3 mb-12">
 					<a

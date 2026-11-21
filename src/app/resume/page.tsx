@@ -82,6 +82,15 @@ export default function ResumePage() {
 						</a>
 					</div>
 					<p className="mt-5 text-sm text-[#c0cccf]">Fresno, California · Pacific Time</p>
+					<p className="mt-3 max-w-3xl text-sm text-[#c0cccf] md:text-base">
+						<Link
+							href="/blog/2026-11-19-linecrush-doesnt-need-me-full-time-anymore"
+							className="text-[#72f3df] underline underline-offset-4"
+						>
+							LineCrush no longer needs me full time
+						</Link>
+						, so I&apos;m looking for my next full-time, hands-on engineering job.
+					</p>
 				</div>
 
 				<div className="mt-8 grid gap-4 md:grid-cols-3">
