@@ -40,6 +40,7 @@ const HISTORY_TURNS = 6;
 const SUGGESTED_QUESTIONS = [
 	{ label: "The level", question: "Is Austin a junior or senior engineer?" },
 	{ label: "The engineering", question: "What did Austin personally build?" },
+	{ label: "Directing agents", question: "How does Austin know when an AI agent is wrong?" },
 	{ label: "Live work log", question: "What has Austin been working on over the last two weeks?" },
 	{ label: "A hard bug", question: "Tell me about the hardest bug Austin has tracked down." },
 	{ label: "Public code", question: "What's in his public GitHub right now?" },

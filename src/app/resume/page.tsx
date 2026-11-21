@@ -81,7 +81,7 @@ export default function ResumePage() {
 							<Mail className="h-5 w-5" aria-hidden="true" /> Get in touch
 						</a>
 					</div>
-					<p className="mt-5 text-sm text-[#c0cccf]">Fresno, California · Pacific Time</p>
+					<p className="mt-5 text-sm text-[#c0cccf]">Fresno, California · Pacific Time · Open to remote, hybrid or in-office work, and to relocating</p>
 					<p className="mt-3 max-w-3xl text-sm text-[#c0cccf] md:text-base">
 						<Link
 							href="/blog/2026-11-19-linecrush-doesnt-need-me-full-time-anymore"
