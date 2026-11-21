@@ -7,7 +7,7 @@ import { BrandIcon } from "@/components/BrandIcon";
 import { RESUME_URL } from "@/lib/resume";
 
 const pageUrl = "https://www.spragginsdesigns.xyz/resume";
-const title = "Austin Spraggins Résumé | Senior Product Engineer";
+const title = "Austin Spraggins Résumé | Senior Software Engineer";
 const description =
 	"Download Austin Spraggins's engineering résumé. Co-founder and CTO at LineCrush with full-stack, native mobile, applied AI, and developer tooling experience.";
 
@@ -61,10 +61,10 @@ export default function ResumePage() {
 				<div className="mt-5 rounded-2xl border border-[#3b5156] bg-[#111e25] p-5 md:p-10">
 					<h1 className="font-heading text-4xl font-bold tracking-tight md:text-6xl">Austin Spraggins</h1>
 					<p className="mt-3 max-w-3xl text-xl font-semibold text-[#72f3df] md:text-2xl">
-						Senior Product Engineer
+						Senior Software Engineer
 					</p>
 					<p className="mt-2 max-w-3xl text-sm text-[#c0cccf] md:text-base">
-						Full-Stack · Native Mobile · Applied AI · Co-Founder &amp; CTO at LineCrush
+						Full-Stack Product Engineering · Applied AI · Co-Founder at LineCrush
 					</p>
 					<div className="mt-5 flex flex-wrap gap-3">
 						<a

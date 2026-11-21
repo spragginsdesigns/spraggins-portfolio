@@ -12,13 +12,13 @@ const poppins = Poppins({
 	variable: "--font-poppins"
 });
 
-const siteTitle = "Austin Spraggins | Senior Product Engineer & LineCrush CTO";
+const siteTitle = "Austin Spraggins | Senior Software Engineer & LineCrush Co-Founder";
 const siteDescription = "Austin Spraggins started LineCrush's native apps and leads their releases. Explore his work in applied AI, full-stack engineering, and native mobile.";
 const socialImage = {
 	url: "/images/work/austin-social.jpg",
 	width: 1200,
 	height: 630,
-	alt: "Austin Spraggins, senior product engineer and LineCrush co-founder"
+	alt: "Austin Spraggins, senior software engineer and LineCrush co-founder"
 };
 
 export const metadata: Metadata = {

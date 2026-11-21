@@ -23,7 +23,7 @@ export default function Hero() {
 								<span><MapPin size={12} aria-hidden="true" /> Fresno, California</span>
 							</div>
 						</div>
-						<p className={styles.role}>Senior Product Engineer</p>
+						<p className={styles.role}>Senior Software Engineer</p>
 						<p className={styles.heroHeadline}>I build products.<br /><span>From the interface<br className={styles.desktopBreak} /> to the infrastructure.</span></p>
 						<p className={styles.intro}>
 							Co-Founder &amp; CTO at LineCrush. I started the codebase, built the business with Jay,

@@ -1,4 +1,4 @@
-# Austin Spraggins | Senior Product Engineer & LineCrush CTO
+# Austin Spraggins | Senior Software Engineer & LineCrush Co-Founder
 
 > Austin builds full-stack products, native mobile apps, and applied AI systems. He started LineCrush's codebase and built the product with his co-founder Jay. He started both native LineCrush apps from scratch, wrote their first month of code, and owns releases and store review. The fleet he designed has written most of their feature code since. He built SureWord's apps himself. He is Co-Founder and CTO at LineCrush Inc in Fresno, California.
 

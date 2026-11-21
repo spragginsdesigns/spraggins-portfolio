@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 		title: `${GUNMETAL_ORBIT.name} - ${STUDIO.name}`,
 		description: `${GUNMETAL_ORBIT.genre}. "${GUNMETAL_ORBIT.tagline}" Steam release ${GUNMETAL_ORBIT.releaseDateDisplay}.`,
 		url: `${BASE_URL}/games`,
-		siteName: "Austin Spraggins - Senior Product Engineer",
+		siteName: "Austin Spraggins - Senior Software Engineer",
 		images: [
 			{
 				url: "/images/games/gunmetal-orbit/capsule-release.jpg",

@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 		description:
 			"Engineering notes on autonomous AI agent fleets, full-stack development, game dev, and startup life at LineCrush.",
 		url: `${SITE_URL}/blog`,
-		siteName: "Austin Spraggins - Senior Product Engineer",
+		siteName: "Austin Spraggins - Senior Software Engineer",
 		locale: "en_US",
 		type: "website"
 	},

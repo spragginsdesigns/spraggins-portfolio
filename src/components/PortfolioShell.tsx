@@ -356,7 +356,7 @@ ${box("GET IN TOUCH", m)}
 ${box("RESUME", m)}
 
   AUSTIN SPRAGGINS
-  Co-Founder & CTO | Senior Product Engineer
+  Senior Software Engineer | Full-Stack Product Engineering & Applied AI | Co-Founder at LineCrush
   Fresno, California
 
   ${rule(m)}

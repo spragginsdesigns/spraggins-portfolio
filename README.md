@@ -1,6 +1,6 @@
 # Austin Spraggins Portfolio
 
-Personal portfolio website showcasing my work as **Co-Founder, CTO & Senior Product Engineer** at [LineCrush Inc](https://www.linecrush.com).
+Personal portfolio website showcasing my work as a **Senior Software Engineer and Co-Founder** at [LineCrush Inc](https://www.linecrush.com).
 
 ![Austin Spraggins portfolio](public/images/work/austin-social.jpg)
 
