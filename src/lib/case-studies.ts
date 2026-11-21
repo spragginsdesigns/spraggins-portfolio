@@ -118,7 +118,14 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 					"Jay and I built out the product together. My work included the swipeable Picks experience, matchup and player research, LineCrushBot, and Sonar search and alerts. We connected those surfaces to the data and services behind them so readers could move from a current story to the quote, the matchup and the numbers in context.",
 					"In 2025 the LineCrush repository recorded a non-merge commit under my Git identity on 355 of 365 days. That was before the fleet launched. The count measures days with recorded Git activity."
 				],
-				proof: [{ label: "LineCrush founders and launch video", href: "https://www.linecrush.com/about-us" }, { label: "Explore Sonar", href: "https://www.linecrush.com/sonar" }, { label: "Read the daily work log", href: "/#work-log" }]
+				proof: [{ label: "LineCrush founders and launch video", href: "https://www.linecrush.com/about-us" }, { label: "See Sonar overview", href: "/work/linecrush#sonar" }, { label: "Read the daily work log", href: "/#work-log" }]
+			},
+			{
+				id: "sonar", label: "Sonar search & alerts", title: "Follow a story back to its source",
+				paragraphs: [
+					"My Sonar work covered search and alerts across sports quotes, podcast clips and social posts. The feature brought those sources into one feed so readers could follow a player or topic, open the source and keep the context behind an update.",
+					"Readers could set alerts for lineup changes, injuries and other updates they wanted to follow. Search helped them look back through the available history, while alerts helped them keep up with what changed next."
+				]
 			},
 			{
 				id: "product-decisions", label: "Product decisions", title: "Help readers get to the evidence faster",
