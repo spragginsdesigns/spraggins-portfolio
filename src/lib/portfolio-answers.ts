@@ -46,7 +46,7 @@ const entries: readonly Entry[] = [
 	{
 		id: "linecrush-product", topic: "linecrush",
 		patterns: [/\bline\s?crush\b/, /\b(sports research|sports analytics|flagship|production platform)\b/],
-		answer: `LineCrush is the paid sports research platform Austin started in 2024 and built with co-founder Jay. As CTO, he works across application code, backend services, data, infrastructure, native clients and releases. The product is available on web, iOS and Android. The public portfolio records ${FMT.apiHandlers} API handlers and ${FMT.postgresTables} database tables as platform scale, not as a count of code personally written by Austin. His case study also shows how new-account failures and release maintenance became part of ongoing product ownership.`,
+		answer: `LineCrush is the paid sports research platform whose codebase Austin started in 2024 and that he built with co-founder Jay. As CTO, he works across application code, backend services, data, infrastructure, native clients and releases. The product is available on web, iOS and Android. The public portfolio records ${FMT.apiHandlers} API handlers and ${FMT.postgresTables} database tables as platform scale, not as a count of code personally written by Austin. His case study also shows how new-account failures and release maintenance became part of ongoing product ownership.`,
 		sources: [linecrushSource, { label: "LineCrush product", href: "https://www.linecrush.com" }, { label: "LineCrush on the App Store", href: "https://apps.apple.com/us/app/linecrush-sports-research/id6774968606" }]
 	},
 	{

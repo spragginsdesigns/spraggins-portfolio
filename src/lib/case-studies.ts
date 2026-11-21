@@ -56,7 +56,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 		description: "Austin Spraggins started the LineCrush codebase, built its AI fleet and C2, and took both native apps from their first commits to the stores.",
 		role: "Co-founder & CTO",
 		result: "Operating subscription business · Web, iOS and Android",
-		period: "May 2024 to present",
+		period: "April 2024 to present",
 		published: "2026-11-17",
 		accent: "#80e9dc",
 		cover: "/images/work/linecrush-sunburst-26.webp",
@@ -270,7 +270,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
 					"I owned gameplay direction, the Godot project, playtesting and the Steam release, using AI tools during development. I took the game through Valve's store and build reviews and launched it on September 10, 2026. Steam credits me as developer and LineCrush Games as publisher.",
 					"After launch I found a shop bug on my Steam Deck that made two slots unreachable with a controller. I fixed the focus navigation and added a regression test that drives the shop with controller input. I built release checks that run the exported game through mining, combat, banking ore and starting the next round.",
 					`I set up Steam Cloud and ${GUNMETAL_ORBIT.steamAchievements} achievements, and built a release pipeline that stages and checks builds before they go live. The changelog records over 100 post-launch Steam-channel version entries.`,
-					`Steamworks recorded paid Steam sales and ${GUNMETAL_ORBIT.lifetimeWishlistAdds} lifetime wishlist additions as of ${GUNMETAL_ORBIT.wishlistSnapshotDisplay}, up from 75 wishlist additions on September 17.`
+					"Steamworks records paid Steam sales."
 				],
 				media: [{ src: "/images/games/gunmetal-orbit/screenshot-v2-1.jpg", alt: "Gunmetal Orbit boss fight next to the mining station", caption: "Gunmetal Orbit · Released gameplay", shape: "landscape" }],
 				proof: [steam, { label: "Public changelog", href: "https://games.linecrush.com/gunmetal-orbit/changelog" }, { label: "Gameplay and screenshots", href: "/games" }]

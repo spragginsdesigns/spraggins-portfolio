@@ -69,9 +69,7 @@ export const GUNMETAL_ORBIT = {
 	campaignWaveRange: "10 to 30",
 	playablePilots: 12,
 	steamAchievements: 34,
-	deckResolution: "1280×800",
-	lifetimeWishlistAdds: 152,
-	wishlistSnapshotDisplay: "November 19, 2026"
+	deckResolution: "1280×800"
 } as const;
 
 export const STUDIO = {

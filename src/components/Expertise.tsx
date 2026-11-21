@@ -238,7 +238,7 @@ const Expertise: React.FC = () => {
 								{/* eslint-disable-next-line @next/next/no-img-element */}
 								<img
 									src="https://wakatime.com/badge/github/spragginsdesigns/Context-Pro-AI.svg"
-									alt="WakaTime badge for Context-Pro-AI"
+									alt="WakaTime badge for LineCrush"
 									loading="lazy"
 								/>
 							</a>

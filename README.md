@@ -1,6 +1,6 @@
 # Austin Spraggins Portfolio
 
-Personal portfolio website showcasing my work as **Co-Founder, CTO & Senior Software Engineer** at [LineCrush Inc](https://www.linecrush.com).
+Personal portfolio website showcasing my work as **Co-Founder, CTO & Senior Product Engineer** at [LineCrush Inc](https://www.linecrush.com).
 
 ![Austin Spraggins portfolio](public/images/work/austin-social.jpg)
 
@@ -18,7 +18,7 @@ I build AI agents that ship production software - and the platforms they run. At
 - **70 tracked agent skills** powering autonomous investigation, implementation, proof, review, and release
 - **Multi-model product intelligence** across OpenAI, Gemini, Claude, Perplexity, and vision/OCR workflows
 - **Four client surfaces:** web, native iOS, native Android, and browser extensions
-- **LineCrush Games:** Gunmetal Orbit, a space-mining arena roguelite [available on Steam September 10, 2026](https://store.steampowered.com/app/4975430)
+- **LineCrush Games:** Gunmetal Orbit, a space-mining arena roguelite [released on Steam on September 10, 2026](https://store.steampowered.com/app/4975430)
 
 LineCrush is stable and [doesn't need me full time anymore](https://www.spragginsdesigns.xyz/blog/2026-11-19-linecrush-doesnt-need-me-full-time-anymore), so I'm looking for my next full-time, hands-on engineering job. Also open to contracts and consulting.
 

@@ -239,7 +239,7 @@ ${box("FEATURED PROJECTS", m)}
   Tech: Next.js, AI SDK, pgvector RAG, Neon, Clerk
   URL: https://sureword.app
 
-  ◆ SAVELIFE CPR
+  ◆ SAVEALIFE CPR
   ${rule(m)}
   Paid client project automating course registration
 
@@ -355,15 +355,16 @@ ${box("GET IN TOUCH", m)}
 ${box("RESUME", m)}
 
   AUSTIN SPRAGGINS
-  Co-Founder & CTO | Senior Software Engineer
+  Co-Founder & CTO | Senior Product Engineer
   Fresno, California
 
   ${rule(m)}
 
   SUMMARY
   ${rule(m)}
-  Full-stack engineer with ${FMT.yearsInProduction} years building production
-  systems at scale. Expertise in React, Python, PostgreSQL,
+  Full-stack engineer shipping web and software work since 2021,
+  with ${FMT.yearsInProduction} years running LineCrush in production.
+  Expertise in React, Python, PostgreSQL,
   and AI/ML integration. Former educator, current CTO.
 
   TECHNICAL EXPERTISE
@@ -383,7 +384,7 @@ ${box("RESUME", m)}
   • ${FMT.gameBuilds} shipped game builds incl. Steam
   • Taught web development at Bitwise and Geekwise
 
-  📄 View full PDF: Scroll down to Skills section
+  📄 View the full résumé: /resume
 `,
 
 	socials: (m = false) => `

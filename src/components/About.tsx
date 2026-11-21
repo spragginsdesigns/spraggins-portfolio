@@ -26,7 +26,7 @@ const chapters = [
 		period: "2023 - 2024",
 		title: "Real businesses, real requirements.",
 		text: "As a paid full-stack developer for Gelateria Del Centro, I built and maintained the business website. I owned the implementation, content updates, and search visibility, and learned what it takes to keep a site useful after launch.",
-		footnote: "Client development",
+		footnote: "Full Stack Developer",
 	},
 	{
 		period: "2024 - today",

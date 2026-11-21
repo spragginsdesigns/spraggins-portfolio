@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			publishedTime: post.date,
 			modifiedTime: post.date,
 			url,
-			siteName: "Austin Spraggins - Senior Software Engineer",
+			siteName: "Austin Spraggins - Senior Product Engineer",
 			locale: "en_US",
 			authors: ["Austin Spraggins"],
 			section: post.tags[0],
