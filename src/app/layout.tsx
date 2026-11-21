@@ -128,20 +128,23 @@ export default function RootLayout({
 				<link
 					rel="apple-touch-icon"
 					sizes="180x180"
-					href="/apple-icon-180x180.png"
+					href="/apple-icon-180x180.png?v=relay"
 				/>
 				<link
 					rel="icon"
 					type="image/png"
 					sizes="32x32"
-					href="/favicon-32x32.png"
+					href="/favicon-32x32.png?v=relay"
 				/>
 				<link
 					rel="icon"
 					type="image/png"
 					sizes="16x16"
-					href="/favicon-16x16.png"
+					href="/favicon-16x16.png?v=relay"
 				/>
+				<link rel="icon" href="/favicon.ico?v=relay" sizes="16x16 32x32 48x48" />
+				<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=relay" />
+				<link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg" />
 				<link rel="manifest" href="/site.webmanifest" />
 				<link
 					rel="alternate"

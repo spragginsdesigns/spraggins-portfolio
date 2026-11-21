@@ -41,7 +41,7 @@ const Header: React.FC = () => {
 					className="inline-flex items-center gap-2 font-heading font-bold text-lg tracking-tight"
 					onClick={() => setMenuOpen(false)}
 				>
-					<Image src="/favicon-32x32.png" alt="" width={26} height={26} unoptimized />
+					<Image src="/favicon.svg" alt="" width={26} height={26} unoptimized />
 					<span><span className="text-primary">Austin</span>{" "}<span className="text-foreground">Spraggins</span></span>
 				</Link>
 
