@@ -49,6 +49,7 @@ Personal portfolio website for **Austin Spraggins** - Co-Founder, CTO & Senior S
 
 - **GitHub:** [github.com/spragginsdesigns](https://github.com/spragginsdesigns)
 - **LinkedIn:** [linkedin.com/in/spragginsdesigns](https://www.linkedin.com/in/spragginsdesigns/)
+- **Gitwork:** [gitwork.dev/spragginsdesigns](https://gitwork.dev/spragginsdesigns) (claimed 2026-11-21). Link only: never embed its player card or show its scores, commit counts, stars or followers, and never call its API from the site. Profile URLs live in `src/lib/profiles.ts` (links and JSON-LD `sameAs`).
 - **Twitter:** [@spragginsdesign](https://twitter.com/spragginsdesign)
 
 ## Commands

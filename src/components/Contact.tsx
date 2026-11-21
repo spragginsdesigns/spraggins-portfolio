@@ -11,6 +11,13 @@ import {
 } from "react-icons/fa";
 import { LOCAL_SITES } from "@/lib/local-websites";
 import { BrandIcon } from "@/components/BrandIcon";
+import { PROFILES } from "@/lib/profiles";
+
+const PROFILE_PILLS = [
+	{ label: "GitHub", href: PROFILES.github },
+	{ label: "LinkedIn", href: PROFILES.linkedin },
+	{ label: "Gitwork", href: PROFILES.gitwork }
+];
 
 const Contact: React.FC = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -99,24 +106,18 @@ const Contact: React.FC = () => {
 						<FaPhone className="w-4 h-4" />
 						Call or text {LOCAL_SITES.phoneDisplay}
 					</a>
-					<a
-						href="https://github.com/spragginsdesigns"
-						target="_blank"
-						rel="noopener noreferrer"
-						className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border/50 text-sm text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
-					>
-						<BrandIcon href="https://github.com" size={16} />
-						GitHub
-					</a>
-					<a
-						href="https://www.linkedin.com/in/spragginsdesigns/"
-						target="_blank"
-						rel="noopener noreferrer"
-						className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border/50 text-sm text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
-					>
-						<BrandIcon href="https://www.linkedin.com" size={16} />
-						LinkedIn
-					</a>
+					{PROFILE_PILLS.map(({ label, href }) => (
+						<a
+							key={href}
+							href={href}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border/50 text-sm text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
+						>
+							<BrandIcon href={href} size={16} />
+							{label}
+						</a>
+					))}
 				</div>
 				<form className="max-w-lg mx-auto" onSubmit={handleSubmit}>
 					{/* Honeypot - hidden from humans, bots fill it and get silently dropped */}

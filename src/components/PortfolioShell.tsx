@@ -336,6 +336,7 @@ ${box("GET IN TOUCH", m)}
   📧 Email:    spragginsdesigns@gmail.com
   🐙 GitHub:   github.com/spragginsdesigns
   💼 LinkedIn: linkedin.com/in/spragginsdesigns
+  🤝 Gitwork:  gitwork.dev/spragginsdesigns
   🐦 Twitter:  @spragginsdesign
 
   ${rule(m)}
@@ -397,6 +398,10 @@ ${box("SOCIAL LINKS", m)}
   💼 LinkedIn
      https://linkedin.com/in/spragginsdesigns
      Professional network and recommendations
+
+  🤝 Gitwork
+     https://gitwork.dev/spragginsdesigns
+     Hiring profile, open to full-time work
 
   🐦 Twitter/X
      https://twitter.com/spragginsdesign

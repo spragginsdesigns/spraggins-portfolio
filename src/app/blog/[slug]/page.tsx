@@ -20,6 +20,7 @@ import TableOfContents, { type TocHeading } from "@/components/TableOfContents";
 import CopyLinkButton from "@/components/CopyLinkButton";
 import Footer from "@/components/Footer";
 import { BrandIcon } from "@/components/BrandIcon";
+import { PROFILES, PROFILE_SAME_AS } from "@/lib/profiles";
 
 const SITE_URL = "https://www.spragginsdesigns.xyz";
 
@@ -237,11 +238,7 @@ export default async function BlogPostPage({ params }: Props) {
 			name: "Austin Spraggins",
 			url: SITE_URL,
 			jobTitle: "Co-Founder & Chief Technology Officer",
-			sameAs: [
-				"https://github.com/spragginsdesigns",
-				"https://www.linkedin.com/in/spragginsdesigns/",
-				"https://twitter.com/spragginsdesign"
-			]
+			sameAs: PROFILE_SAME_AS
 		},
 		publisher: {
 			"@type": "Person",
@@ -532,7 +529,7 @@ export default async function BlogPostPage({ params }: Props) {
 								</p>
 								<div className="flex items-center justify-center sm:justify-start gap-3">
 									<a
-										href="https://github.com/spragginsdesigns"
+										href={PROFILES.github}
 										target="_blank"
 										rel="noopener noreferrer"
 										className="text-muted-foreground hover:text-primary transition-colors"
@@ -541,7 +538,7 @@ export default async function BlogPostPage({ params }: Props) {
 										<BrandIcon href="https://github.com" />
 									</a>
 									<a
-										href="https://twitter.com/spragginsdesign"
+										href={PROFILES.twitter}
 										target="_blank"
 										rel="noopener noreferrer"
 										className="text-muted-foreground hover:text-primary transition-colors"
@@ -550,13 +547,22 @@ export default async function BlogPostPage({ params }: Props) {
 										<BrandIcon href="https://x.com" />
 									</a>
 									<a
-										href="https://www.linkedin.com/in/spragginsdesigns/"
+										href={PROFILES.linkedin}
 										target="_blank"
 										rel="noopener noreferrer"
 										className="text-muted-foreground hover:text-primary transition-colors"
 										aria-label="LinkedIn"
 									>
 										<BrandIcon href="https://www.linkedin.com" />
+									</a>
+									<a
+										href={PROFILES.gitwork}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="text-muted-foreground hover:text-primary transition-colors"
+										aria-label="Gitwork"
+									>
+										<BrandIcon href={PROFILES.gitwork} />
 									</a>
 								</div>
 							</div>

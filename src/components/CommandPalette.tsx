@@ -16,6 +16,7 @@ import {
 	Wrench,
 } from "lucide-react";
 import { BrandIcon } from "@/components/BrandIcon";
+import { PROFILES } from "@/lib/profiles";
 
 interface PaletteItem {
 	id: string;
@@ -131,7 +132,7 @@ const PALETTE_ITEMS: PaletteItem[] = [
 		hint: "@spragginsdesigns",
 		icon: <BrandIcon href="https://github.com" size={18} />,
 		keywords: "github code repos open source",
-		href: "https://github.com/spragginsdesigns",
+		href: PROFILES.github,
 		external: true,
 	},
 	{
@@ -140,7 +141,16 @@ const PALETTE_ITEMS: PaletteItem[] = [
 		hint: "Professional profile",
 		icon: <BrandIcon href="https://www.linkedin.com" size={18} />,
 		keywords: "linkedin professional network",
-		href: "https://www.linkedin.com/in/spragginsdesigns/",
+		href: PROFILES.linkedin,
+		external: true,
+	},
+	{
+		id: "gitwork",
+		label: "Gitwork",
+		hint: "Hiring profile",
+		icon: <BrandIcon href={PROFILES.gitwork} size={18} />,
+		keywords: "gitwork hire hiring recruiter profile full-time job",
+		href: PROFILES.gitwork,
 		external: true,
 	},
 	{
@@ -149,7 +159,7 @@ const PALETTE_ITEMS: PaletteItem[] = [
 		hint: "@spragginsdesign",
 		icon: <BrandIcon href="https://x.com" size={18} />,
 		keywords: "twitter x social",
-		href: "https://twitter.com/spragginsdesign",
+		href: PROFILES.twitter,
 		external: true,
 	},
 	{

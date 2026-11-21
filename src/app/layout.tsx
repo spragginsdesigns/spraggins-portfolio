@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import MotionProvider from "@/components/MotionProvider";
+import { PROFILE_SAME_AS } from "@/lib/profiles";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -105,11 +106,7 @@ const personJsonLd = {
 		"DevOps",
 		"Godot Game Development"
 	],
-	sameAs: [
-		"https://github.com/spragginsdesigns",
-		"https://www.linkedin.com/in/spragginsdesigns/",
-		"https://twitter.com/spragginsdesign"
-	]
+	sameAs: PROFILE_SAME_AS
 };
 
 const websiteJsonLd = {

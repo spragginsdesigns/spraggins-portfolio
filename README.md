@@ -82,6 +82,7 @@ Never expose provider tokens through `NEXT_PUBLIC_*` variables. Public GitHub pr
 
 - **GitHub:** [github.com/spragginsdesigns](https://github.com/spragginsdesigns)
 - **LinkedIn:** [linkedin.com/in/spragginsdesigns](https://www.linkedin.com/in/spragginsdesigns/)
+- **Gitwork:** [gitwork.dev/spragginsdesigns](https://gitwork.dev/spragginsdesigns)
 - **Twitter:** [@spragginsdesign](https://twitter.com/spragginsdesign)
 - **Website:** [spragginsdesigns.xyz](https://www.spragginsdesigns.xyz/)
 
