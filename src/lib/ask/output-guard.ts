@@ -4,15 +4,14 @@
 // scripts/ask-evals.mjs loads it directly with Node.
 
 /**
- * Terms the agent must never introduce into an answer: the names of Austin's
- * children, private repository names, and the names of sportsbooks, exchanges
- * and odds providers. The provider list is the industry at large, not a list
- * of what LineCrush uses, so that the agent cannot name or guess a source.
- * Extra terms can be added without a deploy through ASK_DENY_TERMS
- * (comma-separated).
+ * Terms the agent must never introduce into an answer: private repository
+ * names, and the names of sportsbooks, exchanges and odds providers. The
+ * provider list is the industry at large, not a list of what LineCrush uses,
+ * so that the agent cannot name or guess a source. Personal names (Austin's
+ * children) are kept out of this public file and supplied through
+ * ASK_DENY_TERMS (comma-separated), which also adds terms without a deploy.
  */
 export const BUILT_IN_DENY_TERMS: readonly string[] = [
-	"Julian", "Lilly",
 	"Context-Pro-AI", "bible-ai-explorer",
 	"DraftKings", "FanDuel", "BetMGM", "Caesars", "Pinnacle", "PrizePicks", "Underdog", "Bet365", "ESPN BET", "Fanatics",
 	"BetRivers", "Hard Rock Bet", "Bovada", "Circa", "Kalshi", "Polymarket", "Sportradar", "Genius Sports", "OddsJam", "The Odds API"
