@@ -38,7 +38,18 @@ interface GitHubData {
 	repos: GitHubRepo[];
 }
 
-const CACHE_KEY = "github-showcase-cache";
+// Curated, in display order. Change this list to change what the homepage shows.
+// Keep perplexity-mcp-server off until its leaked key is revoked.
+const FEATURED_REPOS = [
+	"jury-swarm",
+	"sideline",
+	"neon-pg-mcp-server",
+	"ghostcount",
+	"react-steam-deck",
+	"spraggins-portfolio"
+];
+
+const CACHE_KEY = "github-showcase-cache-v2";
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 min - dodges the 60/hr anonymous rate limit
 
 const readCache = (): GitHubData | null => {
@@ -62,15 +73,21 @@ const writeCache = (data: GitHubData) => {
 };
 
 const fetchGitHubData = async (): Promise<GitHubData> => {
-	const [userResponse, reposResponse] = await Promise.all([
+	const [userResponse, repoResults] = await Promise.all([
 		axios.get<GitHubUser>("https://api.github.com/users/spragginsdesigns"),
-		axios.get<GitHubRepo[]>(
-			"https://api.github.com/users/spragginsdesigns/repos?sort=updated&per_page=30"
+		// One request per repo keeps the order fixed; a repo that fails to load is skipped.
+		Promise.all(
+			FEATURED_REPOS.map((name) =>
+				axios
+					.get<GitHubRepo>(`https://api.github.com/repos/spragginsdesigns/${name}`)
+					.then((response) => response.data)
+					.catch(() => null)
+			)
 		)
 	]);
 	return {
 		user: userResponse.data,
-		repos: reposResponse.data.filter((repo) => !repo.fork).slice(0, 9)
+		repos: repoResults.filter((repo): repo is GitHubRepo => repo !== null)
 	};
 };
 
