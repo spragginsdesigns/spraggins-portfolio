@@ -23,7 +23,7 @@ The agent collects every source page its tools return, then `rankSources()` in `
 
 ## Output guard
 
-`src/lib/ask/output-guard.ts` checks the answer as it streams, as a backstop to the prompt's privacy rules. The deny list is the names of Austin's children, private repository names, and the names of sportsbooks, exchanges and odds providers across the industry (not a list of what LineCrush uses, so the agent can neither name nor guess a source). `ASK_DENY_TERMS` adds comma-separated terms without a deploy. Use it for anything that should not sit in a public repository.
+`src/lib/ask/output-guard.ts` checks the answer as it streams, as a backstop to the prompt's privacy rules. The built-in deny list is private repository names and the names of sportsbooks, exchanges and odds providers across the industry (not a list of what LineCrush uses, so the agent can neither name nor guess a source). `ASK_DENY_TERMS` adds comma-separated terms without a deploy. Use it for anything that should not sit in a public repository: the names of Austin's children live there, so production must set it.
 
 - Text is released a few characters behind the stream, so a term split across two chunks is caught before any of it is sent.
 - A term the visitor typed themselves (in the question or the turns their browser sent) is not a leak, so "What is in the Context-Pro-AI repo?" can still be answered with "that is not public".
@@ -129,7 +129,7 @@ Not done: a Vercel Firewall rate-limit rule on `POST /api/ask-ai`. It would stop
 - `ASK_AI_MODEL`: optional model override.
 - `GITHUB_TOKEN`: optional, raises the GitHub rate limit. As of 2026-11-18 the token in Vercel is expired, so the GitHub tools run anonymously. Anonymous access is 60 requests an hour per IP and does run out (it did on the development PC on 2026-11-19, and the agent then says the GitHub lookup failed). Replace it with a fine-grained token that has read access to public repositories only.
 - `ASK_DAILY_ANSWER_CEILING`: optional, site-wide model answers per day (default 300).
-- `ASK_DENY_TERMS`: optional, extra comma-separated terms for the output guard.
+- `ASK_DENY_TERMS`: extra comma-separated terms for the output guard. Required in production: it holds the names of Austin's children.
 - `ASK_EVAL`: set to `1` on a local server to lift the per-visitor limits for the regression script. Ignored when `NODE_ENV` is `production`.
 
 Local development: a shell that exports an empty `OPENAI_API_KEY` overrides `.env.local`. Start the dev server with `env -u OPENAI_API_KEY pnpm dev` if answers come back instantly with no lookups.

@@ -28,7 +28,7 @@ Personal portfolio website for **Austin Spraggins** - Co-Founder, CTO & Senior S
 ### Personal
 
 - **Location:** Fresno, California (grew up in the mountains of O'Neals, CA)
-- **Family:** Proud father of two children - Julian and Lilly
+- **Family:** Proud father of two children. Their names stay private: never write them in this repo or on the site (the Ask agent's output guard reads them from `ASK_DENY_TERMS`)
 - **Faith:** Born-again Christian, saved by grace through faith in Jesus Christ. Public testimony page at /faith (old /#faith links redirect there); faith is central to his life and work.
 - **Background:** Lost his father at age 8; later cared for his mother when she became blind. Former truck driver before transitioning to tech. Went through a transformative life experience that profoundly changed his perspective, helping him find faith, inner peace, and renewed purpose.
 
@@ -159,7 +159,7 @@ YOUTUBE_API_KEY=        # YouTube Data API key
 OPENAI_API_KEY=         # Portfolio agent (needs gpt-6.2-sol access); without it answers fall back to curated facts
 GITHUB_TOKEN=           # Optional, raises the GitHub rate limit for the agent's public-repo tools
 ASK_DAILY_ANSWER_CEILING= # Optional, site-wide model answers per day before the agent serves curated facts (default 300)
-ASK_DENY_TERMS=         # Optional, extra comma-separated terms the agent may never write (added to the built-in list)
+ASK_DENY_TERMS=         # Comma-separated terms the agent may never write, added to the built-in list. Must include the children's names in production
 ```
 
 ### Styling
